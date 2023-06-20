@@ -1,0 +1,290 @@
+[
+    {
+        "day": 1,
+        "price": 150,
+        "potentialTransations": [
+            {
+                "buyDay": 0,
+                "sellDay": 1,
+                "sellPrice": 150,
+                "buyPrice": 70,
+                "profit": 80,
+                "daysHeld": 1
+            }
+        ]
+    },
+    {
+        "day": 3,
+        "price": 153,
+        "potentialTransations": [
+            {
+                "buyDay": 2,
+                "sellDay": 3,
+                "sellPrice": 153,
+                "buyPrice": 54,
+                "profit": 99,
+                "daysHeld": 1
+            },
+            {
+                "buyDay": 0,
+                "sellDay": 3,
+                "sellPrice": 153,
+                "buyPrice": 70,
+                "profit": 83,
+                "daysHeld": 3
+            },
+            {
+                "buyDay": 1,
+                "sellDay": 3,
+                "sellPrice": 153,
+                "buyPrice": 150,
+                "profit": 3,
+                "daysHeld": 2
+            }
+        ]
+    },
+    {
+        "day": 4,
+        "price": 180,
+        "potentialTransations": [
+            {
+                "buyDay": 2,
+                "sellDay": 4,
+                "sellPrice": 180,
+                "buyPrice": 54,
+                "profit": 126,
+                "daysHeld": 2
+            },
+            {
+                "buyDay": 0,
+                "sellDay": 4,
+                "sellPrice": 180,
+                "buyPrice": 70,
+                "profit": 110,
+                "daysHeld": 4
+            },
+            {
+                "buyDay": 1,
+                "sellDay": 4,
+                "sellPrice": 180,
+                "buyPrice": 150,
+                "profit": 30,
+                "daysHeld": 3
+            },
+            {
+                "buyDay": 3,
+                "sellDay": 4,
+                "sellPrice": 180,
+                "buyPrice": 153,
+                "profit": 27,
+                "daysHeld": 1
+            }
+        ]
+    },
+    {
+        "day": 5,
+        "price": 61,
+        "potentialTransations": [
+            {
+                "buyDay": 2,
+                "sellDay": 5,
+                "sellPrice": 61,
+                "buyPrice": 54,
+                "profit": 7,
+                "daysHeld": 3
+            }
+        ]
+    },
+    {
+        "day": 6,
+        "price": 181,
+        "potentialTransations": [
+            {
+                "buyDay": 2,
+                "sellDay": 6,
+                "sellPrice": 181,
+                "buyPrice": 54,
+                "profit": 127,
+                "daysHeld": 4
+            },
+            {
+                "buyDay": 5,
+                "sellDay": 6,
+                "sellPrice": 181,
+                "buyPrice": 61,
+                "profit": 120,
+                "daysHeld": 1
+            },
+            {
+                "buyDay": 0,
+                "sellDay": 6,
+                "sellPrice": 181,
+                "buyPrice": 70,
+                "profit": 111,
+                "daysHeld": 6
+            },
+            {
+                "buyDay": 1,
+                "sellDay": 6,
+                "sellPrice": 181,
+                "buyPrice": 150,
+                "profit": 31,
+                "daysHeld": 5
+            },
+            {
+                "buyDay": 3,
+                "sellDay": 6,
+                "sellPrice": 181,
+                "buyPrice": 153,
+                "profit": 28,
+                "daysHeld": 3
+            },
+            {
+                "buyDay": 4,
+                "sellDay": 6,
+                "sellPrice": 181,
+                "buyPrice": 180,
+                "profit": 1,
+                "daysHeld": 2
+            }
+        ]
+    },
+    {
+        "day": 8,
+        "price": 80,
+        "potentialTransations": [
+            {
+                "buyDay": 7,
+                "sellDay": 8,
+                "sellPrice": 80,
+                "buyPrice": 53,
+                "profit": 27,
+                "daysHeld": 1
+            },
+            {
+                "buyDay": 2,
+                "sellDay": 8,
+                "sellPrice": 80,
+                "buyPrice": 54,
+                "profit": 26,
+                "daysHeld": 6
+            },
+            {
+                "buyDay": 5,
+                "sellDay": 8,
+                "sellPrice": 80,
+                "buyPrice": 61,
+                "profit": 19,
+                "daysHeld": 3
+            },
+            {
+                "buyDay": 0,
+                "sellDay": 8,
+                "sellPrice": 80,
+                "buyPrice": 70,
+                "profit": 10,
+                "daysHeld": 8
+            }
+        ]
+    },
+    {
+        "day": 10,
+        "price": 105,
+        "potentialTransations": [
+            {
+                "buyDay": 9,
+                "sellDay": 10,
+                "sellPrice": 105,
+                "buyPrice": 18,
+                "profit": 87,
+                "daysHeld": 1
+            },
+            {
+                "buyDay": 7,
+                "sellDay": 10,
+                "sellPrice": 105,
+                "buyPrice": 53,
+                "profit": 52,
+                "daysHeld": 3
+            },
+            {
+                "buyDay": 2,
+                "sellDay": 10,
+                "sellPrice": 105,
+                "buyPrice": 54,
+                "profit": 51,
+                "daysHeld": 8
+            },
+            {
+                "buyDay": 5,
+                "sellDay": 10,
+                "sellPrice": 105,
+                "buyPrice": 61,
+                "profit": 44,
+                "daysHeld": 5
+            },
+            {
+                "buyDay": 0,
+                "sellDay": 10,
+                "sellPrice": 105,
+                "buyPrice": 70,
+                "profit": 35,
+                "daysHeld": 10
+            },
+            {
+                "buyDay": 8,
+                "sellDay": 10,
+                "sellPrice": 105,
+                "buyPrice": 80,
+                "profit": 25,
+                "daysHeld": 2
+            }
+        ]
+    },
+    {
+        "day": 11,
+        "price": 77,
+        "potentialTransations": [
+            {
+                "buyDay": 9,
+                "sellDay": 11,
+                "sellPrice": 77,
+                "buyPrice": 18,
+                "profit": 59,
+                "daysHeld": 2
+            },
+            {
+                "buyDay": 7,
+                "sellDay": 11,
+                "sellPrice": 77,
+                "buyPrice": 53,
+                "profit": 24,
+                "daysHeld": 4
+            },
+            {
+                "buyDay": 2,
+                "sellDay": 11,
+                "sellPrice": 77,
+                "buyPrice": 54,
+                "profit": 23,
+                "daysHeld": 9
+            },
+            {
+                "buyDay": 5,
+                "sellDay": 11,
+                "sellPrice": 77,
+                "buyPrice": 61,
+                "profit": 16,
+                "daysHeld": 6
+            },
+            {
+                "buyDay": 0,
+                "sellDay": 11,
+                "sellPrice": 77,
+                "buyPrice": 70,
+                "profit": 7,
+                "daysHeld": 11
+            }
+        ]
+    }
+]

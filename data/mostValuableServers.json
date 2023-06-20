@@ -1,0 +1,62 @@
+[
+    {
+        "name": "the-hub",
+        "totalThreadsHacking": 239300,
+        "moneyThreshhold": 3075647250,
+        "securityThreshholdTarget": 18
+    },
+    {
+        "name": "netlink",
+        "totalThreadsHacking": 1861,
+        "moneyThreshhold": 5156250000,
+        "securityThreshholdTarget": 26
+    },
+    {
+        "name": "johnson-ortho",
+        "totalThreadsHacking": 3773,
+        "moneyThreshhold": 1317096337.5,
+        "securityThreshholdTarget": 21
+    },
+    {
+        "name": "silver-helix",
+        "totalThreadsHacking": 3779,
+        "moneyThreshhold": 843750000,
+        "securityThreshholdTarget": 15
+    },
+    {
+        "name": "crush-fitness",
+        "totalThreadsHacking": 7499,
+        "moneyThreshhold": 1058615531.25,
+        "securityThreshholdTarget": 19
+    },
+    {
+        "name": "rothman-uni",
+        "totalThreadsHacking": 7577,
+        "moneyThreshhold": 3365224706.25,
+        "securityThreshholdTarget": 23
+    },
+    {
+        "name": "omega-net",
+        "totalThreadsHacking": 14958,
+        "moneyThreshhold": 1302769106.25,
+        "securityThreshholdTarget": 14
+    },
+    {
+        "name": "computek",
+        "totalThreadsHacking": 15359,
+        "moneyThreshhold": 4132060387.5,
+        "securityThreshholdTarget": 26
+    },
+    {
+        "name": "catalyst",
+        "totalThreadsHacking": 29789,
+        "moneyThreshhold": 9385584487.5,
+        "securityThreshholdTarget": 26
+    },
+    {
+        "name": "summit-uni",
+        "totalThreadsHacking": 29789,
+        "moneyThreshhold": 6315309806.25,
+        "securityThreshholdTarget": 24
+    }
+]

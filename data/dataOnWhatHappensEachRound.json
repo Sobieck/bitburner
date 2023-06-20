@@ -1,0 +1,380 @@
+[
+    {
+        "countOfFreeMachines": 61,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 2199741,
+        "newThreadsGrowing": 4915,
+        "totalThreadsAllocated": 2204656
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 37,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 271
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 37,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 198,
+        "totalThreadsAllocated": 271
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 270,
+        "totalThreadsAllocated": 270
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 37,
+        "newThreadsWeakening": 72,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 343
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 37,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 271
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 4818,
+        "newThreadsWeakening": 621,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 5673
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 4818,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 270,
+        "totalThreadsAllocated": 5088
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 4789,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 5023
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 18,
+        "newThreadsGrowing": 288,
+        "totalThreadsAllocated": 306
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 9596,
+        "totalThreadsAllocated": 9632
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 75168,
+        "totalThreadsAllocated": 75204
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 4951,
+        "totalThreadsAllocated": 4987
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 3816,
+        "totalThreadsAllocated": 3816
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 19275,
+        "newThreadsWeakening": 72,
+        "newThreadsGrowing": 4879,
+        "totalThreadsAllocated": 24226
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 18958,
+        "totalThreadsAllocated": 18994
+    },
+    {
+        "countOfFreeMachines": 35,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 11774,
+        "newThreadsGrowing": 270,
+        "totalThreadsAllocated": 12044
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 19275,
+        "newThreadsWeakening": 1170,
+        "newThreadsGrowing": 270,
+        "totalThreadsAllocated": 20715
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 75007,
+        "newThreadsGrowing": 270,
+        "totalThreadsAllocated": 75277
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 24224,
+        "totalThreadsAllocated": 24260
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 4818,
+        "newThreadsWeakening": 72,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 5124
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 4818,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 5052
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 19275,
+        "newThreadsWeakening": 2358,
+        "newThreadsGrowing": 4933,
+        "totalThreadsAllocated": 26566
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 270
+    },
+    {
+        "countOfFreeMachines": 37,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 24116,
+        "newThreadsGrowing": 18940,
+        "totalThreadsAllocated": 43056
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 4818,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 5088
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 2409,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 1440,
+        "totalThreadsAllocated": 3849
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 4818,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 2574,
+        "totalThreadsAllocated": 7428
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 1204,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 270,
+        "totalThreadsAllocated": 1510
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 2376,
+        "newThreadsGrowing": 6049,
+        "totalThreadsAllocated": 8425
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 18760,
+        "newThreadsGrowing": 1989,
+        "totalThreadsAllocated": 20749
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 270
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 675,
+        "newThreadsGrowing": 216,
+        "totalThreadsAllocated": 891
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 9637,
+        "newThreadsWeakening": 4717,
+        "newThreadsGrowing": 2574,
+        "totalThreadsAllocated": 16928
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 1206,
+        "newThreadsGrowing": 306,
+        "totalThreadsAllocated": 1512
+    },
+    {
+        "countOfFreeMachines": 35,
+        "newThreadsHacking": 9637,
+        "newThreadsWeakening": 2961,
+        "newThreadsGrowing": 307,
+        "totalThreadsAllocated": 12905
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 38587,
+        "newThreadsWeakening": 18,
+        "newThreadsGrowing": 216,
+        "totalThreadsAllocated": 38821
+    },
+    {
+        "countOfFreeMachines": 36,
+        "newThreadsHacking": 53005,
+        "newThreadsWeakening": 72,
+        "newThreadsGrowing": 307,
+        "totalThreadsAllocated": 53384
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 54,
+        "newThreadsGrowing": 42310,
+        "totalThreadsAllocated": 42364
+    },
+    {
+        "countOfFreeMachines": 38,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 72,
+        "newThreadsGrowing": 63464,
+        "totalThreadsAllocated": 63536
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 150030,
+        "totalThreadsAllocated": 150066
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 2412,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 2646
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 4879,
+        "totalThreadsAllocated": 4915
+    },
+    {
+        "countOfFreeMachines": 33,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 90,
+        "newThreadsGrowing": 252,
+        "totalThreadsAllocated": 342
+    },
+    {
+        "countOfFreeMachines": 34,
+        "newThreadsHacking": 154202,
+        "newThreadsWeakening": 73,
+        "newThreadsGrowing": 79813,
+        "totalThreadsAllocated": 234088
+    },
+    {
+        "countOfFreeMachines": 41,
+        "newThreadsHacking": 154202,
+        "newThreadsWeakening": 63230,
+        "newThreadsGrowing": 262413,
+        "totalThreadsAllocated": 479845
+    },
+    {
+        "countOfFreeMachines": 30,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 149832,
+        "newThreadsGrowing": 162,
+        "totalThreadsAllocated": 149994
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 19275,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 19545
+    },
+    {
+        "countOfFreeMachines": 32,
+        "newThreadsHacking": 154202,
+        "newThreadsWeakening": 36,
+        "newThreadsGrowing": 234,
+        "totalThreadsAllocated": 154472
+    },
+    {
+        "countOfFreeMachines": 31,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 18,
+        "newThreadsGrowing": 1386,
+        "totalThreadsAllocated": 1404
+    },
+    {
+        "countOfFreeMachines": 28,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 0,
+        "newThreadsGrowing": 162,
+        "totalThreadsAllocated": 162
+    },
+    {
+        "countOfFreeMachines": 35,
+        "newThreadsHacking": 173477,
+        "newThreadsWeakening": 90,
+        "newThreadsGrowing": 252,
+        "totalThreadsAllocated": 173819
+    },
+    {
+        "countOfFreeMachines": 30,
+        "newThreadsHacking": 308404,
+        "newThreadsWeakening": 18,
+        "newThreadsGrowing": 18868,
+        "totalThreadsAllocated": 327290
+    },
+    {
+        "countOfFreeMachines": 30,
+        "newThreadsHacking": 0,
+        "newThreadsWeakening": 18,
+        "newThreadsGrowing": 299773,
+        "totalThreadsAllocated": 299791
+    }
+]

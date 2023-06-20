@@ -1,0 +1,80 @@
+[
+    [
+        "foodnstuff",
+        {
+            "name": "hong-fang-tea",
+            "moneyThreshhold": 56250000,
+            "securityThreshholdTarget": 10,
+            "hackDifficulty": 14.7,
+            "moneyAvailable": 3000000,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false
+        }
+    ],
+    [
+        "joesguns",
+        {
+            "name": "nectar-net",
+            "moneyThreshhold": 51562500,
+            "securityThreshholdTarget": 12,
+            "hackDifficulty": 19.1,
+            "moneyAvailable": 2750000,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false
+        }
+    ],
+    [
+        "hong-fang-tea",
+        {
+            "name": "sigma-cosmetics",
+            "moneyThreshhold": 43125000,
+            "securityThreshholdTarget": 8,
+            "hackDifficulty": 7.858000000000001,
+            "moneyAvailable": 2325333.990270041,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false
+        }
+    ],
+    [
+        "harakiri-sushi",
+        {
+            "name": "joesguns",
+            "moneyThreshhold": 46875000,
+            "securityThreshholdTarget": 10,
+            "hackDifficulty": 12.750000000000004,
+            "moneyAvailable": 2500000,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false
+        }
+    ],
+    [
+        "nectar-net",
+        {
+            "name": "n00dles",
+            "moneyThreshhold": 1312500,
+            "securityThreshholdTarget": 6,
+            "hackDifficulty": 1.5400000000000005,
+            "moneyAvailable": 1675039,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true
+        }
+    ],
+    [
+        "sigma-cosmetics",
+        {
+            "name": "foodnstuff",
+            "moneyThreshhold": 37500000,
+            "securityThreshholdTarget": 8,
+            "hackDifficulty": 7.966,
+            "moneyAvailable": 2022060.2525512092,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false
+        }
+    ]
+]
