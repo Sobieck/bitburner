@@ -144,17 +144,17 @@ describe("AlgorithmicStockTrading4Handler", () => {
 
     it('should return the highest profit correctly', () => {
         const result = sut.solve([2, [1, 3, 2, 5, 2, 100]]); 
-        expect(result).toBe(101);
+        expect(result).toBe(102);
     });
 
     it('should return the highest profit correctly', () => {
         const result = sut.solve([3, [1, 3, 2, 5, 2, 100]]);
-        expect(result).toBe(102);
+        expect(result).toBe(103);
     });
 
     it('should return the highest profit correctly', () => {
         const result = sut.solve([3000, [1, 3, 2, 5, 2, 100]]);
-        expect(result).toBe(102);
+        expect(result).toBe(103);
     });
 
     it('should return the highest profit correctly', () => {
@@ -169,8 +169,14 @@ describe("AlgorithmicStockTrading4Handler", () => {
 
     it('should work for rothman but didnt',() => {
         const arrayToUse = [131, 143, 64, 87, 52, 35, 148, 92, 6, 16, 147, 122, 163, 38, 90, 86, 84, 47, 133, 50, 106, 12, 14, 24, 109, 166, 188, 191, 10, 135, 197, 128, 35, 140, 148, 90, 22, 26, 187, 40, 194, 10, 108, 92, 155, 5];
-        const result = sut.solve([10000, arrayToUse]);
-        expect(result).toBe(486);
+        const result = sut.solve([arrayToUse.length, arrayToUse]);
+        expect(result).toBe(1483);
+    });
+
+    it('Algorithmic Stock Trader III, avmnite-02h, contract-107923.cct',() => {
+        const arrayToUse = [32, 26, 76, 50, 172, 192, 197, 167, 4, 173, 70, 140, 64, 59, 85, 193, 199, 135, 64, 168, 190, 110, 47, 190, 55, 32, 34, 12, 2, 134, 133, 8, 159, 38, 16, 78, 93, 62, 128, 155, 4, 32];
+        const result = sut.solve([2, arrayToUse]);
+        expect(result).toBe(366);
     });
    
 });
@@ -316,7 +322,7 @@ class AlgorithmicStockTrading4Handler {
 
                 maxProfit += transactionToAccountFor.differnceBetweenThisProfitAndABetterAlbeitLongerTermProfit;
 
-                // salesSoFar = salesSoFar.filter(x => x.buyDay !== nextBestSale.buyDay);
+                salesSoFar = salesSoFar.filter(x => x.uniqueId !== oldSale.uniqueId);
             }
 
             salesSoFar.push(new BuyDayForSale(nextBestSale.buyDay, nextBestSale.sellDay, nextMostPotentialQuote))
@@ -334,6 +340,7 @@ class BuyDayForSale {
         this.buyDay = buyDay;
         this.sellDay = sellDay;
         this.quote = quote;
+        this.uniqueId = Math.random();
     }
 }
 
@@ -361,7 +368,7 @@ class Sale {
         this.buyPrice = buyPrice;
         this.profit = this.sellPrice - this.buyPrice;
         this.daysHeld = this.sellDay - this.buyDay;
-        this.differnceBetweenThisProfitAndABetterAlbeitLongerTermProfit = 0;
+        this.differnceBetweenThisProfitAndABetterAlbeitLongerTermProfit = 0;        
     }
 }
 
