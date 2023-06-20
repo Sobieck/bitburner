@@ -31,7 +31,7 @@ export async function main(ns) {
 
 
         
-        // ns.run("scripts/investments/invest-in-stocks.js");
+        ns.run("scripts/investments/invest-in-stocks.js");
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
 
 

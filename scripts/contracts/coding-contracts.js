@@ -5,7 +5,8 @@ export async function main(ns) {
         new AlgorithmicStockTrading4Handler(),
         new AlgorithmicStockTrading3Handler(),
         new AlgorithmicStockTrading1Handler(),
-        new AlgorithmicStockTrading2Handler()
+        new AlgorithmicStockTrading2Handler(),
+        new SpiralizeMatrixHandler(),
     ]
 
     const allContracts = [];
@@ -356,6 +357,58 @@ class Sale {
         this.profit = this.sellPrice - this.buyPrice;
         this.daysHeld = this.sellDay - this.buyDay;
         this.differnceBetweenThisProfitAndABetterAlbeitLongerTermProfit = 0;        
+    }
+}
+
+class SpiralizeMatrixHandler {
+    type = "Spiralize Matrix";
+
+    solve(matrix) {
+        return this.solveRecursively(matrix);
+    }
+
+    solveRecursively(matrix, spiralOrderResult = []){
+
+        if(matrix.length === 0){
+            return spiralOrderResult;
+        }
+
+        for (let i = 0; i < matrix.length; i++) {
+            if (i === 0 || i === matrix.length - 1) {
+                let rowToEmpty = matrix[i];
+
+                if(i === matrix.length - 1 && i !== 0){
+                    rowToEmpty.reverse()
+                }
+
+                for (let x = 0; x < rowToEmpty.length; x++) {
+                    const number = rowToEmpty[x];
+                    spiralOrderResult.push(number);
+                }
+
+                rowToEmpty.length = 0
+            } else {
+                let rowBeingUsed = matrix[i];
+
+                spiralOrderResult.push(rowBeingUsed.pop());
+            }
+        }      
+
+        
+        for (let i = matrix.length - 1; i > -1; i--) {
+            if(matrix[i].length === 0){
+                matrix.splice(i, 1);
+            }
+        }
+
+        for (let i = matrix.length - 1; i > -1; i--) {
+            const row = matrix[i];
+            row.reverse();
+            spiralOrderResult.push(row.pop());
+            row.reverse();            
+        }
+
+        return this.solveRecursively(matrix, spiralOrderResult)
     }
 }
 
