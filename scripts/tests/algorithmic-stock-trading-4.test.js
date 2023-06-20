@@ -194,7 +194,7 @@ class AlgorithmicStockTrading4Handler {
     tradeStockWithMoreStucture(maxNumberOfTrades, stockPricesByDay) {
         let potentialSales = []
 
-        for (let i = stockPricesByDay.length - 2; i >= 1; i--) {
+        for (let i = stockPricesByDay.length - 1; i >= 1; i--) {
             const priceToSeeIfHasNoVolitility = stockPricesByDay[i];
 
             const yesterdaysPrice = stockPricesByDay[i - 1]
@@ -325,68 +325,6 @@ class AlgorithmicStockTrading4Handler {
         }
 
         return maxProfit;
-    }
-
-    tradeStockFirstTry(maxNumberOfTrades, stockTimeSeries, potentialProfitsForEachNumberOfTrades = [0, 0]) {
-        if (maxNumberOfTrades === 0) {
-            return Math.max(...potentialProfitsForEachNumberOfTrades);
-        }
-
-        const timeSeriesLength = stockTimeSeries.length;
-
-        let salePrice = stockTimeSeries[timeSeriesLength - 1];
-        let salePriceIndex = timeSeriesLength - 1
-
-        // find sale Price
-        for (let i = timeSeriesLength - 1; i > -1; i--) {
-            const price = stockTimeSeries[i];
-            if (salePrice < price) {
-                salePrice = price;
-                salePriceIndex = i;
-            }
-
-            if (price < salePrice) {
-                break;
-            }
-        }
-
-        let buyPrice = salePrice;
-        let buyPriceIndex = salePriceIndex;
-
-        if (salePriceIndex === 0) {
-            return 0;
-        }
-
-
-        for (let i = salePriceIndex - 1; i > -1; i--) {
-            const price = stockTimeSeries[i];
-
-            if (price <= buyPrice) {
-                buyPrice = price;
-                buyPriceIndex = i;
-            }
-
-            if (price > buyPrice || i === 0) {
-                let profit = salePrice - buyPrice;
-                const earlierDaysPrices = stockTimeSeries.slice(0, i + 1);
-
-                let bestProfitFromOtherDays = this.tradeStockFirstTry(maxNumberOfTrades, earlierDaysPrices)
-
-                if (bestProfitFromOtherDays > profit) {
-                    if (maxNumberOfTrades === 1) {
-                        profit = bestProfitFromOtherDays;
-                    }
-                    else {
-                        bestProfitFromOtherDays = this.tradeStockFirstTry(maxNumberOfTrades - 1, earlierDaysPrices)
-                        profit += bestProfitFromOtherDays;
-                    }
-                }
-
-                potentialProfitsForEachNumberOfTrades.push(profit);
-            }
-        }
-
-        return this.tradeStockFirstTry(maxNumberOfTrades - 1, stockTimeSeries, potentialProfitsForEachNumberOfTrades)
     }
 }
 

@@ -4,7 +4,7 @@
 //run scripts/purchase-servers.js
 export async function main(ns) {
     let currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
-    let ram = 512;
+    let ram = 64;
 
     if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
 

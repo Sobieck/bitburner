@@ -47,8 +47,8 @@ export async function main(ns) {
         .sort((a, b) => b.server.moneyMax - a.server.moneyMax);
 
     const homeServer = ns.getServer("home")
-    homeServer.maxRam -= 20;
-    homeServer.ramUsed -= 20;
+    homeServer.maxRam -= 32;
+    homeServer.ramUsed -= 32;
 
     if (homeServer.ramUsed < 0) {
         homeServer.ramUsed = 0;
