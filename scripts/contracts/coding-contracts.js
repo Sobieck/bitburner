@@ -288,9 +288,6 @@ class AlgorithmicStockTrading4Handler {
 
         potentialSales = potentialSales.filter(x => x.potentialTransations.length !== 0).sort((a, b) => b.profitOfMostValuableTransation() - a.profitOfMostValuableTransation());
 
-
-
-
         let salesSoFar = []
         let maxProfit = 0
 
