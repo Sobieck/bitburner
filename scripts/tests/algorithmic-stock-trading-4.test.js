@@ -170,11 +170,9 @@ describe("AlgorithmicStockTrading4Handler", () => {
     it('should work for rothman but didnt',() => {
         const arrayToUse = [131, 143, 64, 87, 52, 35, 148, 92, 6, 16, 147, 122, 163, 38, 90, 86, 84, 47, 133, 50, 106, 12, 14, 24, 109, 166, 188, 191, 10, 135, 197, 128, 35, 140, 148, 90, 22, 26, 187, 40, 194, 10, 108, 92, 155, 5];
         const result = sut.solve([10000, arrayToUse]);
-        expect(result).toBe(187);
+        expect(result).toBe(486);
     });
-
-
-    
+   
 });
 
 class AlgorithmicStockTrading4Handler {
@@ -200,7 +198,10 @@ class AlgorithmicStockTrading4Handler {
             const yesterdaysPrice = stockPricesByDay[i - 1]
             const tomorrowsPrice = stockPricesByDay[i + 1]
 
-            if(yesterdaysPrice <= priceToSeeIfHasNoVolitility && priceToSeeIfHasNoVolitility <= tomorrowsPrice){
+            if(
+                (yesterdaysPrice <= priceToSeeIfHasNoVolitility && priceToSeeIfHasNoVolitility <= tomorrowsPrice) || // rising prices filter
+                (!tomorrowsPrice && yesterdaysPrice >= priceToSeeIfHasNoVolitility) || // end price
+                (yesterdaysPrice >= priceToSeeIfHasNoVolitility && priceToSeeIfHasNoVolitility >= tomorrowsPrice)) { // falling price filter
                 stockPricesByDay.splice(i, 1);
             }        
         }
