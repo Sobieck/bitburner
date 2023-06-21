@@ -2,10 +2,10 @@
 export async function main(ns) {
     const solverRegistry = [
         new LzDecompression2Handler(),
-        // new AlgorithmicStockTrading4Handler(),
-        // new AlgorithmicStockTrading3Handler(),
-        // new AlgorithmicStockTrading1Handler(),
-        // new AlgorithmicStockTrading2Handler(),
+        new AlgorithmicStockTrading4Handler(),
+        new AlgorithmicStockTrading3Handler(),
+        new AlgorithmicStockTrading1Handler(),
+        new AlgorithmicStockTrading2Handler(),
         new SpiralizeMatrixHandler(),
     ]
 
@@ -138,7 +138,7 @@ class AlgorithmicStockTrading1Handler {
             maxNumberOfTrades = stockPricesByDay.length;
         }
 
-        return new AlgorithmicStockTrading4Handler().tradeStockWithMoreStucture(maxNumberOfTrades, stockPricesByDay);;
+        return new AlgorithmicStockTrading4Handler().tradeStock(maxNumberOfTrades, stockPricesByDay);;
     }
 }
 
@@ -152,7 +152,7 @@ class AlgorithmicStockTrading2Handler {
             maxNumberOfTrades = stockPricesByDay.length;
         }
 
-        return new AlgorithmicStockTrading4Handler().tradeStockWithMoreStucture(maxNumberOfTrades, stockPricesByDay);;
+        return new AlgorithmicStockTrading4Handler().tradeStock(maxNumberOfTrades, stockPricesByDay);;
     }
 }
 
@@ -166,7 +166,7 @@ class AlgorithmicStockTrading3Handler {
             maxNumberOfTrades = stockPricesByDay.length;
         }
 
-        return new AlgorithmicStockTrading4Handler().tradeStockWithMoreStucture(maxNumberOfTrades, stockPricesByDay);;
+        return new AlgorithmicStockTrading4Handler().tradeStock(maxNumberOfTrades, stockPricesByDay);;
     }
 }
 
@@ -181,11 +181,15 @@ class AlgorithmicStockTrading4Handler {
             maxNumberOfTrades = stockPricesByDay.length;
         }
 
-        return this.tradeStockWithMoreStucture(maxNumberOfTrades, stockPricesByDay);;
+        return this.tradeStock(maxNumberOfTrades, stockPricesByDay);;
     }
 
-    tradeStockWithMoreStucture(maxNumberOfTrades, stockPricesByDay) {
-        let potentialSales = []
+    tradeStock(maxNumberOfTrades, stockPricesByDay) {
+        if (maxNumberOfTrades === 0) {
+            return 0;
+        }
+
+        let profitsPerTransaction = []
 
         for (let i = stockPricesByDay.length - 1; i >= 1; i--) {
             const priceToSeeIfHasNoVolitility = stockPricesByDay[i];
@@ -193,172 +197,71 @@ class AlgorithmicStockTrading4Handler {
             const yesterdaysPrice = stockPricesByDay[i - 1]
             const tomorrowsPrice = stockPricesByDay[i + 1]
 
-            if(
+            if (
                 (yesterdaysPrice <= priceToSeeIfHasNoVolitility && priceToSeeIfHasNoVolitility <= tomorrowsPrice) || // rising prices filter
                 (!tomorrowsPrice && yesterdaysPrice >= priceToSeeIfHasNoVolitility) || // end price
                 (yesterdaysPrice >= priceToSeeIfHasNoVolitility && priceToSeeIfHasNoVolitility >= tomorrowsPrice)) { // falling price filter
                 stockPricesByDay.splice(i, 1);
-            }        
+            }
         }
-
-        console.log(stockPricesByDay)
 
         for (let i = 0; i < stockPricesByDay.length; i++) {
             const price = stockPricesByDay[i];
-            potentialSales.push(new Quote(i, price));
-        }
+            const potentialBuyPrice = stockPricesByDay[i - 1];
+            let potentialProfit = 0;
 
-        const numberOfDays = potentialSales.length;
-
-        for (let sellDay = numberOfDays - 1; sellDay > -1; sellDay--) {
-            const sellQuote = potentialSales[sellDay];
-
-            for (let buyDay = 0; buyDay < sellDay; buyDay++) {
-                const buyQuote = potentialSales[buyDay];
-
-                if (buyQuote.price < sellQuote.price) {
-                    sellQuote.potentialTransations.push(new Sale(buyDay, sellDay, buyQuote.price, sellQuote.price));
-                }
-            }
-        }
-
-        // clean and rank transactions
-        potentialSales = potentialSales
-            .filter(x => x.potentialTransations.length !== 0);
-
-        for (let i = 0; i < potentialSales.length; i++) {
-            const salesDay = potentialSales[i];
-
-            function sortByProfitThenDaysHeld(a,b){
-                if(b.profit > a.profit){
-                    return 1;
-                } else if(b.profit < a.profit) {
-                    return -1;
-                }
-
-                if(b.daysHeld < a.daysHeld){
-                    return 1;
-                } else if(b.daysHeld > a.daysHeld) {
-                    return -1;
-                }
+            if (potentialBuyPrice) {
+                potentialProfit = price - potentialBuyPrice;
             }
 
-            salesDay.potentialTransations = salesDay.potentialTransations.sort(sortByProfitThenDaysHeld);
+            if (potentialProfit < 0) {
+                potentialProfit = 0;
+            }
 
-            let moreProfitableHoldingPeriod = salesDay.potentialTransations[0].daysHeld;
 
-            function filterPotentialTransactionsByDaysHeld(potentialTransaction) {
-                if (potentialTransaction.daysHeld <= moreProfitableHoldingPeriod) {
-                    moreProfitableHoldingPeriod = potentialTransaction.daysHeld;
-                    return true;
+            profitsPerTransaction.push({ price, potentialProfit });
+        }
+
+        if (maxNumberOfTrades >= profitsPerTransaction.filter(x => x.potentialProfit > 0).length) {
+            return profitsPerTransaction
+                .reduce((acc, x) => acc + x.potentialProfit, 0);
+        }
+
+        const minProfit = Math.min(...profitsPerTransaction.filter(x => x.potentialProfit !== 0).map(x => x.potentialProfit));
+        const countOfMinProfits = profitsPerTransaction.filter(x => x.potentialProfit === minProfit).length;
+        const maxPrice = Math.max(...stockPricesByDay);
+        const arraysToWorkWith = [];
+
+        for (let i = 0; i < profitsPerTransaction.length; i++) {
+            const profitPerTranaction = profitsPerTransaction[i];
+
+            if (profitPerTranaction.potentialProfit === minProfit) {
+
+                const copyOfProfitsPerTransaction = profitsPerTransaction.map(x => x)
+                if (profitPerTranaction.price === maxPrice) {
+                    copyOfProfitsPerTransaction.splice(i - 1, 1);
                 } else {
-                    return false;
+                    copyOfProfitsPerTransaction.splice(i, 1); // if there is a bigger price in the future, splice sell price. 
                 }
+
+                arraysToWorkWith.push(copyOfProfitsPerTransaction.map(x => x.price));
             }
 
-            salesDay.potentialTransations = salesDay.potentialTransations.filter(filterPotentialTransactionsByDaysHeld);
-        }
-      
-
-        if(potentialSales.length > 0){
-            const allPotentialTransactions = potentialSales.map(x => x.potentialTransations).reduce((acc, x) => acc.concat(x));
-
-            for (const potentialSale of potentialSales) {
-                for (let i = potentialSale.potentialTransations.length - 1; i >= 0; i--) {
-                    const itemToSeeIfWeShouldDeleteBecauseItIsUseless = potentialSale.potentialTransations[i];
-                    const isThereABetterTransaction = allPotentialTransactions
-                        .find(x => x.profit > itemToSeeIfWeShouldDeleteBecauseItIsUseless.profit && 
-                            x.sellDay > itemToSeeIfWeShouldDeleteBecauseItIsUseless.buyDay &&
-                            x.sellDay < itemToSeeIfWeShouldDeleteBecauseItIsUseless.sellDay);
-    
-                    if (isThereABetterTransaction) {
-                        potentialSale.potentialTransations.splice(i, 1);
-                    }
-                }
-    
-                if (potentialSale.potentialTransations.length > 1) {
-                    let previousTransacationProfit = potentialSale.potentialTransations[0].profit
-                    for (let i = 1; i < potentialSale.potentialTransations.length; i++) {
-                        const transaction = potentialSale.potentialTransations[i];
-                        transaction.differnceBetweenThisProfitAndABetterAlbeitLongerTermProfit = transaction.profit - previousTransacationProfit;
-                    }
-                }
-    
+            if (arraysToWorkWith.length === countOfMinProfits) {
+                break;
             }
         }
 
-        potentialSales = potentialSales.filter(x => x.potentialTransations.length !== 0).sort((a, b) => b.profitOfMostValuableTransation() - a.profitOfMostValuableTransation());
-
-        let salesSoFar = []
-        let maxProfit = 0
-
-        if (potentialSales.length < maxNumberOfTrades) {
-            maxNumberOfTrades = potentialSales.length;
+        const potentialProfitsForAllTrades = []
+        for (const newArrayOfPrices of arraysToWorkWith) {
+            potentialProfitsForAllTrades.push(this.tradeStock(maxNumberOfTrades, newArrayOfPrices))
         }
 
-        for (let trade = 0; trade < maxNumberOfTrades; trade++) {
-            const nextMostPotentialQuote = potentialSales[trade];
-            const nextBestSale = nextMostPotentialQuote.potentialTransations[0];
+        return Math.max(...potentialProfitsForAllTrades);
 
-            const oldSale = salesSoFar.find(x => x.buyDay === nextBestSale.buyDay); // this needs expanding on
-            //the only conflicts should be buy days. with a smaller peak and trough between an even higher sale price. So the first potential sale will have the conflict. 
-            if (oldSale) {
-                //new transaction before so we need to account for that from the old profit
-                const sellDayOfNewTransaction = nextBestSale.sellDay;
-
-                const transactionToAccountFor = oldSale.quote.potentialTransations.find(x => x.buyDay >= sellDayOfNewTransaction)
-
-                maxProfit += transactionToAccountFor.differnceBetweenThisProfitAndABetterAlbeitLongerTermProfit;
-
-                salesSoFar = salesSoFar.filter(x => x.uniqueId !== oldSale.uniqueId);
-            }
-
-            salesSoFar.push(new BuyDayForSale(nextBestSale.buyDay, nextBestSale.sellDay, nextMostPotentialQuote))
-
-            maxProfit += nextBestSale.profit;
-
-        }
-
-        return maxProfit;
     }
 }
 
-class BuyDayForSale {
-    constructor(buyDay, sellDay, quote) {
-        this.buyDay = buyDay;
-        this.sellDay = sellDay;
-        this.quote = quote;
-        this.uniqueId = Math.random();
-    }
-}
-
-class Quote {
-    constructor(sellDay, price) {
-        this.sellDay = sellDay;
-        this.price = price;
-        this.potentialTransations = [];
-    }
-
-    profitOfMostValuableTransation() {
-        return this.potentialTransations[0].profit;
-    }
-
-    buyDays() {
-        return this.potentialTransations.map(x => x.buyDay);
-    }
-}
-
-class Sale {
-    constructor(buyDay, sellDay, buyPrice, sellPrice) {
-        this.buyDay = buyDay;
-        this.sellDay = sellDay;
-        this.sellPrice = sellPrice;
-        this.buyPrice = buyPrice;
-        this.profit = this.sellPrice - this.buyPrice;
-        this.daysHeld = this.sellDay - this.buyDay;
-        this.differnceBetweenThisProfitAndABetterAlbeitLongerTermProfit = 0;        
-    }
-}
 
 class SpiralizeMatrixHandler {
     type = "Spiralize Matrix";
