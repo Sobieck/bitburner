@@ -2,10 +2,10 @@
 export async function main(ns) {
     const solverRegistry = [
         new LzDecompression2Handler(),
-        new AlgorithmicStockTrading4Handler(),
-        new AlgorithmicStockTrading3Handler(),
-        new AlgorithmicStockTrading1Handler(),
-        new AlgorithmicStockTrading2Handler(),
+        // new AlgorithmicStockTrading4Handler(),
+        // new AlgorithmicStockTrading3Handler(),
+        // new AlgorithmicStockTrading1Handler(),
+        // new AlgorithmicStockTrading2Handler(),
         new SpiralizeMatrixHandler(),
     ]
 
