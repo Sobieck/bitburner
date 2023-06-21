@@ -29,17 +29,21 @@ export async function main(ns) {
     while (true) {
         i++;
 
-
         
         ns.run("scripts/investments/invest-in-stocks.js");
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
 
+       
 
+        let dispatchScript = 'scripts/advanced-dispatch.js';
 
+        if(ns.fileExists('Formulas.exe')){
+            dispatchScript = 'scripts/batch-dispatch.js'
+        }
 
-        ns.run("scripts/scan.js", 1, 'scripts/advanced-dispatch.js'); // this triggers all hacks. But we need to analyse the environment first. 
+        ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
-
+        
 
 
         const currentNumberOfPurchasedServers = ns.getPurchasedServers().length;

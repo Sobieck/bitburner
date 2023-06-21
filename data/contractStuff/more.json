@@ -1,0 +1,31 @@
+[
+    {
+        "server": "darkweb",
+        "name": "contract-764401.cct",
+        "type": "Find Largest Prime Factor",
+        "attemptsLeft": 10,
+        "input": 95929624,
+        "description": "A prime factor is a factor that is a prime number. What is the largest prime factor of 95929624?"
+    },
+    {
+        "server": "computek",
+        "name": "contract-412757-IcarusMicrosystems.cct",
+        "type": "Array Jumping Game",
+        "attemptsLeft": 1,
+        "input": [
+            3,
+            2,
+            0,
+            9,
+            1,
+            5,
+            5,
+            0,
+            4,
+            9,
+            5,
+            0
+        ],
+        "description": "You are given the following array of integers:\n\n 3,2,0,9,1,5,5,0,4,9,5,0\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine whether you are able to reach the last index.\n\n Your answer should be submitted as 1 or 0, representing true and false respectively"
+    }
+]

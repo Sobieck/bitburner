@@ -16,3 +16,7 @@
 // Second, jobs queued to hacking servers + ram reserved. This ram reserved will be summed with the ram being used on the machine to see if we can add more jobs.
 // startAfter job type  
 
+export async function main(ns) {
+    ns.tprint("hi");
+    ns.run('scripts/advanced-dispatch.js'); // until we have this operational. But this way we can see how it would work if we were using it. 
+}
