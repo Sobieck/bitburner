@@ -39,26 +39,31 @@ export async function main(ns) {
     }
 
     // no targeting is bein done
-    // const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
-    // const helpers = new Helpers(ns);
-    // const portsWeCanPop = helpers.numberOfPortsWeCanPop();
-    // const currentHackingLevel = ns.getHackingLevel();
+    const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
+    const helpers = new Helpers(ns);
+    const portsWeCanPop = helpers.numberOfPortsWeCanPop();
+    const currentHackingLevel = ns.getHackingLevel();
 
-    // // only trigger if we need a new target
-    // const allHackableMachines = enviroment
-    //     .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
-    //     .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
+    if (batchQueue.size === 0) {
+        // only trigger if we need a new target
+        const allHackableMachines = enviroment
+            .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
+            .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
 
-    // allHackableMachines
-    //     .filter(x => !x.server.hasAdminRights)
-    //     .map(x => helpers.hackMachine(x.name));
+        allHackableMachines
+            .filter(x => !x.server.hasAdminRights)
+            .map(x => helpers.hackMachine(x.name));
 
-    // // we can probabably refine this to account for difficulty. 
-    // const allMachinesByOrderOfValue = allHackableMachines
-    //     .filter(x => !x.server.purchasedByPlayer && x.server.moneyMax !== 0)
-    //     .sort((a, b) => b.server.moneyMax - a.server.moneyMax);
+        // we can probabably refine this to account for difficulty. 
+        const allMachinesByOrderOfValue = allHackableMachines
+            .filter(x => !x.server.purchasedByPlayer && x.server.moneyMax !== 0)
+            .sort((a, b) => b.server.moneyMax - a.server.moneyMax);
 
+        const mostValuableMachine = allMachinesByOrderOfValue[0];
 
+        batchQueue.set(mostValuableMachine.name, new BatchQueue())
+    }
+    
     const serverDoingHackin = ns.getServer("home");
     const player = ns.getPlayer();
     const targets = batchQueue.keys();
@@ -74,6 +79,7 @@ export async function main(ns) {
 
         if (batch.securityWeNeedToReduceAfterFullHack && batch.securityWeNeedToReduceAfterFullGrowth && batch.startOnFinalGrowthWeakenings) {
             batch.prepStage = false;
+            batch.jobQueue.push(new BatchJob(currentTime, true))
         }
 
         if (batch.prepStage) {
@@ -154,7 +160,7 @@ export async function main(ns) {
                 } else {
                     const serverToHack = ns.getServer(theTarget);
                     serverToHack.hackDifficulty = serverToHack.minDifficulty;
-                    serverToHack.moneyAvailable = serverToHack.moneyMax;
+                    serverToHack.moneyAvailable = 0;
 
                     const growThreads = Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, serverDoingHackin.cpuCores));
 
@@ -162,6 +168,10 @@ export async function main(ns) {
                     batch.startOnFinalGrowthWeakenings = true;
                 }
             }
+        }
+
+        if (batch.prepStage === false) {
+            ns.tprint(batchQueue);
         }
     }
 
@@ -187,10 +197,16 @@ class BatchQueue {
 }
 
 class BatchJob {
-    constructor(startTime, batchEndTime, initialJob = false) {
-        this.startTime = startTime;
-        this.batchEndTime = batchEndTime;
+    batchEndTime;
 
+    hackWeakenJob;
+    growWeakenJob;
+
+    growJob;
+    hackJob;
+
+    constructor(startTime, initialJob = false) {
+        this.startTime = startTime;
         this.initialJob = initialJob;
     }
 }
