@@ -1,0 +1,13 @@
+[
+    [
+        "ecorp",
+        {
+            "prepStage": true,
+            "jobQueue": [],
+            "initialWeakeningDoneAfter": "2023-06-22T12:45:46.336Z",
+            "initialGrowDoneAfter": "2023-06-22T12:54:14.540Z",
+            "initialHackDoneAfter": "2023-06-22T16:09:05.347Z",
+            "securityWeNeedToReduceAfterFullHack": 1.61
+        }
+    ]
+]

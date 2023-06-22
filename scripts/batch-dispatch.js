@@ -72,76 +72,98 @@ export async function main(ns) {
         // ns.tprint(currentTime)
         // ns.tprint(new Date(batch.initialWeakeningDoneAfter));
 
-        if (!batch.initialWeakeningDoneAfter) {
-            let numberOfThreadsToWeaken = 0;
-            let foundNumberOfThreads = false;
-            const endDate = new Date();
+        if (batch.securityWeNeedToReduceAfterFullHack && batch.securityWeNeedToReduceAfterFullGrowth && batch.startOnFinalGrowthWeakenings) {
+            batch.prepStage = false;
+        }
 
-            if (amountToWeaken !== 0) {
-                while (!foundNumberOfThreads) {
-                    numberOfThreadsToWeaken++
+        if (batch.prepStage) {
+            if (!batch.initialWeakeningDoneAfter) {
+                let numberOfThreadsToWeaken = 0;
+                let foundNumberOfThreads = false;
+                const endDate = new Date();
 
-                    const amountNumberOfThreadsWillWeaken = ns.weakenAnalyze(numberOfThreadsToWeaken, serverDoingHackin.cpuCores)
-                    if (amountNumberOfThreadsWillWeaken > amountToWeaken) {
-                        foundNumberOfThreads = true;
+                if (amountToWeaken !== 0) {
+                    while (!foundNumberOfThreads) {
+                        numberOfThreadsToWeaken++
+
+                        const amountNumberOfThreadsWillWeaken = Math.ceil(ns.weakenAnalyze(numberOfThreadsToWeaken, serverDoingHackin.cpuCores));
+                        if (amountNumberOfThreadsWillWeaken > amountToWeaken) {
+                            foundNumberOfThreads = true;
+                        }
                     }
+
+                    const howLongToWeaken = ns.formulas.hacking.weakenTime(targetServer, player);
+
+                    endDate.setMilliseconds(endDate.getMilliseconds() + howLongToWeaken);
+
+                    ns.scp(weakenScript, serverDoingHackin.hostname);
+                    ns.exec(weakenScript, serverDoingHackin.hostname, numberOfThreadsToWeaken, theTarget);
                 }
 
-                const howLongToWeaken = ns.formulas.hacking.weakenTime(targetServer, player);
+                batch.initialWeakeningDoneAfter = endDate;
 
-                endDate.setMilliseconds(endDate.getMilliseconds() + howLongToWeaken);
+            } else if (!batch.initialGrowDoneAfter && currentTime > new Date(batch.initialWeakeningDoneAfter)) {
+                if (amountToWeaken > 0) {
+                    batch.initialWeakeningDoneAfter = undefined;
+                    ns.tprint("initial weaken didn't work");
+                    continue;
+                }
 
-                ns.scp(weakenScript, serverDoingHackin.hostname);
-                ns.exec(weakenScript, serverDoingHackin.hostname, numberOfThreadsToWeaken, theTarget);
+                const endDate = new Date();
+
+                if (!serverHasMaxMoney) {
+                    const howManyThreadsToGrow = Math.ceil(ns.formulas.hacking.growThreads(targetServer, player, targetServer.moneyMax, serverDoingHackin.cpuCores));
+                    const growTime = ns.formulas.hacking.growTime(targetServer, player);
+
+                    ns.tprint(howManyThreadsToGrow);
+
+                    ns.scp(growScript, serverDoingHackin.hostname);
+                    ns.exec(growScript, serverDoingHackin.hostname, howManyThreadsToGrow, theTarget);
+                    endDate.setMilliseconds(endDate.getMilliseconds() + growTime);
+                }
+
+                batch.initialGrowDoneAfter = endDate;
+            } else if (!batch.securityWeNeedToReduceAfterFullHack && currentTime > new Date(batch.initialGrowDoneAfter)) {
+                if (!serverHasMaxMoney) {
+                    batch.initialGrowDoneAfter = undefined;
+                    ns.tprint("initial grow didn't work")
+                    continue;
+                }
+
+                const endDate = new Date();
+
+                const hackThreads = Math.ceil(ns.hackAnalyzeThreads(theTarget, targetServer.moneyAvailable));
+                batch.securityWeNeedToReduceAfterFullHack = ns.hackAnalyzeSecurity(hackThreads, theTarget);
+
+
+                const serverToHack = ns.getServer(theTarget);
+                serverToHack.hackDifficulty = serverToHack.minDifficulty;
+                serverToHack.moneyAvailable = serverToHack.moneyMax;
+                const timeToHack = ns.formulas.hacking.hackTime(serverToHack, player);
+
+                ns.scp(hackScript, serverDoingHackin.hostname);
+                ns.exec(hackScript, serverDoingHackin.hostname, hackThreads, theTarget);
+
+                endDate.setMilliseconds(endDate.getMilliseconds() + timeToHack);
+                batch.initialHackDoneAfter = endDate;
+            } else if (currentTime > new Date(batch.initialHackDoneAfter) && !batch.securityWeNeedToReduceAfterFullGrowth) {
+                if (serverHasMaxMoney) {
+                    batch.securityWeNeedToReduceAfterFullHack = undefined;
+                    ns.tprint("hack failed, do over");
+                    continue;
+                } else {
+                    const serverToHack = ns.getServer(theTarget);
+                    serverToHack.hackDifficulty = serverToHack.minDifficulty;
+                    serverToHack.moneyAvailable = serverToHack.moneyMax;
+
+                    const growThreads = Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, serverDoingHackin.cpuCores));
+
+                    batch.securityWeNeedToReduceAfterFullGrowth = ns.growthAnalyzeSecurity(growThreads, theTarget, serverDoingHackin.cpuCores);
+                    batch.startOnFinalGrowthWeakenings = true;
+                }
             }
-
-            batch.initialWeakeningDoneAfter = endDate;
-
-        } else if (!batch.initialGrowDoneAfter && currentTime > new Date(batch.initialWeakeningDoneAfter)) {
-            if (amountToWeaken > 0) {
-                batch.initialWeakeningDoneAfter = undefined;
-                ns.tprint("initial weaken didn't work");
-                continue;
-            }
-
-            const endDate = new Date();
-
-            if(!serverHasMaxMoney){
-                ns.tprint("initial grow");
-
-                const howManyThreadsToGrow = ns.formulas.hacking.growThreads(targetServer, player, targetServer.moneyMax, serverDoingHackin.cpuCores);
-                const growTime = ns.formulas.hacking.growTime(targetServer, player);
-    
-                ns.tprint(howManyThreadsToGrow);
-    
-                ns.scp(growScript, serverDoingHackin.hostname);
-                ns.exec(growScript, serverDoingHackin.hostname, howManyThreadsToGrow, theTarget);
-                endDate.setMilliseconds(endDate.getMilliseconds() + growTime);
-            }            
-            
-            batch.initialGrowDoneAfter = endDate;
-        } else if (!batch.initialHackDoneAfter && currentTime > new Date(batch.initialGrowDoneAfter)){
-            if (!serverHasMaxMoney){
-                batch.initialGrowDoneAfter = undefined;
-                ns.tprint("initial grow didn't work")
-                continue;
-            }
-
-            // hack
-            // then measure how much heat that causes. 
-            // then repeat the whole deal and get it into the repeating algo
         }
     }
-
-
-
-
-    //use a file to transmit who we are using in batch attacks instead of params. 
-
-    // first step is grow to max
-    // and shrink to min security 
-
-    // then we do the main loop 
 
     ns.rm(nameOfServersUsedFile);
     ns.write(nameOfServersUsedFile, JSON.stringify(serversUsedForBatching), "W")
@@ -157,19 +179,26 @@ class BatchQueue {
     initialWeakeningDoneAfter;
     initialGrowDoneAfter;
     initialHackDoneAfter;
-    finalWeakeningDoneAfter;
 
-    amountToWeakenAfterGrow;
-    amountToWeakenAfterHack;
+    securityWeNeedToReduceAfterFullHack;
+    securityWeNeedToReduceAfterFullGrowth;
 
     jobQueue = [];
 }
 
 class BatchJob {
-    constructor(startTime, machineStartedOn, msToEndOf) {
+    constructor(startTime, batchEndTime, initialJob = false) {
         this.startTime = startTime;
-        this.machineStartedOn = machineStartedOn;
-        this.msToEndOf = msToEndOf;
+        this.batchEndTime = batchEndTime;
+
+        this.initialJob = initialJob;
+    }
+}
+
+class JobHasTo {
+    constructor(endAfter, endBefore) {
+        this.endAfter = endAfter;
+        this.endBefore = endBefore;
     }
 }
 
