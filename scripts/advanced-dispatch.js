@@ -12,6 +12,8 @@ export async function main(ns) {
     const hackScript = 'scripts/advanced-hacks/hack.js'
     const growScript = 'scripts/advanced-hacks/grow.js'
     const weakenScript = 'scripts/advanced-hacks/weaken.js'
+    const batchQueuesFileName = "data/batchQueue.txt"
+    let batchTargets = [];
 
     const portsWeCanPop = helpers.numberOfPortsWeCanPop();
     const currentHackingLevel = ns.getHackingLevel();
@@ -24,6 +26,11 @@ export async function main(ns) {
 
     if (ns.fileExists(nameOfrecordOfWhoIsBeingHacked)) {
         recordOfWhoIsBeingHacked = new Map(JSON.parse(ns.read(nameOfrecordOfWhoIsBeingHacked)));
+    }
+
+    if (ns.fileExists(batchQueuesFileName)) {
+        const batchQueue = JSON.parse(ns.read(batchQueuesFileName));
+        batchTargets = batchQueue.map(x => x[0]);
     }
 
     if (ns.fileExists(nameOfDataOnWhatHappensEachRound)) {
@@ -44,17 +51,22 @@ export async function main(ns) {
 
     const allMachinesByOrderOfValue = allHackableMachines
         .filter(x => !x.server.purchasedByPlayer && x.server.moneyMax !== 0)
+        .filter(x => !batchTargets.includes(x.name))
         .sort((a, b) => b.server.moneyMax - a.server.moneyMax);
 
-    const homeServer = ns.getServer("home")
-    homeServer.maxRam -= 32;
-    homeServer.ramUsed -= 32;
+    cleanProcessesAttackingBatchTarget(ns, recordOfWhoIsBeingHacked, batchTargets);
 
-    if (homeServer.ramUsed < 0) {
-        homeServer.ramUsed = 0;
+    if (!ns.fileExists("Formulas.exe")){
+        const homeServer = ns.getServer("home")
+        homeServer.maxRam -= 32;
+        homeServer.ramUsed -= 32;
+    
+        if (homeServer.ramUsed < 0) {
+            homeServer.ramUsed = 0;
+        }
+    
+        allHackableMachines.push({ name: "home", server: homeServer })
     }
-
-    allHackableMachines.push({ name: "home", server: homeServer })
 
     const freeMachines = allHackableMachines
         .filter(x => x.server.ramUsed === 0 && x.server.maxRam !== 0)
@@ -203,6 +215,17 @@ export async function main(ns) {
                     ns.tprint(machineWhoIsHackin);
                 }
             });
+    }
+
+    function cleanProcessesAttackingBatchTarget(ns, recordOfWhoIsBeingHacked, batchTargets){
+        for (const machineHackin of recordOfWhoIsBeingHacked) {
+            const whoTheyHackin = machineHackin[1].name;
+            
+            if(batchTargets.includes(whoTheyHackin)){
+                ns.killall(machineHackin[0]);
+                recordOfWhoIsBeingHacked.delete(machineHackin[0]);
+            }
+        }
     }
 }
 
