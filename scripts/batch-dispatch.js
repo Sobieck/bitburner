@@ -64,43 +64,35 @@ export async function main(ns) {
         batchQueue.set(mostValuableMachine.name, new BatchQueue())
     }
     
-    const serverDoingHackin = ns.getServer("home");
+    const serverDoingHackin = ns.getServer("home");// make this an array of servers
     const player = ns.getPlayer();
     const targets = batchQueue.keys();
     const currentTime = new Date();
+
+// clean queue up here.
 
     for (const theTarget of targets) {
         const targetServer = ns.getServer(theTarget);
         const batch = batchQueue.get(theTarget);
         const amountToWeaken = targetServer.hackDifficulty - targetServer.minDifficulty;
         const serverHasMaxMoney = targetServer.moneyMax === targetServer.moneyAvailable;
-        // ns.tprint(currentTime)
-        // ns.tprint(new Date(batch.initialWeakeningDoneAfter));
 
-        if (batch.securityWeNeedToReduceAfterFullHack && batch.securityWeNeedToReduceAfterFullGrowth && batch.startOnFinalGrowthWeakenings) {
+
+        if (batch.securityWeNeedToReduceAfterFullHack && batch.securityWeNeedToReduceAfterFullGrowth && batch.startOnFinalGrowthWeakenings && batch.prepStage === true) {
             batch.prepStage = false;
             batch.jobQueue.push(new BatchJob(currentTime, true))
         }
 
         if (batch.prepStage) {
             if (!batch.initialWeakeningDoneAfter) {
-                let numberOfThreadsToWeaken = 0;
-                let foundNumberOfThreads = false;
-                const endDate = new Date();
+                let endDate = new Date()
 
                 if (amountToWeaken !== 0) {
-                    while (!foundNumberOfThreads) {
-                        numberOfThreadsToWeaken++
+                    
+                    let numberOfThreadsToWeaken = getNumberOfThreadsToWeaken(ns, serverDoingHackin, amountToWeaken);
 
-                        const amountNumberOfThreadsWillWeaken = Math.ceil(ns.weakenAnalyze(numberOfThreadsToWeaken, serverDoingHackin.cpuCores));
-                        if (amountNumberOfThreadsWillWeaken > amountToWeaken) {
-                            foundNumberOfThreads = true;
-                        }
-                    }
+                    endDate = getWeakenEndDate(ns, targetServer, player);
 
-                    const howLongToWeaken = ns.formulas.hacking.weakenTime(targetServer, player);
-
-                    endDate.setMilliseconds(endDate.getMilliseconds() + howLongToWeaken);
 
                     ns.scp(weakenScript, serverDoingHackin.hostname);
                     ns.exec(weakenScript, serverDoingHackin.hostname, numberOfThreadsToWeaken, theTarget);
@@ -118,10 +110,8 @@ export async function main(ns) {
                 const endDate = new Date();
 
                 if (!serverHasMaxMoney) {
-                    const howManyThreadsToGrow = Math.ceil(ns.formulas.hacking.growThreads(targetServer, player, targetServer.moneyMax, serverDoingHackin.cpuCores));
+                    const howManyThreadsToGrow = getGrowThreads(ns, targetServer, player, serverDoingHackin);
                     const growTime = ns.formulas.hacking.growTime(targetServer, player);
-
-                    ns.tprint(howManyThreadsToGrow);
 
                     ns.scp(growScript, serverDoingHackin.hostname);
                     ns.exec(growScript, serverDoingHackin.hostname, howManyThreadsToGrow, theTarget);
@@ -129,7 +119,7 @@ export async function main(ns) {
                 }
 
                 batch.initialGrowDoneAfter = endDate;
-            } else if (!batch.securityWeNeedToReduceAfterFullHack && currentTime > new Date(batch.initialGrowDoneAfter)) {
+            } else if (!batch.initialHackDoneAfter && currentTime > new Date(batch.initialGrowDoneAfter)) {
                 if (!serverHasMaxMoney) {
                     batch.initialGrowDoneAfter = undefined;
                     ns.tprint("initial grow didn't work")
@@ -138,7 +128,7 @@ export async function main(ns) {
 
                 const endDate = new Date();
 
-                const hackThreads = Math.ceil(ns.hackAnalyzeThreads(theTarget, targetServer.moneyAvailable));
+                const hackThreads = getHackThreadsForTotalStealing(ns, theTarget, targetServer);
                 batch.securityWeNeedToReduceAfterFullHack = ns.hackAnalyzeSecurity(hackThreads, theTarget);
 
 
@@ -155,6 +145,9 @@ export async function main(ns) {
             } else if (currentTime > new Date(batch.initialHackDoneAfter) && !batch.securityWeNeedToReduceAfterFullGrowth) {
                 if (serverHasMaxMoney) {
                     batch.securityWeNeedToReduceAfterFullHack = undefined;
+                    batch.initialWeakeningDoneAfter = undefined;
+                    batch.initialGrowDoneAfter = undefined;
+                    batch.initialHackDoneAfter = undefined;
                     ns.tprint("hack failed, do over");
                     continue;
                 } else {
@@ -162,7 +155,7 @@ export async function main(ns) {
                     serverToHack.hackDifficulty = serverToHack.minDifficulty;
                     serverToHack.moneyAvailable = 0;
 
-                    const growThreads = Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, serverDoingHackin.cpuCores));
+                    const growThreads = getGrowThreads(ns, serverToHack, player, serverDoingHackin);
 
                     batch.securityWeNeedToReduceAfterFullGrowth = ns.growthAnalyzeSecurity(growThreads, theTarget, serverDoingHackin.cpuCores);
                     batch.startOnFinalGrowthWeakenings = true;
@@ -170,8 +163,25 @@ export async function main(ns) {
             }
         }
 
+        // work through queue up here
+
+        // new batch work
         if (batch.prepStage === false) {
-            ns.tprint(batchQueue);
+            const numberOfThreadsToWeakenAfterHack = getNumberOfThreadsToWeaken(ns, serverDoingHackin, batch.securityWeNeedToReduceAfterFullHack);
+            const howManyThreadsToGrow = getGrowThreads(ns, targetServer, player, serverDoingHackin);
+            const numberOfThreadsToWeakenAfterGrow = getNumberOfThreadsToWeaken(ns, serverDoingHackin, batch.securityWeNeedToReduceAfterFullHack);
+            const hackThreads = getHackThreadsForTotalStealing(ns, theTarget, targetServer);
+
+            //select server where hacks will happen based on memory here
+
+            // fire this off when we are actually doing a weaken. 
+            const endDateForHackWeaken = getWeakenEndDate(ns, targetServer, player);
+
+
+            // minimize security hack minimize
+            // grow 
+            // minimize security grow minimize
+            // hack - done
         }
     }
 
@@ -205,9 +215,14 @@ class BatchJob {
     growJob;
     hackJob;
 
-    constructor(startTime, initialJob = false) {
+    totalHackCost;
+
+    machineRunningOn;
+    jobRamCost;
+
+    constructor(startTime, initialHack = false) {
         this.startTime = startTime;
-        this.initialJob = initialJob;
+        this.initialHack = initialHack;
     }
 }
 
@@ -282,4 +297,37 @@ export class Helpers {
     fileExists(fileName) {
         return this.ns.fileExists(fileName, "home");
     }
+}
+
+function getHackThreadsForTotalStealing(ns, theTarget, targetServer) {
+    return Math.ceil(ns.hackAnalyzeThreads(theTarget, targetServer.moneyAvailable));
+}
+
+function getGrowThreads(ns, serverToHack, player, serverDoingHackin) {
+    return Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, serverDoingHackin.cpuCores));
+}
+
+function getWeakenEndDate(ns, targetServer, player) {
+    let endDate = new Date();
+    const howLongToWeaken = ns.formulas.hacking.weakenTime(targetServer, player);
+
+    endDate.setMilliseconds(endDate.getMilliseconds() + howLongToWeaken);
+    return endDate;
+}
+
+function getNumberOfThreadsToWeaken(ns, serverDoingHackin, amountToWeaken) {
+    let numberOfThreadsToWeaken = 0;
+    let foundNumberOfThreads = false;
+    while (!foundNumberOfThreads) {
+        numberOfThreadsToWeaken++;
+
+        const amountNumberOfThreadsWillWeaken = Math.ceil(ns.weakenAnalyze(numberOfThreadsToWeaken, serverDoingHackin.cpuCores));
+        if (amountNumberOfThreadsWillWeaken > amountToWeaken) {
+            foundNumberOfThreads = true;
+        }
+    }
+
+    //add a small margin
+    numberOfThreadsToWeaken += 10;
+    return numberOfThreadsToWeaken;
 }
