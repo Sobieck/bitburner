@@ -23,15 +23,9 @@ export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
     const targetNames = Array.from(batchQueue.keys());
 
-    
-    // clean queue up here.
-    // if a job is passed its expire date, delete it off the queue. 
-    // change the queue to saturated hack server
-// decide to bring in new machine for doing the work of hackin
-    // check environment, if the machines currently in the pool all have less than 100gigs free, pull in new purchased machine. Do this until we have no more purchased machines. Let the machines with less than 100g total just languish hacking the old way. 
-
-    
-
+    giveBatchQueueStructure(targetNames, batchQueue);
+    cleanFinishedJobsFromQueue(targetNames, batchQueue);
+    addServerToHackingPoolIfNeedBe(serversUsedForBatching, ns, batchQueue, enviroment);
     addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment);
 
 
@@ -44,13 +38,13 @@ export async function main(ns) {
     // final grow
     // next weakening, record weakening needed
     // check to make sure everything is maxMoney and minDifficulty
-        // if so, put it in the queue and start making money
-// run new hacks based on the queue. 
+    // if so, put it in the queue and start making money
+    // run new hacks based on the queue. 
     // 
-    
+
     const serverDoingHackin = ns.getServer("home"); // make this an array of servers
     const player = ns.getPlayer();
-    
+
     const currentTime = new Date();
 
 
@@ -73,7 +67,7 @@ export async function main(ns) {
     //             let endDate = new Date()
 
     //             if (amountToWeaken !== 0) {
-                    
+
     //                 let numberOfThreadsToWeaken = getNumberOfThreadsToWeaken(ns, serverDoingHackin, amountToWeaken);
 
     //                 endDate = getWeakenEndDate(ns, targetServer, player);
@@ -106,7 +100,7 @@ export async function main(ns) {
     //             batch.initialGrowDoneAfter = endDate;
     //         } 
     //         /// THERE NEEDS TO BE A WEAKEN HERE
-            
+
 
 
     //         else if (!batch.initialHackDoneAfter && currentTime > new Date(batch.initialGrowDoneAfter)) {
@@ -155,7 +149,7 @@ export async function main(ns) {
     //                 batch.securityWeNeedToReduceAfterFullGrowth = undefined;
     //                 continue;
     //             } else {
-                    
+
     //             }
     //         }
     //     }
@@ -194,6 +188,10 @@ export async function main(ns) {
 }
 
 class BatchQueue {
+    constructor(obj) {
+        obj && Object.assign(this, obj);
+    }
+
     prepStage = true;
     targetMachineSaturatedWithAttacks = false;
 
@@ -205,29 +203,43 @@ class BatchQueue {
     securityWeNeedToReduceAfterFullGrowth;
 
     jobQueue = [];
+
+    getAllocatedMemory(machineRunningOn) {
+        return this.jobQueue
+            .filter(x => x.machineRunningOn === machineRunningOn)
+            .map(x => x.jobTotalRamCost)
+            .reduce((acc, x) => acc + x, 0);
+    }
+
+    getMaxMemoryForAJob(machineRunningOn) {
+        return Math.max(...this.jobQueue
+            .filter(x => x.machineRunningOn === machineRunningOn)
+            .map(x => x.jobTotalRamCost));
+    }
 }
 
 class BatchJob {
-    hackWeakenJob;
-    growWeakenJob;
-
-    growJob;
-    hackJob;
-
+    jobs = [];
     //6 second window? 2 cycles seems like enough for each step.
 
-    constructor(startTime, machineRunningOn, batchEndTime, jobRamCost) {
-        this.startTime = startTime;
-        this.machineRunningOn = machineRunningOn;
-        this.batchEndTime = batchEndTime;
-        this.jobTotalRamCost = jobTotalRamCost;
+    startTime;
+    machineRunningOn;
+    jobTotalRamCost;
+
+    wholeBatchFinishsBefore() {
+        return Math.max(...this.jobs.map(x => new Date(x.endBefore)))
+    }
+
+    constructor(obj) {
+        obj && Object.assign(this, obj);
     }
 }
 
 class JobHasTo {
-    constructor(endAfter, endBefore) {
+    constructor(endAfter, endBefore, type) {
         this.endAfter = endAfter;
         this.endBefore = endBefore;
+        this.type = type;
     }
 }
 
@@ -294,6 +306,83 @@ export class Helpers {
 
     fileExists(fileName) {
         return this.ns.fileExists(fileName, "home");
+    }
+}
+
+function addServerToHackingPoolIfNeedBe(serversUsedForBatching, ns, batchQueue, enviroment) {
+    const freeRamOnMachines = [];
+    for (const serverName of serversUsedForBatching) {
+
+        const freeMemoryOnServer = getUnallocatedMemoryOnServer(ns, serverName, batchQueue);
+
+        freeRamOnMachines.push(freeMemoryOnServer);
+    }
+
+
+    if (Math.min(...freeRamOnMachines) < 100) {
+        const allPurchasedMachines = enviroment
+            .filter(x => x.server.purchasedByPlayer && !serversUsedForBatching.includes(x.name))
+            .sort((b, a) => b.server.maxRam - a.server.maxRam);
+
+        if (allPurchasedMachines.length > 0) {
+            const serverToAdd = allPurchasedMachines.pop();
+            serversUsedForBatching.push(serverToAdd.name);
+        }
+    }
+}
+
+function getUnallocatedMemoryOnServer(ns, serverName, batchQueue) {
+    const server = getServer(ns, serverName);
+    const serverMaxMemory = server.maxRam;
+
+    let reservedMemory = Array.from(batchQueue.values())
+        .reduce((acc, x) => acc + x.getAllocatedMemory(serverName), 0);
+
+    const freeMemoryOnServer = serverMaxMemory - reservedMemory;
+
+    return freeMemoryOnServer;
+}
+
+function giveBatchQueueStructure(targetNames, batchQueue) {
+    for (const target of targetNames) {
+        let targetObject = batchQueue.get(target);
+        targetObject = new BatchQueue(targetObject);
+
+        for (let i = 0; i < targetObject.jobQueue.length; i++) {
+            targetObject.jobQueue[i] = new BatchJob(targetObject.jobQueue[i]);
+        }
+
+        batchQueue.set(target, targetObject);
+    }
+}
+
+function getServer(ns, serverName) {
+    const server = ns.getServer(serverName);
+
+    if (serverName === "home") {
+        server.maxRam -= 32;
+        server.ramUsed -= 32;
+
+        if (server.ramUsed < 0) {
+            server.ramUsed = 0;
+        }
+    }
+
+    return server;
+}
+
+function cleanFinishedJobsFromQueue(targetNames, batchQueue) {
+    for (const target of targetNames) {
+        const batch = batchQueue.get(target);
+        const currentTime = new Date();
+
+        for (let i = batch.jobQueue.length - 1; i > -1; i--) {
+            const job = batch.jobQueue[i];
+            if (job.wholeBatchFinishsBefore() < currentTime) {
+                batch.targetMachineSaturatedWithAttacks = true;
+                batch.jobQueue.splice(i, 1);
+            }
+        }
     }
 }
 
