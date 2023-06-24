@@ -1,0 +1,1532 @@
+[
+    {
+        "server": "n00dles",
+        "name": "contract-347821.cct",
+        "type": "Find Largest Prime Factor",
+        "attemptsLeft": 10,
+        "input": 77222712,
+        "description": "A prime factor is a factor that is a prime number. What is the largest prime factor of 77222712?"
+    },
+    {
+        "server": "n00dles",
+        "name": "contract-540931-BachmanAssociates.cct",
+        "type": "Encryption II: Vigenère Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "MOUSEMACROMODEMARRAYPRINT",
+            "VERSION"
+        ],
+        "description": "Vigenère cipher is a type of polyalphabetic substitution. It uses  the Vigenère square to encrypt and decrypt plaintext with a keyword.\n\n &nbsp;&nbsp;Vigenère square:\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------------------------\n &nbsp;&nbsp;&nbsp;&nbsp; A | A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp; B | B C D E F G H I J K L M N O P Q R S T U V W X Y Z A \n &nbsp;&nbsp;&nbsp;&nbsp; C | C D E F G H I J K L M N O P Q R S T U V W X Y Z A B\n &nbsp;&nbsp;&nbsp;&nbsp; D | D E F G H I J K L M N O P Q R S T U V W X Y Z A B C\n &nbsp;&nbsp;&nbsp;&nbsp; E | E F G H I J K L M N O P Q R S T U V W X Y Z A B C D\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...\n &nbsp;&nbsp;&nbsp;&nbsp; Y | Y Z A B C D E F G H I J K L M N O P Q R S T U V W X\n &nbsp;&nbsp;&nbsp;&nbsp; Z | Z A B C D E F G H I J K L M N O P Q R S T U V W X Y\n\n For encryption each letter of the plaintext is paired with the corresponding letter of a repeating keyword. For example, the plaintext DASHBOARD is encrypted with the keyword LINUX:\n &nbsp;&nbsp; Plaintext: DASHBOARD\n &nbsp;&nbsp; Keyword:&nbsp;&nbsp;&nbsp;LINUXLINU\n So, the first letter D is paired with the first letter of the key L. Therefore, row D and column L of the  Vigenère square are used to get the first cipher letter O. This must be repeated for the whole ciphertext.\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"MOUSEMACROMODEMARRAYPRINT\", \"VERSION\"]\n The first element is the plaintext, the second element is the keyword.\n\n Return the ciphertext as uppercase string."
+    },
+    {
+        "server": "foodnstuff",
+        "name": "contract-70685-BitRunners.cct",
+        "type": "Encryption I: Caesar Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "DEBUG MEDIA MOUSE CLOUD CACHE",
+            4
+        ],
+        "description": "Caesar cipher is one of the simplest encryption technique. It is a type of substitution cipher in which each letter in the plaintext  is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A,  E would become B, and A would become X (because of rotation).\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"DEBUG MEDIA MOUSE CLOUD CACHE\", 4]\n The first element is the plaintext, the second element is the left shift value.\n\n Return the ciphertext as uppercase string. Spaces remains the same."
+    },
+    {
+        "server": "harakiri-sushi",
+        "name": "contract-796035-UniversalEnergy.cct",
+        "type": "Generate IP Addresses",
+        "attemptsLeft": 10,
+        "input": "1053835207",
+        "description": "Given the following string containing only digits, return an array with all possible valid IP address combinations that can be created from the string:\n\n 1053835207\n\n Note that an octet cannot begin with a '0' unless the number itself is actually 0. For example, '192.168.010.1' is not a valid IP.\n\n Examples:\n\n 25525511135 -> [\"255.255.11.135\", \"255.255.111.35\"]\n 1938718066 -> [\"193.87.180.66\"]"
+    },
+    {
+        "server": "darkweb",
+        "name": "contract-764401.cct",
+        "type": "Find Largest Prime Factor",
+        "attemptsLeft": 10,
+        "input": 95929624,
+        "description": "A prime factor is a factor that is a prime number. What is the largest prime factor of 95929624?"
+    },
+    {
+        "server": "neo-net",
+        "name": "contract-408829.cct",
+        "type": "Find Largest Prime Factor",
+        "attemptsLeft": 10,
+        "input": 728625833,
+        "description": "A prime factor is a factor that is a prime number. What is the largest prime factor of 728625833?"
+    },
+    {
+        "server": "phantasy",
+        "name": "contract-238908-UniversalEnergy.cct",
+        "type": "Proper 2-Coloring of a Graph",
+        "attemptsLeft": 5,
+        "input": [
+            13,
+            [
+                [
+                    0,
+                    4
+                ],
+                [
+                    0,
+                    5
+                ],
+                [
+                    6,
+                    7
+                ],
+                [
+                    0,
+                    1
+                ],
+                [
+                    2,
+                    10
+                ],
+                [
+                    1,
+                    5
+                ],
+                [
+                    11,
+                    12
+                ],
+                [
+                    1,
+                    6
+                ],
+                [
+                    5,
+                    7
+                ],
+                [
+                    8,
+                    11
+                ],
+                [
+                    7,
+                    8
+                ],
+                [
+                    2,
+                    11
+                ],
+                [
+                    0,
+                    8
+                ],
+                [
+                    1,
+                    4
+                ],
+                [
+                    1,
+                    3
+                ],
+                [
+                    4,
+                    11
+                ],
+                [
+                    3,
+                    7
+                ],
+                [
+                    3,
+                    10
+                ],
+                [
+                    5,
+                    9
+                ],
+                [
+                    4,
+                    7
+                ]
+            ]
+        ],
+        "description": "You are given the following data, representing a graph:\n [13,[[0,4],[0,5],[6,7],[0,1],[2,10],[1,5],[11,12],[1,6],[5,7],[8,11],[7,8],[2,11],[0,8],[1,4],[1,3],[4,11],[3,7],[3,10],[5,9],[4,7]]]\n Note that \"graph\", as used here, refers to the field of graph theory, and has no relation to statistics or plotting. The first element of the data represents the number of vertices in the graph. Each vertex is a unique number between 0 and 12. The next element of the data represents the edges of the graph. Two vertices u,v in a graph are said to be adjacent if there exists an edge [u,v]. Note that an edge [u,v] is the same as an edge [v,u], as order does not matter. You must construct a 2-coloring of the graph, meaning that you have to assign each vertex in the graph a \"color\", either 0 or 1, such that no two adjacent vertices have the same color. Submit your answer in the form of an array, where element i represents the color of vertex i. If it is impossible to construct a 2-coloring of the given graph, instead submit an empty array.\n\n Examples:\n\n Input: [4, [[0, 2], [0, 3], [1, 2], [1, 3]]]\n Output: [0, 0, 1, 1]\n\n Input: [3, [[0, 1], [0, 2], [1, 2]]]\n Output: []"
+    },
+    {
+        "server": "phantasy",
+        "name": "contract-756002.cct",
+        "type": "Sanitize Parentheses in Expression",
+        "attemptsLeft": 10,
+        "input": "((a)a()))((a",
+        "description": "Given the following string:\n\n ((a)a()))((a\n\n remove the minimum number of invalid parentheses in order to validate the string. If there are multiple minimal ways to validate the string, provide all of the possible results. The answer should be provided as an array of strings. If it is impossible to validate the string the result should be an array with only an empty string.\n\n IMPORTANT: The string may contain letters, not just parentheses. Examples:\n \"()())()\" -> [\"()()()\", \"(())()\"]\n \"(a)())()\" -> [\"(a)()()\", \"(a())()\"]\n \")(\" -> [\"\"]"
+    },
+    {
+        "server": "the-hub",
+        "name": "contract-569950-BachmanAssociates.cct",
+        "type": "Compression III: LZ Compression",
+        "attemptsLeft": 10,
+        "input": "f6DaMpMpxaMpMpxMpMpxnMpxnErqeErqeyqeyq25ieU6H25iJieUUUUUUQx4FQUUUUQx4F1Qx4F",
+        "description": "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data, which is either:\n\n 1. Exactly L characters, which are to be copied directly into the uncompressed data.\n 2. A reference to an earlier part of the uncompressed data. To do this, the length is followed by a second ASCII digit X: each of the L output characters is a copy of the character X places before it in the uncompressed data.\n\n For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final chunk may be of either type.\n\n You are given the following input string:\n &nbsp; &nbsp; f6DaMpMpxaMpMpxMpMpxnMpxnErqeErqeyqeyq25ieU6H25iJieUUUUUUQx4FQUUUUQx4F1Qx4F\n Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n Examples (some have other possible encodings of minimal length):\n &nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n &nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n &nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n &nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n &nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n &nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n &nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n &nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041"
+    },
+    {
+        "server": "the-hub",
+        "name": "contract-724487-UniversalEnergy.cct",
+        "type": "Compression III: LZ Compression",
+        "attemptsLeft": 10,
+        "input": "s64B68vS8vS8vS8vS8vSd3hVXnhVGFhVGFhuhVGqQeGqQeGqQ6YeF77777777o0I7x3IwUO5P6ktxn",
+        "description": "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data, which is either:\n\n 1. Exactly L characters, which are to be copied directly into the uncompressed data.\n 2. A reference to an earlier part of the uncompressed data. To do this, the length is followed by a second ASCII digit X: each of the L output characters is a copy of the character X places before it in the uncompressed data.\n\n For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final chunk may be of either type.\n\n You are given the following input string:\n &nbsp; &nbsp; s64B68vS8vS8vS8vS8vSd3hVXnhVGFhVGFhuhVGqQeGqQeGqQ6YeF77777777o0I7x3IwUO5P6ktxn\n Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n Examples (some have other possible encodings of minimal length):\n &nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n &nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n &nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n &nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n &nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n &nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n &nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n &nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041"
+    },
+    {
+        "server": "summit-uni",
+        "name": "contract-357926-UniversalEnergy.cct",
+        "type": "Generate IP Addresses",
+        "attemptsLeft": 10,
+        "input": "961675113",
+        "description": "Given the following string containing only digits, return an array with all possible valid IP address combinations that can be created from the string:\n\n 961675113\n\n Note that an octet cannot begin with a '0' unless the number itself is actually 0. For example, '192.168.010.1' is not a valid IP.\n\n Examples:\n\n 25525511135 -> [\"255.255.11.135\", \"255.255.111.35\"]\n 1938718066 -> [\"193.87.180.66\"]"
+    },
+    {
+        "server": "summit-uni",
+        "name": "contract-825206-Netburners.cct",
+        "type": "Merge Overlapping Intervals",
+        "attemptsLeft": 15,
+        "input": [
+            [
+                6,
+                7
+            ],
+            [
+                14,
+                21
+            ],
+            [
+                17,
+                24
+            ],
+            [
+                12,
+                18
+            ],
+            [
+                13,
+                21
+            ],
+            [
+                11,
+                17
+            ],
+            [
+                21,
+                24
+            ],
+            [
+                10,
+                18
+            ],
+            [
+                17,
+                24
+            ],
+            [
+                24,
+                32
+            ],
+            [
+                11,
+                20
+            ],
+            [
+                8,
+                18
+            ],
+            [
+                13,
+                18
+            ],
+            [
+                20,
+                21
+            ],
+            [
+                13,
+                17
+            ],
+            [
+                3,
+                9
+            ]
+        ],
+        "description": "Given the following array of arrays of numbers representing a list of intervals, merge all overlapping intervals.\n\n [[6,7],[14,21],[17,24],[12,18],[13,21],[11,17],[21,24],[10,18],[17,24],[24,32],[11,20],[8,18],[13,18],[20,21],[13,17],[3,9]]\n\n Example:\n\n [[1, 3], [8, 10], [2, 6], [10, 16]]\n\n would merge into [[1, 6], [8, 16]].\n\n The intervals must be returned in ASCENDING order. You can assume that in an interval, the first number will always be smaller than the second."
+    },
+    {
+        "server": "I.I.I.I",
+        "name": "contract-537829-UniversalEnergy.cct",
+        "type": "Shortest Path in a Grid",
+        "attemptsLeft": 10,
+        "input": [
+            [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                1,
+                1,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "description": "You are located in the top-left corner of the following grid:\n\n &nbsp;&nbsp;[[0,1,0,0,0,0,1],\n&nbsp;&nbsp;&nbsp;[0,0,0,1,1,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,1,1,0,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,0,0,0,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,1,0,0,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,0,0,0,0,0]]\n\n You are trying to find the shortest path to the bottom-right corner of the grid, but there are obstacles on the grid that you cannot move onto. These obstacles are denoted by '1', while empty spaces are denoted by 0.\n\n Determine the shortest path from start to finish, if one exists. The answer should be given as a string of UDLR characters, indicating the moves along the path\n\n NOTE: If there are multiple equally short paths, any of them is accepted as answer. If there is no path, the answer should be an empty string.\n NOTE: The data returned for this contract is an 2D array of numbers representing the grid.\n\n Examples:\n\n &nbsp;&nbsp;&nbsp;&nbsp;[[0,1,0,0,0],\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0,0,0,1,0]]\n \n Answer: 'DRRURRD'\n\n &nbsp;&nbsp;&nbsp;&nbsp;[[0,1],\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,0]]\n \n Answer: ''\n\n"
+    },
+    {
+        "server": "lexo-corp",
+        "name": "contract-50764.cct",
+        "type": "Unique Paths in a Grid I",
+        "attemptsLeft": 10,
+        "input": [
+            11,
+            4
+        ],
+        "description": "You are in a grid with 11 rows and 4 columns, and you are positioned in the top-left corner of that grid. You are trying to reach the bottom-right corner of the grid, but you can only move down or right on each step. Determine how many unique paths there are from start to finish.\n\n NOTE: The data returned for this contract is an array with the number of rows and columns:\n\n [11, 4]"
+    },
+    {
+        "server": "aevum-police",
+        "name": "contract-325747-Aevum.cct",
+        "type": "Find Largest Prime Factor",
+        "attemptsLeft": 10,
+        "input": 149849015,
+        "description": "A prime factor is a factor that is a prime number. What is the largest prime factor of 149849015?"
+    },
+    {
+        "server": "aevum-police",
+        "name": "contract-48925-IcarusMicrosystems.cct",
+        "type": "Array Jumping Game II",
+        "attemptsLeft": 3,
+        "input": [
+            3,
+            3,
+            3,
+            4,
+            3,
+            3,
+            2,
+            3,
+            0,
+            4,
+            4,
+            1,
+            2,
+            4,
+            3
+        ],
+        "description": "You are given the following array of integers:\n\n 3,3,3,4,3,3,2,3,0,4,4,1,2,4,3\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine the minimum number of jumps to reach the end of the array.\n\n If it's impossible to reach the end, then the answer should be 0."
+    },
+    {
+        "server": "aevum-police",
+        "name": "contract-591540.cct",
+        "type": "Shortest Path in a Grid",
+        "attemptsLeft": 10,
+        "input": [
+            [
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            [
+                0,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "description": "You are located in the top-left corner of the following grid:\n\n &nbsp;&nbsp;[[0,0,0,1,1,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,0,0,0,1,0],\n&nbsp;&nbsp;&nbsp;[0,0,0,0,0,0,1],\n&nbsp;&nbsp;&nbsp;[0,0,0,1,1,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,1,1,1,1,0],\n&nbsp;&nbsp;&nbsp;[0,0,0,0,0,0,1],\n&nbsp;&nbsp;&nbsp;[1,0,0,1,0,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,0,1,0,0,0],\n&nbsp;&nbsp;&nbsp;[1,0,0,0,0,0,0]]\n\n You are trying to find the shortest path to the bottom-right corner of the grid, but there are obstacles on the grid that you cannot move onto. These obstacles are denoted by '1', while empty spaces are denoted by 0.\n\n Determine the shortest path from start to finish, if one exists. The answer should be given as a string of UDLR characters, indicating the moves along the path\n\n NOTE: If there are multiple equally short paths, any of them is accepted as answer. If there is no path, the answer should be an empty string.\n NOTE: The data returned for this contract is an 2D array of numbers representing the grid.\n\n Examples:\n\n &nbsp;&nbsp;&nbsp;&nbsp;[[0,1,0,0,0],\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0,0,0,1,0]]\n \n Answer: 'DRRURRD'\n\n &nbsp;&nbsp;&nbsp;&nbsp;[[0,1],\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,0]]\n \n Answer: ''\n\n"
+    },
+    {
+        "server": "aevum-police",
+        "name": "contract-783765.cct",
+        "type": "Encryption II: Vigenère Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "LOGICMOUSEMODEMMACROLINUX",
+            "BROWSER"
+        ],
+        "description": "Vigenère cipher is a type of polyalphabetic substitution. It uses  the Vigenère square to encrypt and decrypt plaintext with a keyword.\n\n &nbsp;&nbsp;Vigenère square:\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------------------------\n &nbsp;&nbsp;&nbsp;&nbsp; A | A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp; B | B C D E F G H I J K L M N O P Q R S T U V W X Y Z A \n &nbsp;&nbsp;&nbsp;&nbsp; C | C D E F G H I J K L M N O P Q R S T U V W X Y Z A B\n &nbsp;&nbsp;&nbsp;&nbsp; D | D E F G H I J K L M N O P Q R S T U V W X Y Z A B C\n &nbsp;&nbsp;&nbsp;&nbsp; E | E F G H I J K L M N O P Q R S T U V W X Y Z A B C D\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...\n &nbsp;&nbsp;&nbsp;&nbsp; Y | Y Z A B C D E F G H I J K L M N O P Q R S T U V W X\n &nbsp;&nbsp;&nbsp;&nbsp; Z | Z A B C D E F G H I J K L M N O P Q R S T U V W X Y\n\n For encryption each letter of the plaintext is paired with the corresponding letter of a repeating keyword. For example, the plaintext DASHBOARD is encrypted with the keyword LINUX:\n &nbsp;&nbsp; Plaintext: DASHBOARD\n &nbsp;&nbsp; Keyword:&nbsp;&nbsp;&nbsp;LINUXLINU\n So, the first letter D is paired with the first letter of the key L. Therefore, row D and column L of the  Vigenère square are used to get the first cipher letter O. This must be repeated for the whole ciphertext.\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"LOGICMOUSEMODEMMACROLINUX\", \"BROWSER\"]\n The first element is the plaintext, the second element is the keyword.\n\n Return the ciphertext as uppercase string."
+    },
+    {
+        "server": "global-pharm",
+        "name": "contract-363749-BachmanAssociates.cct",
+        "type": "Algorithmic Stock Trader III",
+        "attemptsLeft": 9,
+        "input": [
+            149,
+            81,
+            193,
+            18,
+            154,
+            41,
+            55,
+            134,
+            116,
+            120,
+            152,
+            66,
+            66,
+            155,
+            112,
+            141,
+            3,
+            20,
+            131,
+            108,
+            111,
+            44,
+            7,
+            146,
+            62,
+            109,
+            59,
+            30,
+            97,
+            33,
+            118
+        ],
+        "description": "You are given the following array of stock prices (which are numbers) where the i-th element represents the stock price on day i:\n\n 149,81,193,18,154,41,55,134,116,120,152,66,66,155,112,141,3,20,131,108,111,44,7,146,62,109,59,30,97,33,118\n\n Determine the maximum possible profit you can earn using at most two transactions. A transaction is defined as buying and then selling one share of the stock. Note that you cannot engage in multiple transactions at once. In other words, you must sell the stock before you buy it again.\n\n If no profit can be made, then the answer should be 0"
+    },
+    {
+        "server": "defcomm",
+        "name": "contract-338714.cct",
+        "type": "Compression III: LZ Compression",
+        "attemptsLeft": 10,
+        "input": "Lky8y8y8y8y8lM08yOin8c5C8yOinNitdpNitdpNitwitdpNitwiFtwiFtwtwiFtwtdurrbtg3gHtc5Z",
+        "description": "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data, which is either:\n\n 1. Exactly L characters, which are to be copied directly into the uncompressed data.\n 2. A reference to an earlier part of the uncompressed data. To do this, the length is followed by a second ASCII digit X: each of the L output characters is a copy of the character X places before it in the uncompressed data.\n\n For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final chunk may be of either type.\n\n You are given the following input string:\n &nbsp; &nbsp; Lky8y8y8y8y8lM08yOin8c5C8yOinNitdpNitdpNitwitdpNitwiFtwiFtwtwiFtwtdurrbtg3gHtc5Z\n Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n Examples (some have other possible encodings of minimal length):\n &nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n &nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n &nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n &nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n &nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n &nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n &nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n &nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041"
+    },
+    {
+        "server": "infocomm",
+        "name": "contract-379805.cct",
+        "type": "Proper 2-Coloring of a Graph",
+        "attemptsLeft": 5,
+        "input": [
+            10,
+            [
+                [
+                    2,
+                    8
+                ],
+                [
+                    0,
+                    5
+                ],
+                [
+                    0,
+                    4
+                ],
+                [
+                    8,
+                    9
+                ],
+                [
+                    2,
+                    3
+                ],
+                [
+                    5,
+                    9
+                ],
+                [
+                    7,
+                    9
+                ],
+                [
+                    2,
+                    3
+                ],
+                [
+                    2,
+                    4
+                ],
+                [
+                    2,
+                    5
+                ],
+                [
+                    0,
+                    6
+                ]
+            ]
+        ],
+        "description": "You are given the following data, representing a graph:\n [10,[[2,8],[0,5],[0,4],[8,9],[2,3],[5,9],[7,9],[2,3],[2,4],[2,5],[0,6]]]\n Note that \"graph\", as used here, refers to the field of graph theory, and has no relation to statistics or plotting. The first element of the data represents the number of vertices in the graph. Each vertex is a unique number between 0 and 9. The next element of the data represents the edges of the graph. Two vertices u,v in a graph are said to be adjacent if there exists an edge [u,v]. Note that an edge [u,v] is the same as an edge [v,u], as order does not matter. You must construct a 2-coloring of the graph, meaning that you have to assign each vertex in the graph a \"color\", either 0 or 1, such that no two adjacent vertices have the same color. Submit your answer in the form of an array, where element i represents the color of vertex i. If it is impossible to construct a 2-coloring of the given graph, instead submit an empty array.\n\n Examples:\n\n Input: [4, [[0, 2], [0, 3], [1, 2], [1, 3]]]\n Output: [0, 0, 1, 1]\n\n Input: [3, [[0, 1], [0, 2], [1, 2]]]\n Output: []"
+    },
+    {
+        "server": "infocomm",
+        "name": "contract-607596.cct",
+        "type": "Total Ways to Sum",
+        "attemptsLeft": 10,
+        "input": 28,
+        "description": "It is possible write four as a sum in exactly four different ways:\n\n &nbsp;&nbsp;&nbsp;&nbsp;3 + 1\n &nbsp;&nbsp;&nbsp;&nbsp;2 + 2\n &nbsp;&nbsp;&nbsp;&nbsp;2 + 1 + 1\n &nbsp;&nbsp;&nbsp;&nbsp;1 + 1 + 1 + 1\n\n How many different distinct ways can the number 28 be written as a sum of at least two positive integers?"
+    },
+    {
+        "server": "run4theh111z",
+        "name": "contract-875926-UniversalEnergy.cct",
+        "type": "Encryption II: Vigenère Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "PRINTMODEMMOUSEMEDIALOGIN",
+            "PASSWORD"
+        ],
+        "description": "Vigenère cipher is a type of polyalphabetic substitution. It uses  the Vigenère square to encrypt and decrypt plaintext with a keyword.\n\n &nbsp;&nbsp;Vigenère square:\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------------------------\n &nbsp;&nbsp;&nbsp;&nbsp; A | A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp; B | B C D E F G H I J K L M N O P Q R S T U V W X Y Z A \n &nbsp;&nbsp;&nbsp;&nbsp; C | C D E F G H I J K L M N O P Q R S T U V W X Y Z A B\n &nbsp;&nbsp;&nbsp;&nbsp; D | D E F G H I J K L M N O P Q R S T U V W X Y Z A B C\n &nbsp;&nbsp;&nbsp;&nbsp; E | E F G H I J K L M N O P Q R S T U V W X Y Z A B C D\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...\n &nbsp;&nbsp;&nbsp;&nbsp; Y | Y Z A B C D E F G H I J K L M N O P Q R S T U V W X\n &nbsp;&nbsp;&nbsp;&nbsp; Z | Z A B C D E F G H I J K L M N O P Q R S T U V W X Y\n\n For encryption each letter of the plaintext is paired with the corresponding letter of a repeating keyword. For example, the plaintext DASHBOARD is encrypted with the keyword LINUX:\n &nbsp;&nbsp; Plaintext: DASHBOARD\n &nbsp;&nbsp; Keyword:&nbsp;&nbsp;&nbsp;LINUXLINU\n So, the first letter D is paired with the first letter of the key L. Therefore, row D and column L of the  Vigenère square are used to get the first cipher letter O. This must be repeated for the whole ciphertext.\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"PRINTMODEMMOUSEMEDIALOGIN\", \"PASSWORD\"]\n The first element is the plaintext, the second element is the keyword.\n\n Return the ciphertext as uppercase string."
+    },
+    {
+        "server": "helios",
+        "name": "contract-235869.cct",
+        "type": "Merge Overlapping Intervals",
+        "attemptsLeft": 15,
+        "input": [
+            [
+                8,
+                10
+            ],
+            [
+                19,
+                26
+            ],
+            [
+                11,
+                21
+            ],
+            [
+                3,
+                11
+            ],
+            [
+                6,
+                7
+            ],
+            [
+                20,
+                26
+            ],
+            [
+                2,
+                10
+            ],
+            [
+                6,
+                11
+            ],
+            [
+                21,
+                30
+            ],
+            [
+                23,
+                32
+            ],
+            [
+                24,
+                26
+            ],
+            [
+                3,
+                7
+            ],
+            [
+                14,
+                17
+            ],
+            [
+                22,
+                26
+            ],
+            [
+                8,
+                18
+            ],
+            [
+                7,
+                17
+            ],
+            [
+                3,
+                10
+            ]
+        ],
+        "description": "Given the following array of arrays of numbers representing a list of intervals, merge all overlapping intervals.\n\n [[8,10],[19,26],[11,21],[3,11],[6,7],[20,26],[2,10],[6,11],[21,30],[23,32],[24,26],[3,7],[14,17],[22,26],[8,18],[7,17],[3,10]]\n\n Example:\n\n [[1, 3], [8, 10], [2, 6], [10, 16]]\n\n would merge into [[1, 6], [8, 16]].\n\n The intervals must be returned in ASCENDING order. You can assume that in an interval, the first number will always be smaller than the second."
+    },
+    {
+        "server": "helios",
+        "name": "contract-485262-TheBlackHand.cct",
+        "type": "Find All Valid Math Expressions",
+        "attemptsLeft": 10,
+        "input": [
+            "56844",
+            -62
+        ],
+        "description": "You are given the following string which contains only digits between 0 and 9:\n\n 56844\n\n You are also given a target number of -62. Return all possible ways you can add the +(add), -(subtract), and *(multiply) operators to the string such that it evaluates to the target number. (Normal order of operations applies.)\n\n The provided answer should be an array of strings containing the valid expressions. The data provided by this problem is an array with two elements. The first element is the string of digits, while the second element is the target number:\n\n [\"56844\", -62]\n\n NOTE: The order of evaluation expects script operator precedence NOTE: Numbers in the expression cannot have leading 0's. In other words, \"1+01\" is not a valid expression Examples:\n\n Input: digits = \"123\", target = 6\n Output: [1+2+3, 1*2*3]\n\n Input: digits = \"105\", target = 5\n Output: [1*0+5, 10-5]"
+    },
+    {
+        "server": "4sigma",
+        "name": "contract-565763-UniversalEnergy.cct",
+        "type": "Subarray with Maximum Sum",
+        "attemptsLeft": 10,
+        "input": [
+            7,
+            4,
+            -9,
+            4,
+            -2,
+            -1,
+            5,
+            4,
+            2,
+            9,
+            1,
+            3,
+            -6,
+            9,
+            3,
+            7,
+            -3,
+            -3,
+            3,
+            6,
+            -4,
+            -5,
+            2,
+            1,
+            -7,
+            -5,
+            9,
+            -7,
+            -10,
+            8,
+            -6,
+            -1,
+            -8,
+            -2,
+            7,
+            -7,
+            -7
+        ],
+        "description": "Given the following integer array, find the contiguous subarray (containing at least one number) which has the largest sum and return that sum. 'Sum' refers to the sum of all the numbers in the subarray.\n 7,4,-9,4,-2,-1,5,4,2,9,1,3,-6,9,3,7,-3,-3,3,6,-4,-5,2,1,-7,-5,9,-7,-10,8,-6,-1,-8,-2,7,-7,-7"
+    },
+    {
+        "server": ".",
+        "name": "contract-348217.cct",
+        "type": "Compression III: LZ Compression",
+        "attemptsLeft": 10,
+        "input": "112O1121uGF121uGF1GF1GZx27EZx27EZx3bRM7Ee2w6HK68K6805Dd05Dd05Ddh5Dd05Ddh5exzMtyn3j4V6A",
+        "description": "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data, which is either:\n\n 1. Exactly L characters, which are to be copied directly into the uncompressed data.\n 2. A reference to an earlier part of the uncompressed data. To do this, the length is followed by a second ASCII digit X: each of the L output characters is a copy of the character X places before it in the uncompressed data.\n\n For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final chunk may be of either type.\n\n You are given the following input string:\n &nbsp; &nbsp; 112O1121uGF121uGF1GF1GZx27EZx27EZx3bRM7Ee2w6HK68K6805Dd05Dd05Ddh5Dd05Ddh5exzMtyn3j4V6A\n Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n Examples (some have other possible encodings of minimal length):\n &nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n &nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n &nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n &nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n &nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n &nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n &nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n &nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041"
+    },
+    {
+        "server": "b-and-a",
+        "name": "contract-883263.cct",
+        "type": "Array Jumping Game",
+        "attemptsLeft": 1,
+        "input": [
+            5,
+            0,
+            1,
+            0,
+            1,
+            1,
+            3,
+            10,
+            6,
+            0,
+            1,
+            0,
+            0,
+            2,
+            9
+        ],
+        "description": "You are given the following array of integers:\n\n 5,0,1,0,1,1,3,10,6,0,1,0,0,2,9\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine whether you are able to reach the last index.\n\n Your answer should be submitted as 1 or 0, representing true and false respectively"
+    },
+    {
+        "server": "blade",
+        "name": "contract-882788.cct",
+        "type": "Encryption I: Caesar Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "LOGIC MOUSE QUEUE VIRUS MEDIA",
+            20
+        ],
+        "description": "Caesar cipher is one of the simplest encryption technique. It is a type of substitution cipher in which each letter in the plaintext  is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A,  E would become B, and A would become X (because of rotation).\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"LOGIC MOUSE QUEUE VIRUS MEDIA\", 20]\n The first element is the plaintext, the second element is the left shift value.\n\n Return the ciphertext as uppercase string. Spaces remains the same."
+    },
+    {
+        "server": "nwo",
+        "name": "contract-755670.cct",
+        "type": "Algorithmic Stock Trader III",
+        "attemptsLeft": 9,
+        "input": [
+            112,
+            59,
+            192,
+            77,
+            150,
+            176,
+            83,
+            84,
+            200,
+            88,
+            82,
+            73,
+            191,
+            187,
+            198,
+            29,
+            190,
+            2,
+            89,
+            121,
+            36,
+            56,
+            173,
+            5,
+            100,
+            67,
+            171,
+            53,
+            198,
+            161,
+            151,
+            17,
+            142,
+            191,
+            143,
+            193,
+            162,
+            39,
+            5,
+            120,
+            18,
+            29,
+            4,
+            107,
+            68,
+            20
+        ],
+        "description": "You are given the following array of stock prices (which are numbers) where the i-th element represents the stock price on day i:\n\n 112,59,192,77,150,176,83,84,200,88,82,73,191,187,198,29,190,2,89,121,36,56,173,5,100,67,171,53,198,161,151,17,142,191,143,193,162,39,5,120,18,29,4,107,68,20\n\n Determine the maximum possible profit you can earn using at most two transactions. A transaction is defined as buying and then selling one share of the stock. Note that you cannot engage in multiple transactions at once. In other words, you must sell the stock before you buy it again.\n\n If no profit can be made, then the answer should be 0"
+    },
+    {
+        "server": "fulcrumassets",
+        "name": "contract-90748-BachmanAssociates.cct",
+        "type": "Encryption I: Caesar Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "VIRUS EMAIL LOGIN DEBUG SHIFT",
+            2
+        ],
+        "description": "Caesar cipher is one of the simplest encryption technique. It is a type of substitution cipher in which each letter in the plaintext  is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A,  E would become B, and A would become X (because of rotation).\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"VIRUS EMAIL LOGIN DEBUG SHIFT\", 2]\n The first element is the plaintext, the second element is the left shift value.\n\n Return the ciphertext as uppercase string. Spaces remains the same."
+    },
+    {
+        "server": "The-Cave",
+        "name": "contract-506464-BachmanAssociates.cct",
+        "type": "Sanitize Parentheses in Expression",
+        "attemptsLeft": 10,
+        "input": "(()(a(a",
+        "description": "Given the following string:\n\n (()(a(a\n\n remove the minimum number of invalid parentheses in order to validate the string. If there are multiple minimal ways to validate the string, provide all of the possible results. The answer should be provided as an array of strings. If it is impossible to validate the string the result should be an array with only an empty string.\n\n IMPORTANT: The string may contain letters, not just parentheses. Examples:\n \"()())()\" -> [\"()()()\", \"(())()\"]\n \"(a)())()\" -> [\"(a)()()\", \"(a())()\"]\n \")(\" -> [\"\"]"
+    },
+    {
+        "server": "megacorp",
+        "name": "contract-603186-BachmanAssociates.cct",
+        "type": "Compression I: RLE Compression",
+        "attemptsLeft": 10,
+        "input": "yyhhxxjjjjjjjjjMWWGGuIIIIIIIIITgMMZ00HHHHHHHHSS6uu44444444444",
+        "description": "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them into multiple runs.\n\n You are given the following input string:\n &nbsp; &nbsp; yyhhxxjjjjjjjjjMWWGGuIIIIIIIIITgMMZ00HHHHHHHHSS6uu44444444444\n Encode it using run-length encoding with the minimum possible output length.\n\n Examples:\n &nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n &nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n &nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n &nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n"
+    },
+    {
+        "server": "millenium-fitness",
+        "name": "contract-400121-UniversalEnergy.cct",
+        "type": "Shortest Path in a Grid",
+        "attemptsLeft": 10,
+        "input": [
+            [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                1
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                1,
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                1,
+                1
+            ],
+            [
+                1,
+                0,
+                0,
+                1,
+                1,
+                1,
+                1,
+                1,
+                0,
+                0
+            ],
+            [
+                0,
+                1,
+                0,
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                0,
+                0,
+                0,
+                0,
+                1,
+                0,
+                0,
+                1,
+                0,
+                1
+            ],
+            [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ],
+            [
+                1,
+                0,
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+            ]
+        ],
+        "description": "You are located in the top-left corner of the following grid:\n\n &nbsp;&nbsp;[[0,1,1,0,0,0,0,0,1,1],\n&nbsp;&nbsp;&nbsp;[1,0,0,0,0,0,0,0,1,0],\n&nbsp;&nbsp;&nbsp;[0,1,0,1,0,0,1,1,0,0],\n&nbsp;&nbsp;&nbsp;[0,1,0,0,1,0,0,0,1,1],\n&nbsp;&nbsp;&nbsp;[1,0,0,1,1,1,1,1,0,0],\n&nbsp;&nbsp;&nbsp;[0,1,0,1,0,1,0,0,0,0],\n&nbsp;&nbsp;&nbsp;[0,0,0,0,1,0,0,1,0,1],\n&nbsp;&nbsp;&nbsp;[1,0,0,0,0,0,0,0,0,0],\n&nbsp;&nbsp;&nbsp;[1,0,0,1,0,0,0,0,0,0]]\n\n You are trying to find the shortest path to the bottom-right corner of the grid, but there are obstacles on the grid that you cannot move onto. These obstacles are denoted by '1', while empty spaces are denoted by 0.\n\n Determine the shortest path from start to finish, if one exists. The answer should be given as a string of UDLR characters, indicating the moves along the path\n\n NOTE: If there are multiple equally short paths, any of them is accepted as answer. If there is no path, the answer should be an empty string.\n NOTE: The data returned for this contract is an 2D array of numbers representing the grid.\n\n Examples:\n\n &nbsp;&nbsp;&nbsp;&nbsp;[[0,1,0,0,0],\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[0,0,0,1,0]]\n \n Answer: 'DRRURRD'\n\n &nbsp;&nbsp;&nbsp;&nbsp;[[0,1],\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,0]]\n \n Answer: ''\n\n"
+    },
+    {
+        "server": "computek",
+        "name": "contract-218760-IcarusMicrosystems.cct",
+        "type": "HammingCodes: Integer to Encoded Binary",
+        "attemptsLeft": 10,
+        "input": 834266,
+        "description": "You are given the following decimal Value: \n 834266 \n Convert it to a binary representation and encode it as an 'extended Hamming code'. Eg:\n  Value 8 is expressed in binary as '1000', which will be encoded with the pattern 'pppdpddd', where p is a parity bit and d a data bit. The encoding of\n 8 is 11110000. As another example, '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n The answer should be given as a string containing only 1s and 0s.\n NOTE: the endianness of the data bits is reversed in relation to the endianness of the parity bits.\n NOTE: The bit at index zero is the overall parity bit, this should be set last.\n NOTE 2: You should watch the Hamming Code video from 3Blue1Brown, which explains the 'rule' of encoding, including the first index parity bit mentioned in the previous note.\n\n Extra rule for encoding:\n There should be no leading zeros in the 'data bit' section"
+    },
+    {
+        "server": "computek",
+        "name": "contract-412757-IcarusMicrosystems.cct",
+        "type": "Array Jumping Game",
+        "attemptsLeft": 1,
+        "input": [
+            3,
+            2,
+            0,
+            9,
+            1,
+            5,
+            5,
+            0,
+            4,
+            9,
+            5,
+            0
+        ],
+        "description": "You are given the following array of integers:\n\n 3,2,0,9,1,5,5,0,4,9,5,0\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine whether you are able to reach the last index.\n\n Your answer should be submitted as 1 or 0, representing true and false respectively"
+    },
+    {
+        "server": "netlink",
+        "name": "contract-523873.cct",
+        "type": "Compression III: LZ Compression",
+        "attemptsLeft": 10,
+        "input": "qkKF1L3QkKF1L3QkL3QkL3QkrlYccccccccB05222YGjFyx2YhN3jFyx2g248NQlVJmNaAmlrkem",
+        "description": "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data, which is either:\n\n 1. Exactly L characters, which are to be copied directly into the uncompressed data.\n 2. A reference to an earlier part of the uncompressed data. To do this, the length is followed by a second ASCII digit X: each of the L output characters is a copy of the character X places before it in the uncompressed data.\n\n For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final chunk may be of either type.\n\n You are given the following input string:\n &nbsp; &nbsp; qkKF1L3QkKF1L3QkL3QkL3QkrlYccccccccB05222YGjFyx2YhN3jFyx2g248NQlVJmNaAmlrkem\n Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n Examples (some have other possible encodings of minimal length):\n &nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n &nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n &nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n &nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n &nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n &nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n &nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n &nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041"
+    },
+    {
+        "server": "rothman-uni",
+        "name": "contract-429324.cct",
+        "type": "Array Jumping Game II",
+        "attemptsLeft": 3,
+        "input": [
+            4,
+            3,
+            4,
+            5,
+            1,
+            1,
+            2,
+            2,
+            2,
+            3,
+            3,
+            5,
+            4
+        ],
+        "description": "You are given the following array of integers:\n\n 4,3,4,5,1,1,2,2,2,3,3,5,4\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine the minimum number of jumps to reach the end of the array.\n\n If it's impossible to reach the end, then the answer should be 0."
+    },
+    {
+        "server": "rothman-uni",
+        "name": "contract-456108.cct",
+        "type": "Compression I: RLE Compression",
+        "attemptsLeft": 10,
+        "input": "nnnnnnnQQppvvvvvvvvvxxsff77FF77LLIIIIIIIIIIIUUUUUUUUBBqqsvvv500eqqZZZZZZZZZC8LLt444444",
+        "description": "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them into multiple runs.\n\n You are given the following input string:\n &nbsp; &nbsp; nnnnnnnQQppvvvvvvvvvxxsff77FF77LLIIIIIIIIIIIUUUUUUUUBBqqsvvv500eqqZZZZZZZZZC8LLt444444\n Encode it using run-length encoding with the minimum possible output length.\n\n Examples:\n &nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n &nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n &nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n &nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n"
+    },
+    {
+        "server": "rothman-uni",
+        "name": "contract-927837-BachmanAssociates.cct",
+        "type": "Sanitize Parentheses in Expression",
+        "attemptsLeft": 10,
+        "input": "(a))aaa)())a())()))",
+        "description": "Given the following string:\n\n (a))aaa)())a())()))\n\n remove the minimum number of invalid parentheses in order to validate the string. If there are multiple minimal ways to validate the string, provide all of the possible results. The answer should be provided as an array of strings. If it is impossible to validate the string the result should be an array with only an empty string.\n\n IMPORTANT: The string may contain letters, not just parentheses. Examples:\n \"()())()\" -> [\"()()()\", \"(())()\"]\n \"(a)())()\" -> [\"(a)()()\", \"(a())()\"]\n \")(\" -> [\"\"]"
+    },
+    {
+        "server": "zb-institute",
+        "name": "contract-48919.cct",
+        "type": "Encryption I: Caesar Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "EMAIL DEBUG TABLE PRINT SHELL",
+            1
+        ],
+        "description": "Caesar cipher is one of the simplest encryption technique. It is a type of substitution cipher in which each letter in the plaintext  is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A,  E would become B, and A would become X (because of rotation).\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"EMAIL DEBUG TABLE PRINT SHELL\", 1]\n The first element is the plaintext, the second element is the left shift value.\n\n Return the ciphertext as uppercase string. Spaces remains the same."
+    },
+    {
+        "server": "catalyst",
+        "name": "contract-216325-IcarusMicrosystems.cct",
+        "type": "HammingCodes: Integer to Encoded Binary",
+        "attemptsLeft": 10,
+        "input": 2360688523806,
+        "description": "You are given the following decimal Value: \n 2360688523806 \n Convert it to a binary representation and encode it as an 'extended Hamming code'. Eg:\n  Value 8 is expressed in binary as '1000', which will be encoded with the pattern 'pppdpddd', where p is a parity bit and d a data bit. The encoding of\n 8 is 11110000. As another example, '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n The answer should be given as a string containing only 1s and 0s.\n NOTE: the endianness of the data bits is reversed in relation to the endianness of the parity bits.\n NOTE: The bit at index zero is the overall parity bit, this should be set last.\n NOTE 2: You should watch the Hamming Code video from 3Blue1Brown, which explains the 'rule' of encoding, including the first index parity bit mentioned in the previous note.\n\n Extra rule for encoding:\n There should be no leading zeros in the 'data bit' section"
+    },
+    {
+        "server": "alpha-ent",
+        "name": "contract-939348.cct",
+        "type": "Spiralize Matrix",
+        "attemptsLeft": 9,
+        "input": [
+            [
+                37,
+                4,
+                34,
+                40,
+                4,
+                18
+            ],
+            [
+                12,
+                4,
+                4,
+                20,
+                3,
+                40
+            ],
+            [
+                14,
+                26,
+                44,
+                15,
+                8,
+                11
+            ],
+            [
+                29,
+                28,
+                20,
+                25,
+                20,
+                44
+            ],
+            [
+                29,
+                33,
+                20,
+                29,
+                37,
+                36
+            ],
+            [
+                12,
+                33,
+                14,
+                42,
+                17,
+                10
+            ],
+            [
+                4,
+                8,
+                18,
+                31,
+                23,
+                16
+            ],
+            [
+                24,
+                40,
+                36,
+                19,
+                4,
+                29
+            ],
+            [
+                24,
+                14,
+                3,
+                23,
+                3,
+                8
+            ],
+            [
+                14,
+                48,
+                20,
+                21,
+                14,
+                33
+            ],
+            [
+                46,
+                45,
+                11,
+                40,
+                18,
+                37
+            ],
+            [
+                39,
+                10,
+                19,
+                7,
+                39,
+                8
+            ]
+        ],
+        "description": "Given the following array of arrays of numbers representing a 2D matrix, return the elements of the matrix as an array in spiral order:\n\n&nbsp;&nbsp;&nbsp;&nbsp;[\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[37, 4,34,40, 4,18]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[12, 4, 4,20, 3,40]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[14,26,44,15, 8,11]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[29,28,20,25,20,44]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[29,33,20,29,37,36]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[12,33,14,42,17,10]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ 4, 8,18,31,23,16]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[24,40,36,19, 4,29]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[24,14, 3,23, 3, 8]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[14,48,20,21,14,33]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[46,45,11,40,18,37]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[39,10,19, 7,39, 8]\n&nbsp;&nbsp;&nbsp;&nbsp;]\n\nHere is an example of what spiral order should be:\n\n &nbsp;&nbsp;&nbsp;&nbsp;[\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 3]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4, 5, 6]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7, 8, 9]\n &nbsp;&nbsp;&nbsp;&nbsp;]\n\n Answer: [1, 2, 3, 6, 9, 8 ,7, 4, 5]\n\n Note that the matrix will not always be square:\n\n &nbsp;&nbsp;&nbsp;&nbsp;[\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;&nbsp;2,&nbsp;&nbsp;3,&nbsp;&nbsp;4]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5,&nbsp;&nbsp;6,&nbsp;&nbsp;7,&nbsp;&nbsp;8]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[9,&nbsp;10,&nbsp;11,&nbsp;12]\n &nbsp;&nbsp;&nbsp;&nbsp;]\n\n Answer: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]"
+    },
+    {
+        "server": "deltaone",
+        "name": "contract-168093.cct",
+        "type": "Total Ways to Sum II",
+        "attemptsLeft": 10,
+        "input": [
+            23,
+            [
+                3,
+                4,
+                5,
+                6,
+                7,
+                12,
+                13,
+                15,
+                17,
+                20,
+                22,
+                23
+            ]
+        ],
+        "description": "How many different distinct ways can the number 23 be written as a sum of integers contained in the set:\n\n [3,4,5,6,7,12,13,15,17,20,22,23]?\n\n You may use each integer in the set zero or more times."
+    },
+    {
+        "server": "deltaone",
+        "name": "contract-64128-BachmanAssociates.cct",
+        "type": "Encryption I: Caesar Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "SHIFT TRASH SHELL FRAME MEDIA",
+            4
+        ],
+        "description": "Caesar cipher is one of the simplest encryption technique. It is a type of substitution cipher in which each letter in the plaintext  is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A,  E would become B, and A would become X (because of rotation).\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"SHIFT TRASH SHELL FRAME MEDIA\", 4]\n The first element is the plaintext, the second element is the left shift value.\n\n Return the ciphertext as uppercase string. Spaces remains the same."
+    },
+    {
+        "server": "zeus-med",
+        "name": "contract-104763.cct",
+        "type": "Compression I: RLE Compression",
+        "attemptsLeft": 10,
+        "input": "xxGGoo22222222222222nssYVVfmjjjjAvvvvvvvvvvttoooooiit5544tvv7777t",
+        "description": "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them into multiple runs.\n\n You are given the following input string:\n &nbsp; &nbsp; xxGGoo22222222222222nssYVVfmjjjjAvvvvvvvvvvttoooooiit5544tvv7777t\n Encode it using run-length encoding with the minimum possible output length.\n\n Examples:\n &nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n &nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n &nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n &nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n"
+    },
+    {
+        "server": "zeus-med",
+        "name": "contract-960832.cct",
+        "type": "Encryption I: Caesar Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "MOUSE ARRAY CACHE QUEUE EMAIL",
+            1
+        ],
+        "description": "Caesar cipher is one of the simplest encryption technique. It is a type of substitution cipher in which each letter in the plaintext  is replaced by a letter some fixed number of positions down the alphabet. For example, with a left shift of 3, D would be replaced by A,  E would become B, and A would become X (because of rotation).\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"MOUSE ARRAY CACHE QUEUE EMAIL\", 1]\n The first element is the plaintext, the second element is the left shift value.\n\n Return the ciphertext as uppercase string. Spaces remains the same."
+    },
+    {
+        "server": "zb-def",
+        "name": "contract-775212.cct",
+        "type": "Generate IP Addresses",
+        "attemptsLeft": 10,
+        "input": "2417261126",
+        "description": "Given the following string containing only digits, return an array with all possible valid IP address combinations that can be created from the string:\n\n 2417261126\n\n Note that an octet cannot begin with a '0' unless the number itself is actually 0. For example, '192.168.010.1' is not a valid IP.\n\n Examples:\n\n 25525511135 -> [\"255.255.11.135\", \"255.255.111.35\"]\n 1938718066 -> [\"193.87.180.66\"]"
+    },
+    {
+        "server": "nova-med",
+        "name": "contract-690515.cct",
+        "type": "Encryption II: Vigenère Cipher",
+        "attemptsLeft": 10,
+        "input": [
+            "ENTERMEDIALOGINARRAYVIRUS",
+            "SECURITY"
+        ],
+        "description": "Vigenère cipher is a type of polyalphabetic substitution. It uses  the Vigenère square to encrypt and decrypt plaintext with a keyword.\n\n &nbsp;&nbsp;Vigenère square:\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; +----------------------------------------------------\n &nbsp;&nbsp;&nbsp;&nbsp; A | A B C D E F G H I J K L M N O P Q R S T U V W X Y Z \n &nbsp;&nbsp;&nbsp;&nbsp; B | B C D E F G H I J K L M N O P Q R S T U V W X Y Z A \n &nbsp;&nbsp;&nbsp;&nbsp; C | C D E F G H I J K L M N O P Q R S T U V W X Y Z A B\n &nbsp;&nbsp;&nbsp;&nbsp; D | D E F G H I J K L M N O P Q R S T U V W X Y Z A B C\n &nbsp;&nbsp;&nbsp;&nbsp; E | E F G H I J K L M N O P Q R S T U V W X Y Z A B C D\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;...\n &nbsp;&nbsp;&nbsp;&nbsp; Y | Y Z A B C D E F G H I J K L M N O P Q R S T U V W X\n &nbsp;&nbsp;&nbsp;&nbsp; Z | Z A B C D E F G H I J K L M N O P Q R S T U V W X Y\n\n For encryption each letter of the plaintext is paired with the corresponding letter of a repeating keyword. For example, the plaintext DASHBOARD is encrypted with the keyword LINUX:\n &nbsp;&nbsp; Plaintext: DASHBOARD\n &nbsp;&nbsp; Keyword:&nbsp;&nbsp;&nbsp;LINUXLINU\n So, the first letter D is paired with the first letter of the key L. Therefore, row D and column L of the  Vigenère square are used to get the first cipher letter O. This must be repeated for the whole ciphertext.\n\n You are given an array with two elements:\n &nbsp;&nbsp;[\"ENTERMEDIALOGINARRAYVIRUS\", \"SECURITY\"]\n The first element is the plaintext, the second element is the keyword.\n\n Return the ciphertext as uppercase string."
+    },
+    {
+        "server": "microdyne",
+        "name": "contract-495025-BachmanAssociates.cct",
+        "type": "Array Jumping Game",
+        "attemptsLeft": 1,
+        "input": [
+            6,
+            0,
+            1,
+            0,
+            2,
+            7,
+            4,
+            8,
+            0,
+            10,
+            8,
+            4,
+            0,
+            3,
+            0,
+            6,
+            5,
+            1,
+            3,
+            0,
+            2,
+            0,
+            2
+        ],
+        "description": "You are given the following array of integers:\n\n 6,0,1,0,2,7,4,8,0,10,8,4,0,3,0,6,5,1,3,0,2,0,2\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine whether you are able to reach the last index.\n\n Your answer should be submitted as 1 or 0, representing true and false respectively"
+    },
+    {
+        "server": "microdyne",
+        "name": "contract-708967.cct",
+        "type": "Unique Paths in a Grid I",
+        "attemptsLeft": 10,
+        "input": [
+            11,
+            13
+        ],
+        "description": "You are in a grid with 11 rows and 13 columns, and you are positioned in the top-left corner of that grid. You are trying to reach the bottom-right corner of the grid, but you can only move down or right on each step. Determine how many unique paths there are from start to finish.\n\n NOTE: The data returned for this contract is an array with the number of rows and columns:\n\n [11, 13]"
+    },
+    {
+        "server": "stormtech",
+        "name": "contract-531615.cct",
+        "type": "Merge Overlapping Intervals",
+        "attemptsLeft": 15,
+        "input": [
+            [
+                22,
+                30
+            ],
+            [
+                3,
+                13
+            ],
+            [
+                12,
+                19
+            ],
+            [
+                4,
+                10
+            ],
+            [
+                20,
+                24
+            ],
+            [
+                15,
+                20
+            ],
+            [
+                15,
+                21
+            ],
+            [
+                10,
+                19
+            ],
+            [
+                23,
+                28
+            ],
+            [
+                20,
+                27
+            ],
+            [
+                3,
+                7
+            ],
+            [
+                1,
+                3
+            ],
+            [
+                24,
+                33
+            ],
+            [
+                7,
+                16
+            ],
+            [
+                8,
+                16
+            ],
+            [
+                24,
+                26
+            ],
+            [
+                21,
+                29
+            ],
+            [
+                9,
+                12
+            ],
+            [
+                17,
+                22
+            ],
+            [
+                22,
+                26
+            ]
+        ],
+        "description": "Given the following array of arrays of numbers representing a list of intervals, merge all overlapping intervals.\n\n [[22,30],[3,13],[12,19],[4,10],[20,24],[15,20],[15,21],[10,19],[23,28],[20,27],[3,7],[1,3],[24,33],[7,16],[8,16],[24,26],[21,29],[9,12],[17,22],[22,26]]\n\n Example:\n\n [[1, 3], [8, 10], [2, 6], [10, 16]]\n\n would merge into [[1, 6], [8, 16]].\n\n The intervals must be returned in ASCENDING order. You can assume that in an interval, the first number will always be smaller than the second."
+    },
+    {
+        "server": "titan-labs",
+        "name": "contract-234128-BachmanAssociates.cct",
+        "type": "Subarray with Maximum Sum",
+        "attemptsLeft": 10,
+        "input": [
+            -7,
+            -9,
+            9,
+            -1,
+            9,
+            4,
+            9,
+            -4,
+            8,
+            -9,
+            5,
+            9,
+            -5,
+            4,
+            -6,
+            6,
+            6,
+            1,
+            -6
+        ],
+        "description": "Given the following integer array, find the contiguous subarray (containing at least one number) which has the largest sum and return that sum. 'Sum' refers to the sum of all the numbers in the subarray.\n -7,-9,9,-1,9,4,9,-4,8,-9,5,9,-5,4,-6,6,6,1,-6"
+    },
+    {
+        "server": "applied-energetics",
+        "name": "contract-658377-UniversalEnergy.cct",
+        "type": "Compression III: LZ Compression",
+        "attemptsLeft": 10,
+        "input": "sLMLMLMLMLLenSepdw7enSepdenSepdenZCjTspbpspbbpspbbpI2sCspbbpI2H6JHbbpI2H6BqbbCB",
+        "description": "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data, which is either:\n\n 1. Exactly L characters, which are to be copied directly into the uncompressed data.\n 2. A reference to an earlier part of the uncompressed data. To do this, the length is followed by a second ASCII digit X: each of the L output characters is a copy of the character X places before it in the uncompressed data.\n\n For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final chunk may be of either type.\n\n You are given the following input string:\n &nbsp; &nbsp; sLMLMLMLMLLenSepdw7enSepdenSepdenZCjTspbpspbbpspbbpI2sCspbbpI2H6JHbbpI2H6BqbbCB\n Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n Examples (some have other possible encodings of minimal length):\n &nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n &nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n &nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n &nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n &nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n &nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n &nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n &nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041"
+    },
+    {
+        "server": "fulcrumtech",
+        "name": "contract-158939-TheBlackHand.cct",
+        "type": "Array Jumping Game II",
+        "attemptsLeft": 3,
+        "input": [
+            5,
+            4,
+            1,
+            1,
+            4,
+            2,
+            1
+        ],
+        "description": "You are given the following array of integers:\n\n 5,4,1,1,4,2,1\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine the minimum number of jumps to reach the end of the array.\n\n If it's impossible to reach the end, then the answer should be 0."
+    },
+    {
+        "server": "fulcrumtech",
+        "name": "contract-92656.cct",
+        "type": "HammingCodes: Encoded Binary to Integer",
+        "attemptsLeft": 10,
+        "input": "1001000011001010",
+        "description": "You are given the following encoded binary string: \n '1001000011001010' \n\n Treat it as an extended Hamming code with 1 'possible' error at a random index.\n Find the 'possible' wrong bit, fix it and extract the decimal value, which is hidden inside the string.\n\n Note: The length of the binary string is dynamic, but its encoding/decoding follows Hamming's 'rule'\n Note 2: Index 0 is an 'overall' parity bit. Watch the Hamming code video from 3Blue1Brown for more information\n Note 3: There's a ~55% chance for an altered Bit. So... MAYBE there is an altered Bit 😉\n Note: The endianness of the encoded decimal value is reversed in relation to the endianness of the Hamming code. Where the Hamming code is expressed as little-endian (LSB at index 0), the decimal value encoded in it is expressed as big-endian (MSB at index 0).\n Extra note for automation: return the decimal value as a string"
+    },
+    {
+        "server": "kuai-gong",
+        "name": "contract-204490-BachmanAssociates.cct",
+        "type": "Find All Valid Math Expressions",
+        "attemptsLeft": 10,
+        "input": [
+            "56296920",
+            -30
+        ],
+        "description": "You are given the following string which contains only digits between 0 and 9:\n\n 56296920\n\n You are also given a target number of -30. Return all possible ways you can add the +(add), -(subtract), and *(multiply) operators to the string such that it evaluates to the target number. (Normal order of operations applies.)\n\n The provided answer should be an array of strings containing the valid expressions. The data provided by this problem is an array with two elements. The first element is the string of digits, while the second element is the target number:\n\n [\"56296920\", -30]\n\n NOTE: The order of evaluation expects script operator precedence NOTE: Numbers in the expression cannot have leading 0's. In other words, \"1+01\" is not a valid expression Examples:\n\n Input: digits = \"123\", target = 6\n Output: [1+2+3, 1*2*3]\n\n Input: digits = \"105\", target = 5\n Output: [1*0+5, 10-5]"
+    },
+    {
+        "server": "kuai-gong",
+        "name": "contract-909679.cct",
+        "type": "HammingCodes: Integer to Encoded Binary",
+        "attemptsLeft": 10,
+        "input": 21350938216721596,
+        "description": "You are given the following decimal Value: \n 21350938216721596 \n Convert it to a binary representation and encode it as an 'extended Hamming code'. Eg:\n  Value 8 is expressed in binary as '1000', which will be encoded with the pattern 'pppdpddd', where p is a parity bit and d a data bit. The encoding of\n 8 is 11110000. As another example, '10101' (Value 21) will result into (pppdpdddpd) '1001101011'.\n The answer should be given as a string containing only 1s and 0s.\n NOTE: the endianness of the data bits is reversed in relation to the endianness of the parity bits.\n NOTE: The bit at index zero is the overall parity bit, this should be set last.\n NOTE 2: You should watch the Hamming Code video from 3Blue1Brown, which explains the 'rule' of encoding, including the first index parity bit mentioned in the previous note.\n\n Extra rule for encoding:\n There should be no leading zeros in the 'data bit' section"
+    },
+    {
+        "server": "nectar-net",
+        "name": "contract-525186-Sector12.cct",
+        "type": "Compression I: RLE Compression",
+        "attemptsLeft": 10,
+        "input": "EkkkkOF77888MMOOlllllqzIIIInss88888855AAPPNNNNFWWWWWWW8VVVwwwx66RrRbbbbbbbbb55AAAaOB",
+        "description": "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them into multiple runs.\n\n You are given the following input string:\n &nbsp; &nbsp; EkkkkOF77888MMOOlllllqzIIIInss88888855AAPPNNNNFWWWWWWW8VVVwwwx66RrRbbbbbbbbb55AAAaOB\n Encode it using run-length encoding with the minimum possible output length.\n\n Examples:\n &nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n &nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n &nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n &nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n"
+    },
+    {
+        "server": "CSEC",
+        "name": "contract-218743.cct",
+        "type": "Sanitize Parentheses in Expression",
+        "attemptsLeft": 10,
+        "input": "(a)a())a))(a(a))(",
+        "description": "Given the following string:\n\n (a)a())a))(a(a))(\n\n remove the minimum number of invalid parentheses in order to validate the string. If there are multiple minimal ways to validate the string, provide all of the possible results. The answer should be provided as an array of strings. If it is impossible to validate the string the result should be an array with only an empty string.\n\n IMPORTANT: The string may contain letters, not just parentheses. Examples:\n \"()())()\" -> [\"()()()\", \"(())()\"]\n \"(a)())()\" -> [\"(a)()()\", \"(a())()\"]\n \")(\" -> [\"\"]"
+    },
+    {
+        "server": "CSEC",
+        "name": "contract-306591-BachmanAssociates.cct",
+        "type": "Algorithmic Stock Trader III",
+        "attemptsLeft": 9,
+        "input": [
+            75,
+            166,
+            96,
+            69,
+            127,
+            95,
+            185,
+            2,
+            158,
+            146,
+            141,
+            142,
+            107,
+            141,
+            44,
+            5,
+            91,
+            116,
+            192,
+            178,
+            186,
+            73,
+            26,
+            94,
+            54,
+            140,
+            166,
+            92,
+            47,
+            41,
+            82,
+            66,
+            174,
+            126,
+            103,
+            81,
+            37,
+            57,
+            171,
+            49,
+            70,
+            140,
+            148,
+            36,
+            21,
+            40,
+            57,
+            176,
+            116
+        ],
+        "description": "You are given the following array of stock prices (which are numbers) where the i-th element represents the stock price on day i:\n\n 75,166,96,69,127,95,185,2,158,146,141,142,107,141,44,5,91,116,192,178,186,73,26,94,54,140,166,92,47,41,82,66,174,126,103,81,37,57,171,49,70,140,148,36,21,40,57,176,116\n\n Determine the maximum possible profit you can earn using at most two transactions. A transaction is defined as buying and then selling one share of the stock. Note that you cannot engage in multiple transactions at once. In other words, you must sell the stock before you buy it again.\n\n If no profit can be made, then the answer should be 0"
+    },
+    {
+        "server": "CSEC",
+        "name": "contract-827413.cct",
+        "type": "Compression I: RLE Compression",
+        "attemptsLeft": 10,
+        "input": "zzzzzzzzzzz5l15566DDxxmmmmmmmEEEEEEsggggg3rrrrrrrrrTTTTcTTHHl5EEEE",
+        "description": "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them into multiple runs.\n\n You are given the following input string:\n &nbsp; &nbsp; zzzzzzzzzzz5l15566DDxxmmmmmmmEEEEEEsggggg3rrrrrrrrrTTTTcTTHHl5EEEE\n Encode it using run-length encoding with the minimum possible output length.\n\n Examples:\n &nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n &nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n &nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n &nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n"
+    },
+    {
+        "server": "syscore",
+        "name": "contract-939641-UniversalEnergy.cct",
+        "type": "Compression I: RLE Compression",
+        "attemptsLeft": 10,
+        "input": "MMMMMMMMM88888wwwwwwwwwwwwwpplZgPsYMuuuuu7TUggggAAAAADDDDDDDDDDDDDDhhhhzwa",
+        "description": "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them into multiple runs.\n\n You are given the following input string:\n &nbsp; &nbsp; MMMMMMMMM88888wwwwwwwwwwwwwpplZgPsYMuuuuu7TUggggAAAAADDDDDDDDDDDDDDhhhhzwa\n Encode it using run-length encoding with the minimum possible output length.\n\n Examples:\n &nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n &nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n &nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n &nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n"
+    }
+]

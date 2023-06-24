@@ -20,6 +20,8 @@ export async function main(ns) {
     ns.rm('data/recordOfWhoIsBeingHacked.txt');
     ns.rm('data/salesLedger.txt');
     ns.rm('stopTrading.txt');
-    ns.rm('data/stockHistory.txt')
-    ns.rm('data/contractData.txt')
+    ns.rm('data/stockHistory.txt');
+    ns.rm('data/contractData.txt');
+    ns.rm('data/serversUsedForBatching.txt');
+    ns.rm('data/batchQueue.txt')
 }
