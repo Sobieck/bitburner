@@ -22,6 +22,7 @@ export async function main(ns) {
 
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
     const targetNames = Array.from(batchQueue.keys());
+    const player = ns.getPlayer();
 
     giveBatchQueueStructure(targetNames, batchQueue);
     cleanFinishedJobsFromQueue(targetNames, batchQueue);
@@ -29,7 +30,73 @@ export async function main(ns) {
     addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment);
 
 
-    // initialize
+    for (const target of targetNames) {
+        const targetServer = ns.getServer(target);
+        const batch = batchQueue.get(target);
+        const amountToWeaken = targetServer.hackDifficulty - targetServer.minDifficulty;
+        const serverHasMaxMoney = targetServer.moneyMax === targetServer.moneyAvailable;
+        const currentTime = new Date();
+
+        // if(amountToWeaken === 0 && serverHasMaxMoney)
+
+        if (batch.prepStage) {
+            // 
+
+            if (batch.successfulWeakening === false) {
+                if (currentTime > new Date(batch.weakeningDoneAfter) || !batch.weakeningDoneAfter) {
+                    if (amountToWeaken !== 0) {
+                        let endDate = new Date()
+                        endDate = getWeakenEndDate(ns, targetServer, player);
+                        addSecondsToDate(endDate, 10)
+
+                        const job = new JobHasTo(new Date(), endDate, "initial-weaken");
+                        batch.jobs.push(job);
+                        batch.weakeningDoneAfter = endDate;
+                    } else if (amountToWeaken === 0) {
+                        batch.successfulWeakening = true;
+                    }
+                }
+            }
+
+            if (batch.successfulWeakening && batch.successfulGrowing === false) {
+                if (currentTime > new Date(batch.growDoneAfter) || !batch.growDoneAfter) {
+
+                    if (serverHasMaxMoney === false) {
+
+                        if (targetServer.moneyAvailable === 0) {
+                            const serverDoingHackin = getServerWithMostUnallocatedSpace(ns, serversUsedForBatching, batchQueue);
+                            const growThreads = getGrowThreads(ns, targetServer, player, serverDoingHackin);
+                            batch.securityWeNeedToReduceAfterFullGrowth = ns.growthAnalyzeSecurity(growThreads, target, serverDoingHackin.cpuCores);
+                        }
+
+                        const growTime = ns.formulas.hacking.growTime(targetServer, player);
+
+                        let endDate = new Date()
+                        addMillisecondsToDate(endDate, growTime);
+                        addSecondsToDate(endDate, 10)
+
+                        const job = new JobHasTo(new Date(), endDate, "initial-grow");
+                        batch.job.push(job);
+                        batch.growDoneAfter = endDate;
+                    }
+
+
+                    else if (serverHasMaxMoney) {
+                        batch.successfulGrowing = true;
+                    }
+                }
+            }
+
+            if(batch.successfulGrowing && batch.successfulHacking === false){
+                
+                if(currentTime > new Date(batch.hackDoneAfter) || !batch.hackDoneAfter){
+                    // handle failure here, reset weaken and grow, failure is not having just 0 dollars in the bank account
+                    // on success flag it, but still reset weaken and grow.
+                    // add amount of heat we will get on hacks here as well.
+                }
+            }
+        }
+    }
     // initial weakening
     // initial grow
     // next weakening 
@@ -42,10 +109,6 @@ export async function main(ns) {
     // run new hacks based on the queue. 
     // 
 
-    const serverDoingHackin = ns.getServer("home"); // make this an array of servers
-    const player = ns.getPlayer();
-
-    const currentTime = new Date();
 
 
 
@@ -64,20 +127,7 @@ export async function main(ns) {
 
     //     if (batch.prepStage) {
     //         if (!batch.initialWeakeningDoneAfter) {
-    //             let endDate = new Date()
 
-    //             if (amountToWeaken !== 0) {
-
-    //                 let numberOfThreadsToWeaken = getNumberOfThreadsToWeaken(ns, serverDoingHackin, amountToWeaken);
-
-    //                 endDate = getWeakenEndDate(ns, targetServer, player);
-
-
-    //                 ns.scp(weakenScript, serverDoingHackin.hostname);
-    //                 ns.exec(weakenScript, serverDoingHackin.hostname, numberOfThreadsToWeaken, theTarget);
-    //             }
-
-    //             batch.initialWeakeningDoneAfter = endDate;
 
     //         } else if (!batch.initialGrowDoneAfter && currentTime > new Date(batch.initialWeakeningDoneAfter)) {
     //             if (amountToWeaken > 0) {
@@ -90,7 +140,7 @@ export async function main(ns) {
 
     //             if (!serverHasMaxMoney) {
     //                 const howManyThreadsToGrow = getGrowThreads(ns, targetServer, player, serverDoingHackin);
-    //                 const growTime = ns.formulas.hacking.growTime(targetServer, player);
+    //                
 
     //                 ns.scp(growScript, serverDoingHackin.hostname);
     //                 ns.exec(growScript, serverDoingHackin.hostname, howManyThreadsToGrow, theTarget);
@@ -192,12 +242,18 @@ class BatchQueue {
         obj && Object.assign(this, obj);
     }
 
-    prepStage = true;
     targetMachineSaturatedWithAttacks = false;
 
+    prepStage = true;
+
     weakeningDoneAfter;
-    initialGrowDoneAfter;
-    initialHackDoneAfter;
+    successfulWeakening = false;
+
+    growDoneAfter;
+    successfulGrowing = false;
+
+    hackDoneAfter;
+    successfulHacking = false;
 
     securityWeNeedToReduceAfterFullHack;
     securityWeNeedToReduceAfterFullGrowth;
@@ -236,10 +292,12 @@ class BatchJob {
 }
 
 class JobHasTo {
+    executed = false;
     constructor(endAfter, endBefore, type) {
         this.endAfter = endAfter;
         this.endBefore = endBefore;
         this.type = type;
+        this.types = ["grow", "hack", "weaken-after-hack", "weaken-after-grow", "initial-weaken", "initial-grow", "initial-hack"]
     }
 }
 
@@ -331,6 +389,27 @@ function addServerToHackingPoolIfNeedBe(serversUsedForBatching, ns, batchQueue, 
     }
 }
 
+function getServerWithMostUnallocatedSpace(ns, serversUsedForBatching, batchQueue) {
+    let server;
+    let serversUnallocatedSpace;
+    for (let i = 0; i < serversUsedForBatching.length; i++) {
+        const serverName = serversUsedForBatching[i];
+        if (!server) {
+            serversUnallocatedSpace = getUnallocatedMemoryOnServer(ns, serverName, batchQueue);
+            server = getServer(ns, serverName);
+        } else {
+            const nextServersUnallocatedSpace = getUnallocatedMemoryOnServer(ns, serverName, batchQueue);
+
+            if (nextServersUnallocatedSpace > serversUnallocatedSpace) {
+                serversUnallocatedSpace = serversUnallocatedSpace;
+                server = getServer(ns, serverName);
+            }
+        }
+    }
+
+    return server;
+}
+
 function getUnallocatedMemoryOnServer(ns, serverName, batchQueue) {
     const server = getServer(ns, serverName);
     const serverMaxMemory = server.maxRam;
@@ -417,6 +496,14 @@ function getHackThreadsForTotalStealing(ns, theTarget, targetServer) {
 
 function getGrowThreads(ns, serverToHack, player, serverDoingHackin) {
     return Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, serverDoingHackin.cpuCores));
+}
+
+function addSecondsToDate(date, secondsToAdd) {
+    date.setSeconds(date.getSeconds() + secondsToAdd);
+}
+
+function addMillisecondsToDate(date, msToAdd) {
+    date.setMilliseconds(date.getMilliseconds() + msToAdd);
 }
 
 function getWeakenEndDate(ns, targetServer, player) {
