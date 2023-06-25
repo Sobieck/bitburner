@@ -30,17 +30,18 @@ export async function main(ns) {
     addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment);
 
 
-    for (const target of targetNames) {
-        const targetServer = ns.getServer(target);
-        const batch = batchQueue.get(target);
+    for (const nameOfTarget of targetNames) {
+        const targetServer = ns.getServer(nameOfTarget);
+        const batch = batchQueue.get(nameOfTarget);
         const amountToWeaken = targetServer.hackDifficulty - targetServer.minDifficulty;
         const serverHasMaxMoney = targetServer.moneyMax === targetServer.moneyAvailable;
         const currentTime = new Date();
 
-        // if(amountToWeaken === 0 && serverHasMaxMoney)
+        if (amountToWeaken === 0 && serverHasMaxMoney && batch.securityWeNeedToReduceAfterFullHack && batch.securityWeNeedToReduceAfterFullGrowth) {
+            batch.prepStage = false;
+        }
 
         if (batch.prepStage) {
-            // 
 
             if (batch.successfulWeakening === false) {
                 if (currentTime > new Date(batch.weakeningDoneAfter) || !batch.weakeningDoneAfter) {
@@ -66,7 +67,7 @@ export async function main(ns) {
                         if (targetServer.moneyAvailable === 0) {
                             const serverDoingHackin = getServerWithMostUnallocatedSpace(ns, serversUsedForBatching, batchQueue);
                             const growThreads = getGrowThreads(ns, targetServer, player, serverDoingHackin);
-                            batch.securityWeNeedToReduceAfterFullGrowth = ns.growthAnalyzeSecurity(growThreads, target, serverDoingHackin.cpuCores);
+                            batch.securityWeNeedToReduceAfterFullGrowth = ns.growthAnalyzeSecurity(growThreads, nameOfTarget, serverDoingHackin.cpuCores);
                         }
 
                         const growTime = ns.formulas.hacking.growTime(targetServer, player);
@@ -81,18 +82,45 @@ export async function main(ns) {
                     }
 
 
-                    else if (serverHasMaxMoney) {
+                    if (serverHasMaxMoney) {
                         batch.successfulGrowing = true;
+                        batch.successfulWeakening = false;
                     }
                 }
             }
 
-            if(batch.successfulGrowing && batch.successfulHacking === false){
-                
-                if(currentTime > new Date(batch.hackDoneAfter) || !batch.hackDoneAfter){
-                    // handle failure here, reset weaken and grow, failure is not having just 0 dollars in the bank account
-                    // on success flag it, but still reset weaken and grow.
-                    // add amount of heat we will get on hacks here as well.
+            if (batch.successfulGrowing && batch.successfulHacking === false) {
+
+                if (currentTime > new Date(batch.hackDoneAfter) || !batch.hackDoneAfter) {
+                    if (serverHasMaxMoney) {
+                        if (currentTime > new Date(batch.hackDoneAfter)) {
+
+                            batch.successfulWeakening = false;
+                            batch.successfulGrowing = false;
+                            batch.successfulHacking = false;
+                            batch.hackDoneAfter = undefined;
+
+                        } else {
+                            const hackThreads = getHackThreadsForTotalStealing(ns, nameOfTarget, targetServer);
+                            batch.securityWeNeedToReduceAfterFullHack = ns.hackAnalyzeSecurity(hackThreads, nameOfTarget);
+
+                            const hackTime = ns.formulas.hacking.hackTime(targetServer, player);
+
+                            let endDate = new Date()
+                            addMillisecondsToDate(endDate, hackTime);
+                            addSecondsToDate(endDate, 10)
+    
+                            const job = new JobHasTo(new Date(), endDate, "initial-hack");
+                            batch.job.push(job);
+                            batch.hackDoneAfter = endDate;
+                        }
+                    }
+
+                    if (targetServer.moneyAvailable === 0) {
+                        batch.successfulGrowing = false;
+                        batch.successfulWeakening = false;
+                        batch.successfulHacking = true;
+                    }
                 }
             }
         }
@@ -162,8 +190,7 @@ export async function main(ns) {
 
     //             const endDate = new Date();
 
-    //             const hackThreads = getHackThreadsForTotalStealing(ns, theTarget, targetServer);
-    //             batch.securityWeNeedToReduceAfterFullHack = ns.hackAnalyzeSecurity(hackThreads, theTarget);
+
 
 
     //             const serverToHack = ns.getServer(theTarget);
