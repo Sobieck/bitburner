@@ -33,47 +33,51 @@ export async function main(ns) {
         prepServerForBatching(targetServer, batchForTarget, ns, player, serversUsedForBatching, batchQueueForDifferentTargets, nameOfTarget);
         // add jobs to batches
 
-        
+
         if (batchForTarget.prepStage === false) {
 
-            const batch = new BatchOfJobs();
+            if (batchForTarget.batchesQueue.length === 0 || batchForTarget.batchesQueue.every(x => new Date() > new Date(x.startTime))) {
+                const batch = new BatchOfJobs();
 
-            const secondsToPad = 6;
-            const msToPad = 6;
-            const noJobsRunningAfter = batchForTarget.thereAreNoJobsRunningAfter();
-            let noMoreJobsAfter = new Date();
-            
-            if(noJobsRunningAfter > 0){
-                noMoreJobsAfter = new Date(noJobsRunningAfter);
+                const secondsToPadEndTime = 6;
+                const msToPadStartTime = 6;
+                
+                const defaultStartTime = getWeakenEndDate(ns, targetServer, player);
+                addSecondsToDate(defaultStartTime, 40);
+
+                let noMoreJobsAfter = new Date(defaultStartTime);
+
+                const noJobsRunningAfter = batchForTarget.thereAreNoJobsRunningAfter();
+                if (noJobsRunningAfter > 0) {
+                    noMoreJobsAfter = new Date(noJobsRunningAfter);
+                }
+
+                const hackStart = createNewDataFromOldDateAndAddMilliseconds(noMoreJobsAfter, msToPadStartTime);
+                const hackEnd = createNewDataFromOldDateAndAddSeconds(hackStart, secondsToPadEndTime);
+
+                batch.jobs.push(new JobHasTo(hackStart, hackEnd, "hack"))
+
+                const weakenAfterhackStart = createNewDataFromOldDateAndAddMilliseconds(hackEnd, msToPadStartTime);
+                const weakenAfterHackEnd = createNewDataFromOldDateAndAddSeconds(weakenAfterhackStart, secondsToPadEndTime);
+
+                batch.jobs.push(new JobHasTo(weakenAfterhackStart, weakenAfterHackEnd, "weaken-after-hack"))
+
+                const growStart = createNewDataFromOldDateAndAddMilliseconds(weakenAfterHackEnd, msToPadStartTime);
+                const growEnd = createNewDataFromOldDateAndAddSeconds(growStart, secondsToPadEndTime);
+
+                batch.jobs.push(new JobHasTo(growStart, growEnd, "grow"))
+
+                const weakenAfterGrowStart = createNewDataFromOldDateAndAddMilliseconds(growEnd, msToPadStartTime);
+                const weakenAfterGrowEnd = createNewDataFromOldDateAndAddSeconds(weakenAfterGrowStart, secondsToPadEndTime);
+
+                batch.jobs.push(new JobHasTo(weakenAfterGrowStart, weakenAfterGrowEnd, "weaken-after-grow"))
+
+                batchForTarget.batchesQueue.push(batch);
             }
-
-            const hackStart = createNewDataFromOldDateAndAddMilliseconds(noMoreJobsAfter, msToPad);
-            const hackEnd = createNewDataFromOldDateAndAddSeconds(hackStart, secondsToPad);
-
-            batch.jobs.push(new JobHasTo(hackStart, hackEnd, "hack"))
-
-            const weakenAfterhackStart = createNewDataFromOldDateAndAddMilliseconds(hackEnd, msToPad);
-            const weakenAfterHackEnd = createNewDataFromOldDateAndAddSeconds(weakenAfterhackStart, secondsToPad);
-
-            batch.jobs.push(new JobHasTo(weakenAfterhackStart, weakenAfterHackEnd, "weaken-after-hack"))
-
-            const growStart = createNewDataFromOldDateAndAddMilliseconds(weakenAfterHackEnd, msToPad);
-            const growEnd = createNewDataFromOldDateAndAddSeconds(growStart, secondsToPad);
-
-            batch.jobs.push(new JobHasTo(growStart, growEnd, "grow"))
-
-            const weakenAfterGrowStart = createNewDataFromOldDateAndAddMilliseconds(growEnd, msToPad);
-            const weakenAfterGrowEnd = createNewDataFromOldDateAndAddSeconds(weakenAfterGrowStart, secondsToPad);
-
-            batch.jobs.push(new JobHasTo(weakenAfterGrowStart, weakenAfterGrowEnd, "weaken-after-grow"))
-
-            batchForTarget.batchesQueue.push(batch);
         }
     }
 
-
     executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsedForBatching, player, enviroment);
-
 
     ns.rm(nameOfServersUsedFile);
     ns.write(nameOfServersUsedFile, JSON.stringify(serversUsedForBatching), "W")
@@ -114,7 +118,7 @@ class BatchQueueForTarget {
             .reduce((acc, x) => acc + x, 0);
     }
 
-    thereAreNoJobsRunningAfter(){
+    thereAreNoJobsRunningAfter() {
         return Math.max(...this.batchesQueue.map(x => x.wholeBatchFinishsBefore()));
     }
 }
@@ -546,12 +550,12 @@ function getGrowThreads(ns, serverToHack, player, serverDoingHackin) {
     return Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, serverDoingHackin.cpuCores));
 }
 
-function createNewDataFromOldDateAndAddSeconds(date, secondsToAdd){
+function createNewDataFromOldDateAndAddSeconds(date, secondsToAdd) {
     const newDate = new Date(date);
     return addSecondsToDate(newDate, secondsToAdd);
 }
 
-function createNewDataFromOldDateAndAddMilliseconds(date, secondsToAdd){
+function createNewDataFromOldDateAndAddMilliseconds(date, secondsToAdd) {
     const newDate = new Date(date);
     return addSecondsToDate(newDate, secondsToAdd);
 }
