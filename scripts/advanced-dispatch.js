@@ -13,7 +13,15 @@ export async function main(ns) {
     const growScript = 'scripts/advanced-hacks/grow.js'
     const weakenScript = 'scripts/advanced-hacks/weaken.js'
     const batchQueuesFileName = "data/batchQueue.txt"
+
     let batchTargets = [];
+
+    let machinesRunningBatches = []
+    const machinesRunningBatchesTextName = "data/serversUsedForBatching.txt"
+
+    if (ns.fileExists(machinesRunningBatchesTextName)) {
+        machinesRunningBatches = JSON.parse(ns.read(machinesRunningBatchesTextName));
+    }
 
     const portsWeCanPop = helpers.numberOfPortsWeCanPop();
     const currentHackingLevel = ns.getHackingLevel();
@@ -56,21 +64,20 @@ export async function main(ns) {
 
     cleanProcessesAttackingBatchTarget(ns, recordOfWhoIsBeingHacked, batchTargets);
 
-    if (!ns.fileExists("Formulas.exe")){
-        const homeServer = ns.getServer("home")
-        homeServer.maxRam -= 32;
-        homeServer.ramUsed -= 32;
-    
-        if (homeServer.ramUsed < 0) {
-            homeServer.ramUsed = 0;
-        }
-    
-        allHackableMachines.push({ name: "home", server: homeServer })
+    const homeServer = ns.getServer("home")
+    homeServer.maxRam -= 32;
+    homeServer.ramUsed -= 32;
+
+    if (homeServer.ramUsed < 0) {
+        homeServer.ramUsed = 0;
     }
 
+    allHackableMachines.push({ name: "home", server: homeServer })
+
     const freeMachines = allHackableMachines
-        .filter(x => x.server.ramUsed === 0 && x.server.maxRam !== 0)
+        .filter(x => x.server.ramUsed === 0 && x.server.maxRam !== 0 && !machinesRunningBatches.includes(x.name))
         .sort((b, a) => b.server.maxRam - a.server.maxRam);
+
 
     roundData.countOfFreeMachines = freeMachines.length;
 
@@ -114,7 +121,7 @@ export async function main(ns) {
             freeMachines.push(machineToRunOn);
             // ns.tprint("Broke out of hack queue with servers left.")
         } else {
-            
+
             const threadsNeeded = Math.floor((machineToRunOn.server.maxRam - spaceRequireForOtherPrograms) / ramNeededForHack)
 
             ns.scp(hackScript, machineToRunOn.name);
@@ -217,11 +224,11 @@ export async function main(ns) {
             });
     }
 
-    function cleanProcessesAttackingBatchTarget(ns, recordOfWhoIsBeingHacked, batchTargets){
+    function cleanProcessesAttackingBatchTarget(ns, recordOfWhoIsBeingHacked, batchTargets) {
         for (const machineHackin of recordOfWhoIsBeingHacked) {
             const whoTheyHackin = machineHackin[1].name;
-            
-            if(batchTargets.includes(whoTheyHackin)){
+
+            if (batchTargets.includes(whoTheyHackin)) {
                 ns.killall(machineHackin[0]);
                 recordOfWhoIsBeingHacked.delete(machineHackin[0]);
             }

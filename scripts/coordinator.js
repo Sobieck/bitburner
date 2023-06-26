@@ -30,8 +30,8 @@ export async function main(ns) {
         i++;
 
         
-        // ns.run("scripts/investments/invest-in-stocks.js");
-        // await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
+        ns.run("scripts/investments/invest-in-stocks.js");
+        await ns.sleep(individualSleepAmount); 
 
        
 

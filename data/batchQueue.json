@@ -1,50 +1,32 @@
 [
     [
-        "megacorp",
-        {
-            "targetMachineSaturatedWithAttacks": true,
-            "prepStage": true,
-            "weakeningDoneAfter": "2023-06-25T20:05:00.307Z",
-            "successfulWeakening": false,
-            "successfulGrowing": false,
-            "successfulHacking": false,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executed": false,
-                            "endAfter": "2023-06-25T19:57:29.919Z",
-                            "endBefore": "2023-06-25T20:05:00.307Z",
-                            "type": "weaken-dynamic"
-                        }
-                    ]
-                }
-            ],
-            "jobQueue": []
-        }
-    ],
-    [
-        "ecorp",
+        "catalyst",
         {
             "targetMachineSaturatedWithAttacks": false,
             "prepStage": true,
-            "weakeningDoneAfter": "2023-06-25T20:01:13.852Z",
-            "successfulWeakening": false,
+            "weakeningDoneAfter": "2023-06-26T19:38:28.527Z",
+            "successfulWeakening": true,
+            "growDoneAfter": "2023-06-26T19:49:29.605Z",
             "successfulGrowing": false,
-            "successfulHacking": false,
+            "hackDoneAfter": "2023-06-26T19:18:29.455Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 10.696,
+            "securityWeNeedToReduceAfterFullGrowth": 98.85600000000001,
             "batchesQueue": [
                 {
                     "jobs": [
                         {
-                            "executed": false,
-                            "endAfter": "2023-06-25T19:57:29.919Z",
-                            "endBefore": "2023-06-25T20:01:13.852Z",
-                            "type": "weaken-dynamic"
+                            "executing": true,
+                            "ramCost": 43249.5,
+                            "machineRunningOn": "CLOUD-022",
+                            "endAfter": "2023-06-26T19:38:30.667Z",
+                            "endBefore": "2023-06-26T19:49:29.605Z",
+                            "type": "grow-dynamic"
                         }
-                    ]
+                    ],
+                    "startTime": "2023-06-26T19:38:30.668Z"
                 }
-            ],
-            "jobQueue": []
+            ]
         }
     ]
 ]
