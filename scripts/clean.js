@@ -1,19 +1,27 @@
 //run scripts/clean.js 
 export async function main(ns) {
+    let newMachine = false;
 
-    if(!ns.fileExists("stopTrading.txt")){
+    if (ns.args[0] === "new") {
+        newMachine = true;
+    }
+
+    if (!ns.fileExists("stopTrading.txt") || !newMachine) {
         ns.tprint("must add stopTrading.txt to server.");
         return;
     }
 
     ns.killall("home", true);
 
-    const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
-    enviroment
-        .filter(x => x.server.hasAdminRights)
-        .map(target => {
-            ns.killall(target.name);
-        })
+    if (!newMachine) {
+        const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
+        enviroment
+            .filter(x => x.server.hasAdminRights)
+            .map(target => {
+                ns.killall(target.name);
+            })
+    }
+
 
     ns.rm('data/enviroment.txt');
     ns.rm('data/dataOnWhatHappensEachRound.txt');

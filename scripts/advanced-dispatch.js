@@ -47,7 +47,7 @@ export async function main(ns) {
 
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
 
-    clearDeletedServersOfWhoIsBeingHacked(recordOfWhoIsBeingHacked, enviroment);
+    clearDeletedServersOfWhoIsBeingHacked(recordOfWhoIsBeingHacked, enviroment, machinesRunningBatches);
 
     const allHackableMachines = enviroment
         .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
@@ -211,15 +211,23 @@ export async function main(ns) {
         return machinesNextInQueueToHack;
     }
 
-    function clearDeletedServersOfWhoIsBeingHacked(recordOfWhoIsBeingHacked, enviroment) {
+    function clearDeletedServersOfWhoIsBeingHacked(recordOfWhoIsBeingHacked, enviroment, machinesRunningBatches) {
         const machinesWhoAreHackin = Array.from(recordOfWhoIsBeingHacked.entries()).map(x => x[0]);
         const namesOfMachinesInTheEnvironment = enviroment.map(x => x.name);
 
         machinesWhoAreHackin
-            .map(machineWhoIsHackin => {
-                if (!namesOfMachinesInTheEnvironment.includes(machineWhoIsHackin) && machineWhoIsHackin !== "home") {
-                    recordOfWhoIsBeingHacked.delete(machineWhoIsHackin);
-                    ns.tprint(machineWhoIsHackin);
+            .map(machineWhoIsHackinName => {
+                if (!namesOfMachinesInTheEnvironment.includes(machineWhoIsHackinName) && machineWhoIsHackinName !== "home") {
+                    recordOfWhoIsBeingHacked.delete(machineWhoIsHackinName);
+                    ns.tprint(machineWhoIsHackinName);
+                }
+            });
+
+        machinesWhoAreHackin
+            .map(machineWhoIsHackinName => {
+                if (machinesRunningBatches.includes(machineWhoIsHackinName)){
+                    recordOfWhoIsBeingHacked.delete(machineWhoIsHackinName);
+                    ns.tprint(machineWhoIsHackinName);
                 }
             });
     }

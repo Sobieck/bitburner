@@ -41,15 +41,16 @@ export async function main(ns) {
 
                 const secondsToPadEndTime = 6;
                 const msToPadStartTime = 6;
-                
+
                 const defaultStartTime = getWeakenEndDate(ns, targetServer, player);
                 addSecondsToDate(defaultStartTime, 40);
 
-                let noMoreJobsAfter = new Date(defaultStartTime);
-
                 const noJobsRunningAfter = batchForTarget.thereAreNoJobsRunningAfter();
-                if (noJobsRunningAfter > 0) {
-                    noMoreJobsAfter = new Date(noJobsRunningAfter);
+
+                let noMoreJobsAfter = new Date(noJobsRunningAfter);
+
+                if (noJobsRunningAfter < 0) {
+                    noMoreJobsAfter = new Date(defaultStartTime);
                 }
 
                 const hackStart = createNewDataFromOldDateAndAddMilliseconds(noMoreJobsAfter, msToPadStartTime);
@@ -77,7 +78,7 @@ export async function main(ns) {
         }
     }
 
-    executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsedForBatching, player, enviroment);
+    await executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsedForBatching, player, enviroment);
 
     ns.rm(nameOfServersUsedFile);
     ns.write(nameOfServersUsedFile, JSON.stringify(serversUsedForBatching), "W")
@@ -108,6 +109,7 @@ class BatchQueueForTarget {
 
     securityWeNeedToReduceAfterFullHack;
     securityWeNeedToReduceAfterFullGrowth;
+    originalNumberOfThreadsForFullMoney;
 
     batchesQueue = [];
 
@@ -218,7 +220,7 @@ export class Helpers {
     }
 }
 
-function executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsedForBatching, player, enviroment) {
+async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsedForBatching, player) {
     const hackScript = 'scripts/advanced-hacks/hack.js';
     const growScript = 'scripts/advanced-hacks/grow.js';
     const weakenScript = 'scripts/advanced-hacks/weaken.js';
@@ -291,7 +293,13 @@ function executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsed
                             targetServer.moneyAvailable = targetServer.moneyMax;
                         }
 
+
                         numberOfThreads = getHackThreadsForTotalStealing(ns, nameOfTarget, targetServer);
+
+                        if (numberOfThreads === -1) {
+                            numberOfThreads = batchForTarget.originalNumberOfThreadsForFullMoney;
+                        }
+
                         ramCost = ramNeededForHack * numberOfThreads;
 
                         const ifStartedNowHackDoneAt = getHackEndDate(ns, targetServer, player);
@@ -301,25 +309,20 @@ function executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsed
                     }
 
                     if (shouldExecute) {
-                        ns.tprint("Freemachin ram: ", freeMachine.maxRam - freeMachine.ramUsed);
-                        ns.tprint("Ram needed: ", ramCost);
-
                         if (freeMachine.maxRam - freeMachine.ramUsed < ramCost) {
-                            addServerToHackingPool(serversUsedForBatching, ns, batchQueueForDifferentTargets);
+                            await addServerToHackingPool(serversUsedForBatching, ns, batchQueueForDifferentTargets);
                             y--;
                             continue;
                         }
 
+                        ns.tprint(script, " ", freeMachine.hostname," ", numberOfThreads," " ,nameOfTarget)
 
                         ns.scp(script, freeMachine.hostname);
                         ns.exec(script, freeMachine.hostname, numberOfThreads, nameOfTarget);
 
                         job.ramCost = ramCost;
                         job.executing = true;
-                        // why isn't this persisting?
-                        ns.tprint(freeMachine.hostname);
                         job.machineRunningOn = freeMachine.hostname;
-                        ns.tprint(job);
 
                         if (!batchOfJobs.startTime) {
                             batchOfJobs.startTime = new Date();
@@ -337,7 +340,7 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, servers
     const serverHasMaxMoney = targetServer.moneyMax === targetServer.moneyAvailable;
     const currentTime = new Date();
 
-    if (amountToWeaken === 0 && serverHasMaxMoney && batchForTarget.securityWeNeedToReduceAfterFullHack && batchForTarget.securityWeNeedToReduceAfterFullGrowth && batchForTarget.prepStage) {
+    if (amountToWeaken === 0 && serverHasMaxMoney && batchForTarget.securityWeNeedToReduceAfterFullHack && batchForTarget.securityWeNeedToReduceAfterFullGrowth && batchForTarget.prepStage && batchForTarget.originalNumberOfThreadsForFullMoney) {
         batchForTarget.prepStage = false;
         batchForTarget.targetMachineSaturatedWithAttacks = false;
     }
@@ -408,9 +411,10 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, servers
                     } else {
                         const hackThreads = getHackThreadsForTotalStealing(ns, nameOfTarget, targetServer);
                         batchForTarget.securityWeNeedToReduceAfterFullHack = ns.hackAnalyzeSecurity(hackThreads, nameOfTarget);
+                        batchForTarget.originalNumberOfThreadsForFullMoney = hackThreads;
 
                         let endDate = getHackEndDate(ns, targetServer, player);
-                        addSecondsToDate(endDate, 10);
+                        addSecondsToDate(endDate, 100);
 
                         const job = new JobHasTo(new Date(), endDate, "hack-dynamic");
                         const batchOfJobs = new BatchOfJobs();
@@ -431,7 +435,8 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, servers
     }
 }
 
-function addServerToHackingPool(serversUsedForBatching, ns) {
+async function addServerToHackingPool(serversUsedForBatching, ns) {
+
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
 
     const allPurchasedMachines = enviroment
@@ -441,20 +446,23 @@ function addServerToHackingPool(serversUsedForBatching, ns) {
     if (allPurchasedMachines.length > 0) {
         const serverToAdd = allPurchasedMachines.pop();
         ns.killall(serverToAdd.name);
+        ns.tprint("here");
+        await ns.sleep(200);
         serversUsedForBatching.push(serverToAdd.name);
     }
 }
 
-function getServerWithMostUnallocatedSpace(ns, serversUsedForBatching, batchQueueForTargetAllTargets) {
+function getServerWithMostUnallocatedSpace(ns, serversUsedForBatching) {
     let server;
     let serversUnallocatedSpace;
     for (let i = 0; i < serversUsedForBatching.length; i++) {
         const serverName = serversUsedForBatching[i];
+
         if (!server) {
-            serversUnallocatedSpace = getUnallocatedMemoryOnServer(ns, serverName, batchQueueForTargetAllTargets);
+            serversUnallocatedSpace = getUnallocatedMemoryOnServer(ns, serverName);
             server = getServer(ns, serverName);
         } else {
-            const nextServersUnallocatedSpace = getUnallocatedMemoryOnServer(ns, serverName, batchQueueForTargetAllTargets);
+            const nextServersUnallocatedSpace = getUnallocatedMemoryOnServer(ns, serverName);
 
             if (nextServersUnallocatedSpace > serversUnallocatedSpace) {
                 serversUnallocatedSpace = serversUnallocatedSpace;
@@ -518,7 +526,7 @@ function cleanFinishedJobsFromQueue(targetNames, batchQueue) {
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
-    if (batchQueue.size === 0 || targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) {
+    if ((batchQueue.size === 0 || targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 4) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();
@@ -552,12 +560,14 @@ function getGrowThreads(ns, serverToHack, player, serverDoingHackin) {
 
 function createNewDataFromOldDateAndAddSeconds(date, secondsToAdd) {
     const newDate = new Date(date);
-    return addSecondsToDate(newDate, secondsToAdd);
+    addSecondsToDate(newDate, secondsToAdd);
+    return newDate;
 }
 
 function createNewDataFromOldDateAndAddMilliseconds(date, secondsToAdd) {
     const newDate = new Date(date);
-    return addSecondsToDate(newDate, secondsToAdd);
+    addMillisecondsToDate(newDate, secondsToAdd);
+    return newDate;
 }
 
 

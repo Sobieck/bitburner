@@ -25,25 +25,20 @@ export async function main(ns) {
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
     const numberOfDifferentSleeps = 5;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
+    let dispatchScript = 'scripts/advanced-dispatch.js';
 
     while (true) {
         i++;
 
-        
+
         ns.run("scripts/investments/invest-in-stocks.js");
-        await ns.sleep(individualSleepAmount); 
+        await ns.sleep(individualSleepAmount);
 
-       
 
-        let dispatchScript = 'scripts/advanced-dispatch.js';
-
-        if(ns.fileExists('Formulas.exe')){
-            dispatchScript = 'scripts/batch-dispatch.js'
-        }
 
         ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
-        
+
 
 
         const currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
@@ -59,7 +54,7 @@ export async function main(ns) {
                 iterationsToWait = 0;
             }
 
-            if(moneyAvailable < 1_000_000_000){
+            if (moneyAvailable < 1_000_000_000) {
                 iterationsToWait = timeInSecondsToWaitToBuy / loopEveryXSeconds;
             }
 
@@ -72,6 +67,10 @@ export async function main(ns) {
 
             if (moneyAvailable > 500_000_000_000) {
                 ns.run('scripts/investments/upgrade-small-servers.js')
+
+                if (ns.fileExists('Formulas.exe')) {
+                    dispatchScript = 'scripts/batch-dispatch.js'
+                }
             }
         }
         await ns.sleep(individualSleepAmount);
@@ -88,7 +87,7 @@ export async function main(ns) {
 
 
         ns.run('scripts/contracts/coding-contracts.js');
-        await ns.sleep(individualSleepAmount);        
+        await ns.sleep(individualSleepAmount);
     }
 }
 

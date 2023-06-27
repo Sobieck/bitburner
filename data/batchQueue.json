@@ -1,30 +1,26 @@
 [
     [
-        "catalyst",
+        "omnitek",
         {
             "targetMachineSaturatedWithAttacks": false,
             "prepStage": true,
-            "weakeningDoneAfter": "2023-06-26T19:38:28.527Z",
-            "successfulWeakening": true,
-            "growDoneAfter": "2023-06-26T19:49:29.605Z",
+            "weakeningDoneAfter": "2023-06-27T23:24:40.446Z",
+            "successfulWeakening": false,
             "successfulGrowing": false,
-            "hackDoneAfter": "2023-06-26T19:18:29.455Z",
-            "successfulHacking": true,
-            "securityWeNeedToReduceAfterFullHack": 10.696,
-            "securityWeNeedToReduceAfterFullGrowth": 98.85600000000001,
+            "successfulHacking": false,
             "batchesQueue": [
                 {
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 43249.5,
-                            "machineRunningOn": "CLOUD-022",
-                            "endAfter": "2023-06-26T19:38:30.667Z",
-                            "endBefore": "2023-06-26T19:49:29.605Z",
-                            "type": "grow-dynamic"
+                            "ramCost": 2171.75,
+                            "machineRunningOn": "CLOUD-016",
+                            "endAfter": "2023-06-27T22:35:25.685Z",
+                            "endBefore": "2023-06-27T23:24:40.446Z",
+                            "type": "weaken-dynamic"
                         }
                     ],
-                    "startTime": "2023-06-26T19:38:30.668Z"
+                    "startTime": "2023-06-27T22:35:25.896Z"
                 }
             ]
         }
