@@ -4,23 +4,40 @@
         {
             "targetMachineSaturatedWithAttacks": false,
             "prepStage": true,
-            "weakeningDoneAfter": "2023-06-27T23:24:40.446Z",
+            "weakeningDoneAfter": "2023-06-27T23:57:35.137Z",
             "successfulWeakening": false,
-            "successfulGrowing": false,
+            "growDoneAfter": "2023-06-27T23:37:04.566Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-27T23:43:50.701Z",
             "successfulHacking": false,
+            "securityWeNeedToReduceAfterFullHack": 5.0120000000000005,
+            "originalNumberOfThreadsForFullMoney": 2506,
             "batchesQueue": [
                 {
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 2171.75,
+                            "ramCost": 4260.2,
                             "machineRunningOn": "CLOUD-016",
-                            "endAfter": "2023-06-27T22:35:25.685Z",
-                            "endBefore": "2023-06-27T23:24:40.446Z",
+                            "endAfter": "2023-06-27T23:37:06.894Z",
+                            "endBefore": "2023-06-27T23:43:50.701Z",
+                            "type": "hack-dynamic"
+                        }
+                    ],
+                    "startTime": "2023-06-27T23:37:06.894Z"
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 386.75,
+                            "machineRunningOn": "CLOUD-016",
+                            "endAfter": "2023-06-27T23:37:09.907Z",
+                            "endBefore": "2023-06-27T23:57:35.137Z",
                             "type": "weaken-dynamic"
                         }
                     ],
-                    "startTime": "2023-06-27T22:35:25.896Z"
+                    "startTime": "2023-06-27T23:37:09.908Z"
                 }
             ]
         }

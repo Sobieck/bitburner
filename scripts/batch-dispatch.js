@@ -39,8 +39,8 @@ export async function main(ns) {
             if (batchForTarget.batchesQueue.length === 0 || batchForTarget.batchesQueue.every(x => new Date() > new Date(x.startTime))) {
                 const batch = new BatchOfJobs();
 
-                const secondsToPadEndTime = 6;
-                const msToPadStartTime = 6;
+                const secondsToPadEndTime = 20;
+                const msToPadStartTime = 20;
 
                 const defaultStartTime = getWeakenEndDate(ns, targetServer, player);
                 addSecondsToDate(defaultStartTime, 40);
@@ -397,7 +397,7 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, servers
             }
         }
 
-        if (batchForTarget.successfulGrowing && batchForTarget.successfulHacking === false) {
+        if (batchForTarget.successfulGrowing && batchForTarget.successfulHacking === false && batchForTarget.successfulWeakening) {
 
             if (currentTime > new Date(batchForTarget.hackDoneAfter) || !batchForTarget.hackDoneAfter) {
                 if (serverHasMaxMoney) {
