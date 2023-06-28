@@ -24,7 +24,7 @@ export async function main(ns) {
 
     giveBatchQueueStructure(targetNames, batchQueueForDifferentTargets);
     cleanFinishedJobsFromQueue(targetNames, batchQueueForDifferentTargets);
-    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment);
+    
 
     for (const nameOfTarget of targetNames) {
         const targetServer = ns.getServer(nameOfTarget);
@@ -39,8 +39,8 @@ export async function main(ns) {
             if (batchForTarget.batchesQueue.length === 0 || batchForTarget.batchesQueue.every(x => new Date() > new Date(x.startTime))) {
                 const batch = new BatchOfJobs();
 
-                const secondsToPadEndTime = 20;
-                const msToPadStartTime = 20;
+                const secondsToPadEndTime = 6;
+                const msToPadStartTime = 6;
 
                 const defaultStartTime = getWeakenEndDate(ns, targetServer, player);
                 addSecondsToDate(defaultStartTime, 40);
@@ -79,6 +79,7 @@ export async function main(ns) {
     }
 
     await executeJobs(ns, targetNames, batchQueueForDifferentTargets, serversUsedForBatching, player, enviroment);
+    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment);
 
     ns.rm(nameOfServersUsedFile);
     ns.write(nameOfServersUsedFile, JSON.stringify(serversUsedForBatching), "W")
@@ -315,10 +316,14 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, serve
                             continue;
                         }
 
-                        ns.tprint(script, " ", freeMachine.hostname," ", numberOfThreads," " ,nameOfTarget)
+                        // ns.tprint(script, " ", freeMachine.hostname," ", numberOfThreads," " ,nameOfTarget)
 
                         ns.scp(script, freeMachine.hostname);
-                        ns.exec(script, freeMachine.hostname, numberOfThreads, nameOfTarget);
+                        const failure = ns.exec(script, freeMachine.hostname, numberOfThreads, nameOfTarget);
+
+                        if(failure === 0){
+                            ns.tprint("failed exec")
+                        }
 
                         job.ramCost = ramCost;
                         job.executing = true;
@@ -520,13 +525,14 @@ function cleanFinishedJobsFromQueue(targetNames, batchQueue) {
             const job = batch.batchesQueue[i];
             if (job.wholeBatchFinishsBefore() < currentTime) {
                 batch.batchesQueue.splice(i, 1);
+                batch.targetMachineSaturatedWithAttacks = true;
             }
         }
     }
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
-    if ((batchQueue.size === 0 || targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 4) {
+    if ((batchQueue.size === 0 || targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 5) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();

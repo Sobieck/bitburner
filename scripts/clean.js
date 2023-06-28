@@ -6,7 +6,7 @@ export async function main(ns) {
         newMachine = true;
     }
 
-    if (!ns.fileExists("stopTrading.txt") || !newMachine) {
+    if (!newMachine && !ns.fileExists("stopTrading.txt")) {
         ns.tprint("must add stopTrading.txt to server.");
         return;
     }
