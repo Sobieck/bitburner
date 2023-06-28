@@ -16,9 +16,9 @@ export async function main(ns) {
 
 
 
-        // if (ns.fileExists('Formulas.exe')) {
-        //     dispatchScript = 'scripts/batch-dispatch.js'
-        // }
+        if (ns.fileExists('Formulas.exe')) {
+            dispatchScript = 'scripts/batch-dispatch.js'
+        }
 
         ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 

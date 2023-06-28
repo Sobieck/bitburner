@@ -33,6 +33,7 @@ export async function main(ns) {
 function purchaseServer(ns, buyOrUpgradeServerFlag) {
     let currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
     let ram = 128;
+    const maxRam = 1048576;
 
     if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
 
@@ -43,7 +44,7 @@ function purchaseServer(ns, buyOrUpgradeServerFlag) {
 
             let ramToBuy = ram;
 
-            while (moneyAvailable > ns.getPurchasedServerCost(ramToBuy)) {
+            while ((moneyAvailable > ns.getPurchasedServerCost(ramToBuy)) || (ramToBuy < 2 * maxRam)) {
                 ramToBuy = ramToBuy * 2;
             }
 

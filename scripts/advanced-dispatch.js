@@ -1,10 +1,6 @@
-//need to make it so we have a one to one ratio. no multiplies like we are seeing now.
-// the ten most valuable servers need to be tackled by owned machines and local.
-
 /** @param {NS} ns */
 //run scripts/advanced-dispatch.js 
 export async function main(ns) {
-    //home just gets put in the queue, and filtered out of hack if we have more than 5 purchased servers.
 
     const helpers = new Helpers(ns);
     const nameOfrecordOfWhoIsBeingHacked = 'data/recordOfWhoIsBeingHacked.txt';
@@ -59,7 +55,6 @@ export async function main(ns) {
     const hackQueue = [];
     const growAndWeakenQueue = [];
 
-    // figure out what needs to happen to items in the queue
     machinesNextInQueueToHack.forEach(machineInQuestion => {
         if (machineInQuestion.needsWeakening() || machineInQuestion.needsGrowing()) {
             growAndWeakenQueue.push(machineInQuestion);

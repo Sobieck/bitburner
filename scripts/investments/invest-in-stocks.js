@@ -33,7 +33,7 @@ export async function main(ns) {
         ledger = JSON.parse(ns.read(nameOfLedger));
     }
 
-    const stopTradingExists = ns.fileExists("../../stopTrading.txt");
+    const stopTradingExists = ns.fileExists("../../stopTrading.txt") || ns.fileExists("../../buyOrUpgradeServerFlag.txt");
     // sell short term positions;
     stockRecords.map(stock => {
         const investedShares = stock.investedShares;
