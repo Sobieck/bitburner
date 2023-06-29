@@ -1,5 +1,11 @@
 //run scripts/coordinator.js 1000 564 5.629 BitRunners
 export async function main(ns) {
+
+    let trading = true;
+    if (ns.args[0] === "new") {
+        trading = false;
+    }
+
     let i = 0;
     const loopEveryXSeconds = 3;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
@@ -10,8 +16,9 @@ export async function main(ns) {
     while (true) {
         i++;
 
-
-        ns.run("scripts/investments/invest-in-stocks.js");
+        if (trading) {
+            ns.run("scripts/investments/invest-in-stocks.js");
+        }
         await ns.sleep(individualSleepAmount);
 
 
