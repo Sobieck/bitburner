@@ -1,626 +1,34 @@
 [
     [
+        "foodnstuff",
+        {
+            "name": "foodnstuff",
+            "moneyThreshhold": 37500000,
+            "securityThreshholdTarget": 8,
+            "hackDifficulty": 3,
+            "moneyAvailable": 50000000,
+            "minDifficulty": 3,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "home",
+            "pid": 158236
+        }
+    ],
+    [
         "n00dles",
         {
             "name": "n00dles",
             "moneyThreshhold": 1312500,
             "securityThreshholdTarget": 6,
-            "hackDifficulty": 5.192000000000002,
-            "moneyAvailable": 0,
+            "hackDifficulty": 3.062000000000001,
+            "moneyAvailable": 1750000,
             "minDifficulty": 1,
             "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25569
-        }
-    ],
-    [
-        "b-and-a",
-        {
-            "name": "b-and-a",
-            "moneyThreshhold": 426370200918.75,
-            "securityThreshholdTarget": 30,
-            "hackDifficulty": 48.105999999999995,
-            "moneyAvailable": 568493601225,
-            "minDifficulty": 25,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24675
-        }
-    ],
-    [
-        "omnitek",
-        {
-            "name": "omnitek",
-            "moneyThreshhold": 285816663075,
-            "securityThreshholdTarget": 37,
-            "hackDifficulty": 32.28,
-            "moneyAvailable": 0,
-            "minDifficulty": 32,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24511
-        }
-    ],
-    [
-        "global-pharm",
-        {
-            "name": "global-pharm",
-            "moneyThreshhold": 28603524056.25,
-            "securityThreshholdTarget": 33,
-            "hackDifficulty": 44.641999999999996,
-            "moneyAvailable": 38138032075,
-            "minDifficulty": 28,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25143
-        }
-    ],
-    [
-        "deltaone",
-        {
-            "name": "deltaone",
-            "moneyThreshhold": 26103819600,
-            "securityThreshholdTarget": 33,
-            "hackDifficulty": 55.032,
-            "moneyAvailable": 34805092800,
-            "minDifficulty": 28,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 23374
-        }
-    ],
-    [
-        "zeus-med",
-        {
-            "name": "zeus-med",
-            "moneyThreshhold": 24560109900,
-            "securityThreshholdTarget": 34,
-            "hackDifficulty": 49.822,
-            "moneyAvailable": 32746813200,
-            "minDifficulty": 29,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25244
-        }
-    ],
-    [
-        "stormtech",
-        {
-            "name": "stormtech",
-            "moneyThreshhold": 21854138568.75,
-            "securityThreshholdTarget": 31,
-            "hackDifficulty": 42.188,
-            "moneyAvailable": 29138851425,
-            "minDifficulty": 26,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24779
-        }
-    ],
-    [
-        "univ-energy",
-        {
-            "name": "univ-energy",
-            "moneyThreshhold": 21240562462.5,
-            "securityThreshholdTarget": 33,
-            "hackDifficulty": 44.21,
-            "moneyAvailable": 28320749950,
-            "minDifficulty": 28,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24487
-        }
-    ],
-    [
-        "nova-med",
-        {
-            "name": "nova-med",
-            "moneyThreshhold": 20913041400,
-            "securityThreshholdTarget": 31,
-            "hackDifficulty": 43.292,
-            "moneyAvailable": 27884055200,
-            "minDifficulty": 26,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 23823
-        }
-    ],
-    [
-        "zb-institute",
-        {
-            "name": "zb-institute",
-            "moneyThreshhold": 20429254068.75,
-            "securityThreshholdTarget": 29,
-            "hackDifficulty": 39.632000000000005,
-            "moneyAvailable": 27239005425,
-            "minDifficulty": 24,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24404
-        }
-    ],
-    [
-        "unitalife",
-        {
-            "name": "unitalife",
-            "moneyThreshhold": 20223740775,
-            "securityThreshholdTarget": 31,
-            "hackDifficulty": 26.21,
-            "moneyAvailable": 0,
-            "minDifficulty": 26,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24768
-        }
-    ],
-    [
-        "zb-def",
-        {
-            "name": "zb-def",
-            "moneyThreshhold": 19809638531.25,
-            "securityThreshholdTarget": 26,
-            "hackDifficulty": 21,
-            "moneyAvailable": 26412851375,
-            "minDifficulty": 21,
-            "isWeakening": false,
             "isGrowing": false,
             "isHacking": true,
             "machineRunningOn": "home",
-            "pid": 25512
-        }
-    ],
-    [
-        "aerocorp",
-        {
-            "name": "aerocorp",
-            "moneyThreshhold": 19561845768.75,
-            "securityThreshholdTarget": 34,
-            "hackDifficulty": 29.238,
-            "moneyAvailable": 0,
-            "minDifficulty": 29,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25384
-        }
-    ],
-    [
-        "icarus",
-        {
-            "name": "icarus",
-            "moneyThreshhold": 17999324381.25,
-            "securityThreshholdTarget": 35,
-            "hackDifficulty": 47.67400000000001,
-            "moneyAvailable": 23999099175,
-            "minDifficulty": 30,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 23647
-        }
-    ],
-    [
-        "omnia",
-        {
-            "name": "omnia",
-            "moneyThreshhold": 17872659131.25,
-            "securityThreshholdTarget": 36,
-            "hackDifficulty": 53.638000000000005,
-            "moneyAvailable": 23830212175,
-            "minDifficulty": 31,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24826
-        }
-    ],
-    [
-        "applied-energetics",
-        {
-            "name": "applied-energetics",
-            "moneyThreshhold": 17685719568.75,
-            "securityThreshholdTarget": 27,
-            "hackDifficulty": 22,
-            "moneyAvailable": 23580959425,
-            "minDifficulty": 22,
-            "isWeakening": false,
-            "isGrowing": false,
-            "isHacking": true,
-            "machineRunningOn": "home",
-            "pid": 25563
-        }
-    ],
-    [
-        "powerhouse-fitness",
-        {
-            "name": "powerhouse-fitness",
-            "moneyThreshhold": 16875000000,
-            "securityThreshholdTarget": 24,
-            "hackDifficulty": 35.403999999999996,
-            "moneyAvailable": 22500000000,
-            "minDifficulty": 19,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 23911
-        }
-    ],
-    [
-        "taiyang-digital",
-        {
-            "name": "taiyang-digital",
-            "moneyThreshhold": 16261046456.25,
-            "securityThreshholdTarget": 29,
-            "hackDifficulty": 39.448,
-            "moneyAvailable": 21681395275,
-            "minDifficulty": 24,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24630
-        }
-    ],
-    [
-        "defcomm",
-        {
-            "name": "defcomm",
-            "moneyThreshhold": 16238802412.5,
-            "securityThreshholdTarget": 36,
-            "hackDifficulty": 62.129999999999995,
-            "moneyAvailable": 21651736550,
-            "minDifficulty": 31,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25385
-        }
-    ],
-    [
-        "solaris",
-        {
-            "name": "solaris",
-            "moneyThreshhold": 16089427931.25,
-            "securityThreshholdTarget": 31,
-            "hackDifficulty": 42.806,
-            "moneyAvailable": 21452570575,
-            "minDifficulty": 26,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24791
-        }
-    ],
-    [
-        "galactic-cyber",
-        {
-            "name": "galactic-cyber",
-            "moneyThreshhold": 15718994287.5,
-            "securityThreshholdTarget": 24,
-            "hackDifficulty": 19.194,
-            "moneyAvailable": 0,
-            "minDifficulty": 19,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25128
-        }
-    ],
-    [
-        "titan-labs",
-        {
-            "name": "titan-labs",
-            "moneyThreshhold": 15314489418.75,
-            "securityThreshholdTarget": 29,
-            "hackDifficulty": 24.214,
-            "moneyAvailable": 0,
-            "minDifficulty": 24,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24925
-        }
-    ],
-    [
-        "vitalife",
-        {
-            "name": "vitalife",
-            "moneyThreshhold": 13924472962.5,
-            "securityThreshholdTarget": 32,
-            "hackDifficulty": 27,
-            "moneyAvailable": 18565963950,
-            "minDifficulty": 27,
-            "isWeakening": false,
-            "isGrowing": false,
-            "isHacking": true,
-            "machineRunningOn": "home",
-            "pid": 25537
-        }
-    ],
-    [
-        "alpha-ent",
-        {
-            "name": "alpha-ent",
-            "moneyThreshhold": 12504332400,
-            "securityThreshholdTarget": 28,
-            "hackDifficulty": 23.162,
-            "moneyAvailable": 0,
-            "minDifficulty": 23,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25267
-        }
-    ],
-    [
-        "helios",
-        {
-            "name": "helios",
-            "moneyThreshhold": 12134651175,
-            "securityThreshholdTarget": 37,
-            "hackDifficulty": 32,
-            "moneyAvailable": 16179534900,
-            "minDifficulty": 32,
-            "isWeakening": false,
-            "isGrowing": false,
-            "isHacking": true,
-            "machineRunningOn": "home",
-            "pid": 25538
-        }
-    ],
-    [
-        "infocomm",
-        {
-            "name": "infocomm",
-            "moneyThreshhold": 12066402075,
-            "securityThreshholdTarget": 29,
-            "hackDifficulty": 52.566,
-            "moneyAvailable": 16088536100,
-            "minDifficulty": 24,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24427
-        }
-    ],
-    [
-        "rho-construction",
-        {
-            "name": "rho-construction",
-            "moneyThreshhold": 11612223112.5,
-            "securityThreshholdTarget": 19,
-            "hackDifficulty": 26.189999999999998,
-            "moneyAvailable": 15482964150,
-            "minDifficulty": 14,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25255
-        }
-    ],
-    [
-        "microdyne",
-        {
-            "name": "microdyne",
-            "moneyThreshhold": 11180453400,
-            "securityThreshholdTarget": 29,
-            "hackDifficulty": 38.272,
-            "moneyAvailable": 14907271200,
-            "minDifficulty": 24,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24022
-        }
-    ],
-    [
-        "syscore",
-        {
-            "name": "syscore",
-            "moneyThreshhold": 10176374737.5,
-            "securityThreshholdTarget": 29,
-            "hackDifficulty": 41.674,
-            "moneyAvailable": 13568499650,
-            "minDifficulty": 24,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24631
-        }
-    ],
-    [
-        "snap-fitness",
-        {
-            "name": "snap-fitness",
-            "moneyThreshhold": 8437500000,
-            "securityThreshholdTarget": 24,
-            "hackDifficulty": 38.7,
-            "moneyAvailable": 11250000000,
-            "minDifficulty": 19,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24326
-        }
-    ],
-    [
-        "aevum-police",
-        {
-            "name": "aevum-police",
-            "moneyThreshhold": 6058108443.75,
-            "securityThreshholdTarget": 30,
-            "hackDifficulty": 25,
-            "moneyAvailable": 8077477925,
-            "minDifficulty": 25,
-            "isWeakening": false,
-            "isGrowing": false,
-            "isHacking": true,
-            "machineRunningOn": "home",
-            "pid": 25526
-        }
-    ],
-    [
-        "catalyst",
-        {
-            "name": "catalyst",
-            "moneyThreshhold": 5649433350,
-            "securityThreshholdTarget": 26,
-            "hackDifficulty": 39.734,
-            "moneyAvailable": 7532577800,
-            "minDifficulty": 21,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25426
-        }
-    ],
-    [
-        "netlink",
-        {
-            "name": "netlink",
-            "moneyThreshhold": 5156250000,
-            "securityThreshholdTarget": 28,
-            "hackDifficulty": 44.403999999999996,
-            "moneyAvailable": 6875000000,
-            "minDifficulty": 23,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24961
-        }
-    ],
-    [
-        "millenium-fitness",
-        {
-            "name": "millenium-fitness",
-            "moneyThreshhold": 4687500000,
-            "securityThreshholdTarget": 20,
-            "hackDifficulty": 15,
-            "moneyAvailable": 6250000000,
-            "minDifficulty": 15,
-            "isWeakening": false,
-            "isGrowing": false,
-            "isHacking": true,
-            "machineRunningOn": "home",
-            "pid": 25500
-        }
-    ],
-    [
-        "rothman-uni",
-        {
-            "name": "rothman-uni",
-            "moneyThreshhold": 3364352793.75,
-            "securityThreshholdTarget": 21,
-            "hackDifficulty": 34.394000000000005,
-            "moneyAvailable": 4485803725,
-            "minDifficulty": 16,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25278
-        }
-    ],
-    [
-        "the-hub",
-        {
-            "name": "the-hub",
-            "moneyThreshhold": 3050533481.25,
-            "securityThreshholdTarget": 20,
-            "hackDifficulty": 28.672,
-            "moneyAvailable": 4067377975,
-            "minDifficulty": 15,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25399
-        }
-    ],
-    [
-        "omega-net",
-        {
-            "name": "omega-net",
-            "moneyThreshhold": 1271037600,
-            "securityThreshholdTarget": 15,
-            "hackDifficulty": 10.116,
-            "moneyAvailable": 0,
-            "minDifficulty": 10,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25488
-        }
-    ],
-    [
-        "crush-fitness",
-        {
-            "name": "crush-fitness",
-            "moneyThreshhold": 1022006812.5,
-            "securityThreshholdTarget": 18,
-            "hackDifficulty": 13.122,
-            "moneyAvailable": 0,
-            "minDifficulty": 13,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25553
-        }
-    ],
-    [
-        "silver-helix",
-        {
-            "name": "silver-helix",
-            "moneyThreshhold": 843750000,
-            "securityThreshholdTarget": 15,
-            "hackDifficulty": 23.808,
-            "moneyAvailable": 1125000000,
-            "minDifficulty": 10,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25463
+            "pid": 158237
         }
     ],
     [
@@ -629,14 +37,30 @@
             "name": "iron-gym",
             "moneyThreshhold": 375000000,
             "securityThreshholdTarget": 15,
-            "hackDifficulty": 28.828,
+            "hackDifficulty": 25.788,
             "moneyAvailable": 500000000,
             "minDifficulty": 10,
             "isWeakening": true,
             "isGrowing": false,
             "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 25477
+            "pid": 158194
+        }
+    ],
+    [
+        "max-hardware",
+        {
+            "name": "max-hardware",
+            "moneyThreshhold": 187500000,
+            "securityThreshholdTarget": 10,
+            "hackDifficulty": 13.892,
+            "moneyAvailable": 250000000,
+            "minDifficulty": 5,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158214
         }
     ],
     [
@@ -645,14 +69,30 @@
             "name": "zer0",
             "moneyThreshhold": 140625000,
             "securityThreshholdTarget": 13,
-            "hackDifficulty": 8.104,
-            "moneyAvailable": 0,
+            "hackDifficulty": 14.694,
+            "moneyAvailable": 187500000,
             "minDifficulty": 8,
-            "isWeakening": false,
-            "isGrowing": true,
+            "isWeakening": true,
+            "isGrowing": false,
             "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 25541
+            "pid": 158215
+        }
+    ],
+    [
+        "neo-net",
+        {
+            "name": "neo-net",
+            "moneyThreshhold": 93750000,
+            "securityThreshholdTarget": 13,
+            "hackDifficulty": 8,
+            "moneyAvailable": 125000000,
+            "minDifficulty": 8,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "home",
+            "pid": 158235
         }
     ],
     [
@@ -661,14 +101,14 @@
             "name": "harakiri-sushi",
             "moneyThreshhold": 75000000,
             "securityThreshholdTarget": 10,
-            "hackDifficulty": 5,
+            "hackDifficulty": 11.362,
             "moneyAvailable": 100000000,
             "minDifficulty": 5,
-            "isWeakening": false,
+            "isWeakening": true,
             "isGrowing": false,
-            "isHacking": true,
+            "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 25564
+            "pid": 158216
         }
     ],
     [
@@ -677,14 +117,30 @@
             "name": "hong-fang-tea",
             "moneyThreshhold": 56250000,
             "securityThreshholdTarget": 10,
-            "hackDifficulty": 5,
+            "hackDifficulty": 16.622,
             "moneyAvailable": 75000000,
             "minDifficulty": 5,
-            "isWeakening": false,
+            "isWeakening": true,
             "isGrowing": false,
-            "isHacking": true,
+            "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 25565
+            "pid": 158217
+        }
+    ],
+    [
+        "nectar-net",
+        {
+            "name": "nectar-net",
+            "moneyThreshhold": 51562500,
+            "securityThreshholdTarget": 12,
+            "hackDifficulty": 16.427999999999997,
+            "moneyAvailable": 68750000,
+            "minDifficulty": 7,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158218
         }
     ],
     [
@@ -693,14 +149,14 @@
             "name": "joesguns",
             "moneyThreshhold": 46875000,
             "securityThreshholdTarget": 10,
-            "hackDifficulty": 18.578,
+            "hackDifficulty": 16.434,
             "moneyAvailable": 62500000,
             "minDifficulty": 5,
             "isWeakening": true,
             "isGrowing": false,
             "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 25567
+            "pid": 158238
         }
     ],
     [
@@ -709,46 +165,590 @@
             "name": "sigma-cosmetics",
             "moneyThreshhold": 43125000,
             "securityThreshholdTarget": 8,
-            "hackDifficulty": 3,
-            "moneyAvailable": 57500000,
+            "hackDifficulty": 3.08,
+            "moneyAvailable": 0,
             "minDifficulty": 3,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158239
+        }
+    ],
+    [
+        "the-hub",
+        {
+            "name": "the-hub",
+            "moneyThreshhold": 3459399318.75,
+            "securityThreshholdTarget": 17,
+            "hackDifficulty": 12.098,
+            "moneyAvailable": 0,
+            "minDifficulty": 12,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158102
+        }
+    ],
+    [
+        "johnson-ortho",
+        {
+            "name": "johnson-ortho",
+            "moneyThreshhold": 1430095893.75,
+            "securityThreshholdTarget": 26,
+            "hackDifficulty": 21,
+            "moneyAvailable": 1906794525,
+            "minDifficulty": 21,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "fulcrumtech",
+            "pid": 158169
+        }
+    ],
+    [
+        "omega-net",
+        {
+            "name": "omega-net",
+            "moneyThreshhold": 1272206550,
+            "securityThreshholdTarget": 14,
+            "hackDifficulty": 9,
+            "moneyAvailable": 1696275400,
+            "minDifficulty": 9,
             "isWeakening": false,
             "isGrowing": false,
             "isHacking": true,
             "machineRunningOn": "home",
-            "pid": 25566
+            "pid": 158211
         }
     ],
     [
-        "foodnstuff",
+        "crush-fitness",
         {
-            "name": "foodnstuff",
-            "moneyThreshhold": 37500000,
-            "securityThreshholdTarget": 8,
-            "hackDifficulty": 49.05200000000001,
-            "moneyAvailable": 50000000,
-            "minDifficulty": 3,
+            "name": "crush-fitness",
+            "moneyThreshhold": 1042394006.25,
+            "securityThreshholdTarget": 17,
+            "hackDifficulty": 26.316000000000003,
+            "moneyAvailable": 1389858675,
+            "minDifficulty": 12,
             "isWeakening": true,
             "isGrowing": false,
             "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 25568
+            "pid": 158044
         }
     ],
     [
-        "4sigma",
+        "silver-helix",
         {
-            "name": "4sigma",
-            "moneyThreshhold": 293496700312.5,
+            "name": "silver-helix",
+            "moneyThreshhold": 843750000,
+            "securityThreshholdTarget": 15,
+            "hackDifficulty": 10.09,
+            "moneyAvailable": 0,
+            "minDifficulty": 10,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158213
+        }
+    ],
+    [
+        "phantasy",
+        {
+            "name": "phantasy",
+            "moneyThreshhold": 450000000,
+            "securityThreshholdTarget": 12,
+            "hackDifficulty": 15.254000000000001,
+            "moneyAvailable": 600000000,
+            "minDifficulty": 7,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158193
+        }
+    ],
+    [
+        "rho-construction",
+        {
+            "name": "rho-construction",
+            "moneyThreshhold": 10013917031.25,
+            "securityThreshholdTarget": 23,
+            "hackDifficulty": 33.174,
+            "moneyAvailable": 13351889375,
+            "minDifficulty": 18,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157583
+        }
+    ],
+    [
+        "catalyst",
+        {
+            "name": "catalyst",
+            "moneyThreshhold": 9888666206.25,
+            "securityThreshholdTarget": 25,
+            "hackDifficulty": 20.112,
+            "moneyAvailable": 0,
+            "minDifficulty": 20,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158081
+        }
+    ],
+    [
+        "summit-uni",
+        {
+            "name": "summit-uni",
+            "moneyThreshhold": 6033307012.5,
+            "securityThreshholdTarget": 27,
+            "hackDifficulty": 22,
+            "moneyAvailable": 8044409350,
+            "minDifficulty": 22,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "home",
+            "pid": 158234
+        }
+    ],
+    [
+        "netlink",
+        {
+            "name": "netlink",
+            "moneyThreshhold": 5156250000,
+            "securityThreshholdTarget": 27,
+            "hackDifficulty": 33.870000000000005,
+            "moneyAvailable": 6875000000,
+            "minDifficulty": 22,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157701
+        }
+    ],
+    [
+        "millenium-fitness",
+        {
+            "name": "millenium-fitness",
+            "moneyThreshhold": 4687500000,
+            "securityThreshholdTarget": 23,
+            "hackDifficulty": 39.068,
+            "moneyAvailable": 6250000000,
+            "minDifficulty": 18,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157890
+        }
+    ],
+    [
+        "computek",
+        {
+            "name": "computek",
+            "moneyThreshhold": 4617371756.25,
+            "securityThreshholdTarget": 25,
+            "hackDifficulty": 34.264,
+            "moneyAvailable": 6156495675,
+            "minDifficulty": 20,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157832
+        }
+    ],
+    [
+        "rothman-uni",
+        {
+            "name": "rothman-uni",
+            "moneyThreshhold": 4290413700,
+            "securityThreshholdTarget": 20,
+            "hackDifficulty": 30.862000000000002,
+            "moneyAvailable": 5720551600,
+            "minDifficulty": 15,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158192
+        }
+    ],
+    [
+        "unitalife",
+        {
+            "name": "unitalife",
+            "moneyThreshhold": 19118014068.75,
+            "securityThreshholdTarget": 29,
+            "hackDifficulty": 37.97,
+            "moneyAvailable": 25490685425,
+            "minDifficulty": 24,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157657
+        }
+    ],
+    [
+        "zb-def",
+        {
+            "name": "zb-def",
+            "moneyThreshhold": 17154234262.5,
             "securityThreshholdTarget": 24,
-            "hackDifficulty": 33.010000000000005,
-            "moneyAvailable": 391328933750,
+            "hackDifficulty": 19.13,
+            "moneyAvailable": 0,
             "minDifficulty": 19,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157934
+        }
+    ],
+    [
+        "applied-energetics",
+        {
+            "name": "applied-energetics",
+            "moneyThreshhold": 16687378312.5,
+            "securityThreshholdTarget": 27,
+            "hackDifficulty": 34.47,
+            "moneyAvailable": 22249837750,
+            "minDifficulty": 22,
             "isWeakening": true,
             "isGrowing": false,
             "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 25552
+            "pid": 157986
+        }
+    ],
+    [
+        "lexo-corp",
+        {
+            "name": "lexo-corp",
+            "moneyThreshhold": 13764931818.75,
+            "securityThreshholdTarget": 26,
+            "hackDifficulty": 21.132,
+            "moneyAvailable": 0,
+            "minDifficulty": 21,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157889
+        }
+    ],
+    [
+        "alpha-ent",
+        {
+            "name": "alpha-ent",
+            "moneyThreshhold": 13416298256.25,
+            "securityThreshholdTarget": 28,
+            "hackDifficulty": 23,
+            "moneyAvailable": 17888397675,
+            "minDifficulty": 23,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "home",
+            "pid": 158233
+        }
+    ],
+    [
+        "syscore",
+        {
+            "name": "syscore",
+            "moneyThreshhold": 10500493912.5,
+            "securityThreshholdTarget": 27,
+            "hackDifficulty": 36.036,
+            "moneyAvailable": 14000658550,
+            "minDifficulty": 22,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157489
+        }
+    ],
+    [
+        "snap-fitness",
+        {
+            "name": "snap-fitness",
+            "moneyThreshhold": 8437500000,
+            "securityThreshholdTarget": 21,
+            "hackDifficulty": 16.126,
+            "moneyAvailable": 0,
+            "minDifficulty": 16,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157853
+        }
+    ],
+    [
+        "aevum-police",
+        {
+            "name": "aevum-police",
+            "moneyThreshhold": 5596723725,
+            "securityThreshholdTarget": 31,
+            "hackDifficulty": 49.798,
+            "moneyAvailable": 7462298300,
+            "minDifficulty": 26,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157700
+        }
+    ],
+    [
+        "stormtech",
+        {
+            "name": "stormtech",
+            "moneyThreshhold": 19539669787.5,
+            "securityThreshholdTarget": 31,
+            "hackDifficulty": 38.424,
+            "moneyAvailable": 26052893050,
+            "minDifficulty": 26,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 158080
+        }
+    ],
+    [
+        "aerocorp",
+        {
+            "name": "aerocorp",
+            "moneyThreshhold": 19305747018.75,
+            "securityThreshholdTarget": 35,
+            "hackDifficulty": 30,
+            "moneyAvailable": 25740996025,
+            "minDifficulty": 30,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "home",
+            "pid": 158232
+        }
+    ],
+    [
+        "zb-institute",
+        {
+            "name": "zb-institute",
+            "moneyThreshhold": 18494860068.75,
+            "securityThreshholdTarget": 27,
+            "hackDifficulty": 33.284000000000006,
+            "moneyAvailable": 24659813425,
+            "minDifficulty": 22,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157177
+        }
+    ],
+    [
+        "omnia",
+        {
+            "name": "omnia",
+            "moneyThreshhold": 18371417062.5,
+            "securityThreshholdTarget": 33,
+            "hackDifficulty": 46.202,
+            "moneyAvailable": 24495222750,
+            "minDifficulty": 28,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157333
+        }
+    ],
+    [
+        "icarus",
+        {
+            "name": "icarus",
+            "moneyThreshhold": 18098401368.75,
+            "securityThreshholdTarget": 36,
+            "hackDifficulty": 31.158,
+            "moneyAvailable": 0,
+            "minDifficulty": 31,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157351
+        }
+    ],
+    [
+        "powerhouse-fitness",
+        {
+            "name": "powerhouse-fitness",
+            "moneyThreshhold": 16875000000,
+            "securityThreshholdTarget": 26,
+            "hackDifficulty": 36.456,
+            "moneyAvailable": 22500000000,
+            "minDifficulty": 21,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157831
+        }
+    ],
+    [
+        "titan-labs",
+        {
+            "name": "titan-labs",
+            "moneyThreshhold": 16223172562.5,
+            "securityThreshholdTarget": 28,
+            "hackDifficulty": 35.976,
+            "moneyAvailable": 21630896750,
+            "minDifficulty": 23,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157910
+        }
+    ],
+    [
+        "taiyang-digital",
+        {
+            "name": "taiyang-digital",
+            "moneyThreshhold": 16173961743.75,
+            "securityThreshholdTarget": 30,
+            "hackDifficulty": 25.152,
+            "moneyAvailable": 0,
+            "minDifficulty": 25,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157505
+        }
+    ],
+    [
+        "defcomm",
+        {
+            "name": "defcomm",
+            "moneyThreshhold": 15431042193.75,
+            "securityThreshholdTarget": 37,
+            "hackDifficulty": 52.117999999999995,
+            "moneyAvailable": 20574722925,
+            "minDifficulty": 32,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 156996
+        }
+    ],
+    [
+        "solaris",
+        {
+            "name": "solaris",
+            "moneyThreshhold": 15227457543.75,
+            "securityThreshholdTarget": 29,
+            "hackDifficulty": 24,
+            "moneyAvailable": 20303276725,
+            "minDifficulty": 24,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "omnitek",
+            "pid": 158097
+        }
+    ],
+    [
+        "vitalife",
+        {
+            "name": "vitalife",
+            "moneyThreshhold": 14888257537.5,
+            "securityThreshholdTarget": 32,
+            "hackDifficulty": 27.152,
+            "moneyAvailable": 0,
+            "minDifficulty": 27,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157638
+        }
+    ],
+    [
+        "galactic-cyber",
+        {
+            "name": "galactic-cyber",
+            "moneyThreshhold": 14384169525,
+            "securityThreshholdTarget": 26,
+            "hackDifficulty": 21,
+            "moneyAvailable": 19178892700,
+            "minDifficulty": 21,
+            "isWeakening": false,
+            "isGrowing": false,
+            "isHacking": true,
+            "machineRunningOn": "home",
+            "pid": 158210
+        }
+    ],
+    [
+        "helios",
+        {
+            "name": "helios",
+            "moneyThreshhold": 13031962650,
+            "securityThreshholdTarget": 35,
+            "hackDifficulty": 30.156,
+            "moneyAvailable": 0,
+            "minDifficulty": 30,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157506
+        }
+    ],
+    [
+        "infocomm",
+        {
+            "name": "infocomm",
+            "moneyThreshhold": 12661338150,
+            "securityThreshholdTarget": 35,
+            "hackDifficulty": 30.162,
+            "moneyAvailable": 0,
+            "minDifficulty": 30,
+            "isWeakening": false,
+            "isGrowing": true,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157352
+        }
+    ],
+    [
+        "microdyne",
+        {
+            "name": "microdyne",
+            "moneyThreshhold": 10315166156.25,
+            "securityThreshholdTarget": 29,
+            "hackDifficulty": 35.094,
+            "moneyAvailable": 13753554875,
+            "minDifficulty": 24,
+            "isWeakening": true,
+            "isGrowing": false,
+            "isHacking": false,
+            "machineRunningOn": "home",
+            "pid": 157451
         }
     ],
     [
@@ -757,62 +757,14 @@
             "name": "fulcrumassets",
             "moneyThreshhold": 18750000,
             "securityThreshholdTarget": 38,
-            "hackDifficulty": 33.324,
-            "moneyAvailable": 0,
-            "minDifficulty": 33,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25189
-        }
-    ],
-    [
-        "clarkinc",
-        {
-            "name": "clarkinc",
-            "moneyThreshhold": 406473630993.75,
-            "securityThreshholdTarget": 25,
-            "hackDifficulty": 20.282,
-            "moneyAvailable": 0,
-            "minDifficulty": 20,
-            "isWeakening": false,
-            "isGrowing": true,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 25398
-        }
-    ],
-    [
-        "nwo",
-        {
-            "name": "nwo",
-            "moneyThreshhold": 402751471556.25,
-            "securityThreshholdTarget": 38,
-            "hackDifficulty": 56.618,
-            "moneyAvailable": 537001962075,
+            "hackDifficulty": 100,
+            "moneyAvailable": 25000000,
             "minDifficulty": 33,
             "isWeakening": true,
             "isGrowing": false,
             "isHacking": false,
             "machineRunningOn": "home",
-            "pid": 24676
-        }
-    ],
-    [
-        "fulcrumtech",
-        {
-            "name": "fulcrumtech",
-            "moneyThreshhold": 26681973600,
-            "securityThreshholdTarget": 37,
-            "hackDifficulty": 52.03,
-            "moneyAvailable": 35575964800,
-            "minDifficulty": 32,
-            "isWeakening": true,
-            "isGrowing": false,
-            "isHacking": false,
-            "machineRunningOn": "home",
-            "pid": 24414
+            "pid": 157743
         }
     ]
 ]

@@ -24,7 +24,7 @@ export async function main(ns) {
 
     await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment);
     addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment);
-    // adjust window sizes based on failures in the last hour.
+    adjustTimingsDependingOnReliability(batchQueueForDifferentTargets, targetNames);
 
     ns.rm(batchQueuesFileName);
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
@@ -65,7 +65,7 @@ class BatchQueueForTarget {
 
     lastFailure;
 
-    executionWindowSize = 15;
+    executionWindowSizeInSeconds = 15;
 
     getAllocatedMemory(machineRunningOn) {
         return this.batchesQueue
@@ -176,13 +176,39 @@ export class Helpers {
     }
 }
 
+function adjustTimingsDependingOnReliability(batchQueueForDifferentTargets, targetNames) {
+    const currentTime = new Date();
+
+    for (const nameOfTarget of targetNames) {
+        const batch = batchQueueForDifferentTargets.get(nameOfTarget);
+
+        if (currentTime.getHours() !== batch.lastResetHour) {
+            if (batch.failuresInTheLastHour === 0 && batch.successesInTheLastHour > 0 && batch.executionWindowSizeInSeconds > 3) {
+                batch.executionWindowSizeInSeconds--;
+            }
+
+            const totalRuns = batch.successesInTheLastHour + batch.failuresInTheLastHour;
+            const ratioOfFailures = 1 - (batch.successesInTheLastHour / totalRuns);
+
+            if (ratioOfFailures > 0.1) {
+                batch.executionWindowSizeInSeconds++;
+            }
+
+
+            batch.lastResetHour = currentTime.getHours();
+            batch.successesInTheLastHour = 0;
+            batch.failuresInTheLastHour = 0;
+        }
+    }
+}
+
 function createBatchesOfJobs(batchForTarget, ns, targetServer, player) {
     if (batchForTarget.prepStage === false) {
 
         if (batchForTarget.batchesQueue.length === 0 || batchForTarget.batchesQueue.every(x => new Date() > new Date(x.startTime))) {
             const batch = new BatchOfJobs();
 
-            const secondsToPadEndTime = batchForTarget.executionWindowSize;
+            const secondsToPadEndTime = batchForTarget.executionWindowSizeInSeconds;
             const msToPadStartTime = 1;
 
             const noJobsRunningAfter = batchForTarget.thereAreNoJobsRunningAfter();
@@ -199,9 +225,9 @@ function createBatchesOfJobs(batchForTarget, ns, targetServer, player) {
                 noMoreJobsAfter = defaultEndTime;
             }
 
-            if(targetServer.hostname === "megacorp"){
-                ns.tprint(noMoreJobsAfter.toLocaleTimeString());
-            }
+            // if(targetServer.hostname === "megacorp"){
+            //     ns.tprint(noMoreJobsAfter.toLocaleTimeString());
+            // }
 
             const hackStart = createNewDataFromOldDateAndAddMilliseconds(noMoreJobsAfter, msToPadStartTime);
             const hackEnd = createNewDataFromOldDateAndAddSeconds(hackStart, secondsToPadEndTime);
@@ -288,16 +314,16 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         if (ifStartedNowWeakenDoneAt > endBeforeDate) {
                             const howMuchOff = ifStartedNowWeakenDoneAt - endBeforeDate;
                             const howMuchOffSeconds = new Date(howMuchOff).getSeconds()
-                            if(howMuchOffSeconds < batchForTarget.executionWindowSize / 2){
+                            if (howMuchOffSeconds < batchForTarget.executionWindowSizeInSeconds / 2) {
 
-                                if(nameOfTarget === "megacorp"){
-                                    ns.tprint(nameOfTarget);
-                                    ns.tprint(ifStartedNowWeakenDoneAt);
-                                    ns.tprint(endBeforeDate);
-                                }
+                                // if(nameOfTarget === "megacorp"){
+                                //     ns.tprint(nameOfTarget);
+                                //     ns.tprint(ifStartedNowWeakenDoneAt);
+                                //     ns.tprint(endBeforeDate);
+                                // }
 
                                 // i think we need to adjust weakens sometimes when they miss their window. But that time isn't now. 
-                            } 
+                            }
                         }
                     }
 
@@ -542,17 +568,10 @@ function giveBatchQueueStructure(targetNames, batchQueue) {
 }
 
 function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
-    const now = new Date();
 
     for (const target of targetNames) {
         const batches = batchQueue.get(target);
         const currentTime = new Date();
-
-        if (currentTime.getHours() !== batches.lastResetHour) {
-            batches.lastResetHour = currentTime.getHours();
-            batches.successesInTheLastHour = 0;
-            batches.failuresInTheLastHour = 0;
-        }
 
         for (let i = batches.batchesQueue.length - 1; i > -1; i--) {
             const batch = batches.batchesQueue[i];
@@ -573,15 +592,15 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                 batches.targetMachineSaturatedWithAttacks = true;
             }
 
-            if (batch.poisonedBatch){
+            if (batch.poisonedBatch) {
                 batches.failures++;
                 batches.failuresInTheLastHour++;
                 batches.lastFailure = batch;
-                
+
                 remove = true;
-                
+
                 batch.jobs.map(x => {
-                    if(x.pid){
+                    if (x.pid) {
                         ns.kill(x.pid);
                         ns.tprint(x.pid);
                     }
@@ -590,7 +609,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                 ns.tprint("killed poisoned")
             }
 
-            if(remove){
+            if (remove) {
                 batches.batchesQueue.splice(i, 1);
             }
         }
@@ -598,7 +617,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
-    if ((batchQueue.size < 8 || targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 15) {
+    if ((batchQueue.size < 8 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 25)) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();
