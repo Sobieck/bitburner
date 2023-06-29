@@ -2,8 +2,8 @@
     [
         "megacorp",
         {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
             "weakeningDoneAfter": "2023-06-29T01:10:27.707Z",
             "successfulWeakening": false,
             "growDoneAfter": "2023-06-29T01:01:15.922Z",
@@ -18,55 +18,498 @@
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 631.75,
+                            "ramCost": 163.2,
+                            "endAfter": "2023-06-29T17:44:08.653Z",
+                            "endBefore": "2023-06-29T17:44:23.653Z",
+                            "type": "hack",
                             "machineRunningOn": "home",
-                            "endAfter": "2023-06-29T01:01:18.961Z",
-                            "endBefore": "2023-06-29T01:10:27.707Z",
-                            "type": "weaken-dynamic",
-                            "pid": 15693
+                            "pid": 140708
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:23.654Z",
+                            "endBefore": "2023-06-29T17:44:38.654Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "home",
+                            "pid": 139417
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 9801.75,
+                            "endAfter": "2023-06-29T17:44:38.655Z",
+                            "endBefore": "2023-06-29T17:44:53.655Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 139862
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 806.75,
+                            "endAfter": "2023-06-29T17:44:53.656Z",
+                            "endBefore": "2023-06-29T17:45:08.656Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 138651
                         }
                     ],
-                    "startTime": "2023-06-29T01:01:18.961Z"
+                    "startTime": "2023-06-29T17:37:34.282Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 163.2,
+                            "endAfter": "2023-06-29T17:45:08.657Z",
+                            "endBefore": "2023-06-29T17:45:23.657Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 141084
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:23.658Z",
+                            "endBefore": "2023-06-29T17:45:38.658Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "silver-helix",
+                            "pid": 139762
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 9856,
+                            "endAfter": "2023-06-29T17:45:38.659Z",
+                            "endBefore": "2023-06-29T17:45:53.659Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140226
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 806.75,
+                            "endAfter": "2023-06-29T17:45:53.660Z",
+                            "endBefore": "2023-06-29T17:46:08.660Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139038
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:38:34.689Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:08.661Z",
+                            "endBefore": "2023-06-29T17:46:23.661Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:23.662Z",
+                            "endBefore": "2023-06-29T17:46:38.662Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140128
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 9801.75,
+                            "endAfter": "2023-06-29T17:46:38.663Z",
+                            "endBefore": "2023-06-29T17:46:53.663Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140691
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 806.75,
+                            "endAfter": "2023-06-29T17:46:53.664Z",
+                            "endBefore": "2023-06-29T17:47:08.664Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139357
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:39:26.063Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:08.665Z",
+                            "endBefore": "2023-06-29T17:47:23.665Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:47:23.666Z",
+                            "endBefore": "2023-06-29T17:47:38.666Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "univ-energy",
+                            "pid": 140529
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 14679,
+                            "endAfter": "2023-06-29T17:47:38.667Z",
+                            "endBefore": "2023-06-29T17:47:53.667Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140246
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 806.75,
+                            "endAfter": "2023-06-29T17:47:53.668Z",
+                            "endBefore": "2023-06-29T17:48:08.668Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140726
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:44.820Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:33.802Z",
+                            "endBefore": "2023-06-29T17:49:48.802Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:48.803Z",
+                            "endBefore": "2023-06-29T17:50:03.803Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:03.804Z",
+                            "endBefore": "2023-06-29T17:50:18.804Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 806.75,
+                            "endAfter": "2023-06-29T17:50:18.805Z",
+                            "endBefore": "2023-06-29T17:50:33.805Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140670
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:51.325Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:33.806Z",
+                            "endBefore": "2023-06-29T17:50:48.806Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:48.807Z",
+                            "endBefore": "2023-06-29T17:51:03.807Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:03.808Z",
+                            "endBefore": "2023-06-29T17:51:18.808Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 806.75,
+                            "endAfter": "2023-06-29T17:51:18.809Z",
+                            "endBefore": "2023-06-29T17:51:33.809Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 141046
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:51.603Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:33.810Z",
+                            "endBefore": "2023-06-29T17:51:48.810Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:48.811Z",
+                            "endBefore": "2023-06-29T17:52:03.811Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:03.812Z",
+                            "endBefore": "2023-06-29T17:52:18.812Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:18.813Z",
+                            "endBefore": "2023-06-29T17:52:33.813Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
                 }
-            ]
+            ],
+            "successes": 69,
+            "failures": 15,
+            "successesInTheLastHour": 25,
+            "failuresInTheLastHour": 4,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": true,
+                        "ramCost": 219.29999999999998,
+                        "endAfter": "2023-06-29T17:41:08.641Z",
+                        "endBefore": "2023-06-29T17:41:23.641Z",
+                        "type": "hack",
+                        "machineRunningOn": "home",
+                        "pid": 139340
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:41:23.642Z",
+                        "endBefore": "2023-06-29T17:41:38.642Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 9801.75,
+                        "endAfter": "2023-06-29T17:41:38.643Z",
+                        "endBefore": "2023-06-29T17:41:53.643Z",
+                        "type": "grow",
+                        "machineRunningOn": "home",
+                        "pid": 138731
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 806.75,
+                        "endAfter": "2023-06-29T17:41:53.644Z",
+                        "endBefore": "2023-06-29T17:42:08.644Z",
+                        "type": "weaken-after-grow",
+                        "machineRunningOn": "home",
+                        "pid": 137440
+                    }
+                ],
+                "startTime": "2023-06-29T17:34:24.305Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
         }
     ],
     [
         "ecorp",
         {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "weakeningDoneAfter": "2023-06-29T01:02:38.234Z",
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T01:18:44.740Z",
             "successfulWeakening": false,
-            "growDoneAfter": "2023-06-29T00:44:09.357Z",
-            "successfulGrowing": false,
+            "growDoneAfter": "2023-06-29T01:08:16.748Z",
+            "successfulGrowing": true,
             "hackDoneAfter": "2023-06-29T00:55:27.922Z",
             "successfulHacking": true,
             "securityWeNeedToReduceAfterFullHack": 0.268,
+            "securityWeNeedToReduceAfterFullGrowth": 22.124,
             "originalNumberOfThreadsForFullMoney": 134,
             "batchesQueue": [
                 {
                     "jobs": [
                         {
                             "executing": true,
+                            "ramCost": 246.5,
+                            "endAfter": "2023-06-29T17:43:57.456Z",
+                            "endBefore": "2023-06-29T17:44:12.456Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140268
+                        },
+                        {
+                            "executing": true,
                             "ramCost": 36.75,
-                            "machineRunningOn": "avmnite-02h",
-                            "endAfter": "2023-06-29T00:55:32.167Z",
-                            "endBefore": "2023-06-29T01:02:38.234Z",
-                            "type": "weaken-dynamic",
-                            "pid": 13867
+                            "endAfter": "2023-06-29T17:44:12.457Z",
+                            "endBefore": "2023-06-29T17:44:27.457Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "run4theh111z",
+                            "pid": 139016
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 14383.25,
+                            "endAfter": "2023-06-29T17:44:27.458Z",
+                            "endBefore": "2023-06-29T17:44:42.458Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 138652
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 806.75,
+                            "endAfter": "2023-06-29T17:44:42.459Z",
+                            "endBefore": "2023-06-29T17:44:57.459Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139209
                         }
                     ],
-                    "startTime": "2023-06-29T00:55:32.167Z"
+                    "startTime": "2023-06-29T17:37:34.282Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 484.5,
+                            "endAfter": "2023-06-29T17:46:29.076Z",
+                            "endBefore": "2023-06-29T17:46:44.076Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140915
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:44.077Z",
+                            "endBefore": "2023-06-29T17:46:59.077Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:59.078Z",
+                            "endBefore": "2023-06-29T17:47:14.078Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:14.079Z",
+                            "endBefore": "2023-06-29T17:47:29.079Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:30.402Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:56:39.135Z",
+                            "endBefore": "2023-06-29T17:56:54.135Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:56:54.136Z",
+                            "endBefore": "2023-06-29T17:57:09.136Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:57:09.137Z",
+                            "endBefore": "2023-06-29T17:57:24.137Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:57:24.138Z",
+                            "endBefore": "2023-06-29T17:57:39.138Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
                 }
-            ]
+            ],
+            "successes": 49,
+            "failures": 31,
+            "successesInTheLastHour": 13,
+            "failuresInTheLastHour": 15,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": true,
+                        "ramCost": 181.9,
+                        "endAfter": "2023-06-29T17:40:23.656Z",
+                        "endBefore": "2023-06-29T17:40:38.656Z",
+                        "type": "hack",
+                        "machineRunningOn": "home",
+                        "pid": 139191
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:40:38.657Z",
+                        "endBefore": "2023-06-29T17:40:53.657Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 14441,
+                        "endAfter": "2023-06-29T17:40:53.658Z",
+                        "endBefore": "2023-06-29T17:41:08.658Z",
+                        "type": "grow",
+                        "machineRunningOn": "home",
+                        "pid": 137283
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:41:08.659Z",
+                        "endBefore": "2023-06-29T17:41:23.659Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "startTime": "2023-06-29T17:34:00.082Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
         }
     ],
     [
         "nwo",
         {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
             "weakeningDoneAfter": "2023-06-29T01:09:46.561Z",
             "successfulWeakening": false,
             "growDoneAfter": "2023-06-29T00:59:58.449Z",
@@ -81,24 +524,327 @@
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 806.75,
+                            "ramCost": 159.79999999999998,
+                            "endAfter": "2023-06-29T17:43:12.334Z",
+                            "endBefore": "2023-06-29T17:43:27.334Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140361
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:43:27.335Z",
+                            "endBefore": "2023-06-29T17:43:42.335Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 139096
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12528.25,
+                            "endAfter": "2023-06-29T17:43:42.336Z",
+                            "endBefore": "2023-06-29T17:43:57.336Z",
+                            "type": "grow",
                             "machineRunningOn": "home",
-                            "endAfter": "2023-06-29T01:00:03.409Z",
-                            "endBefore": "2023-06-29T01:09:46.561Z",
-                            "type": "weaken-dynamic",
-                            "pid": 15292
+                            "pid": 139552
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:43:57.337Z",
+                            "endBefore": "2023-06-29T17:44:12.337Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 138072
                         }
                     ],
-                    "startTime": "2023-06-29T01:00:03.410Z"
+                    "startTime": "2023-06-29T17:36:03.894Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 159.79999999999998,
+                            "endAfter": "2023-06-29T17:44:12.338Z",
+                            "endBefore": "2023-06-29T17:44:27.338Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140741
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:27.339Z",
+                            "endBefore": "2023-06-29T17:44:42.339Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 139457
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12528.25,
+                            "endAfter": "2023-06-29T17:44:42.340Z",
+                            "endBefore": "2023-06-29T17:44:57.340Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 139920
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:44:57.341Z",
+                            "endBefore": "2023-06-29T17:45:12.341Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 138456
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:37:04.113Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 159.79999999999998,
+                            "endAfter": "2023-06-29T17:45:12.342Z",
+                            "endBefore": "2023-06-29T17:45:27.342Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 141115
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:27.343Z",
+                            "endBefore": "2023-06-29T17:45:42.343Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "home",
+                            "pid": 139842
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12528.25,
+                            "endAfter": "2023-06-29T17:45:42.344Z",
+                            "endBefore": "2023-06-29T17:45:57.344Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140344
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:45:57.345Z",
+                            "endBefore": "2023-06-29T17:46:12.345Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 138846
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:38:04.531Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:12.346Z",
+                            "endBefore": "2023-06-29T17:46:27.346Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:27.347Z",
+                            "endBefore": "2023-06-29T17:46:42.347Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140227
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12528.25,
+                            "endAfter": "2023-06-29T17:46:42.348Z",
+                            "endBefore": "2023-06-29T17:46:57.348Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140727
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:46:57.349Z",
+                            "endBefore": "2023-06-29T17:47:12.349Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140418
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:41.793Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:56.755Z",
+                            "endBefore": "2023-06-29T17:50:11.755Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:11.756Z",
+                            "endBefore": "2023-06-29T17:50:26.756Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:26.757Z",
+                            "endBefore": "2023-06-29T17:50:41.757Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:50:41.758Z",
+                            "endBefore": "2023-06-29T17:50:56.758Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140635
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:45.315Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:56.759Z",
+                            "endBefore": "2023-06-29T17:51:11.759Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:11.760Z",
+                            "endBefore": "2023-06-29T17:51:26.760Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:26.761Z",
+                            "endBefore": "2023-06-29T17:51:41.761Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:51:41.762Z",
+                            "endBefore": "2023-06-29T17:51:56.762Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 141007
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:45.549Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:56.763Z",
+                            "endBefore": "2023-06-29T17:52:11.763Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:11.764Z",
+                            "endBefore": "2023-06-29T17:52:26.764Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:26.765Z",
+                            "endBefore": "2023-06-29T17:52:41.765Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:41.766Z",
+                            "endBefore": "2023-06-29T17:52:56.766Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
                 }
-            ]
+            ],
+            "successes": 81,
+            "failures": 10,
+            "successesInTheLastHour": 26,
+            "failuresInTheLastHour": 1,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:10:06.032Z",
+                        "endBefore": "2023-06-29T17:10:21.032Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 36.75,
+                        "endAfter": "2023-06-29T17:10:21.033Z",
+                        "endBefore": "2023-06-29T17:10:36.033Z",
+                        "type": "weaken-after-hack",
+                        "machineRunningOn": "fulcrumtech",
+                        "pid": 126529
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 12528.25,
+                        "endAfter": "2023-06-29T17:10:36.034Z",
+                        "endBefore": "2023-06-29T17:10:51.034Z",
+                        "type": "grow",
+                        "machineRunningOn": "home",
+                        "pid": 127034
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 1016.75,
+                        "endAfter": "2023-06-29T17:10:51.035Z",
+                        "endBefore": "2023-06-29T17:11:06.035Z",
+                        "type": "weaken-after-grow",
+                        "machineRunningOn": "home",
+                        "pid": 126720
+                    }
+                ],
+                "startTime": "2023-06-29T17:05:35.706Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
         }
     ],
     [
         "blade",
         {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
             "weakeningDoneAfter": "2023-06-29T01:02:58.194Z",
             "successfulWeakening": false,
             "growDoneAfter": "2023-06-29T00:54:23.444Z",
@@ -113,24 +859,205 @@
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 701.75,
+                            "ramCost": 175.1,
+                            "endAfter": "2023-06-29T17:44:00.419Z",
+                            "endBefore": "2023-06-29T17:44:15.419Z",
+                            "type": "hack",
                             "machineRunningOn": "home",
-                            "endAfter": "2023-06-29T00:54:28.769Z",
-                            "endBefore": "2023-06-29T01:02:58.194Z",
-                            "type": "weaken-dynamic",
-                            "pid": 13532
+                            "pid": 140473
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:15.420Z",
+                            "endBefore": "2023-06-29T17:44:30.420Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 139608
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 11277,
+                            "endAfter": "2023-06-29T17:44:30.421Z",
+                            "endBefore": "2023-06-29T17:44:45.421Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140015
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 911.75,
+                            "endAfter": "2023-06-29T17:44:45.422Z",
+                            "endBefore": "2023-06-29T17:45:00.422Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139885
                         }
                     ],
-                    "startTime": "2023-06-29T00:54:28.770Z"
+                    "startTime": "2023-06-29T17:40:05.190Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 175.1,
+                            "endAfter": "2023-06-29T17:45:00.423Z",
+                            "endBefore": "2023-06-29T17:45:15.423Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140595
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:15.424Z",
+                            "endBefore": "2023-06-29T17:45:30.424Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 139979
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:45:30.425Z",
+                            "endBefore": "2023-06-29T17:45:45.425Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:45:45.426Z",
+                            "endBefore": "2023-06-29T17:46:00.426Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:02.724Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 175.1,
+                            "endAfter": "2023-06-29T17:46:00.427Z",
+                            "endBefore": "2023-06-29T17:46:15.427Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 141116
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:15.428Z",
+                            "endBefore": "2023-06-29T17:46:30.428Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:30.429Z",
+                            "endBefore": "2023-06-29T17:46:45.429Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:45.430Z",
+                            "endBefore": "2023-06-29T17:47:00.430Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:44:03.703Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:21.706Z",
+                            "endBefore": "2023-06-29T17:52:36.706Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:36.707Z",
+                            "endBefore": "2023-06-29T17:52:51.707Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:51.708Z",
+                            "endBefore": "2023-06-29T17:53:06.708Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:53:06.709Z",
+                            "endBefore": "2023-06-29T17:53:21.709Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
                 }
-            ]
+            ],
+            "successes": 57,
+            "failures": 33,
+            "successesInTheLastHour": 22,
+            "failuresInTheLastHour": 14,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:43:00.415Z",
+                        "endBefore": "2023-06-29T17:43:15.415Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 36.75,
+                        "endAfter": "2023-06-29T17:43:15.416Z",
+                        "endBefore": "2023-06-29T17:43:30.416Z",
+                        "type": "weaken-after-hack",
+                        "machineRunningOn": "netlink",
+                        "pid": 139227
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 11277,
+                        "endAfter": "2023-06-29T17:43:30.417Z",
+                        "endBefore": "2023-06-29T17:43:45.417Z",
+                        "type": "grow",
+                        "machineRunningOn": "home",
+                        "pid": 139631
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 911.75,
+                        "endAfter": "2023-06-29T17:43:45.418Z",
+                        "endBefore": "2023-06-29T17:44:00.418Z",
+                        "type": "weaken-after-grow",
+                        "machineRunningOn": "home",
+                        "pid": 139494
+                    }
+                ],
+                "startTime": "2023-06-29T17:39:04.891Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
         }
     ],
     [
         "kuai-gong",
         {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
             "weakeningDoneAfter": "2023-06-29T01:03:26.541Z",
             "successfulWeakening": false,
             "growDoneAfter": "2023-06-29T00:55:22.785Z",
@@ -145,17 +1072,278 @@
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 596.75,
+                            "ramCost": 197.2,
+                            "endAfter": "2023-06-29T17:43:46.864Z",
+                            "endBefore": "2023-06-29T17:44:01.864Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140453
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:01.865Z",
+                            "endBefore": "2023-06-29T17:44:16.865Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "univ-energy",
+                            "pid": 139476
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 9271.5,
+                            "endAfter": "2023-06-29T17:44:16.866Z",
+                            "endBefore": "2023-06-29T17:44:31.866Z",
+                            "type": "grow",
                             "machineRunningOn": "home",
-                            "endAfter": "2023-06-29T00:55:26.145Z",
-                            "endBefore": "2023-06-29T01:03:26.541Z",
-                            "type": "weaken-dynamic",
-                            "pid": 13838
+                            "pid": 139902
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 771.75,
+                            "endAfter": "2023-06-29T17:44:31.867Z",
+                            "endBefore": "2023-06-29T17:44:46.867Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 138848
                         }
                     ],
-                    "startTime": "2023-06-29T00:55:26.145Z"
+                    "startTime": "2023-06-29T17:38:04.532Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 197.2,
+                            "endAfter": "2023-06-29T17:44:46.868Z",
+                            "endBefore": "2023-06-29T17:45:01.868Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140833
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:01.869Z",
+                            "endBefore": "2023-06-29T17:45:16.869Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "home",
+                            "pid": 139864
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 9271.5,
+                            "endAfter": "2023-06-29T17:45:16.870Z",
+                            "endBefore": "2023-06-29T17:45:31.870Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140284
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 771.75,
+                            "endAfter": "2023-06-29T17:45:31.871Z",
+                            "endBefore": "2023-06-29T17:45:46.871Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140046
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:44.587Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:45:46.872Z",
+                            "endBefore": "2023-06-29T17:46:01.872Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:01.873Z",
+                            "endBefore": "2023-06-29T17:46:16.873Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "run4theh111z",
+                            "pid": 140247
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 13622,
+                            "endAfter": "2023-06-29T17:46:16.874Z",
+                            "endBefore": "2023-06-29T17:46:31.874Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140089
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 771.75,
+                            "endAfter": "2023-06-29T17:46:31.875Z",
+                            "endBefore": "2023-06-29T17:46:46.875Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140434
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:20.763Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:07.108Z",
+                            "endBefore": "2023-06-29T17:48:22.108Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:48:22.109Z",
+                            "endBefore": "2023-06-29T17:48:37.109Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "univ-energy",
+                            "pid": 141132
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 13622,
+                            "endAfter": "2023-06-29T17:48:37.110Z",
+                            "endBefore": "2023-06-29T17:48:52.110Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140893
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 771.75,
+                            "endAfter": "2023-06-29T17:48:52.111Z",
+                            "endBefore": "2023-06-29T17:49:07.111Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140495
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:24.126Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:07.112Z",
+                            "endBefore": "2023-06-29T17:49:22.112Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:22.113Z",
+                            "endBefore": "2023-06-29T17:49:37.113Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:37.114Z",
+                            "endBefore": "2023-06-29T17:49:52.114Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 771.75,
+                            "endAfter": "2023-06-29T17:49:52.115Z",
+                            "endBefore": "2023-06-29T17:50:07.115Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140873
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:24.381Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:07.116Z",
+                            "endBefore": "2023-06-29T17:50:22.116Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:22.117Z",
+                            "endBefore": "2023-06-29T17:50:37.117Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:37.118Z",
+                            "endBefore": "2023-06-29T17:50:52.118Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:52.119Z",
+                            "endBefore": "2023-06-29T17:51:07.119Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
                 }
-            ]
+            ],
+            "successes": 92,
+            "failures": 6,
+            "successesInTheLastHour": 33,
+            "failuresInTheLastHour": 0,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:03:00.664Z",
+                        "endBefore": "2023-06-29T17:03:15.664Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:03:15.665Z",
+                        "endBefore": "2023-06-29T17:03:30.665Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:03:30.666Z",
+                        "endBefore": "2023-06-29T17:03:45.666Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 771.75,
+                        "endAfter": "2023-06-29T17:03:45.667Z",
+                        "endBefore": "2023-06-29T17:04:00.667Z",
+                        "type": "weaken-after-grow",
+                        "machineRunningOn": "home",
+                        "pid": 123435
+                    }
+                ],
+                "startTime": "2023-06-29T16:57:17.938Z",
+                "poisonedBatch": true
+            },
+            "executionWindowSize": 15
         }
     ],
     [
@@ -176,71 +1364,2385 @@
                 {
                     "jobs": [
                         {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-29T01:12:56.533Z",
-                            "endBefore": "2023-06-29T01:13:11.533Z",
-                            "type": "hack"
+                            "executing": true,
+                            "ramCost": 147.9,
+                            "endAfter": "2023-06-29T17:43:26.341Z",
+                            "endBefore": "2023-06-29T17:43:41.341Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140654
                         },
                         {
                             "executing": true,
                             "ramCost": 36.75,
-                            "endAfter": "2023-06-29T01:13:11.534Z",
-                            "endBefore": "2023-06-29T01:13:26.534Z",
+                            "endAfter": "2023-06-29T17:43:41.342Z",
+                            "endBefore": "2023-06-29T17:43:56.342Z",
                             "type": "weaken-after-hack",
                             "machineRunningOn": "omnitek",
-                            "pid": 15809
+                            "pid": 140047
                         },
                         {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-29T01:13:26.535Z",
-                            "endBefore": "2023-06-29T01:13:41.535Z",
-                            "type": "grow"
+                            "executing": true,
+                            "ramCost": 11189.5,
+                            "endAfter": "2023-06-29T17:43:56.343Z",
+                            "endBefore": "2023-06-29T17:44:11.343Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140285
                         },
                         {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-29T01:13:41.536Z",
-                            "endBefore": "2023-06-29T01:13:56.536Z",
-                            "type": "weaken-after-grow"
+                            "executing": true,
+                            "ramCost": 911.75,
+                            "endAfter": "2023-06-29T17:44:11.344Z",
+                            "endBefore": "2023-06-29T17:44:26.344Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140167
                         }
                     ],
-                    "startTime": "2023-06-29T01:01:40.001Z"
+                    "startTime": "2023-06-29T17:41:14.754Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 147.9,
+                            "endAfter": "2023-06-29T17:44:26.345Z",
+                            "endBefore": "2023-06-29T17:44:41.345Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 141028
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:41.346Z",
+                            "endBefore": "2023-06-29T17:44:56.346Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140419
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 11189.5,
+                            "endAfter": "2023-06-29T17:44:56.347Z",
+                            "endBefore": "2023-06-29T17:45:11.347Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140671
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 911.75,
+                            "endAfter": "2023-06-29T17:45:11.348Z",
+                            "endBefore": "2023-06-29T17:45:26.348Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140553
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:12.034Z",
+                    "poisonedBatch": false
                 },
                 {
                     "jobs": [
                         {
                             "executing": false,
                             "ramCost": 0,
-                            "endAfter": "2023-06-29T01:13:56.537Z",
-                            "endBefore": "2023-06-29T01:14:11.537Z",
+                            "endAfter": "2023-06-29T17:45:26.349Z",
+                            "endBefore": "2023-06-29T17:45:41.349Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:41.350Z",
+                            "endBefore": "2023-06-29T17:45:56.350Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 140799
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 11189.5,
+                            "endAfter": "2023-06-29T17:45:56.351Z",
+                            "endBefore": "2023-06-29T17:46:11.351Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 141047
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 911.75,
+                            "endAfter": "2023-06-29T17:46:11.352Z",
+                            "endBefore": "2023-06-29T17:46:26.352Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140934
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:12.361Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:26.353Z",
+                            "endBefore": "2023-06-29T17:46:41.353Z",
                             "type": "hack"
                         },
                         {
                             "executing": false,
                             "ramCost": 0,
-                            "endAfter": "2023-06-29T01:14:11.538Z",
-                            "endBefore": "2023-06-29T01:14:26.538Z",
+                            "endAfter": "2023-06-29T17:46:41.354Z",
+                            "endBefore": "2023-06-29T17:46:56.354Z",
                             "type": "weaken-after-hack"
                         },
                         {
                             "executing": false,
                             "ramCost": 0,
-                            "endAfter": "2023-06-29T01:14:26.539Z",
-                            "endBefore": "2023-06-29T01:14:41.539Z",
+                            "endAfter": "2023-06-29T17:46:56.355Z",
+                            "endBefore": "2023-06-29T17:47:11.355Z",
                             "type": "grow"
                         },
                         {
                             "executing": false,
                             "ramCost": 0,
-                            "endAfter": "2023-06-29T01:14:41.540Z",
-                            "endBefore": "2023-06-29T01:14:56.540Z",
+                            "endAfter": "2023-06-29T17:47:11.356Z",
+                            "endBefore": "2023-06-29T17:47:26.356Z",
                             "type": "weaken-after-grow"
                         }
-                    ]
+                    ],
+                    "poisonedBatch": false
                 }
-            ]
+            ],
+            "successes": 79,
+            "failures": 5,
+            "successesInTheLastHour": 39,
+            "failuresInTheLastHour": 2,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": true,
+                        "ramCost": 147.9,
+                        "endAfter": "2023-06-29T17:13:56.529Z",
+                        "endBefore": "2023-06-29T17:14:11.529Z",
+                        "type": "hack",
+                        "machineRunningOn": "home",
+                        "pid": 129242
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:14:11.530Z",
+                        "endBefore": "2023-06-29T17:14:26.530Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:14:26.531Z",
+                        "endBefore": "2023-06-29T17:14:41.531Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:14:41.532Z",
+                        "endBefore": "2023-06-29T17:14:56.532Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "startTime": "2023-06-29T17:12:55.884Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "4sigma",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T11:33:48.744Z",
+            "successfulWeakening": true,
+            "growDoneAfter": "2023-06-29T11:28:28.261Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T11:36:20.250Z",
+            "successfulHacking": false,
+            "securityWeNeedToReduceAfterFullHack": 0.164,
+            "securityWeNeedToReduceAfterFullGrowth": 15.168000000000001,
+            "originalNumberOfThreadsForFullMoney": 82,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 129.2,
+                            "endAfter": "2023-06-29T17:43:37.777Z",
+                            "endBefore": "2023-06-29T17:43:52.777Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140692
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:43:52.778Z",
+                            "endBefore": "2023-06-29T17:44:07.778Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "home",
+                            "pid": 140034
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 6636,
+                            "endAfter": "2023-06-29T17:44:07.779Z",
+                            "endBefore": "2023-06-29T17:44:22.779Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140269
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 561.75,
+                            "endAfter": "2023-06-29T17:44:22.780Z",
+                            "endBefore": "2023-06-29T17:44:37.780Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139573
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:39:59.161Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 139.4,
+                            "endAfter": "2023-06-29T17:44:37.781Z",
+                            "endBefore": "2023-06-29T17:44:52.781Z",
+                            "type": "hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 141064
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:44:52.782Z",
+                            "endBefore": "2023-06-29T17:45:07.782Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 6636,
+                            "endAfter": "2023-06-29T17:45:07.783Z",
+                            "endBefore": "2023-06-29T17:45:22.783Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140655
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 561.75,
+                            "endAfter": "2023-06-29T17:45:22.784Z",
+                            "endBefore": "2023-06-29T17:45:37.784Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139957
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:59.708Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:45:37.785Z",
+                            "endBefore": "2023-06-29T17:45:52.785Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:52.786Z",
+                            "endBefore": "2023-06-29T17:46:07.786Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "run4theh111z",
+                            "pid": 140709
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 6678,
+                            "endAfter": "2023-06-29T17:46:07.787Z",
+                            "endBefore": "2023-06-29T17:46:22.787Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 141029
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 561.75,
+                            "endAfter": "2023-06-29T17:46:22.788Z",
+                            "endBefore": "2023-06-29T17:46:37.788Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140345
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:59.945Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:37.789Z",
+                            "endBefore": "2023-06-29T17:46:52.789Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:52.790Z",
+                            "endBefore": "2023-06-29T17:47:07.790Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "blade",
+                            "pid": 141085
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:07.791Z",
+                            "endBefore": "2023-06-29T17:47:22.791Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:22.792Z",
+                            "endBefore": "2023-06-29T17:47:37.792Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:57.661Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:37.793Z",
+                            "endBefore": "2023-06-29T17:47:52.793Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:52.794Z",
+                            "endBefore": "2023-06-29T17:48:07.794Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:07.795Z",
+                            "endBefore": "2023-06-29T17:48:22.795Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 561.75,
+                            "endAfter": "2023-06-29T17:48:22.796Z",
+                            "endBefore": "2023-06-29T17:48:37.796Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 141150
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:44:09.773Z",
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 68,
+            "failures": 36,
+            "successesInTheLastHour": 28,
+            "failuresInTheLastHour": 14,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:42:37.773Z",
+                        "endBefore": "2023-06-29T17:42:52.773Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 36.75,
+                        "endAfter": "2023-06-29T17:42:52.774Z",
+                        "endBefore": "2023-06-29T17:43:07.774Z",
+                        "type": "weaken-after-hack",
+                        "machineRunningOn": "home",
+                        "pid": 139632
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 6636,
+                        "endAfter": "2023-06-29T17:43:07.775Z",
+                        "endBefore": "2023-06-29T17:43:22.775Z",
+                        "type": "grow",
+                        "machineRunningOn": "home",
+                        "pid": 139886
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 561.75,
+                        "endAfter": "2023-06-29T17:43:22.776Z",
+                        "endBefore": "2023-06-29T17:43:37.776Z",
+                        "type": "weaken-after-grow",
+                        "machineRunningOn": "home",
+                        "pid": 139193
+                    }
+                ],
+                "startTime": "2023-06-29T17:38:58.855Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "omnitek",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T12:00:53.713Z",
+            "successfulWeakening": false,
+            "growDoneAfter": "2023-06-29T11:54:10.864Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T11:45:58.560Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 0.178,
+            "securityWeNeedToReduceAfterFullGrowth": 20.516000000000002,
+            "originalNumberOfThreadsForFullMoney": 89,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 183.6,
+                            "endAfter": "2023-06-29T17:44:07.326Z",
+                            "endBefore": "2023-06-29T17:44:22.326Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140615
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:22.327Z",
+                            "endBefore": "2023-06-29T17:44:37.327Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "run4theh111z",
+                            "pid": 139801
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 8975.75,
+                            "endAfter": "2023-06-29T17:44:37.328Z",
+                            "endBefore": "2023-06-29T17:44:52.328Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140187
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 736.75,
+                            "endAfter": "2023-06-29T17:44:52.329Z",
+                            "endBefore": "2023-06-29T17:45:07.329Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139996
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:35.512Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 183.6,
+                            "endAfter": "2023-06-29T17:45:07.330Z",
+                            "endBefore": "2023-06-29T17:45:22.330Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140989
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:22.331Z",
+                            "endBefore": "2023-06-29T17:45:37.331Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "zb-institute",
+                            "pid": 140188
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 8975.75,
+                            "endAfter": "2023-06-29T17:45:37.332Z",
+                            "endBefore": "2023-06-29T17:45:52.332Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140576
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 736.75,
+                            "endAfter": "2023-06-29T17:45:52.333Z",
+                            "endBefore": "2023-06-29T17:46:07.333Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140381
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:35.784Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:07.334Z",
+                            "endBefore": "2023-06-29T17:46:22.334Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:22.335Z",
+                            "endBefore": "2023-06-29T17:46:37.335Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140577
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 8975.75,
+                            "endAfter": "2023-06-29T17:46:37.336Z",
+                            "endBefore": "2023-06-29T17:46:52.336Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140956
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 736.75,
+                            "endAfter": "2023-06-29T17:46:52.337Z",
+                            "endBefore": "2023-06-29T17:47:07.337Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140760
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:36.229Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:37.879Z",
+                            "endBefore": "2023-06-29T17:48:52.879Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:52.880Z",
+                            "endBefore": "2023-06-29T17:49:07.880Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:07.881Z",
+                            "endBefore": "2023-06-29T17:49:22.881Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 736.75,
+                            "endAfter": "2023-06-29T17:49:22.882Z",
+                            "endBefore": "2023-06-29T17:49:37.882Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140970
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:39.481Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:37.883Z",
+                            "endBefore": "2023-06-29T17:49:52.883Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:52.884Z",
+                            "endBefore": "2023-06-29T17:50:07.884Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:07.885Z",
+                            "endBefore": "2023-06-29T17:50:22.885Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:22.886Z",
+                            "endBefore": "2023-06-29T17:50:37.886Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 95,
+            "failures": 6,
+            "successesInTheLastHour": 37,
+            "failuresInTheLastHour": 0,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T16:59:52.844Z",
+                        "endBefore": "2023-06-29T17:00:07.844Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 36.75,
+                        "endAfter": "2023-06-29T17:00:07.845Z",
+                        "endBefore": "2023-06-29T17:00:22.845Z",
+                        "type": "weaken-after-hack",
+                        "machineRunningOn": "omnitek",
+                        "pid": 123105
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:00:22.846Z",
+                        "endBefore": "2023-06-29T17:00:37.846Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:00:37.847Z",
+                        "endBefore": "2023-06-29T17:00:52.847Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "startTime": "2023-06-29T16:56:20.693Z",
+                "poisonedBatch": true
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "b-and-a",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T12:16:53.024Z",
+            "successfulWeakening": true,
+            "growDoneAfter": "2023-06-29T12:09:17.726Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T12:19:40.459Z",
+            "successfulHacking": false,
+            "securityWeNeedToReduceAfterFullHack": 0.188,
+            "securityWeNeedToReduceAfterFullGrowth": 23.636,
+            "originalNumberOfThreadsForFullMoney": 94,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 197.2,
+                            "endAfter": "2023-06-29T17:44:02.417Z",
+                            "endBefore": "2023-06-29T17:44:17.417Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140578
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:17.418Z",
+                            "endBefore": "2023-06-29T17:44:32.418Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "blade",
+                            "pid": 139729
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 10340.75,
+                            "endAfter": "2023-06-29T17:44:32.419Z",
+                            "endBefore": "2023-06-29T17:44:47.419Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140112
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 841.75,
+                            "endAfter": "2023-06-29T17:44:47.420Z",
+                            "endBefore": "2023-06-29T17:45:02.420Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139921
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:23.378Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 197.2,
+                            "endAfter": "2023-06-29T17:45:02.421Z",
+                            "endBefore": "2023-06-29T17:45:17.421Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140935
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:17.422Z",
+                            "endBefore": "2023-06-29T17:45:32.422Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 140113
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 10340.75,
+                            "endAfter": "2023-06-29T17:45:32.423Z",
+                            "endBefore": "2023-06-29T17:45:47.423Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140496
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 841.75,
+                            "endAfter": "2023-06-29T17:45:47.424Z",
+                            "endBefore": "2023-06-29T17:46:02.424Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140303
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:23.769Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:02.425Z",
+                            "endBefore": "2023-06-29T17:46:17.425Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:17.426Z",
+                            "endBefore": "2023-06-29T17:46:32.426Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 140474
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 10340.75,
+                            "endAfter": "2023-06-29T17:46:32.427Z",
+                            "endBefore": "2023-06-29T17:46:47.427Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140874
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 841.75,
+                            "endAfter": "2023-06-29T17:46:47.428Z",
+                            "endBefore": "2023-06-29T17:47:02.428Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140672
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:21.095Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:02.429Z",
+                            "endBefore": "2023-06-29T17:47:17.429Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:47:17.430Z",
+                            "endBefore": "2023-06-29T17:47:32.430Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "netlink",
+                            "pid": 140851
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:32.431Z",
+                            "endBefore": "2023-06-29T17:47:47.431Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 841.75,
+                            "endAfter": "2023-06-29T17:47:47.432Z",
+                            "endBefore": "2023-06-29T17:48:02.432Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 141048
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:21.379Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:02.433Z",
+                            "endBefore": "2023-06-29T17:48:17.433Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:17.434Z",
+                            "endBefore": "2023-06-29T17:48:32.434Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:32.435Z",
+                            "endBefore": "2023-06-29T17:48:47.435Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:47.436Z",
+                            "endBefore": "2023-06-29T17:49:02.436Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 84,
+            "failures": 12,
+            "successesInTheLastHour": 41,
+            "failuresInTheLastHour": 0,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:02:02.249Z",
+                        "endBefore": "2023-06-29T17:02:17.249Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 36.75,
+                        "endAfter": "2023-06-29T17:02:17.250Z",
+                        "endBefore": "2023-06-29T17:02:32.250Z",
+                        "type": "weaken-after-hack",
+                        "machineRunningOn": "omnitek",
+                        "pid": 122881
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:02:32.251Z",
+                        "endBefore": "2023-06-29T17:02:47.251Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:02:47.252Z",
+                        "endBefore": "2023-06-29T17:03:02.252Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "startTime": "2023-06-29T16:55:41.365Z",
+                "poisonedBatch": true
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "global-pharm",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T12:37:55.673Z",
+            "successfulWeakening": false,
+            "growDoneAfter": "2023-06-29T12:33:03.215Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T12:27:05.525Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 0.152,
+            "securityWeNeedToReduceAfterFullGrowth": 18.512,
+            "originalNumberOfThreadsForFullMoney": 76,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 129.2,
+                            "endAfter": "2023-06-29T17:44:02.198Z",
+                            "endBefore": "2023-06-29T17:44:17.198Z",
+                            "type": "hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140852
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:17.199Z",
+                            "endBefore": "2023-06-29T17:44:32.199Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 140147
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 8139.25,
+                            "endAfter": "2023-06-29T17:44:32.200Z",
+                            "endBefore": "2023-06-29T17:44:47.200Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140454
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 666.75,
+                            "endAfter": "2023-06-29T17:44:47.201Z",
+                            "endBefore": "2023-06-29T17:45:02.201Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139803
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:35.512Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:45:02.202Z",
+                            "endBefore": "2023-06-29T17:45:17.202Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:17.203Z",
+                            "endBefore": "2023-06-29T17:45:32.203Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "rho-construction",
+                            "pid": 140530
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 8139.25,
+                            "endAfter": "2023-06-29T17:45:32.204Z",
+                            "endBefore": "2023-06-29T17:45:47.204Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140834
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 666.75,
+                            "endAfter": "2023-06-29T17:45:47.205Z",
+                            "endBefore": "2023-06-29T17:46:02.205Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140190
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:35.784Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:02.206Z",
+                            "endBefore": "2023-06-29T17:46:17.206Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:17.207Z",
+                            "endBefore": "2023-06-29T17:46:32.207Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140916
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:32.208Z",
+                            "endBefore": "2023-06-29T17:46:47.208Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 666.75,
+                            "endAfter": "2023-06-29T17:46:47.209Z",
+                            "endBefore": "2023-06-29T17:47:02.209Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140579
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:36.230Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:02.210Z",
+                            "endBefore": "2023-06-29T17:47:17.210Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:17.211Z",
+                            "endBefore": "2023-06-29T17:47:32.211Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:32.212Z",
+                            "endBefore": "2023-06-29T17:47:47.212Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 666.75,
+                            "endAfter": "2023-06-29T17:47:47.213Z",
+                            "endBefore": "2023-06-29T17:48:02.213Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140957
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:36.448Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:02.214Z",
+                            "endBefore": "2023-06-29T17:48:17.214Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:17.215Z",
+                            "endBefore": "2023-06-29T17:48:32.215Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:32.216Z",
+                            "endBefore": "2023-06-29T17:48:47.216Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:47.217Z",
+                            "endBefore": "2023-06-29T17:49:02.217Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 99,
+            "failures": 7,
+            "successesInTheLastHour": 40,
+            "failuresInTheLastHour": 1,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": true,
+                        "ramCost": 129.2,
+                        "endAfter": "2023-06-29T17:12:02.070Z",
+                        "endBefore": "2023-06-29T17:12:17.070Z",
+                        "type": "hack",
+                        "machineRunningOn": "fulcrumtech",
+                        "pid": 128639
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:12:17.071Z",
+                        "endBefore": "2023-06-29T17:12:32.071Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 8099,
+                        "endAfter": "2023-06-29T17:12:32.072Z",
+                        "endBefore": "2023-06-29T17:12:47.072Z",
+                        "type": "grow",
+                        "machineRunningOn": "home",
+                        "pid": 128236
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 666.75,
+                        "endAfter": "2023-06-29T17:12:47.073Z",
+                        "endBefore": "2023-06-29T17:13:02.073Z",
+                        "type": "weaken-after-grow",
+                        "machineRunningOn": "home",
+                        "pid": 127660
+                    }
+                ],
+                "startTime": "2023-06-29T17:08:33.544Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "zeus-med",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T12:56:30.929Z",
+            "successfulWeakening": false,
+            "growDoneAfter": "2023-06-29T12:51:27.149Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T12:45:34.549Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 0.15,
+            "securityWeNeedToReduceAfterFullGrowth": 20.352,
+            "originalNumberOfThreadsForFullMoney": 75,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 127.5,
+                            "endAfter": "2023-06-29T17:43:59.993Z",
+                            "endBefore": "2023-06-29T17:44:14.993Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140853
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:14.994Z",
+                            "endBefore": "2023-06-29T17:44:29.994Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "netlink",
+                            "pid": 140148
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 8904,
+                            "endAfter": "2023-06-29T17:44:29.995Z",
+                            "endBefore": "2023-06-29T17:44:44.995Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140455
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 736.75,
+                            "endAfter": "2023-06-29T17:44:44.996Z",
+                            "endBefore": "2023-06-29T17:44:59.996Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140346
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:29.777Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:14.232Z",
+                            "endBefore": "2023-06-29T17:46:29.232Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:29.233Z",
+                            "endBefore": "2023-06-29T17:46:44.233Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "blade",
+                            "pid": 141030
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:44.234Z",
+                            "endBefore": "2023-06-29T17:46:59.234Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 736.75,
+                            "endAfter": "2023-06-29T17:46:59.235Z",
+                            "endBefore": "2023-06-29T17:47:14.235Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140554
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:33.211Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:14.236Z",
+                            "endBefore": "2023-06-29T17:47:29.236Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:29.237Z",
+                            "endBefore": "2023-06-29T17:47:44.237Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:44.238Z",
+                            "endBefore": "2023-06-29T17:47:59.238Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 736.75,
+                            "endAfter": "2023-06-29T17:47:59.239Z",
+                            "endBefore": "2023-06-29T17:48:14.239Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140936
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:33.419Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:14.240Z",
+                            "endBefore": "2023-06-29T17:48:29.240Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:29.241Z",
+                            "endBefore": "2023-06-29T17:48:44.241Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:44.242Z",
+                            "endBefore": "2023-06-29T17:48:59.242Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:59.243Z",
+                            "endBefore": "2023-06-29T17:49:14.243Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 81,
+            "failures": 14,
+            "successesInTheLastHour": 31,
+            "failuresInTheLastHour": 5,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": true,
+                        "ramCost": 124.1,
+                        "endAfter": "2023-06-29T17:38:59.973Z",
+                        "endBefore": "2023-06-29T17:39:14.973Z",
+                        "type": "hack",
+                        "machineRunningOn": "fulcrumtech",
+                        "pid": 138944
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 36.75,
+                        "endAfter": "2023-06-29T17:39:14.974Z",
+                        "endBefore": "2023-06-29T17:39:29.974Z",
+                        "type": "weaken-after-hack",
+                        "machineRunningOn": "run4theh111z",
+                        "pid": 138271
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:39:29.975Z",
+                        "endBefore": "2023-06-29T17:39:44.975Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 736.75,
+                        "endAfter": "2023-06-29T17:39:44.976Z",
+                        "endBefore": "2023-06-29T17:39:59.976Z",
+                        "type": "weaken-after-grow",
+                        "machineRunningOn": "home",
+                        "pid": 137794
+                    }
+                ],
+                "startTime": "2023-06-29T17:35:18.552Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "fulcrumtech",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T13:14:51.519Z",
+            "successfulWeakening": false,
+            "growDoneAfter": "2023-06-29T13:07:58.320Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T12:59:24.973Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 0.184,
+            "securityWeNeedToReduceAfterFullGrowth": 19.552,
+            "originalNumberOfThreadsForFullMoney": 92,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 190.4,
+                            "endAfter": "2023-06-29T17:44:00.268Z",
+                            "endBefore": "2023-06-29T17:44:15.268Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140555
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:15.269Z",
+                            "endBefore": "2023-06-29T17:44:30.269Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 139610
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12428.5,
+                            "endAfter": "2023-06-29T17:44:30.270Z",
+                            "endBefore": "2023-06-29T17:44:45.270Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 139422
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 701.75,
+                            "endAfter": "2023-06-29T17:44:45.271Z",
+                            "endBefore": "2023-06-29T17:45:00.271Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139887
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:39:35.116Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:05.449Z",
+                            "endBefore": "2023-06-29T17:46:20.449Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:20.450Z",
+                            "endBefore": "2023-06-29T17:46:35.450Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 140397
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12428.5,
+                            "endAfter": "2023-06-29T17:46:35.451Z",
+                            "endBefore": "2023-06-29T17:46:50.451Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140206
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 701.75,
+                            "endAfter": "2023-06-29T17:46:50.452Z",
+                            "endBefore": "2023-06-29T17:47:05.452Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139822
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:38.541Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:05.453Z",
+                            "endBefore": "2023-06-29T17:47:20.453Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:47:20.454Z",
+                            "endBefore": "2023-06-29T17:47:35.454Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "avmnite-02h",
+                            "pid": 140781
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12428.5,
+                            "endAfter": "2023-06-29T17:47:35.455Z",
+                            "endBefore": "2023-06-29T17:47:50.455Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140596
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 701.75,
+                            "endAfter": "2023-06-29T17:47:50.456Z",
+                            "endBefore": "2023-06-29T17:48:05.456Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140207
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:38.791Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:05.457Z",
+                            "endBefore": "2023-06-29T17:48:20.457Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:48:20.458Z",
+                            "endBefore": "2023-06-29T17:48:35.458Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 141151
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 12428.5,
+                            "endAfter": "2023-06-29T17:48:35.459Z",
+                            "endBefore": "2023-06-29T17:48:50.459Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140971
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 701.75,
+                            "endAfter": "2023-06-29T17:48:50.460Z",
+                            "endBefore": "2023-06-29T17:49:05.460Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140597
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:39.265Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:05.461Z",
+                            "endBefore": "2023-06-29T17:49:20.461Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:20.462Z",
+                            "endBefore": "2023-06-29T17:49:35.462Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:49:35.463Z",
+                            "endBefore": "2023-06-29T17:49:50.463Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 701.75,
+                            "endAfter": "2023-06-29T17:49:50.464Z",
+                            "endBefore": "2023-06-29T17:50:05.464Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140972
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:39.482Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:05.465Z",
+                            "endBefore": "2023-06-29T17:50:20.465Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:20.466Z",
+                            "endBefore": "2023-06-29T17:50:35.466Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:35.467Z",
+                            "endBefore": "2023-06-29T17:50:50.467Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:50.468Z",
+                            "endBefore": "2023-06-29T17:51:05.468Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 87,
+            "failures": 11,
+            "successesInTheLastHour": 35,
+            "failuresInTheLastHour": 0,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:02:35.335Z",
+                        "endBefore": "2023-06-29T17:02:50.335Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:02:50.336Z",
+                        "endBefore": "2023-06-29T17:03:05.336Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:03:05.337Z",
+                        "endBefore": "2023-06-29T17:03:20.337Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:03:20.338Z",
+                        "endBefore": "2023-06-29T17:03:35.338Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "poisonedBatch": true
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "deltaone",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T13:36:10.994Z",
+            "successfulWeakening": false,
+            "growDoneAfter": "2023-06-29T13:30:01.494Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T13:23:38.636Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 0.156,
+            "securityWeNeedToReduceAfterFullGrowth": 28.332,
+            "originalNumberOfThreadsForFullMoney": 78,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:10.141Z",
+                            "endBefore": "2023-06-29T17:50:25.141Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:50:25.142Z",
+                            "endBefore": "2023-06-29T17:50:40.142Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "omnitek",
+                            "pid": 139710
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:50:40.143Z",
+                            "endBefore": "2023-06-29T17:50:55.143Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:50:55.144Z",
+                            "endBefore": "2023-06-29T17:51:10.144Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140937
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:20.353Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:10.145Z",
+                            "endBefore": "2023-06-29T17:51:25.145Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:51:25.146Z",
+                            "endBefore": "2023-06-29T17:51:40.146Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "home",
+                            "pid": 139865
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:51:40.147Z",
+                            "endBefore": "2023-06-29T17:51:55.147Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1016.75,
+                            "endAfter": "2023-06-29T17:51:55.148Z",
+                            "endBefore": "2023-06-29T17:52:10.148Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140016
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:44.589Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:10.149Z",
+                            "endBefore": "2023-06-29T17:52:25.149Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:52:25.150Z",
+                            "endBefore": "2023-06-29T17:52:40.150Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "home",
+                            "pid": 140248
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:40.151Z",
+                            "endBefore": "2023-06-29T17:52:55.151Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:52:55.152Z",
+                            "endBefore": "2023-06-29T17:53:10.152Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:44.825Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:53:10.153Z",
+                            "endBefore": "2023-06-29T17:53:25.153Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:53:25.154Z",
+                            "endBefore": "2023-06-29T17:53:40.154Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:53:40.155Z",
+                            "endBefore": "2023-06-29T17:53:55.155Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:53:55.156Z",
+                            "endBefore": "2023-06-29T17:54:10.156Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 49,
+            "failures": 36,
+            "successesInTheLastHour": 18,
+            "failuresInTheLastHour": 15,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": true,
+                        "ramCost": 132.6,
+                        "endAfter": "2023-06-29T17:42:13.795Z",
+                        "endBefore": "2023-06-29T17:42:28.795Z",
+                        "type": "hack",
+                        "machineRunningOn": "home",
+                        "pid": 139477
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:42:28.796Z",
+                        "endBefore": "2023-06-29T17:42:43.796Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:42:43.797Z",
+                        "endBefore": "2023-06-29T17:42:58.797Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:42:58.798Z",
+                        "endBefore": "2023-06-29T17:43:13.798Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "startTime": "2023-06-29T17:39:44.139Z",
+                "poisonedBatch": false
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "nova-med",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T13:45:21.278Z",
+            "successfulWeakening": true,
+            "growDoneAfter": "2023-06-29T13:41:10.613Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T13:47:40.135Z",
+            "successfulHacking": false,
+            "securityWeNeedToReduceAfterFullHack": 0.14200000000000002,
+            "securityWeNeedToReduceAfterFullGrowth": 16.104,
+            "originalNumberOfThreadsForFullMoney": 71,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 120.7,
+                            "endAfter": "2023-06-29T17:43:59.073Z",
+                            "endBefore": "2023-06-29T17:44:14.073Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140875
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:14.074Z",
+                            "endBefore": "2023-06-29T17:44:29.074Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140304
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 10741.5,
+                            "endAfter": "2023-06-29T17:44:29.075Z",
+                            "endBefore": "2023-06-29T17:44:44.075Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140169
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-06-29T17:44:44.076Z",
+                            "endBefore": "2023-06-29T17:44:59.076Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140498
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:32.781Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:45:33.624Z",
+                            "endBefore": "2023-06-29T17:45:48.624Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:48.625Z",
+                            "endBefore": "2023-06-29T17:46:03.625Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "fulcrumtech",
+                            "pid": 140894
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 7087.5,
+                            "endAfter": "2023-06-29T17:46:03.626Z",
+                            "endBefore": "2023-06-29T17:46:18.626Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 141152
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-06-29T17:46:18.627Z",
+                            "endBefore": "2023-06-29T17:46:33.627Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140580
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:36.230Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:33.628Z",
+                            "endBefore": "2023-06-29T17:46:48.628Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:48.629Z",
+                            "endBefore": "2023-06-29T17:47:03.629Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:03.630Z",
+                            "endBefore": "2023-06-29T17:47:18.630Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-06-29T17:47:18.631Z",
+                            "endBefore": "2023-06-29T17:47:33.631Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140973
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:39.482Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:33.632Z",
+                            "endBefore": "2023-06-29T17:47:48.632Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:48.633Z",
+                            "endBefore": "2023-06-29T17:48:03.633Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:03.634Z",
+                            "endBefore": "2023-06-29T17:48:18.634Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:18.635Z",
+                            "endBefore": "2023-06-29T17:48:33.635Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 89,
+            "failures": 5,
+            "successesInTheLastHour": 38,
+            "failuresInTheLastHour": 1,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:02:43.794Z",
+                        "endBefore": "2023-06-29T17:02:58.794Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:02:58.795Z",
+                        "endBefore": "2023-06-29T17:03:13.795Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": true,
+                        "ramCost": 10741.5,
+                        "endAfter": "2023-06-29T17:03:13.796Z",
+                        "endBefore": "2023-06-29T17:03:28.796Z",
+                        "type": "grow",
+                        "machineRunningOn": "home",
+                        "pid": 124523
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:03:28.797Z",
+                        "endBefore": "2023-06-29T17:03:43.797Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "startTime": "2023-06-29T17:00:18.925Z",
+                "poisonedBatch": true
+            },
+            "executionWindowSize": 15
+        }
+    ],
+    [
+        "univ-energy",
+        {
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
+            "weakeningDoneAfter": "2023-06-29T14:05:36.620Z",
+            "successfulWeakening": false,
+            "growDoneAfter": "2023-06-29T14:00:53.761Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-06-29T13:54:56.263Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 0.152,
+            "securityWeNeedToReduceAfterFullGrowth": 16.616,
+            "originalNumberOfThreadsForFullMoney": 76,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 129.2,
+                            "endAfter": "2023-06-29T17:44:03.253Z",
+                            "endBefore": "2023-06-29T17:44:18.253Z",
+                            "type": "hack",
+                            "machineRunningOn": "home",
+                            "pid": 140854
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:44:18.254Z",
+                            "endBefore": "2023-06-29T17:44:33.254Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "univ-energy",
+                            "pid": 140129
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 7306.25,
+                            "endAfter": "2023-06-29T17:44:33.255Z",
+                            "endBefore": "2023-06-29T17:44:48.255Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140435
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-06-29T17:44:48.256Z",
+                            "endBefore": "2023-06-29T17:45:03.256Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 139805
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:40:35.513Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:45:03.257Z",
+                            "endBefore": "2023-06-29T17:45:18.257Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:45:18.258Z",
+                            "endBefore": "2023-06-29T17:45:33.258Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "netlink",
+                            "pid": 140499
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 7306.25,
+                            "endAfter": "2023-06-29T17:45:33.259Z",
+                            "endBefore": "2023-06-29T17:45:48.259Z",
+                            "type": "grow",
+                            "machineRunningOn": "home",
+                            "pid": 140814
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-06-29T17:45:48.260Z",
+                            "endBefore": "2023-06-29T17:46:03.260Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140191
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:41:35.785Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:03.261Z",
+                            "endBefore": "2023-06-29T17:46:18.261Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 36.75,
+                            "endAfter": "2023-06-29T17:46:18.262Z",
+                            "endBefore": "2023-06-29T17:46:33.262Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "powerhouse-fitness",
+                            "pid": 140876
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:46:33.263Z",
+                            "endBefore": "2023-06-29T17:46:48.263Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-06-29T17:46:48.264Z",
+                            "endBefore": "2023-06-29T17:47:03.264Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140581
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:42:36.230Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:03.265Z",
+                            "endBefore": "2023-06-29T17:47:18.265Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:18.266Z",
+                            "endBefore": "2023-06-29T17:47:33.266Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:47:33.267Z",
+                            "endBefore": "2023-06-29T17:47:48.267Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-06-29T17:47:48.268Z",
+                            "endBefore": "2023-06-29T17:48:03.268Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "home",
+                            "pid": 140958
+                        }
+                    ],
+                    "startTime": "2023-06-29T17:43:36.449Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:03.269Z",
+                            "endBefore": "2023-06-29T17:48:18.269Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:18.270Z",
+                            "endBefore": "2023-06-29T17:48:33.270Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:33.271Z",
+                            "endBefore": "2023-06-29T17:48:48.271Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-06-29T17:48:48.272Z",
+                            "endBefore": "2023-06-29T17:49:03.272Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 102,
+            "failures": 6,
+            "successesInTheLastHour": 43,
+            "failuresInTheLastHour": 0,
+            "lastResetHour": 12,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:00:05.632Z",
+                        "endBefore": "2023-06-29T17:00:20.632Z",
+                        "type": "hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:00:20.633Z",
+                        "endBefore": "2023-06-29T17:00:35.633Z",
+                        "type": "weaken-after-hack"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:00:35.634Z",
+                        "endBefore": "2023-06-29T17:00:50.634Z",
+                        "type": "grow"
+                    },
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-29T17:00:50.635Z",
+                        "endBefore": "2023-06-29T17:01:05.635Z",
+                        "type": "weaken-after-grow"
+                    }
+                ],
+                "poisonedBatch": true
+            },
+            "executionWindowSize": 15
         }
     ]
 ]
