@@ -4,7 +4,7 @@
         "max": 10
     },
     "skills": {
-        "hacking": 158,
+        "hacking": 179,
         "strength": 1,
         "defense": 1,
         "dexterity": 1,
@@ -13,7 +13,7 @@
         "intelligence": 0
     },
     "exp": {
-        "hacking": 24539.392000000124,
+        "hacking": 41176.98559999674,
         "strength": 0,
         "defense": 0,
         "dexterity": 0,
@@ -56,14 +56,14 @@
     "city": "Sector-12",
     "numPeopleKilled": 0,
     "money": 533150,
-    "location": "Alpha Enterprises",
-    "totalPlaytime": 1550894600,
+    "location": "Universal Energy",
+    "totalPlaytime": 1553276800,
     "jobs": {},
     "factions": [
         "CyberSec"
     ],
     "entropy": 0,
-    "playtimeSinceLastAug": 5836400,
-    "playtimeSinceLastBitnode": 5836400,
+    "playtimeSinceLastAug": 8218600,
+    "playtimeSinceLastBitnode": 8218600,
     "bitNodeN": 4
 }

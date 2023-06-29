@@ -9,7 +9,7 @@ export async function main(ns) {
 
     const loopEveryXSeconds = 3;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 5;
+    const numberOfDifferentSleeps = 6;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/advanced-dispatch.js';
 
@@ -47,6 +47,11 @@ export async function main(ns) {
 
 
         ns.run('scripts/contracts/coding-contracts.js');
+        await ns.sleep(individualSleepAmount);
+
+
+        
+        ns.run('scripts/singularity/singularity-coordinator.js');
         await ns.sleep(individualSleepAmount);
     }
 }
