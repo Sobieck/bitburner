@@ -17,13 +17,13 @@ export async function main(ns) {
         .filter(x => x.server.purchasedByPlayer && x.server.maxRam < maxRam)
         .sort((b, a) => a.server.maxRam - b.server.maxRam)
 
+
     if (playerPurchasedServers.length === 0) {
 
         const currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
-
         if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
             purchaseServer(ns, buyOrUpgradeServerFlag);
-        }
+        } 
     } else {
         const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
         upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag);
@@ -66,7 +66,8 @@ function purchaseServer(ns, buyOrUpgradeServerFlag) {
 
 function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag) {
 
-    const ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 4;
+    ns.tprint(smallestPlayerPurchasedServer)
+    const ramToBuy = smallestPlayerPurchasedServer.maxRam * 4;
     const maxRam = 1048576;
     if (ramToBuy > maxRam) {
         ramToBuy = maxRam;

@@ -168,17 +168,16 @@ function createBatchesOfJobs(batchForTarget, ns, targetServer, player) {
         if (batchForTarget.batchesQueue.length === 0 || batchForTarget.batchesQueue.every(x => new Date() > new Date(x.startTime))) {
             const batch = new BatchOfJobs();
 
-            const secondsToPadEndTime = 6;
-            const msToPadStartTime = 6;
-
-            const defaultStartTime = getWeakenEndDate(ns, targetServer, player);
-            addSecondsToDate(defaultStartTime, 40);
+            const secondsToPadEndTime = 15;
+            const msToPadStartTime = 1;
 
             const noJobsRunningAfter = batchForTarget.thereAreNoJobsRunningAfter();
 
             let noMoreJobsAfter = new Date(noJobsRunningAfter);
 
             if (noJobsRunningAfter < 0) {
+                const defaultStartTime = getWeakenEndDate(ns, targetServer, player);
+                addSecondsToDate(defaultStartTime, 40);
                 noMoreJobsAfter = new Date(defaultStartTime);
             }
 
@@ -309,7 +308,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         }
                     }
 
-                    if (shouldExecute) {
+                    if (shouldExecute && machineToRunOn) {
                         ns.scp(script, machineToRunOn.hostname);
                         const failure = ns.exec(script, machineToRunOn.hostname, numberOfThreads, nameOfTarget);
 
@@ -320,10 +319,13 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         job.ramCost = ramCost;
                         job.executing = true;
                         job.machineRunningOn = machineToRunOn.hostname;
+                        job.pid = failure;
 
                         if (!batchOfJobs.startTime) {
                             batchOfJobs.startTime = new Date();
                         }
+
+                        await ns.sleep(30);
                     }
                 }
             }
@@ -347,13 +349,15 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
     allHackableMachines.push({ name: "home", server: homeServer })
 
     const machinesWithRamAvailable = allHackableMachines
-        .filter(x => x.server.ramUsed <= x.server.maxRam && x.server.maxRam !== 0)
-        .sort((b, a) => (b.server.maxRam - b.server.ramUsed) - (a.server.maxRam - a.server.ramUsed));
+        .filter(x => x.server.ramUsed <= x.server.maxRam && x.server.maxRam !== 0);
+        
 
-    const serversWithEnoughRam = machinesWithRamAvailable.filter(x => (x.server.maxRam - x.server.ramUsed) > ramNeeded);
+    const serversWithEnoughRam = machinesWithRamAvailable
+        .filter(x => (x.server.maxRam - x.server.ramUsed) > ramNeeded)
+        .sort((b, a) =>(b.server.maxRam - b.server.ramUsed) - (a.server.maxRam - a.server.ramUsed));
 
     for (const potentialServerToRun of serversWithEnoughRam) {
-        const server = getServer(ns, potentialServerToRun.hostname);
+        const server = getServer(ns, potentialServerToRun.name);
         const freeRam = server.maxRam - server.ramUsed;
         if (freeRam > ramNeeded) {
             machineToRunOn = server;
@@ -516,7 +520,7 @@ function cleanFinishedJobsFromQueue(targetNames, batchQueue) {
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
-    if ((batchQueue.size < 4 ||targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 7) {
+    if ((batchQueue.size < 6 ||targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 10) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();

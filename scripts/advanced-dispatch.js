@@ -103,7 +103,7 @@ export async function main(ns) {
                 threadsNeeded = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable)) * 5;
 
                 if(threadsNeeded === 0){
-                    threadsNeeded = 15000;
+                    threadsNeeded = 5000;
                 }
             }
 
@@ -170,13 +170,14 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
     allHackableMachines.push({ name: "home", server: homeServer })
 
     const machinesWithRamAvailable = allHackableMachines
-        .filter(x => x.server.ramUsed <= x.server.maxRam && x.server.maxRam !== 0)
-        .sort((b, a) => (b.server.maxRam - b.server.ramUsed) - (a.server.maxRam - a.server.ramUsed));
+        .filter(x => x.server.ramUsed <= x.server.maxRam && x.server.maxRam !== 0);
 
-    const serversWithEnoughRam = machinesWithRamAvailable.filter(x => (x.server.maxRam - x.server.ramUsed) > ramNeeded);
+    const serversWithEnoughRam = machinesWithRamAvailable
+        .filter(x => (x.server.maxRam - x.server.ramUsed) > ramNeeded)
+        .sort((b, a) =>(b.server.maxRam - b.server.ramUsed) - (a.server.maxRam - a.server.ramUsed));
 
     for (const potentialServerToRun of serversWithEnoughRam) {
-        const server = getServer(ns, potentialServerToRun.hostname);
+        const server = getServer(ns, potentialServerToRun.name);
         const freeRam = server.maxRam - server.ramUsed;
         if (freeRam > ramNeeded) {
             machineToRunOn = server;
@@ -193,6 +194,7 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
 
     return machineToRunOn;
 }
+
 
 function getServer(ns, serverName) {
     const server = ns.getServer(serverName);
