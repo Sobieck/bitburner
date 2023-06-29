@@ -67,9 +67,13 @@ export async function main(ns) {
 
     hackQueue.forEach(target => {
 
-        const numberOfThreads = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable));
+        let numberOfThreads = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable));
         const ramNeeded = ramNeededForOneHackThread * numberOfThreads;
         let machineToRunOn = getMachineWithEnoughRam(ns, ramNeeded, enviroment);
+
+        if (!machineToRunOn){
+            [numberOfThreads, machineToRunOn] = getMachineWithNumberOfThreads(ns, enviroment, numberOfThreads, ramNeededForOneHackThread);
+        }
 
         if (machineToRunOn) {
             ns.scp(hackScript, machineToRunOn.hostname);
@@ -109,6 +113,10 @@ export async function main(ns) {
 
             machineToRunOn = getMachineWithEnoughRam(ns, threadsNeeded * ramNeededForGrow, enviroment);
 
+            if (!machineToRunOn){
+                [threadsNeeded, machineToRunOn] = getMachineWithNumberOfThreads(ns, enviroment, threadsNeeded, ramNeededForGrow);
+            }
+
             if (machineToRunOn && machineToRunOn.cpuCores > 1 && ns.fileExists('Formulas.exe')) {
                 threadsNeeded = Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, machineToRunOn.cpuCores));
             }
@@ -124,10 +132,16 @@ export async function main(ns) {
 
             machineToRunOn = getMachineWithEnoughRam(ns, threadsNeeded * ramNeededForWeaken, enviroment);
 
-            if (machineToRunOn.cpuCores > 1) {
+            if (!machineToRunOn){
+                [threadsNeeded, machineToRunOn] = getMachineWithNumberOfThreads(ns, enviroment, threadsNeeded, ramNeededForWeaken);
+            }
+
+            if (machineToRunOn && machineToRunOn.cpuCores > 1) {
                 threadsNeeded = getNumberOfThreadsToWeaken(ns, machineToRunOn.cpuCores, amountToWeaken);
             }
         }
+
+
 
         if (machineToRunOn) {
             ns.scp(script, machineToRunOn.hostname);
@@ -152,6 +166,18 @@ export async function main(ns) {
             }
         }
     }
+}
+
+function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread){
+    let machineToRunOn;
+
+    while(threads > 0 && !machineToRunOn){
+        threads--;
+
+        machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment)
+    }
+
+    return [ threads, machineToRunOn ];
 }
 
 function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
@@ -189,7 +215,6 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
         const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
         ns.rm(buyOrUpgradeServerFlag);
         ns.write(buyOrUpgradeServerFlag, "", "W");
-        ns.tprint(ramNeeded);
     }
 
     return machineToRunOn;
@@ -200,8 +225,8 @@ function getServer(ns, serverName) {
     const server = ns.getServer(serverName);
 
     if (serverName === "home") {
-        server.maxRam -= 32;
-        server.ramUsed -= 32;
+        server.maxRam -= 16;
+        server.ramUsed -= 16;
 
         if (server.ramUsed < 0) {
             server.ramUsed = 0;

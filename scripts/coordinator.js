@@ -6,7 +6,7 @@ export async function main(ns) {
         trading = false;
     }
 
-    let i = 0;
+
     const loopEveryXSeconds = 3;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
     const numberOfDifferentSleeps = 5;
@@ -14,7 +14,7 @@ export async function main(ns) {
     let dispatchScript = 'scripts/advanced-dispatch.js';
 
     while (true) {
-        i++;
+
 
         if (trading) {
             ns.run("scripts/investments/invest-in-stocks.js");
