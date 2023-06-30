@@ -10,9 +10,14 @@ export async function main(ns) {
     }
 
     let maxRam = 1048576;
+    let upgradeOnly = false;
 
     if(ns.args[0]){
         maxRam = ns.args[0];
+    }
+
+    if(ns.args[1]){
+        upgradeOnly = true;
     }
 
     const enviroment = JSON.parse(ns.read('../../data/enviroment.txt'));
@@ -29,7 +34,7 @@ export async function main(ns) {
         } 
     } else {
         const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
-        upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag, maxRam);
+        upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag, maxRam, upgradeOnly);
     }
 }
 
@@ -66,9 +71,9 @@ function purchaseServer(ns, buyOrUpgradeServerFlag, maxRam) {
     }
 }
 
-function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag, maxRam) {
+function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag, maxRam, upgradeOnly) {
 
-    const ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 2;
+    let ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 2;
 
     if (ramToBuy >= maxRam) {
         ramToBuy = maxRam;
@@ -83,6 +88,8 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServ
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         ns.rm(buyOrUpgradeServerFlag);
     } else {
-        purchaseServer(ns, buyOrUpgradeServerFlag);
+        if(upgradeOnly === false){
+            purchaseServer(ns, buyOrUpgradeServerFlag);
+        }
     }
 }

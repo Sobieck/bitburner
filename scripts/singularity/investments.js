@@ -7,7 +7,6 @@ export async function main(ns) {
         if (!ns.fileExists("Formulas.exe")) {
             checkTor(ns);
             ns.singularity.purchaseProgram("Formulas.exe");
-            workingOnGettingAugmentsOrPrograms = true;
         }
     }
 
@@ -25,9 +24,20 @@ export async function main(ns) {
         ns.singularity.upgradeHomeRam()
     }
 
-    if(numberOfPurchasedServers < 10){
-        ns.run("scripts/investments/purchase-server.js", 1, 2048)
-    }
+    // const environment = JSON.parse(ns.read("data/enviroment.txt"));
+    // const countOfPurchasedServersWithLessThan2048Gigs = environment
+    //     .filter(x => x.server.maxRam < 2048 && x.server.purchasedByPlayer)
+    //     .length;
+
+    // if(numberOfPurchasedServers < 10 || countOfPurchasedServersWithLessThan2048Gigs !== 0){ 
+    //     let upgradeOnly = false;
+
+    //     if(countOfPurchasedServersWithLessThan2048Gigs !== 0){
+    //         upgradeOnly = true;
+    //     }
+
+    //     ns.run("scripts/investments/purchase-server.js", 1, 2048, upgradeOnly)
+    // }
 
     if (ns.fileExists("Formulas.exe")){
         ns.run('scripts/investments/purchase-server.js');
