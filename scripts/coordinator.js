@@ -6,6 +6,16 @@ export async function main(ns) {
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/advanced-dispatch.js';
 
+    let runClean = true;
+    if (ns.args[0] === 'old') {
+        runClean = false;
+    }
+
+    if (runClean) {
+        ns.run('scripts/clean.js', 1, "new");
+        await ns.sleep(1000);
+    }
+
     while (true) {
 
         if (ns.fileExists('Formulas.exe')) {
@@ -38,7 +48,7 @@ export async function main(ns) {
 
         ns.run('scripts/contracts/coding-contracts.js');
         await ns.sleep(individualSleepAmount);
-        
+
 
     }
 }

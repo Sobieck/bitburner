@@ -34,4 +34,5 @@ export async function main(ns) {
     ns.rm('data/batchQueue.txt')
     ns.rm('buyOrUpgradeServerFlag.txt');
     ns.rm('data/organizations.txt');
+    ns.rm('ramObservations.txt');
 }

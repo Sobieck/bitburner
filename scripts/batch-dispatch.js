@@ -300,7 +300,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
 
                         machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment);
 
-                        if (machineToRunOn.cpuCores > 1) {
+                        if (machineToRunOn && machineToRunOn.cpuCores > 1) {
                             numberOfThreads = getNumberOfThreadsToWeaken(ns, machineToRunOn.cpuCores, amountToWeaken);
                         }
 
@@ -346,6 +346,10 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         const ifStartedNowGrowDoneAt = getGrowEndDate(ns, targetServer, player);
                         if (new Date(job.endAfter) < ifStartedNowGrowDoneAt && ifStartedNowGrowDoneAt < new Date(job.endBefore)) {
                             shouldExecute = true;
+                        }
+
+                        if (ifStartedNowGrowDoneAt > new Date(job.endBefore)) {
+                            batchOfJobs.poisonedBatch = true;
                         }
                     }
 
@@ -432,11 +436,11 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
         const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
 
         let maxAmountNeeded = 0;
-        if(ns.fileExists(buyOrUpgradeServerFlag)){
+        if (ns.fileExists(buyOrUpgradeServerFlag)) {
             maxAmountNeeded = ns.read(buyOrUpgradeServerFlag);
         }
 
-        if(maxAmountNeeded < ramNeeded) {
+        if (maxAmountNeeded < ramNeeded) {
             maxAmountNeeded = ramNeeded;
             ns.rm(buyOrUpgradeServerFlag);
             ns.write(buyOrUpgradeServerFlag, maxAmountNeeded, "W");
@@ -470,6 +474,7 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfT
     if (amountToWeaken === 0 && serverHasMaxMoney && batchForTarget.securityWeNeedToReduceAfterFullHack && batchForTarget.securityWeNeedToReduceAfterFullGrowth && batchForTarget.prepStage && batchForTarget.originalNumberOfThreadsForFullMoney) {
         batchForTarget.prepStage = false;
         batchForTarget.targetMachineSaturatedWithAttacks = false;
+        batchForTarget.executionWindowSizeInSeconds = 15;
     }
 
     if (batchForTarget.prepStage) {
@@ -625,6 +630,13 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
+    const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
+    const ramObservations = 'ramObservations.txt';
+
+    if (ns.fileExists(buyOrUpgradeServerFlag) || ns.fileExists(ramObservations)) {
+        return;
+    }
+
     if ((batchQueue.size < 2 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 25)) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();

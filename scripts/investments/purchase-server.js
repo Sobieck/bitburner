@@ -4,12 +4,26 @@
 //run scripts/purchase-servers.js
 export async function main(ns) {
     const buyOrUpgradeServerFlag = "../../buyOrUpgradeServerFlag.txt"
+    const ramObservationsTextFile = '../../ramObservations.txt'
     let additionalRamNeeded = 0;
+    let ramObservations = [];
 
     if (!ns.fileExists(buyOrUpgradeServerFlag)) {
         return;
     } else {
-        additionalRamNeeded = JSON.parse(ns.read(buyOrUpgradeServerFlag));
+        if(ns.fileExists(ramObservationsTextFile)){
+            ramObservations = JSON.parse(ns.read(ramObservationsTextFile));
+            ns.rm(ramObservationsTextFile);
+        }
+
+        const latestRamNeeded = JSON.parse(ns.read(buyOrUpgradeServerFlag));
+
+        ramObservations.push(latestRamNeeded);
+
+        ns.rm(buyOrUpgradeServerFlag);
+        ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
+
+        additionalRamNeeded = ramObservations.reduce((a,b) => a + b) / ramObservations.length;
     }
 
     let maxRam = 1048576;
@@ -33,15 +47,15 @@ export async function main(ns) {
 
         const currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
         if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
-            purchaseServer(ns, buyOrUpgradeServerFlag, maxRam);
+            purchaseServer(ns, ramObservationsTextFile, maxRam);
         } 
     } else {
         const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
-        upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag, maxRam, upgradeOnly, additionalRamNeeded);
+        upgradeSmallMachine(ns, smallestPlayerPurchasedServer, ramObservationsTextFile, maxRam, upgradeOnly, additionalRamNeeded);
     }
 }
 
-function purchaseServer(ns, buyOrUpgradeServerFlag, maxRam, additionalRamNeeded) {
+function purchaseServer(ns, ramObservationsTextFile, maxRam, additionalRamNeeded) {
     let currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
     let ram = 128;
 
@@ -63,7 +77,7 @@ function purchaseServer(ns, buyOrUpgradeServerFlag, maxRam, additionalRamNeeded)
             if(ramToBuy > additionalRamNeeded){
                 const hostname = "CLOUD-" + String(currentNumberOfPurchasedServers).padStart(3, '0')
                 ns.purchaseServer(hostname, ramToBuy);
-                ns.rm(buyOrUpgradeServerFlag);
+                ns.rm(ramObservationsTextFile);
     
                 currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
             }
@@ -76,7 +90,7 @@ function purchaseServer(ns, buyOrUpgradeServerFlag, maxRam, additionalRamNeeded)
     }
 }
 
-function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag, maxRam, upgradeOnly, additionalRamNeeded) {
+function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, ramObservationsTextFile, maxRam, upgradeOnly, additionalRamNeeded) {
 
     let ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 2;
 
@@ -93,11 +107,11 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServ
 
     if (moneyAvailable > costOfRamToBuy) {
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
-        ns.rm(buyOrUpgradeServerFlag);
+        ns.rm(ramObservationsTextFile);
     } else {
-        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString() );
+        ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
         if(upgradeOnly === false){
-            purchaseServer(ns, buyOrUpgradeServerFlag);
+            purchaseServer(ns, ramObservationsTextFile, maxRam, additionalRamNeeded);
         }
     }
 }

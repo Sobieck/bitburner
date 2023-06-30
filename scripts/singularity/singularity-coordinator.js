@@ -8,6 +8,9 @@ export async function main(ns) {
 
     await ns.sleep(200);
 
-    ns.run('scripts/singularity/investments.js')
+    ns.run('scripts/singularity/investments.js');
 
+    await ns.sleep(200);
+
+    ns.run('scripts/singularity/finish-round.js');
 }

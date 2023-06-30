@@ -4,7 +4,7 @@ export async function main(ns) {
     const currentWork = ns.singularity.getCurrentWork();
     const organizationTextFileName = "data/organizations.txt";
 
-    const organizations =  JSON.parse(ns.read(organizationTextFileName));
+    const organizations = JSON.parse(ns.read(organizationTextFileName));
 
     let workingOnGettingAugmentsOrPrograms = false;
 
@@ -25,12 +25,12 @@ export async function main(ns) {
         }
     }
 
-    const mostRepExpensiveForEachFaction = [];
-
     if (!player.factions) {
         ns.singularity.universityCourse("Rothman University", "Computer Science", true);
         return;
     }
+
+    const mostRepExpensiveForEachFaction = [];
 
     for (const faction of player.factions) {
         const maximumAugRep = Math.max(...ns
@@ -40,7 +40,7 @@ export async function main(ns) {
             .filter(x => !ownedAugmentations.includes(x))
             .map(x => ns.singularity.getAugmentationRepReq(x)));
 
-        if(maximumAugRep > 0){
+        if (maximumAugRep > 0) {
             mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
         }
     }
@@ -62,7 +62,7 @@ export async function main(ns) {
                 }
             }
 
-            if (!currentWork ||  currentWork.type === "FACTION" && currentWork.factionName === faction) {
+            if (!currentWork || currentWork.type === "FACTION" && currentWork.factionName === faction) {
                 if (maxRepNeeded > factionRep) {
                     workingOnGettingAugmentsOrPrograms = true;
                     break;

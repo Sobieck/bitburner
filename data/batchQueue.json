@@ -1,67 +1,66 @@
 [
     [
+        "rho-construction",
+        {
+            "targetMachineSaturatedWithAttacks": false,
+            "prepStage": true,
+            "weakeningDoneAfter": "2023-06-30T21:05:43.798Z",
+            "successfulWeakening": false,
+            "successfulGrowing": false,
+            "successfulHacking": false,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 1121.75,
+                            "machineRunningOn": "CLOUD-014",
+                            "pid": 66272,
+                            "endAfter": "2023-06-30T20:38:42.233Z",
+                            "endBefore": "2023-06-30T21:05:43.798Z",
+                            "type": "weaken-dynamic"
+                        }
+                    ],
+                    "startTime": "2023-06-30T20:38:42.233Z",
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 0,
+            "failures": 0,
+            "successesInTheLastHour": 0,
+            "failuresInTheLastHour": 0,
+            "lastResetHour": 15,
+            "executionWindowSizeInSeconds": 15
+        }
+    ],
+    [
         "catalyst",
         {
             "targetMachineSaturatedWithAttacks": false,
             "prepStage": true,
             "successfulWeakening": true,
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:55:40.303Z",
+            "growDoneAfter": "2023-06-30T20:46:02.846Z",
+            "successfulGrowing": false,
             "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 13.054,
-            "originalNumberOfThreadsForFullMoney": 6527,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-30T15:51:32.737Z",
-                            "endBefore": "2023-06-30T15:55:40.303Z",
-                            "type": "hack-dynamic"
-                        }
-                    ],
-                    "poisonedBatch": false
-                }
-            ],
+            "securityWeNeedToReduceAfterFullGrowth": 70.052,
+            "batchesQueue": [],
             "successes": 0,
-            "failures": 0,
+            "failures": 1,
             "successesInTheLastHour": 0,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
-            "executionWindowSizeInSeconds": 15
-        }
-    ],
-    [
-        "summit-uni",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "successfulWeakening": true,
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:55:48.126Z",
-            "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 35.494,
-            "originalNumberOfThreadsForFullMoney": 17747,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-30T15:51:35.743Z",
-                            "endBefore": "2023-06-30T15:55:48.126Z",
-                            "type": "hack-dynamic"
-                        }
-                    ],
-                    "poisonedBatch": false
-                }
-            ],
-            "successes": 0,
-            "failures": 0,
-            "successesInTheLastHour": 0,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
+            "failuresInTheLastHour": 1,
+            "lastResetHour": 15,
+            "lastFailure": {
+                "jobs": [
+                    {
+                        "executing": false,
+                        "ramCost": 0,
+                        "endAfter": "2023-06-30T20:38:45.240Z",
+                        "endBefore": "2023-06-30T20:46:02.846Z",
+                        "type": "grow-dynamic"
+                    }
+                ],
+                "poisonedBatch": true
+            },
             "executionWindowSizeInSeconds": 15
         }
     ]
