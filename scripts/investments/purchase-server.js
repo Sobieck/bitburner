@@ -102,7 +102,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, ramObservationsT
         ramToBuy = maxRam;
     }
 
-    const costOfRamToBuy = ns.getPurchasedServerCost(ramToBuy);
+    const costOfRamToBuy = ns.getPurchasedServerUpgradeCost(smallestPlayerPurchasedServer.name, ramToBuy);
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
     if (moneyAvailable > costOfRamToBuy) {
