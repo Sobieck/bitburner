@@ -1,7 +1,12 @@
 export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
-    const organizationsToJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "run4theh111z", "ecorp"];
+    const organizationsToJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui"];
     const factionInvitations = ns.singularity.checkFactionInvitations();
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+
+    if (moneyAvailable > 1_000_000_000){
+        ns.singularity.travelToCity("Chongqing");
+    }
 
     for (const orgServerName of organizationsToJoin) {
 
@@ -19,6 +24,11 @@ export async function main(ns) {
 
         if (serverWithLineage && factionInvitations.includes(serverWithLineage.server.organizationName)) {
             await ns.singularity.joinFaction(serverWithLineage.server.organizationName);
+        }
+
+
+        if (factionInvitations.includes(orgServerName)) {
+            await ns.singularity.joinFaction(orgServerName);
         }
     }
 }

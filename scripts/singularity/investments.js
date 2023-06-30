@@ -25,8 +25,12 @@ export async function main(ns) {
         ns.singularity.upgradeHomeRam()
     }
 
-    if(numberOfPurchasedServers < 10 || ns.fileExists("Formulas.exe")){
-        ns.run('scripts/investments/purchase-server.js')
+    if(numberOfPurchasedServers < 10){
+        ns.run("scripts/investments/purchase-server.js", 1, 2048)
+    }
+
+    if (ns.fileExists("Formulas.exe")){
+        ns.run('scripts/investments/purchase-server.js');
     }
 
     if (!ns.fileExists("BruteSSH.exe")) {
