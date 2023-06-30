@@ -170,12 +170,26 @@ export async function main(ns) {
 
 function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread){
     let machineToRunOn;
+    const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
+    let originalAmountNeeded = ramCostPerThread * threads;
 
+    let globalMaxAmountNeeded = 0;
+
+    if(ns.fileExists(buyOrUpgradeServerFlag)){
+        globalMaxAmountNeeded = JSON.parse(ns.read(buyOrUpgradeServerFlag));
+    }
+
+    if(originalAmountNeeded > globalMaxAmountNeeded){
+        globalMaxAmountNeeded = originalAmountNeeded;
+        ns.rm(buyOrUpgradeServerFlag);
+        ns.write(buyOrUpgradeServerFlag, globalMaxAmountNeeded, "W");
+    }
+    
     while(threads > 0 && !machineToRunOn){
         threads--;
 
         machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment)
-    }
+    }  
 
     return [ threads, machineToRunOn ];
 }
@@ -209,12 +223,6 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
             machineToRunOn = server;
             break;
         }
-    }
-
-    if (machineToRunOn === undefined) {
-        const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
-        ns.rm(buyOrUpgradeServerFlag);
-        ns.write(buyOrUpgradeServerFlag, "", "W");
     }
 
     return machineToRunOn;

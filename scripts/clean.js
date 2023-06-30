@@ -33,4 +33,5 @@ export async function main(ns) {
     ns.rm('data/serversUsedForBatching.txt');
     ns.rm('data/batchQueue.txt')
     ns.rm('buyOrUpgradeServerFlag.txt');
+    ns.rm('data/organizations.txt');
 }

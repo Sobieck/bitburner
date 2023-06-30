@@ -1,14 +1,23 @@
 export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
-    const organizationsToJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui"];
+    const organizationTextFileName = "data/organizations.txt";
+
+    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus"];
+    const lowPriority = ["Chongqing", "Tian Di Hui"];
+    const organzations = { toJoin, lowPriority };
+
+    ns.rm(organizationTextFileName);
+    ns.write(organizationTextFileName, JSON.stringify(organzations), "W");
+
+
     const factionInvitations = ns.singularity.checkFactionInvitations();
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-    if (moneyAvailable > 1_000_000_000){
+    if (moneyAvailable > 1_000_000_000) {
         ns.singularity.travelToCity("Chongqing");
     }
 
-    for (const orgServerName of organizationsToJoin) {
+    for (const orgServerName of organzations.toJoin) {
 
         const serverWithLineage = enviroment.find(x => x.name === orgServerName);
 

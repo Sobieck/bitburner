@@ -339,7 +339,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
 
                         machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment);
 
-                        if (machineToRunOn.cpuCores > 1) {
+                        if (machineToRunOn && machineToRunOn.cpuCores > 1) {
                             numberOfThreads = getGrowThreads(ns, targetServer, player, machineToRunOn.cpuCores);
                         }
 
@@ -430,9 +430,17 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
 
     if (machineToRunOn === undefined) {
         const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
-        ns.rm(buyOrUpgradeServerFlag);
-        ns.write(buyOrUpgradeServerFlag, "", "W");
-        ns.tprint(ramNeeded);
+
+        let maxAmountNeeded = 0;
+        if(ns.fileExists(buyOrUpgradeServerFlag)){
+            maxAmountNeeded = ns.read(buyOrUpgradeServerFlag);
+        }
+
+        if(maxAmountNeeded < ramNeeded) {
+            maxAmountNeeded = ramNeeded;
+            ns.rm(buyOrUpgradeServerFlag);
+            ns.write(buyOrUpgradeServerFlag, maxAmountNeeded, "W");
+        }
     }
 
     return machineToRunOn;
@@ -617,7 +625,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
-    if ((batchQueue.size < 10 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 25)) {
+    if ((batchQueue.size < 6 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 25)) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();

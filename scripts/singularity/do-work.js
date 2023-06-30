@@ -2,6 +2,9 @@ export async function main(ns) {
     const player = ns.getPlayer();
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
     const currentWork = ns.singularity.getCurrentWork();
+    const organizationTextFileName = "data/organizations.txt";
+
+    const organizations =  JSON.parse(ns.read(organizationTextFileName));
 
     let workingOnGettingAugmentsOrPrograms = false;
 
@@ -33,16 +36,17 @@ export async function main(ns) {
         const maximumAugRep = Math.max(...ns
             .singularity
             .getAugmentationsFromFaction(faction)
-            .filter(x => !ownedAugmentations.includes(x) || x.startsWith("NeuroFlux Governor"))
+            .filter(x => x !== "NeuroFlux Governor")
+            .filter(x => !ownedAugmentations.includes(x))
             .map(x => ns.singularity.getAugmentationRepReq(x)));
 
-        mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
+        if(maximumAugRep > 0){
+            mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
+        }
     }
 
-    const factionsWhoWeJustWantToCoastWith = ["Chongqing", "Tian Di Hui"];
-
     const sortedFactions = mostRepExpensiveForEachFaction
-        .filter(x => x.maximumAugRep > 0 && !factionsWhoWeJustWantToCoastWith.includes(x.faction))
+        .filter(x => x.maximumAugRep > 0 && !organizations.lowPriority.includes(x.faction))
         .sort((a, b) => a.maximumAugRep - b.maximumAugRep);
 
     if (!currentWork || currentWork.type === "FACTION" || currentWork.type === "COMPANY") {
