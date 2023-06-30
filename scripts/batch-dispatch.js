@@ -625,7 +625,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
-    if ((batchQueue.size < 6 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 25)) {
+    if ((batchQueue.size < 2 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 25)) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();

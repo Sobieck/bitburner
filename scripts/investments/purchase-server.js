@@ -79,16 +79,14 @@ function purchaseServer(ns, buyOrUpgradeServerFlag, maxRam, additionalRamNeeded)
 function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag, maxRam, upgradeOnly, additionalRamNeeded) {
 
     let ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 2;
-    
-    while((ramToBuy - smallestPlayerPurchasedServer.server.maxRam) > additionalRamNeeded){
-        ramToBuy * 2;
+
+    while(!(ramToBuy - smallestPlayerPurchasedServer.server.maxRam > additionalRamNeeded)){
+        ramToBuy = ramToBuy * 2;
     }
 
     if (ramToBuy >= maxRam) {
         ramToBuy = maxRam;
     }
-
-    ramToBuy = ramToBuy;
 
     const costOfRamToBuy = ns.getPurchasedServerCost(ramToBuy);
     const moneyAvailable = ns.getServerMoneyAvailable("home");
@@ -97,7 +95,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServ
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         ns.rm(buyOrUpgradeServerFlag);
     } else {
-        // ns.tprint("too expensive to buy ", ramToBuy, " $", costOfRamToBuy);
+        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString() );
         if(upgradeOnly === false){
             purchaseServer(ns, buyOrUpgradeServerFlag);
         }

@@ -6,18 +6,18 @@
             "prepStage": true,
             "successfulWeakening": true,
             "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:25:38.881Z",
+            "hackDoneAfter": "2023-06-30T15:55:40.303Z",
             "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 13.540000000000001,
-            "originalNumberOfThreadsForFullMoney": 6770,
+            "securityWeNeedToReduceAfterFullHack": 13.054,
+            "originalNumberOfThreadsForFullMoney": 6527,
             "batchesQueue": [
                 {
                     "jobs": [
                         {
                             "executing": false,
                             "ramCost": 0,
-                            "endAfter": "2023-06-30T15:21:30.246Z",
-                            "endBefore": "2023-06-30T15:25:38.881Z",
+                            "endAfter": "2023-06-30T15:51:32.737Z",
+                            "endBefore": "2023-06-30T15:55:40.303Z",
                             "type": "hack-dynamic"
                         }
                     ],
@@ -39,150 +39,18 @@
             "prepStage": true,
             "successfulWeakening": true,
             "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:25:46.751Z",
+            "hackDoneAfter": "2023-06-30T15:55:48.126Z",
             "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 40.072,
-            "originalNumberOfThreadsForFullMoney": 20036,
+            "securityWeNeedToReduceAfterFullHack": 35.494,
+            "originalNumberOfThreadsForFullMoney": 17747,
             "batchesQueue": [
                 {
                     "jobs": [
                         {
                             "executing": false,
                             "ramCost": 0,
-                            "endAfter": "2023-06-30T15:21:33.264Z",
-                            "endBefore": "2023-06-30T15:25:46.751Z",
-                            "type": "hack-dynamic"
-                        }
-                    ],
-                    "poisonedBatch": false
-                }
-            ],
-            "successes": 0,
-            "failures": 0,
-            "successesInTheLastHour": 0,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
-            "executionWindowSizeInSeconds": 15
-        }
-    ],
-    [
-        "netlink",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "successfulWeakening": true,
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:26:00.087Z",
-            "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 10.636000000000001,
-            "originalNumberOfThreadsForFullMoney": 5318,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-30T15:21:36.280Z",
-                            "endBefore": "2023-06-30T15:26:00.087Z",
-                            "type": "hack-dynamic"
-                        }
-                    ],
-                    "poisonedBatch": false
-                }
-            ],
-            "successes": 0,
-            "failures": 0,
-            "successesInTheLastHour": 0,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
-            "executionWindowSizeInSeconds": 15
-        }
-    ],
-    [
-        "rothman-uni",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "successfulWeakening": true,
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:25:12.039Z",
-            "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 9.694,
-            "originalNumberOfThreadsForFullMoney": 4847,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-30T15:21:39.300Z",
-                            "endBefore": "2023-06-30T15:25:12.039Z",
-                            "type": "hack-dynamic"
-                        }
-                    ],
-                    "poisonedBatch": false
-                }
-            ],
-            "successes": 0,
-            "failures": 0,
-            "successesInTheLastHour": 0,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
-            "executionWindowSizeInSeconds": 15
-        }
-    ],
-    [
-        "aevum-police",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "successfulWeakening": true,
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:26:06.914Z",
-            "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 12.386000000000001,
-            "originalNumberOfThreadsForFullMoney": 6193,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-30T15:21:42.324Z",
-                            "endBefore": "2023-06-30T15:26:06.914Z",
-                            "type": "hack-dynamic"
-                        }
-                    ],
-                    "poisonedBatch": false
-                }
-            ],
-            "successes": 0,
-            "failures": 0,
-            "successesInTheLastHour": 0,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
-            "executionWindowSizeInSeconds": 15
-        }
-    ],
-    [
-        "the-hub",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "successfulWeakening": true,
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-06-30T15:24:48.445Z",
-            "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 6.0200000000000005,
-            "originalNumberOfThreadsForFullMoney": 3010,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": false,
-                            "ramCost": 0,
-                            "endAfter": "2023-06-30T15:21:45.333Z",
-                            "endBefore": "2023-06-30T15:24:48.445Z",
+                            "endAfter": "2023-06-30T15:51:35.743Z",
+                            "endBefore": "2023-06-30T15:55:48.126Z",
                             "type": "hack-dynamic"
                         }
                     ],

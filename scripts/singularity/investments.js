@@ -16,7 +16,7 @@ export async function main(ns) {
         ns.singularity.upgradeHomeRam()
     }
 
-    if (homeUpgradeCost < 7_000_000_000 && moneyAvailable > homeUpgradeCost && moneyAvailable > 7_000_000_000) {
+    if (homeUpgradeCost < 30_000_000_000 && moneyAvailable > homeUpgradeCost && moneyAvailable > 30_000_000_000) {
         ns.singularity.upgradeHomeRam()
     }
 
@@ -29,7 +29,7 @@ export async function main(ns) {
         .filter(x => x.server.maxRam < 2048 && x.server.purchasedByPlayer)
         .length;
 
-    if(numberOfPurchasedServers < 10 || countOfPurchasedServersWithLessThan2048Gigs !== 0){ 
+    if((numberOfPurchasedServers < 10 || countOfPurchasedServersWithLessThan2048Gigs !== 0) && !ns.fileExists("Formulas.exe")){ 
         let upgradeOnly = false;
 
         if(countOfPurchasedServersWithLessThan2048Gigs !== 0){
