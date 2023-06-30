@@ -17,7 +17,7 @@ export async function main(ns) {
             await ns.singularity.connect("home");
         }
 
-        if (factionInvitations.includes(serverWithLineage.server.organizationName)) {
+        if (serverWithLineage && factionInvitations.includes(serverWithLineage.server.organizationName)) {
             await ns.singularity.joinFaction(serverWithLineage.server.organizationName);
         }
     }

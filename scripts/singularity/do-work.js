@@ -3,19 +3,33 @@ export async function main(ns) {
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
     const currentWork = ns.singularity.getCurrentWork();
 
-    if(currentWork.type !== "CREATE_PROGRAM"){
+    let workingOnGettingAugmentsOrPrograms = false;
+
+    if (currentWork && currentWork.type !== "CREATE_PROGRAM"){
         if (!ns.fileExists("BruteSSH.exe")) {
-            ns.singularity.createProgram("BruteSSH.exe", true);
-            workingOnGettingAugmentsOrPrograms = true;
+            const worked = ns.singularity.createProgram("BruteSSH.exe", true);
+            if(worked){
+                workingOnGettingAugmentsOrPrograms = true;
+            }
+
         }
     
         if (!ns.fileExists("FTPCrack.exe")) {
-            ns.singularity.createProgram("FTPCrack.exe", true);
-            workingOnGettingAugmentsOrPrograms = true;
+            const worked = ns.singularity.createProgram("FTPCrack.exe", true);
+            if(worked){
+                workingOnGettingAugmentsOrPrograms = true;
+            }
         }
     }
 
     const mostRepExpensiveForEachFaction = [];
+
+
+
+    if(!player.factions){
+        ns.singularity.universityCourse("Rothman University", "Computer Science", true);
+        return;
+    }
 
     for (const faction of player.factions) {
         const maximumAugRep = Math.max(...ns
@@ -31,8 +45,6 @@ export async function main(ns) {
         .filter(x => x.maximumAugRep > 0)
         .sort((a, b) => a.maximumAugRep - b.maximumAugRep);
 
-
-    let workingOnGettingAugmentsOrPrograms = false;
 
     if (currentWork.type === "FACTION" || currentWork.type === "COMPANY" || !currentWork) {
         for (const factionWithMostExpensiveAug of sortedFactions) {

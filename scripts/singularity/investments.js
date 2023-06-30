@@ -1,8 +1,4 @@
 export async function main(ns) {
-
-    // do one investment per thing.
-
-
     const moneyAvailable = ns.getServerMoneyAvailable("home");
     const numberOfPurchasedServers = ns.getPurchasedServers().length;
 
@@ -57,15 +53,6 @@ export async function main(ns) {
         checkTor(ns);
         ns.singularity.purchaseProgram("SQLInject.exe");
     }
-
-
-
-
-    // buy programs.
-
-    // once servers are all installed, we can spend up to 60 billion on home ram
-
-    // then trigger floating server.    
 }
 
 function checkTor(ns) {
