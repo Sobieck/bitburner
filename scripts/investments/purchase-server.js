@@ -16,8 +16,7 @@ export async function main(ns) {
     const playerPurchasedServers = enviroment
         .filter(x => x.server.purchasedByPlayer && x.server.maxRam < maxRam)
         .sort((b, a) => a.server.maxRam - b.server.maxRam)
-
-
+        
     if (playerPurchasedServers.length === 0) {
 
         const currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
@@ -44,7 +43,7 @@ function purchaseServer(ns, buyOrUpgradeServerFlag) {
 
             let ramToBuy = ram;
 
-            while ((moneyAvailable > ns.getPurchasedServerCost(ramToBuy)) || (ramToBuy < 2 * maxRam)) {
+            while ((moneyAvailable > ns.getPurchasedServerCost(ramToBuy)) && (ramToBuy < 2 * maxRam)) {
                 ramToBuy = ramToBuy * 2;
             }
 
@@ -57,7 +56,7 @@ function purchaseServer(ns, buyOrUpgradeServerFlag) {
             currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
         }
         else {
-            ns.tprint("Not enough money to buy new server")
+            // ns.tprint("Not enough money to buy new server")
         }
     } else {
         ns.tprint("max servers already bought");
@@ -66,8 +65,7 @@ function purchaseServer(ns, buyOrUpgradeServerFlag) {
 
 function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServerFlag) {
 
-    ns.tprint(smallestPlayerPurchasedServer)
-    const ramToBuy = smallestPlayerPurchasedServer.maxRam * 4;
+    const ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 4;
     const maxRam = 1048576;
     if (ramToBuy > maxRam) {
         ramToBuy = maxRam;
@@ -80,6 +78,6 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, buyOrUpgradeServ
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         ns.rm(buyOrUpgradeServerFlag);
     } else {
-        ns.purchaseServer(ns);
+        purchaseServer(ns, buyOrUpgradeServerFlag);
     }
 }

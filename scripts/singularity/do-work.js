@@ -1,6 +1,19 @@
 export async function main(ns) {
     const player = ns.getPlayer();
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
+    const currentWork = ns.singularity.getCurrentWork();
+
+    if(currentWork.type !== "CREATE_PROGRAM"){
+        if (!ns.fileExists("BruteSSH.exe")) {
+            ns.singularity.createProgram("BruteSSH.exe", true);
+            workingOnGettingAugmentsOrPrograms = true;
+        }
+    
+        if (!ns.fileExists("FTPCrack.exe")) {
+            ns.singularity.createProgram("FTPCrack.exe", true);
+            workingOnGettingAugmentsOrPrograms = true;
+        }
+    }
 
     const mostRepExpensiveForEachFaction = [];
 
@@ -16,26 +29,41 @@ export async function main(ns) {
 
     const sortedFactions = mostRepExpensiveForEachFaction
         .filter(x => x.maximumAugRep > 0)
-        .sort((a,b) => a.maximumAugRep - b.maximumAugRep);
+        .sort((a, b) => a.maximumAugRep - b.maximumAugRep);
 
-    const currentWork = ns.singularity.getCurrentWork();
 
-    for (const factionWithMostExpensiveAug of sortedFactions) {
-        const faction = factionWithMostExpensiveAug.faction;
-        const maxRepNeeded = factionWithMostExpensiveAug.maximumAugRep;
-        const factionRep = ns.singularity.getFactionRep(faction);
+    let workingOnGettingAugmentsOrPrograms = false;
 
-        if (maxRepNeeded > factionRep && (!currentWork || currentWork.type === "FACTION")){            
-            if(currentWork.factionName !== faction || !currentWork){
-                await ns.singularity.workForFaction(faction, "hacking", false);
-            }            
+    if (currentWork.type === "FACTION" || currentWork.type === "COMPANY" || !currentWork) {
+        for (const factionWithMostExpensiveAug of sortedFactions) {
+            const faction = factionWithMostExpensiveAug.faction;
+            const maxRepNeeded = factionWithMostExpensiveAug.maximumAugRep;
+            const factionRep = ns.singularity.getFactionRep(faction);
+
+            if (maxRepNeeded > factionRep) {
+                if (currentWork.factionName !== faction || !currentWork || currentWork.type === "COMPANY") {
+                    await ns.singularity.workForFaction(faction, "hacking", true);
+                    workingOnGettingAugmentsOrPrograms = true;
+                }
+            }
+
+            if (currentWork.type === "FACTION" && currentWork.factionName === faction) {
+                if (maxRepNeeded > factionRep) {
+                    workingOnGettingAugmentsOrPrograms = true;
+                    break;
+                } else {
+                    ns.toast(`Done working for ${faction}`, "success", null);
+                }
+            }
         }
 
-        if (currentWork.type === "FACTION" && currentWork.factionName === faction){
-            if (maxRepNeeded > factionRep){
-                break;
+        if (workingOnGettingAugmentsOrPrograms === false) {
+            const workTarget = "ECorp";
+
+            if (player.jobs.ECorp) {
+                await ns.singularity.workForCompany(workTarget, player.jobs.ECorp);
             } else {
-                ns.toast(`Done working for ${faction}`, "success", null);
+                await ns.singularity.applyToCompany(workTarget, "software");
             }
         }
     }

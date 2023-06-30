@@ -9,11 +9,14 @@ export async function main(ns) {
 
     const loopEveryXSeconds = 3;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 6;
+    const numberOfDifferentSleeps = 5;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/advanced-dispatch.js';
 
     while (true) {
+
+        ns.run('scripts/singularity/singularity-coordinator.js');
+        await ns.sleep(individualSleepAmount);
 
 
         if (trading) {
@@ -22,17 +25,12 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-
         if (ns.fileExists('Formulas.exe')) {
             dispatchScript = 'scripts/batch-dispatch.js'
         }
 
         ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
-
-
-        ns.run('scripts/investments/purchase-server.js')
-        await ns.sleep(individualSleepAmount);
 
 
         const moneyAvailable = ns.getServerMoneyAvailable("home");
@@ -48,10 +46,7 @@ export async function main(ns) {
 
         ns.run('scripts/contracts/coding-contracts.js');
         await ns.sleep(individualSleepAmount);
-
-
         
-        ns.run('scripts/singularity/singularity-coordinator.js');
-        await ns.sleep(individualSleepAmount);
+
     }
 }

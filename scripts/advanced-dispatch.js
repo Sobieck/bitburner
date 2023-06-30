@@ -225,8 +225,8 @@ function getServer(ns, serverName) {
     const server = ns.getServer(serverName);
 
     if (serverName === "home") {
-        server.maxRam -= 10;
-        server.ramUsed -= 10;
+        server.maxRam -= 32;
+        server.ramUsed -= 32;
 
         if (server.ramUsed < 0) {
             server.ramUsed = 0;
