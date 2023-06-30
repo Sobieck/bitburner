@@ -2,7 +2,7 @@
 export async function main(ns) {
     const loopEveryXSeconds = 3;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 4;
+    const numberOfDifferentSleeps = 5;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/advanced-dispatch.js';
 
@@ -32,8 +32,6 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-        // do a file check for stocks, purchase the api in a singularity script sometime. low priority
-
 
         const moneyAvailable = ns.getServerMoneyAvailable("home");
 
@@ -46,9 +44,18 @@ export async function main(ns) {
 
 
 
+
+
         ns.run('scripts/contracts/coding-contracts.js');
         await ns.sleep(individualSleepAmount);
 
 
+
+
+        if(ns.stock.has4SDataTIXAPI()){
+            ns.run('scripts/investments/invest-in-stocks.js');
+        }
+
+        await ns.sleep(individualSleepAmount);
     }
 }

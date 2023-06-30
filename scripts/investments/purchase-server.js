@@ -109,7 +109,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, ramObservationsT
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         ns.rm(ramObservationsTextFile);
     } else {
-        ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
         if(upgradeOnly === false){
             purchaseServer(ns, ramObservationsTextFile, maxRam, additionalRamNeeded);
         }
