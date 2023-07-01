@@ -53,9 +53,6 @@ class BatchQueueForTarget {
     securityWeNeedToReduceAfterFullHack;
     securityWeNeedToReduceAfterFullGrowth;
     originalNumberOfThreadsForFullMoney;
-
-    batchesQueue = [];
-
     successes = 0;
     failures = 0;
 
@@ -63,9 +60,11 @@ class BatchQueueForTarget {
     failuresInTheLastHour = 0;
     lastResetHour = 0
 
-    lastFailure;
-
     executionWindowSizeInSeconds = 15;
+
+    batchesQueue = [];
+
+    lastFailure;
 
     getAllocatedMemory(machineRunningOn) {
         return this.batchesQueue
@@ -646,7 +645,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player) {
     const ramObservationsForPurchasingNewServer = 'data/ramObservations.txt';
 
-    if (ns.fileExists(ramObservationsForPurchasingNewServer) && batchQueue.size > 1) {
+    if (ns.fileExists(ramObservationsForPurchasingNewServer)) {
         return;
     }
 

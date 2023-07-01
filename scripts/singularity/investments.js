@@ -16,6 +16,8 @@ export async function main(ns) {
         if (!ns.fileExists("Formulas.exe")) {
             checkTor(ns);
             ns.singularity.purchaseProgram("Formulas.exe");
+            ns.rm(ramObservationsTextFile);
+            ns.rm('../../buyOrUpgradeServerFlag.txt');
         }
     }
 

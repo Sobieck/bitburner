@@ -6,13 +6,7 @@ export async function main(ns) {
         newMachine = true;
     }
 
-    if (!newMachine && !ns.fileExists("stopInvesting.txt")) {
-        ns.tprint("must add stopInvesting.txt to server.");
-        return;
-    }
-
-
-
+    
     if (!newMachine) {
         ns.killall("home", true);
 
