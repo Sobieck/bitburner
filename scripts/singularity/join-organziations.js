@@ -1,6 +1,7 @@
 export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
     const organizationTextFileName = "data/organizations.txt";
+    const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
     const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus"];
     const lowPriority = ["Chongqing", "Tian Di Hui"];
@@ -9,14 +10,14 @@ export async function main(ns) {
     ns.rm(organizationTextFileName);
     ns.write(organizationTextFileName, JSON.stringify(organzations), "W");
 
-
     const factionInvitations = ns.singularity.checkFactionInvitations();
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
     if (moneyAvailable > 1_000_000_000) {
-        if (ns.singularity.getFactionRep("Chongqing") === 0){
-            ns.singularity.travelToCity("Chongqing");
-        }        
+        if (!ownedAugmentations.includes('Neuregen Gene Modification'))
+            if (ns.singularity.getFactionRep("Chongqing") === 0) {
+                ns.singularity.travelToCity("Chongqing");
+            }
     }
 
     for (const orgServerName of organzations.toJoin) {

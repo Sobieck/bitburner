@@ -1,17 +1,17 @@
 export async function main(ns) {
+    
+    const factionToMaxFile = "data/factionToMax.txt";
+    let factionToMax;
 
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
-
-    if (moneyAvailable < 200_000_000_000) {
+    if(ns.fileExists(factionToMaxFile)){
+        factionToMax = ns.read(factionToMaxFile);
+    } else {
         return;
     }
 
-    const organizationTextFileName = "data/organizations.txt";
-    const organizations = JSON.parse(ns.read(organizationTextFileName));
-
     const player = ns.getPlayer();
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
-
+    
 
     const mostRepExpensiveForEachFaction = [];
     for (const faction of player.factions) {
@@ -28,17 +28,30 @@ export async function main(ns) {
     }
 
     const targetFaction = mostRepExpensiveForEachFaction
-        .filter(x => x.maximumAugRep > 0 && !organizations.lowPriority.includes(x.faction))
-        .sort((a, b) => b.maximumAugRep - a.maximumAugRep)
+        .filter(x => x.faction === factionToMax)
         .pop();
 
     if (targetFaction.maximumAugRep > ns.singularity.getFactionRep(targetFaction.faction)) {
         return;
+    } 
+
+    const stopInvestingFileName = "stopInvesting.txt";
+    if (!ns.fileExists(stopInvestingFileName)) {
+        ns.write(stopInvestingFileName, "", "W")
+        return;
     }
 
-    const stopTradingFileName = "stopTrading.txt";
-    if (!ns.fileExists(stopTradingFileName)) {
-        ns.write(stopTradingFileName, "", "W")
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+
+    // make dynamic, 100x the most expensive augment we plan on buying. 
+    if (moneyAvailable < 250_000_000_000) {
+        return;
+    }
+
+
+    const stopStockTradingFileName = "stopTrading.txt";
+    if (!ns.fileExists(stopStockTradingFileName)) {
+        ns.write(stopStockTradingFileName, "", "W")
         return;
     }
 

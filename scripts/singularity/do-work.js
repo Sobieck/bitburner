@@ -3,6 +3,13 @@ export async function main(ns) {
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
     const currentWork = ns.singularity.getCurrentWork();
     const organizationTextFileName = "data/organizations.txt";
+    const factionToMaxFile = "data/factionToMax.txt";
+
+    let factionToMax;
+
+    if(ns.fileExists(factionToMaxFile)){
+        factionToMax = ns.read(factionToMaxFile);
+    }
 
     const organizations = JSON.parse(ns.read(organizationTextFileName));
 
@@ -49,10 +56,15 @@ export async function main(ns) {
         .filter(x => x.maximumAugRep > 0 && !organizations.lowPriority.includes(x.faction))
         .sort((a, b) => a.maximumAugRep - b.maximumAugRep);
 
+    if(sortedFactions.length > 0 && !factionToMax){
+        factionToMax = sortedFactions[0].faction;
+        ns.write(factionToMaxFile, factionToMax, "W");
+    }
+
     if (!currentWork || currentWork.type === "FACTION" || currentWork.type === "COMPANY") {
-        for (const factionWithMostExpensiveAug of sortedFactions) {
-            const faction = factionWithMostExpensiveAug.faction;
-            const maxRepNeeded = factionWithMostExpensiveAug.maximumAugRep;
+        for (const factionWithTheirMostExpensiveAug of sortedFactions) {
+            const faction = factionWithTheirMostExpensiveAug.faction;
+            const maxRepNeeded = factionWithTheirMostExpensiveAug.maximumAugRep;
             const factionRep = ns.singularity.getFactionRep(faction);
 
             if (maxRepNeeded > factionRep) {

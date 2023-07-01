@@ -33,7 +33,7 @@ export async function main(ns) {
         ledger = JSON.parse(ns.read(nameOfLedger));
     }
 
-    const stopTradingExists = ns.fileExists("../../stopTrading.txt") || ns.fileExists("../../buyOrUpgradeServerFlag.txt");
+    const stopTradingExists = ns.fileExists("../../stopTrading.txt") || ns.fileExists('../../data/ramObservations.txt');
     // sell short term positions;
     stockRecords.map(stock => {
         const investedShares = stock.investedShares;
@@ -65,7 +65,7 @@ export async function main(ns) {
     const commission = 100_001;
     const moneyAvailable = ns.getServerMoneyAvailable("home") - commission;
 
-    if (moneyAvailable > 600_000_000_000 && !stopTradingExists) {
+    if (moneyAvailable > 100_000_000_000 && !stopTradingExists) {
         const stocksToGoLong = stockRecords
             .filter(stock => stock.investedShares !== stock.maxShares && stock.forecast > 0.6)
             .sort((a, b) => b.volatility - a.volatility);

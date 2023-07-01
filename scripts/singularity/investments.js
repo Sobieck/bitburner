@@ -1,7 +1,16 @@
 export async function main(ns) {
+    const ramObservationsTextFile = '../../data/ramObservations.txt';
+    const stopInvestingFileName = "stopInvesting.txt";
+    if (ns.fileExists(stopInvestingFileName)) {
+        if(ns.fileExists(ramObservationsTextFile)){
+            ns.rm(ramObservationsTextFile);
+        }
+        return;
+    }
+
+
     const moneyAvailable = ns.getServerMoneyAvailable("home");
     const numberOfPurchasedServers = ns.getPurchasedServers().length;
-
 
     if (moneyAvailable > 5_000_000_000) {
         if (!ns.fileExists("Formulas.exe")) {

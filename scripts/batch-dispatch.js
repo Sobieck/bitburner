@@ -23,8 +23,8 @@ export async function main(ns) {
     }
 
     await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment);
-    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment);
-    adjustTimingsOrOutrightDeleteDependingOnReliability(batchQueueForDifferentTargets, targetNames);
+    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player);
+    adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDifferentTargets, targetNames);
 
     ns.rm(batchQueuesFileName);
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
@@ -176,8 +176,11 @@ export class Helpers {
     }
 }
 
-function adjustTimingsOrOutrightDeleteDependingOnReliability(batchQueueForDifferentTargets, targetNames) {
+
+
+function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDifferentTargets, targetNames) {
     const currentTime = new Date();
+    let countOfDeleted = 0;
 
     for (const nameOfTarget of targetNames) {
         const queueOfBatches = batchQueueForDifferentTargets.get(nameOfTarget);
@@ -199,18 +202,19 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(batchQueueForDiffer
             queueOfBatches.successesInTheLastHour = 0;
             queueOfBatches.failuresInTheLastHour = 0;
 
-            if (ratioOfFailuresThisHour > 0.6 && totalRunsThisHour > 11) {
-                // for (const batch of queueOfBatches.batchesQueue) {
-                //     batch.jobs.map(x => {
-                //         if (x.pid) {
-                //             ns.kill(x.pid);
-                //         }
-                //     });
+            if (ratioOfFailuresThisHour > 0.6 && totalRunsThisHour > 10 && countOfDeleted < 2) {
+                for (const batch of queueOfBatches.batchesQueue) {
+                    batch.jobs.map(x => {
+                        if (x.pid) {
+                            ns.kill(x.pid);
+                        }
+                    });
 
-                // }
+                }
 
-                // batchQueueForDifferentTargets.delete(nameOfTarget);
+                batchQueueForDifferentTargets.delete(nameOfTarget);
                 ns.tprint(`Deleted ${nameOfTarget} from batchQueue for failing too often. Ratio of Failure: ${ratioOfFailuresThisHour}. Total Runs: ${totalRunsThisHour}`);
+                countOfDeleted++;
             }
         }
     }
@@ -434,7 +438,7 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
 
     const serversWithEnoughRam = machinesWithRamAvailable
         .filter(x => (x.server.maxRam - x.server.ramUsed) > ramNeeded)
-        .sort((b, a) => b.server.maxRam  - a.server.maxRam);
+        .sort((b, a) => b.server.maxRam - a.server.maxRam);
 
     for (const potentialServerToRun of serversWithEnoughRam) {
         const server = getServer(ns, potentialServerToRun.name);
@@ -639,7 +643,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
     }
 }
 
-function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
+function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player) {
     const ramObservationsForPurchasingNewServer = 'data/ramObservations.txt';
 
     if (ns.fileExists(ramObservationsForPurchasingNewServer)) {
@@ -659,14 +663,27 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
             .filter(x => !x.server.hasAdminRights)
             .map(x => helpers.hackMachine(x.name));
 
-        // we can probabably refine this to account for difficulty. 
         const allMachinesByOrderOfValue = allHackableMachines
             .filter(x => !x.server.purchasedByPlayer && x.server.moneyMax !== 0 && !targetNames.includes(x.name))
             .sort((a, b) => b.server.moneyMax - a.server.moneyMax);
 
-        const mostValuableMachine = allMachinesByOrderOfValue[0];
+        // only add machine if 90%+ chances of successfully hacking at minDifficulty. 
+        let mostValuableMachine;
+        for (const hackPossibility of allMachinesByOrderOfValue) {
+            const server = ns.getServer(hackPossibility.name);
+            server.hackDifficulty = server.minDifficulty;
+            const chanceOfHackingAtMinDif = ns.formulas.hacking.hackChance(server, player);
 
-        batchQueue.set(mostValuableMachine.name, new BatchQueueForTarget());
+            if (chanceOfHackingAtMinDif > 0.9) {
+                mostValuableMachine = hackPossibility;
+                break;
+            }
+        }
+
+        if (mostValuableMachine) {
+            batchQueue.set(mostValuableMachine.name, new BatchQueueForTarget());
+        }
+
     }
 }
 
