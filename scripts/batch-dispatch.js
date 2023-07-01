@@ -646,7 +646,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player) {
     const ramObservationsForPurchasingNewServer = 'data/ramObservations.txt';
 
-    if (ns.fileExists(ramObservationsForPurchasingNewServer)) {
+    if (ns.fileExists(ramObservationsForPurchasingNewServer) && batchQueue.size > 1) {
         return;
     }
 

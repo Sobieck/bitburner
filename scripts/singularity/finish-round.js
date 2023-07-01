@@ -1,9 +1,9 @@
 export async function main(ns) {
-    
+
     const factionToMaxFile = "data/factionToMax.txt";
     let factionToMax;
 
-    if(ns.fileExists(factionToMaxFile)){
+    if (ns.fileExists(factionToMaxFile)) {
         factionToMax = ns.read(factionToMaxFile);
     } else {
         return;
@@ -11,7 +11,6 @@ export async function main(ns) {
 
     const player = ns.getPlayer();
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
-    
 
     const mostRepExpensiveForEachFaction = [];
     for (const faction of player.factions) {
@@ -31,27 +30,14 @@ export async function main(ns) {
         .filter(x => x.faction === factionToMax)
         .pop();
 
+
     if (targetFaction.maximumAugRep > ns.singularity.getFactionRep(targetFaction.faction)) {
         return;
-    } 
+    }
 
     const stopInvestingFileName = "stopInvesting.txt";
     if (!ns.fileExists(stopInvestingFileName)) {
         ns.write(stopInvestingFileName, "", "W")
-        return;
-    }
-
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
-
-    // make dynamic, 100x the most expensive augment we plan on buying. 
-    if (moneyAvailable < 250_000_000_000) {
-        return;
-    }
-
-
-    const stopStockTradingFileName = "stopTrading.txt";
-    if (!ns.fileExists(stopStockTradingFileName)) {
-        ns.write(stopStockTradingFileName, "", "W")
         return;
     }
 
@@ -84,6 +70,28 @@ export async function main(ns) {
                     }
                 }
             });
+
+    const priceOfMostExpensiveAugment = Math.max(...factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction).factionAugmentsThatIDontOwnAndCanAfford.map(x => x.price));
+    
+
+    const buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
+    ns.tprint(buyAugmentsWhenWeHaveMoreThanThisMuchMoney)
+
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+
+    // make dynamic, 100x the most expensive augment we plan on buying. 
+    if (moneyAvailable < 250_000_000_000) {
+        return;
+    }
+
+
+    const stopStockTradingFileName = "stopTrading.txt";
+    if (!ns.fileExists(stopStockTradingFileName)) {
+        ns.write(stopStockTradingFileName, "", "W")
+        return;
+    }
+
+
 
     const purchasableAugments = new Map();
 
