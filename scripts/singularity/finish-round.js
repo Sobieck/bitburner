@@ -2,7 +2,7 @@ export async function main(ns) {
 
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-    if (moneyAvailable < 200_000_000_000){
+    if (moneyAvailable < 200_000_000_000) {
         return;
     }
 
@@ -32,7 +32,7 @@ export async function main(ns) {
         .sort((a, b) => b.maximumAugRep - a.maximumAugRep)
         .pop();
 
-    if(targetFaction.maximumAugRep > ns.singularity.getFactionRep(targetFaction.faction)){
+    if (targetFaction.maximumAugRep > ns.singularity.getFactionRep(targetFaction.faction)) {
         return;
     }
 
@@ -115,25 +115,25 @@ function purchaseNeuroFluxGovernors(ns, faction) {
     const price = ns.singularity.getAugmentationPrice(augmentName);
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-    if(moneyAvailable > price){
+    if (moneyAvailable > price) {
         ns.singularity.purchaseAugmentation(faction, augmentName);
     } else {
         return;
     }
 
-    purchaseNeuroFluxGovernors(ns, faction);    
+    purchaseNeuroFluxGovernors(ns, faction);
 }
 
-function upgradeHomeMachine(ns){
+function upgradeHomeMachine(ns) {
     const ramCost = ns.singularity.getUpgradeHomeRamCost();
     const coreCost = ns.singularity.getUpgradeHomeCoresCost();
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-    if(ramCost > moneyAvailable && coreCost > moneyAvailable){
+    if (ramCost > moneyAvailable && coreCost > moneyAvailable) {
         return;
     }
 
-    if (ramCost > coreCost){
+    if (ramCost > coreCost) {
         ns.singularity.upgradeHomeCores();
     } else {
         ns.singularity.upgradeHomeRam();
@@ -147,15 +147,15 @@ function purchaseAug(ns, faction, augmentName, prereqs, purchasableAugments) {
 
     if (ownedAugments.includes(augmentName) === false) {
         for (const prereq of prereqs) {
-            if(!ownedAugments.includes(prereq)){
+            if (!ownedAugments.includes(prereq)) {
                 const prereqAugment = purchasableAugments.get(prereq);
                 purchaseAug(ns, prereqAugment.faction, prereq, prereqAugment.prereqs, purchasableAugments);
             }
         }
 
-        if(ns.singularity.getAugmentationPrice(augmentName) < ns.getServerMoneyAvailable("home")){
+        if (ns.singularity.getAugmentationPrice(augmentName) < ns.getServerMoneyAvailable("home")) {
             ns.singularity.purchaseAugmentation(faction, augmentName);
             purchasableAugments.delete(augmentName);
-        }        
+        }
     }
 }

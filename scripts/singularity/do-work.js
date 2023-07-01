@@ -73,13 +73,32 @@ export async function main(ns) {
         }
 
         if (workingOnGettingAugmentsOrPrograms === false) {
+
+            const veryGoodHackingAugment = "Neuregen Gene Modification";
+            const cityThatProvidesThatAugment = "Chongqing";
+            if (!ownedAugmentations.includes(veryGoodHackingAugment)) {
+
+                if (ns.singularity.getFactionRep(cityThatProvidesThatAugment) < ns.singularity.getAugmentationRepReq(veryGoodHackingAugment)) {
+                    if (!currentWork || currentWork.factionName !== cityThatProvidesThatAugment || currentWork.type === "COMPANY") {
+                        await ns.singularity.workForFaction(cityThatProvidesThatAugment, "hacking", true);
+                    }
+                } else {
+                    if(currentWork && currentWork.factionName === cityThatProvidesThatAugment){
+                        ns.singularity.stopAction();
+                    }                    
+                }
+            }
+
             const workTarget = "ECorp";
 
             if (player.jobs.ECorp) {
-                await ns.singularity.workForCompany(workTarget, player.jobs.ECorp);
-            }
-            await ns.singularity.applyToCompany(workTarget, "software");
 
+                if (!currentWork || !currentWork.type === "COMPANY") {
+                    await ns.singularity.workForCompany(workTarget, player.jobs.ECorp);
+                }
+
+                await ns.singularity.applyToCompany(workTarget, "software");
+            }
         }
     }
 }

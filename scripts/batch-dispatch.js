@@ -24,7 +24,7 @@ export async function main(ns) {
 
     await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment);
     addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment);
-    adjustTimingsDependingOnReliability(batchQueueForDifferentTargets, targetNames);
+    adjustTimingsOrOutrightDeleteDependingOnReliability(batchQueueForDifferentTargets, targetNames);
 
     ns.rm(batchQueuesFileName);
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
@@ -176,28 +176,42 @@ export class Helpers {
     }
 }
 
-function adjustTimingsDependingOnReliability(batchQueueForDifferentTargets, targetNames) {
+function adjustTimingsOrOutrightDeleteDependingOnReliability(batchQueueForDifferentTargets, targetNames) {
     const currentTime = new Date();
 
     for (const nameOfTarget of targetNames) {
-        const batch = batchQueueForDifferentTargets.get(nameOfTarget);
+        const queueOfBatches = batchQueueForDifferentTargets.get(nameOfTarget);
 
-        if (currentTime.getHours() !== batch.lastResetHour) {
-            if (batch.failuresInTheLastHour === 0 && batch.successesInTheLastHour > 0 && batch.executionWindowSizeInSeconds > 3) {
-                batch.executionWindowSizeInSeconds--;
+        if (currentTime.getHours() !== queueOfBatches.lastResetHour) {
+            if (queueOfBatches.failuresInTheLastHour === 0 && queueOfBatches.successesInTheLastHour > 0 && queueOfBatches.executionWindowSizeInSeconds > 3) {
+                queueOfBatches.executionWindowSizeInSeconds--;
             }
 
-            const totalRuns = batch.successesInTheLastHour + batch.failuresInTheLastHour;
-            const ratioOfFailures = 1 - (batch.successesInTheLastHour / totalRuns);
+            const totalRuns = queueOfBatches.successesInTheLastHour + queueOfBatches.failuresInTheLastHour;
+            const ratioOfFailures = 1 - (queueOfBatches.successesInTheLastHour / totalRuns);
 
             if (ratioOfFailures > 0.1) {
-                batch.executionWindowSizeInSeconds++;
+                queueOfBatches.executionWindowSizeInSeconds++;
             }
 
 
-            batch.lastResetHour = currentTime.getHours();
-            batch.successesInTheLastHour = 0;
-            batch.failuresInTheLastHour = 0;
+            queueOfBatches.lastResetHour = currentTime.getHours();
+            queueOfBatches.successesInTheLastHour = 0;
+            queueOfBatches.failuresInTheLastHour = 0;
+
+            if(ratioOfFailures > 0.5){
+                for (const batch of batchQueueForDifferentTargets.batchesQueue) {
+                    batch.jobs.map(x => {
+                        if (x.pid) {
+                            ns.kill(x.pid);
+                        }
+                    });
+    
+                }
+
+                batchQueueForDifferentTargets.delete(nameOfTarget);
+                ns.tprint(`Deleted ${nameOfTarget} from batchQueue for failing too often.`);
+            }
         }
     }
 }
@@ -615,11 +629,8 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                 batch.jobs.map(x => {
                     if (x.pid) {
                         ns.kill(x.pid);
-                        ns.tprint(x.pid);
                     }
                 });
-
-                ns.tprint("killed poisoned")
             }
 
             if (remove) {
@@ -630,9 +641,9 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 }
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
-    const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
+    const ramObservationsForPurchasingNewServer = 'data/ramObservations.txt';
 
-    if (ns.fileExists(buyOrUpgradeServerFlag)) {
+    if (ns.fileExists(ramObservationsForPurchasingNewServer)) {
         return;
     }
 
