@@ -17,7 +17,6 @@ export async function main(ns) {
         if (ns.fileExists(typeRecord)) {
             const tempType = JSON.parse(ns.read(typeRecord));
             type = new TypeOfPurchase(tempType);
-            ns.tprint(type);
         }
 
         if (ns.fileExists(ramObservationsTextFile)) {
@@ -77,6 +76,7 @@ export async function main(ns) {
     if (upgradedOrPurchased) {
         ns.rm(ramObservationsTextFile);
         type.changeType();
+        ns.tprint("bought server");
     }
 
     ns.rm(typeRecord);
@@ -138,7 +138,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         return true;
     } else {
-        ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
         if (upgradeOnly === false) {
             return purchaseServer(ns, maxRam, additionalRamNeeded);
         }

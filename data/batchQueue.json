@@ -2,8 +2,8 @@
     [
         "rho-construction",
         {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
+            "targetMachineSaturatedWithAttacks": true,
+            "prepStage": false,
             "weakeningDoneAfter": "2023-07-01T01:17:45.993Z",
             "successfulWeakening": false,
             "growDoneAfter": "2023-07-01T00:45:34.619Z",
@@ -18,24 +18,402 @@
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 1611.75,
+                            "ramCost": 14302.1,
+                            "endAfter": "2023-07-01T01:27:41.207Z",
+                            "endBefore": "2023-07-01T01:27:56.207Z",
+                            "type": "hack",
                             "machineRunningOn": "CLOUD-021",
-                            "pid": 8068,
-                            "endAfter": "2023-07-01T00:45:37.741Z",
-                            "endBefore": "2023-07-01T01:17:45.993Z",
-                            "type": "weaken-dynamic"
+                            "pid": 17156
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:27:56.208Z",
+                            "endBefore": "2023-07-01T01:28:11.208Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-010",
+                            "pid": 15504
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 19885.25,
+                            "endAfter": "2023-07-01T01:28:11.209Z",
+                            "endBefore": "2023-07-01T01:28:26.209Z",
+                            "type": "grow",
+                            "machineRunningOn": "CLOUD-022",
+                            "pid": 16022
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:28:26.210Z",
+                            "endBefore": "2023-07-01T01:28:41.210Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-007",
+                            "pid": 15617
                         }
                     ],
-                    "startTime": "2023-07-01T00:45:37.743Z",
+                    "startTime": "2023-07-01T01:18:06.972Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 14302.1,
+                            "endAfter": "2023-07-01T01:28:41.211Z",
+                            "endBefore": "2023-07-01T01:28:56.211Z",
+                            "type": "hack",
+                            "machineRunningOn": "CLOUD-024",
+                            "pid": 17388
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:28:56.212Z",
+                            "endBefore": "2023-07-01T01:29:11.212Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-004",
+                            "pid": 15734
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 19885.25,
+                            "endAfter": "2023-07-01T01:29:11.213Z",
+                            "endBefore": "2023-07-01T01:29:26.213Z",
+                            "type": "grow",
+                            "machineRunningOn": "CLOUD-020",
+                            "pid": 16246
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:29:26.214Z",
+                            "endBefore": "2023-07-01T01:29:41.214Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-011",
+                            "pid": 15850
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:19:07.201Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:29:41.215Z",
+                            "endBefore": "2023-07-01T01:29:56.215Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:29:56.216Z",
+                            "endBefore": "2023-07-01T01:30:11.216Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-006",
+                            "pid": 15963
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 19885.25,
+                            "endAfter": "2023-07-01T01:30:11.217Z",
+                            "endBefore": "2023-07-01T01:30:26.217Z",
+                            "type": "grow",
+                            "machineRunningOn": "CLOUD-022",
+                            "pid": 16475
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:30:26.218Z",
+                            "endBefore": "2023-07-01T01:30:41.218Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-014",
+                            "pid": 16081
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:20:07.485Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:30:41.219Z",
+                            "endBefore": "2023-07-01T01:30:56.219Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:30:56.220Z",
+                            "endBefore": "2023-07-01T01:31:11.220Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-010",
+                            "pid": 16202
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 19885.25,
+                            "endAfter": "2023-07-01T01:31:11.221Z",
+                            "endBefore": "2023-07-01T01:31:26.221Z",
+                            "type": "grow",
+                            "machineRunningOn": "CLOUD-022",
+                            "pid": 16712
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:31:26.222Z",
+                            "endBefore": "2023-07-01T01:31:41.222Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-001",
+                            "pid": 16318
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:21:07.754Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:31:41.223Z",
+                            "endBefore": "2023-07-01T01:31:56.223Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:31:56.224Z",
+                            "endBefore": "2023-07-01T01:32:11.224Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-013",
+                            "pid": 16431
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 19885.25,
+                            "endAfter": "2023-07-01T01:32:11.225Z",
+                            "endBefore": "2023-07-01T01:32:26.225Z",
+                            "type": "grow",
+                            "machineRunningOn": "CLOUD-015",
+                            "pid": 16948
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:32:26.226Z",
+                            "endBefore": "2023-07-01T01:32:41.226Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-002",
+                            "pid": 16548
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:22:08.035Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:32:41.227Z",
+                            "endBefore": "2023-07-01T01:32:56.227Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:32:56.228Z",
+                            "endBefore": "2023-07-01T01:33:11.228Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-006",
+                            "pid": 16666
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 19887,
+                            "endAfter": "2023-07-01T01:33:11.229Z",
+                            "endBefore": "2023-07-01T01:33:26.229Z",
+                            "type": "grow",
+                            "machineRunningOn": "CLOUD-023",
+                            "pid": 17179
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:33:26.230Z",
+                            "endBefore": "2023-07-01T01:33:41.230Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-022",
+                            "pid": 16780
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:23:08.327Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:33:41.231Z",
+                            "endBefore": "2023-07-01T01:33:56.231Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:33:56.232Z",
+                            "endBefore": "2023-07-01T01:34:11.232Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-006",
+                            "pid": 16899
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 19887,
+                            "endAfter": "2023-07-01T01:34:11.233Z",
+                            "endBefore": "2023-07-01T01:34:26.233Z",
+                            "type": "grow",
+                            "machineRunningOn": "CLOUD-023",
+                            "pid": 17450
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:34:26.234Z",
+                            "endBefore": "2023-07-01T01:34:41.234Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-012",
+                            "pid": 17016
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:24:08.545Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:34:41.235Z",
+                            "endBefore": "2023-07-01T01:34:56.235Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:34:56.236Z",
+                            "endBefore": "2023-07-01T01:35:11.236Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-016",
+                            "pid": 17133
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:35:11.237Z",
+                            "endBefore": "2023-07-01T01:35:26.237Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:35:26.238Z",
+                            "endBefore": "2023-07-01T01:35:41.238Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-019",
+                            "pid": 17251
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:25:08.938Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:35:41.239Z",
+                            "endBefore": "2023-07-01T01:35:56.239Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 596.75,
+                            "endAfter": "2023-07-01T01:35:56.240Z",
+                            "endBefore": "2023-07-01T01:36:11.240Z",
+                            "type": "weaken-after-hack",
+                            "machineRunningOn": "CLOUD-010",
+                            "pid": 17364
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:36:11.241Z",
+                            "endBefore": "2023-07-01T01:36:26.241Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "endAfter": "2023-07-01T01:36:26.242Z",
+                            "endBefore": "2023-07-01T01:36:41.242Z",
+                            "type": "weaken-after-grow",
+                            "machineRunningOn": "CLOUD-020",
+                            "pid": 17497
+                        }
+                    ],
+                    "startTime": "2023-07-01T01:26:09.200Z",
+                    "poisonedBatch": false
+                },
+                {
+                    "jobs": [
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:36:41.243Z",
+                            "endBefore": "2023-07-01T01:36:56.243Z",
+                            "type": "hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:36:56.244Z",
+                            "endBefore": "2023-07-01T01:37:11.244Z",
+                            "type": "weaken-after-hack"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:37:11.245Z",
+                            "endBefore": "2023-07-01T01:37:26.245Z",
+                            "type": "grow"
+                        },
+                        {
+                            "executing": false,
+                            "ramCost": 0,
+                            "endAfter": "2023-07-01T01:37:26.246Z",
+                            "endBefore": "2023-07-01T01:37:41.246Z",
+                            "type": "weaken-after-grow"
+                        }
+                    ],
                     "poisonedBatch": false
                 }
             ],
-            "successes": 3,
+            "successes": 4,
             "failures": 0,
-            "successesInTheLastHour": 0,
+            "successesInTheLastHour": 1,
             "failuresInTheLastHour": 0,
             "lastResetHour": 20,
-            "executionWindowSizeInSeconds": 14
+            "executionWindowSizeInSeconds": 15
         }
     ],
     [
@@ -44,7 +422,8 @@
             "targetMachineSaturatedWithAttacks": false,
             "prepStage": true,
             "weakeningDoneAfter": "2023-07-01T01:26:26.941Z",
-            "successfulWeakening": false,
+            "successfulWeakening": true,
+            "growDoneAfter": "2023-07-01T01:35:57.597Z",
             "successfulGrowing": false,
             "successfulHacking": false,
             "batchesQueue": [
@@ -52,21 +431,21 @@
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 2801.75,
-                            "machineRunningOn": "CLOUD-015",
-                            "pid": 4675,
-                            "endAfter": "2023-07-01T00:30:44.100Z",
-                            "endBefore": "2023-07-01T01:26:26.941Z",
-                            "type": "weaken-dynamic"
+                            "ramCost": 1639.75,
+                            "machineRunningOn": "CLOUD-021",
+                            "pid": 17435,
+                            "endAfter": "2023-07-01T01:26:27.418Z",
+                            "endBefore": "2023-07-01T01:35:57.597Z",
+                            "type": "grow-dynamic"
                         }
                     ],
-                    "startTime": "2023-07-01T00:30:44.100Z",
+                    "startTime": "2023-07-01T01:26:27.420Z",
                     "poisonedBatch": false
                 }
             ],
-            "successes": 0,
+            "successes": 1,
             "failures": 0,
-            "successesInTheLastHour": 0,
+            "successesInTheLastHour": 1,
             "failuresInTheLastHour": 0,
             "lastResetHour": 20,
             "executionWindowSizeInSeconds": 15
