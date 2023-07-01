@@ -30,6 +30,9 @@ export async function main(ns) {
         .filter(x => x.faction === factionToMax)
         .pop();
 
+    if (!ownedAugmentations.includes("Artificial Bio-neural Network Implant") && factionToMax === "BitRunners"){
+        targetFaction.maximumAugRep = 276_000;
+    }
 
     if (targetFaction.maximumAugRep > ns.singularity.getFactionRep(targetFaction.faction)) {
         return;
@@ -72,18 +75,15 @@ export async function main(ns) {
             });
 
     const priceOfMostExpensiveAugment = Math.max(...factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction).factionAugmentsThatIDontOwnAndCanAfford.map(x => x.price));
-    
+
 
     const buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
-    ns.tprint(buyAugmentsWhenWeHaveMoreThanThisMuchMoney)
 
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-    // make dynamic, 100x the most expensive augment we plan on buying. 
-    if (moneyAvailable < 250_000_000_000) {
+    if (moneyAvailable < buyAugmentsWhenWeHaveMoreThanThisMuchMoney) {
         return;
     }
-
 
     const stopStockTradingFileName = "stopTrading.txt";
     if (!ns.fileExists(stopStockTradingFileName)) {

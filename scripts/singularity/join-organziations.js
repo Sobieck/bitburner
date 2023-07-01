@@ -3,23 +3,22 @@ export async function main(ns) {
     const organizationTextFileName = "data/organizations.txt";
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
-    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners"];
+    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand"];
     const lowPriority = ["Chongqing", "Tian Di Hui", "Sector-12"];
 
     const factionInvitations = ns.singularity.checkFactionInvitations();
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
 
-
-    if (moneyAvailable > 1_000_000_000) {
-        if (!ownedAugmentations.includes('Neuregen Gene Modification')) {
+    if (!ownedAugmentations.includes('Neuregen Gene Modification')) {
+        if (moneyAvailable > 1_000_000_000) {
             if (ns.singularity.getFactionRep("Chongqing") === 0) {
                 ns.singularity.travelToCity("Chongqing");
             }
-        } else if(!ownedAugmentations.includes("CashRoot Starter Kit")){
-            toJoin.push("Sector-12");
-            lowPriority.push("Sector-12");
         }
+    } else if (!ownedAugmentations.includes("CashRoot Starter Kit")) {
+        toJoin.push("Sector-12");
+        lowPriority.push("Sector-12");
     }
 
     const organzations = { toJoin, lowPriority };

@@ -326,6 +326,10 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
 
                         if (new Date(job.endAfter) < ifStartedNowWeakenDoneAt && ifStartedNowWeakenDoneAt < endBeforeDate) {
                             shouldExecute = true;
+                        }                        
+                        
+                        if (ifStartedNowWeakenDoneAt > endBeforeDate) {
+                            batchOfJobs.poisonedBatch = true;
                         }
 
                         if (ifStartedNowWeakenDoneAt > endBeforeDate) {
