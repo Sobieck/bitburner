@@ -187,10 +187,10 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(batchQueueForDiffer
                 queueOfBatches.executionWindowSizeInSeconds--;
             }
 
-            const totalRuns = queueOfBatches.successesInTheLastHour + queueOfBatches.failuresInTheLastHour;
-            const ratioOfFailures = 1 - (queueOfBatches.successesInTheLastHour / totalRuns);
+            const totalRunsThisHour = queueOfBatches.successesInTheLastHour + queueOfBatches.failuresInTheLastHour;
+            const ratioOfFailuresThisHour = 1 - (queueOfBatches.successesInTheLastHour / totalRunsThisHour);
 
-            if (ratioOfFailures > 0.1) {
+            if (ratioOfFailuresThisHour > 0.1) {
                 queueOfBatches.executionWindowSizeInSeconds++;
             }
 
@@ -199,18 +199,18 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(batchQueueForDiffer
             queueOfBatches.successesInTheLastHour = 0;
             queueOfBatches.failuresInTheLastHour = 0;
 
-            if(ratioOfFailures > 0.5){
-                for (const batch of batchQueueForDifferentTargets.batchesQueue) {
-                    batch.jobs.map(x => {
-                        if (x.pid) {
-                            ns.kill(x.pid);
-                        }
-                    });
-    
-                }
+            if (ratioOfFailuresThisHour > 0.6 && totalRunsThisHour > 11) {
+                // for (const batch of queueOfBatches.batchesQueue) {
+                //     batch.jobs.map(x => {
+                //         if (x.pid) {
+                //             ns.kill(x.pid);
+                //         }
+                //     });
 
-                batchQueueForDifferentTargets.delete(nameOfTarget);
-                ns.tprint(`Deleted ${nameOfTarget} from batchQueue for failing too often.`);
+                // }
+
+                // batchQueueForDifferentTargets.delete(nameOfTarget);
+                ns.tprint(`Deleted ${nameOfTarget} from batchQueue for failing too often. Ratio of Failure: ${ratioOfFailuresThisHour}. Total Runs: ${totalRunsThisHour}`);
             }
         }
     }
@@ -430,12 +430,11 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
     allHackableMachines.push({ name: "home", server: homeServer })
 
     const machinesWithRamAvailable = allHackableMachines
-        .filter(x => x.server.ramUsed <= x.server.maxRam && x.server.maxRam !== 0);
-
+        .filter(x => x.server.ramUsed < x.server.maxRam && x.server.maxRam !== 0);
 
     const serversWithEnoughRam = machinesWithRamAvailable
         .filter(x => (x.server.maxRam - x.server.ramUsed) > ramNeeded)
-        .sort((b, a) => (b.server.maxRam - b.server.ramUsed) - (a.server.maxRam - a.server.ramUsed));
+        .sort((b, a) => b.server.maxRam  - a.server.maxRam);
 
     for (const potentialServerToRun of serversWithEnoughRam) {
         const server = getServer(ns, potentialServerToRun.name);

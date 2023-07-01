@@ -14,7 +14,9 @@ export async function main(ns) {
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
     if (moneyAvailable > 1_000_000_000) {
-        ns.singularity.travelToCity("Chongqing");
+        if (ns.singularity.getFactionRep("Chongqing") === 0){
+            ns.singularity.travelToCity("Chongqing");
+        }        
     }
 
     for (const orgServerName of organzations.toJoin) {

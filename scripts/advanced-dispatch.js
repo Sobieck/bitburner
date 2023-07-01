@@ -210,11 +210,11 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
     allHackableMachines.push({ name: "home", server: homeServer })
 
     const machinesWithRamAvailable = allHackableMachines
-        .filter(x => x.server.ramUsed <= x.server.maxRam && x.server.maxRam !== 0);
+        .filter(x => x.server.ramUsed < x.server.maxRam && x.server.maxRam !== 0);
 
     const serversWithEnoughRam = machinesWithRamAvailable
         .filter(x => (x.server.maxRam - x.server.ramUsed) > ramNeeded)
-        .sort((b, a) =>(b.server.maxRam - b.server.ramUsed) - (a.server.maxRam - a.server.ramUsed));
+        .sort((b, a) => b.server.maxRam  - a.server.maxRam);
 
     for (const potentialServerToRun of serversWithEnoughRam) {
         const server = getServer(ns, potentialServerToRun.name);

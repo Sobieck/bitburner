@@ -1,6 +1,6 @@
 //run scripts/coordinator.js 1000 564 5.629 BitRunners
 export async function main(ns) {
-    const loopEveryXSeconds = 3;
+    const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
     const numberOfDifferentSleeps = 5;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
@@ -24,7 +24,7 @@ export async function main(ns) {
 
         ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
-
+        
 
 
 
