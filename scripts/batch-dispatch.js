@@ -454,8 +454,8 @@ function getServer(ns, serverName) {
     const server = ns.getServer(serverName);
 
     if (serverName === "home") {
-        server.maxRam -= 64;
-        server.ramUsed -= 64;
+        server.maxRam -= 128;
+        server.ramUsed -= 128;
 
         if (server.ramUsed < 0) {
             server.ramUsed = 0;
@@ -631,9 +631,8 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment) {
     const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
-    const ramObservations = 'ramObservations.txt';
 
-    if (ns.fileExists(buyOrUpgradeServerFlag) || ns.fileExists(ramObservations)) {
+    if (ns.fileExists(buyOrUpgradeServerFlag)) {
         return;
     }
 

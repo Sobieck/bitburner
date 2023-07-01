@@ -11,9 +11,11 @@ export async function main(ns) {
         return;
     }
 
-    ns.killall("home", true);
+ 
 
     if (!newMachine) {
+        ns.killall("home", true);
+
         const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
         enviroment
             .filter(x => x.server.hasAdminRights)
@@ -34,5 +36,6 @@ export async function main(ns) {
     ns.rm('data/batchQueue.txt')
     ns.rm('buyOrUpgradeServerFlag.txt');
     ns.rm('data/organizations.txt');
-    ns.rm('ramObservations.txt');
+    ns.rm('data/ramObservations.txt');
+    ns.rm('data/typeOfServerPurchase.txt');
 }

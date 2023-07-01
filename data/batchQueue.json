@@ -4,7 +4,46 @@
         {
             "targetMachineSaturatedWithAttacks": false,
             "prepStage": true,
-            "weakeningDoneAfter": "2023-06-30T21:05:43.798Z",
+            "weakeningDoneAfter": "2023-07-01T01:17:45.993Z",
+            "successfulWeakening": false,
+            "growDoneAfter": "2023-07-01T00:45:34.619Z",
+            "successfulGrowing": true,
+            "hackDoneAfter": "2023-07-01T00:19:03.105Z",
+            "successfulHacking": true,
+            "securityWeNeedToReduceAfterFullHack": 16.826,
+            "securityWeNeedToReduceAfterFullGrowth": 45.452,
+            "originalNumberOfThreadsForFullMoney": 8413,
+            "batchesQueue": [
+                {
+                    "jobs": [
+                        {
+                            "executing": true,
+                            "ramCost": 1611.75,
+                            "machineRunningOn": "CLOUD-021",
+                            "pid": 8068,
+                            "endAfter": "2023-07-01T00:45:37.741Z",
+                            "endBefore": "2023-07-01T01:17:45.993Z",
+                            "type": "weaken-dynamic"
+                        }
+                    ],
+                    "startTime": "2023-07-01T00:45:37.743Z",
+                    "poisonedBatch": false
+                }
+            ],
+            "successes": 3,
+            "failures": 0,
+            "successesInTheLastHour": 0,
+            "failuresInTheLastHour": 0,
+            "lastResetHour": 20,
+            "executionWindowSizeInSeconds": 14
+        }
+    ],
+    [
+        "syscore",
+        {
+            "targetMachineSaturatedWithAttacks": false,
+            "prepStage": true,
+            "weakeningDoneAfter": "2023-07-01T01:26:26.941Z",
             "successfulWeakening": false,
             "successfulGrowing": false,
             "successfulHacking": false,
@@ -13,15 +52,15 @@
                     "jobs": [
                         {
                             "executing": true,
-                            "ramCost": 1121.75,
-                            "machineRunningOn": "CLOUD-014",
-                            "pid": 66272,
-                            "endAfter": "2023-06-30T20:38:42.233Z",
-                            "endBefore": "2023-06-30T21:05:43.798Z",
+                            "ramCost": 2801.75,
+                            "machineRunningOn": "CLOUD-015",
+                            "pid": 4675,
+                            "endAfter": "2023-07-01T00:30:44.100Z",
+                            "endBefore": "2023-07-01T01:26:26.941Z",
                             "type": "weaken-dynamic"
                         }
                     ],
-                    "startTime": "2023-06-30T20:38:42.233Z",
+                    "startTime": "2023-07-01T00:30:44.100Z",
                     "poisonedBatch": false
                 }
             ],
@@ -29,38 +68,7 @@
             "failures": 0,
             "successesInTheLastHour": 0,
             "failuresInTheLastHour": 0,
-            "lastResetHour": 15,
-            "executionWindowSizeInSeconds": 15
-        }
-    ],
-    [
-        "catalyst",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "successfulWeakening": true,
-            "growDoneAfter": "2023-06-30T20:46:02.846Z",
-            "successfulGrowing": false,
-            "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullGrowth": 70.052,
-            "batchesQueue": [],
-            "successes": 0,
-            "failures": 1,
-            "successesInTheLastHour": 0,
-            "failuresInTheLastHour": 1,
-            "lastResetHour": 15,
-            "lastFailure": {
-                "jobs": [
-                    {
-                        "executing": false,
-                        "ramCost": 0,
-                        "endAfter": "2023-06-30T20:38:45.240Z",
-                        "endBefore": "2023-06-30T20:46:02.846Z",
-                        "type": "grow-dynamic"
-                    }
-                ],
-                "poisonedBatch": true
-            },
+            "lastResetHour": 20,
             "executionWindowSizeInSeconds": 15
         }
     ]

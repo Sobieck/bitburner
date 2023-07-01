@@ -3,15 +3,24 @@
 /** @param {NS} ns */
 //run scripts/purchase-servers.js
 export async function main(ns) {
-    const buyOrUpgradeServerFlag = "../../buyOrUpgradeServerFlag.txt"
-    const ramObservationsTextFile = '../../ramObservations.txt'
+    const buyOrUpgradeServerFlag = "../../buyOrUpgradeServerFlag.txt";
+    const ramObservationsTextFile = '../../data/ramObservations.txt';
+    const typeRecord = "../../data/typeOfServerPurchase.txt";
+
     let additionalRamNeeded = 0;
     let ramObservations = [];
+    let type = new TypeOfPurchase();
 
     if (!ns.fileExists(buyOrUpgradeServerFlag)) {
         return;
     } else {
-        if(ns.fileExists(ramObservationsTextFile)){
+        if (ns.fileExists(typeRecord)) {
+            const tempType = JSON.parse(ns.read(typeRecord));
+            type = new TypeOfPurchase(tempType);
+            ns.tprint(type);
+        }
+
+        if (ns.fileExists(ramObservationsTextFile)) {
             ramObservations = JSON.parse(ns.read(ramObservationsTextFile));
             ns.rm(ramObservationsTextFile);
         }
@@ -23,17 +32,27 @@ export async function main(ns) {
         ns.rm(buyOrUpgradeServerFlag);
         ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
 
-        additionalRamNeeded = ramObservations.reduce((a,b) => a + b) / ramObservations.length;
+        if (type.min) {
+            additionalRamNeeded = Math.min(...ramObservations);
+        }
+
+        if (type.average) {
+            additionalRamNeeded = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
+        }
+
+        if (type.max) {
+            additionalRamNeeded = Math.max(...ramObservations);
+        }
     }
 
     let maxRam = 1048576;
     let upgradeOnly = false;
 
-    if(ns.args[0]){
+    if (ns.args[0]) {
         maxRam = ns.args[0];
     }
 
-    if(ns.args[1]){
+    if (ns.args[1]) {
         upgradeOnly = true;
     }
 
@@ -42,20 +61,29 @@ export async function main(ns) {
     const playerPurchasedServers = enviroment
         .filter(x => x.server.purchasedByPlayer && x.server.maxRam < maxRam)
         .sort((b, a) => a.server.maxRam - b.server.maxRam)
-        
+
+    let upgradedOrPurchased = false;
     if (playerPurchasedServers.length === 0) {
 
         const currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
         if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
-            purchaseServer(ns, ramObservationsTextFile, maxRam);
-        } 
+            upgradedOrPurchased = purchaseServer(ns, ramObservationsTextFile, maxRam);
+        }
     } else {
         const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
-        upgradeSmallMachine(ns, smallestPlayerPurchasedServer, ramObservationsTextFile, maxRam, upgradeOnly, additionalRamNeeded);
+        upgradedOrPurchased = upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeOnly, additionalRamNeeded);
     }
+
+    if (upgradedOrPurchased) {
+        ns.rm(ramObservationsTextFile);
+        type.changeType();
+    }
+
+    ns.rm(typeRecord);
+    ns.write(typeRecord, JSON.stringify(type), "W");
 }
 
-function purchaseServer(ns, ramObservationsTextFile, maxRam, additionalRamNeeded) {
+function purchaseServer(ns, maxRam, additionalRamNeeded) {
     let currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
     let ram = 128;
 
@@ -74,12 +102,11 @@ function purchaseServer(ns, ramObservationsTextFile, maxRam, additionalRamNeeded
 
             ramToBuy = ramToBuy / 2;
 
-            if(ramToBuy > additionalRamNeeded){
+            if (ramToBuy > additionalRamNeeded) {
                 const hostname = "CLOUD-" + String(currentNumberOfPurchasedServers).padStart(3, '0')
                 ns.purchaseServer(hostname, ramToBuy);
-                ns.rm(ramObservationsTextFile);
-    
-                currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
+
+                return true;
             }
         }
         else {
@@ -88,13 +115,15 @@ function purchaseServer(ns, ramObservationsTextFile, maxRam, additionalRamNeeded
     } else {
         // ns.tprint("max servers already bought");
     }
+
+    return false;
 }
 
-function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, ramObservationsTextFile, maxRam, upgradeOnly, additionalRamNeeded) {
+function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeOnly, additionalRamNeeded) {
 
     let ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 2;
 
-    while(!(ramToBuy - smallestPlayerPurchasedServer.server.maxRam > additionalRamNeeded)){
+    while (!(ramToBuy - smallestPlayerPurchasedServer.server.maxRam > additionalRamNeeded)) {
         ramToBuy = ramToBuy * 2;
     }
 
@@ -107,11 +136,49 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, ramObservationsT
 
     if (moneyAvailable > costOfRamToBuy) {
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
-        ns.rm(ramObservationsTextFile);
+        return true;
     } else {
-        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
-        if(upgradeOnly === false){
-            purchaseServer(ns, ramObservationsTextFile, maxRam, additionalRamNeeded);
+        ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+        if (upgradeOnly === false) {
+            return purchaseServer(ns, maxRam, additionalRamNeeded);
+        }
+    }
+
+    return false;
+}
+
+class TypeOfPurchase {
+
+    max = false;
+    min = true;
+    average = false;
+
+    constructor(obj) {
+        obj && Object.assign(this, obj);
+    }
+
+
+    changeType() {
+
+        if (this.min) {
+            this.min = false;
+            this.average = true;
+            this.max = false;
+            return;
+        }
+
+        if (this.average) {
+            this.min = false;
+            this.average = false;
+            this.max = true;
+            return;
+        }
+
+        if (this.max) {
+            this.min = true;
+            this.average = false;
+            this.max = false;
+            return;
         }
     }
 }
