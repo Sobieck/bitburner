@@ -34,4 +34,5 @@ export async function main(ns) {
     ns.rm('data/typeOfServerPurchase.txt');
     ns.rm("data/factionToMax.txt");
     ns.rm('stopTrading.txt');
+    ns.rm('data/reliabilityForEvery100Batches.txt');
 }

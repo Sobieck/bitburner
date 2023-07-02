@@ -1,5 +1,17 @@
-export async function main(ns) {
+let failuresThisRun = 0;
+let successesThisRun = 0;
 
+let lastTimeVisited = new Date();
+let secondsBetweenVisits = [];
+
+export async function main(ns) {
+    const now = new Date();
+    const secondsSinceLastVisit = Math.abs(now.getTime() - lastTimeVisited.getTime())/1000;
+    lastTimeVisited = now;
+    if(secondsSinceLastVisit !== 0){
+        secondsBetweenVisits.push(secondsSinceLastVisit);
+    }
+    
     const batchQueuesFileName = "data/batchQueue.txt"
 
     let batchQueueForDifferentTargets = new Map();
@@ -43,6 +55,30 @@ export async function main(ns) {
 
     ns.rm(batchQueuesFileName);
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
+
+    const total = failuresThisRun + successesThisRun;
+  
+    if (total >= 100) {
+        const timeStamp = `[${String(now.getHours()).padStart(2,0)}:${String(now.getMinutes()).padStart(2,0)}]`
+
+        const errorRate = 1 - (successesThisRun / total);
+        ns.tprint(`${timeStamp} Error Rate ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })} Successes: ${successesThisRun} Failures: ${failuresThisRun}`);
+        
+        const averageTimeBetweenVisits = secondsBetweenVisits.reduce((acc, b) => acc + b, 0) / secondsBetweenVisits.length;
+        ns.tprint(`${timeStamp} Average of ${averageTimeBetweenVisits} between visits`)
+
+        const reliabilityForBatchFile = 'data/reliabilityForEvery100Batches.txt';
+        let batchReliability = [];
+        if (ns.fileExists(reliabilityForBatchFile)) {
+            batchReliability = JSON.parse(ns.read(reliabilityForBatchFile));
+        }
+        batchReliability.push({errorRate, averageTimeBetweenVisits, now });
+        ns.rm(reliabilityForBatchFile);
+        ns.write(reliabilityForBatchFile, JSON.stringify(batchReliability), "W");
+        failuresThisRun = 0;
+        successesThisRun = 0;
+        secondsBetweenVisits = [];
+    }
 
     if (ns.getServerMoneyAvailable("home") > 1_000_000_000_000 || targetNames.map(x => batchQueueForDifferentTargets.get(x)).every(x => !x.targetMachineSaturatedWithAttacks)) {
         ns.run('scripts/advanced-dispatch.js');
@@ -318,7 +354,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         const ifStartedNowWeakenDoneAt = getWeakenEndDate(ns, targetServer, player);
                         shouldExecute = shouldWeExecute(job, ifStartedNowWeakenDoneAt);
 
-                        if(shouldExecute === false){
+                        if (shouldExecute === false) {
                             continue;
                         }
 
@@ -347,8 +383,8 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                     if (job.type.startsWith("grow")) {
                         const ifStartedNowGrowDoneAt = getGrowEndDate(ns, targetServer, player);
                         shouldExecute = shouldWeExecute(job, ifStartedNowGrowDoneAt);
-                        
-                        if(shouldExecute === false){
+
+                        if (shouldExecute === false) {
                             continue;
                         }
 
@@ -372,7 +408,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         const ifStartedNowHackDoneAt = getHackEndDate(ns, targetServer, player);
                         shouldExecute = shouldWeExecute(job, ifStartedNowHackDoneAt);
 
-                        if(shouldExecute === false){
+                        if (shouldExecute === false) {
                             continue;
                         }
 
@@ -639,9 +675,11 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                     batches.failures++;
                     batches.failuresInTheLastHour++;
                     batches.lastFailure = batch;
+                    failuresThisRun++;
                 } else {
                     batches.successes++;
                     batches.successesInTheLastHour++;
+                    successesThisRun++;
                 }
 
                 remove = true;
@@ -652,6 +690,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                 batches.failures++;
                 batches.failuresInTheLastHour++;
                 batches.lastFailure = batch;
+                failuresThisRun++;
 
                 remove = true;
 
