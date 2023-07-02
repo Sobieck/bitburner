@@ -43,7 +43,7 @@ export async function main(ns) {
 
     ns.rm(batchQueuesFileName);
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
-    
+
     if (ns.getServerMoneyAvailable("home") > 1_000_000_000_000 || targetNames.map(x => batchQueueForDifferentTargets.get(x)).every(x => !x.targetMachineSaturatedWithAttacks)) {
         ns.run('scripts/advanced-dispatch.js');
     }
@@ -57,27 +57,28 @@ class BatchQueueForTarget {
     targetMachineSaturatedWithAttacks = false;
 
     prepStage = true;
-
     weakeningDoneAfter;
     successfulWeakening = false;
-
     growDoneAfter;
     successfulGrowing = false;
-
     hackDoneAfter;
     successfulHacking = false;
 
     securityWeNeedToReduceAfterFullHack;
     securityWeNeedToReduceAfterFullGrowth;
     originalNumberOfThreadsForFullMoney;
+
     successes = 0;
     failures = 0;
-
     successesInTheLastHour = 0;
     failuresInTheLastHour = 0;
     lastResetHour = 0
 
     executionWindowSizeInSeconds = 15;
+
+
+    jobOrder = new JobOrder();
+
 
     batchesQueue = [];
 
@@ -93,6 +94,76 @@ class BatchQueueForTarget {
     thereAreNoJobsRunningAfter() {
         return Math.max(...this.batchesQueue.map(x => x.wholeBatchFinishsBefore()));
     }
+}
+
+class JobOrder {
+    constructor(obj) {
+        obj && Object.assign(this, obj);
+    }
+
+    weakenAfterGrowStartPlace = [];
+    weakenAfterHackPlace = [];
+    growPlace = [];
+    hackPlace = [];
+
+    addBatchToTable(batch, ns) {
+        batch.jobs.sort((a,b) => new Date(a.executedAt) - new Date(b.executedAt));
+
+        for (let i = 0; i < batch.jobs.length; i++) {
+            const job = batch.jobs[i];
+            this.addToTable(job.type, i);
+        }
+    }
+
+    addToTable(type, place) {
+        if (type === 'weaken-after-grow') {
+            const placeCount = this.weakenAfterGrowStartPlace.find(x => x.place === place);
+            if (placeCount) {
+                placeCount.countOfPlace++;
+            } else {
+                const newPlace = new PlaceCount(place);
+                this.weakenAfterGrowStartPlace.push(newPlace);
+            }
+        }
+
+        if (type === 'weaken-after-hack') {
+            const placeCount = this.weakenAfterHackPlace.find(x => x.place === place);
+            if (placeCount) {
+                placeCount.countOfPlace++;
+            } else {
+                const newPlace = new PlaceCount(place);
+                this.weakenAfterHackPlace.push(newPlace);
+            }
+        }
+
+        if (type === 'grow') {
+            const placeCount = this.growPlace.find(x => x.place === place);
+            if (placeCount) {
+                placeCount.countOfPlace++;
+            } else {
+                const newPlace = new PlaceCount(place);
+                this.growPlace.push(newPlace);
+            }
+        }
+
+        if (type === 'hack') {
+            const placeCount = this.hackPlace.find(x => x.place === place);
+            if (placeCount) {
+                placeCount.countOfPlace++;
+            } else {
+                const newPlace = new PlaceCount(place);
+                this.hackPlace.push(newPlace);
+            }
+        }
+    }
+}
+
+class PlaceCount {
+    constructor(place) {
+        this.place = place;
+    }
+
+    countOfPlace = 1;
 }
 
 class BatchOfJobs {
@@ -266,29 +337,23 @@ function createBatchesOfJobs(batchForTarget, ns, targetServer, player) {
                 noMoreJobsAfter = defaultEndTime;
             }
 
-            // if(targetServer.hostname === "megacorp"){
-            //     ns.tprint(noMoreJobsAfter.toLocaleTimeString());
-            // }
-
             const hackStart = createNewDataFromOldDateAndAddMilliseconds(noMoreJobsAfter, msToPadStartTime);
             const hackEnd = createNewDataFromOldDateAndAddSeconds(hackStart, secondsToPadEndTime);
-
-            batch.jobs.push(new JobHasTo(hackStart, hackEnd, "hack"));
 
             const weakenAfterhackStart = createNewDataFromOldDateAndAddMilliseconds(hackEnd, msToPadStartTime);
             const weakenAfterHackEnd = createNewDataFromOldDateAndAddSeconds(weakenAfterhackStart, secondsToPadEndTime);
 
-            batch.jobs.push(new JobHasTo(weakenAfterhackStart, weakenAfterHackEnd, "weaken-after-hack"));
-
             const growStart = createNewDataFromOldDateAndAddMilliseconds(weakenAfterHackEnd, msToPadStartTime);
             const growEnd = createNewDataFromOldDateAndAddSeconds(growStart, secondsToPadEndTime);
-
-            batch.jobs.push(new JobHasTo(growStart, growEnd, "grow"));
 
             const weakenAfterGrowStart = createNewDataFromOldDateAndAddMilliseconds(growEnd, msToPadStartTime);
             const weakenAfterGrowEnd = createNewDataFromOldDateAndAddSeconds(weakenAfterGrowStart, secondsToPadEndTime);
 
+            // get them in the order they are executed. 
             batch.jobs.push(new JobHasTo(weakenAfterGrowStart, weakenAfterGrowEnd, "weaken-after-grow"));
+            batch.jobs.push(new JobHasTo(weakenAfterhackStart, weakenAfterHackEnd, "weaken-after-hack"));
+            batch.jobs.push(new JobHasTo(growStart, growEnd, "grow"));
+            batch.jobs.push(new JobHasTo(hackStart, hackEnd, "hack"));
 
             batchForTarget.batchesQueue.push(batch);
         }
@@ -313,9 +378,10 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
             for (let y = 0; y < batchOfJobs.jobs.length; y++) {
                 const job = batchOfJobs.jobs[y];
 
-                const targetServer = ns.getServer(nameOfTarget);
-
                 if (job.executing === false) {
+
+                    const targetServer = ns.getServer(nameOfTarget);
+
                     let machineToRunOn;
                     let script;
                     let numberOfThreads;
@@ -323,6 +389,13 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                     let shouldExecute = false;
 
                     if (job.type.startsWith("weaken")) {
+                        const ifStartedNowWeakenDoneAt = getWeakenEndDate(ns, targetServer, player);
+                        shouldExecute = shouldWeExecute(job, ifStartedNowWeakenDoneAt);
+
+                        if(shouldExecute === false){
+                            continue;
+                        }
+
                         script = weakenScript;
 
                         let amountToWeaken = targetServer.hackDifficulty - targetServer.minDifficulty;
@@ -343,13 +416,16 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         if (machineToRunOn && machineToRunOn.cpuCores > 1) {
                             numberOfThreads = getNumberOfThreadsToWeaken(ns, machineToRunOn.cpuCores, amountToWeaken);
                         }
-
-                        const ifStartedNowWeakenDoneAt = getWeakenEndDate(ns, targetServer, player);
-                        shouldExecute = shouldWeExecute(job, ifStartedNowWeakenDoneAt);
-
                     }
 
                     if (job.type.startsWith("grow")) {
+                        const ifStartedNowGrowDoneAt = getGrowEndDate(ns, targetServer, player);
+                        shouldExecute = shouldWeExecute(job, ifStartedNowGrowDoneAt);
+                        
+                        if(shouldExecute === false){
+                            continue;
+                        }
+
                         script = growScript;
 
                         if (job.type !== "grow-dynamic") {
@@ -364,13 +440,16 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         if (machineToRunOn && machineToRunOn.cpuCores > 1) {
                             numberOfThreads = getGrowThreads(ns, targetServer, player, machineToRunOn.cpuCores);
                         }
-
-                        const ifStartedNowGrowDoneAt = getGrowEndDate(ns, targetServer, player);
-                        
-                        shouldExecute = shouldWeExecute(job, ifStartedNowGrowDoneAt);
                     }
 
                     if (job.type.startsWith("hack")) {
+                        const ifStartedNowHackDoneAt = getHackEndDate(ns, targetServer, player);
+                        shouldExecute = shouldWeExecute(job, ifStartedNowHackDoneAt);
+
+                        if(shouldExecute === false){
+                            continue;
+                        }
+
                         script = hackScript;
 
                         if (job.type === "hack") {
@@ -387,10 +466,6 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         ramCost = ramNeededForHack * numberOfThreads;
 
                         machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment);
-
-                        const ifStartedNowHackDoneAt = getHackEndDate(ns, targetServer, player);
-
-                        shouldExecute = shouldWeExecute(job, ifStartedNowHackDoneAt);
                     }
 
                     if (shouldExecute && machineToRunOn) {
@@ -613,6 +688,7 @@ function giveBatchQueueStructure(targetNames, batchQueue) {
     for (const target of targetNames) {
         let targetObject = batchQueue.get(target);
         targetObject = new BatchQueueForTarget(targetObject);
+        targetObject.jobOrder = new JobOrder(targetObject.jobOrder);
 
         for (let i = 0; i < targetObject.batchesQueue.length; i++) {
             targetObject.batchesQueue[i] = new BatchOfJobs(targetObject.batchesQueue[i]);
@@ -641,6 +717,12 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                 } else {
                     batches.successes++;
                     batches.successesInTheLastHour++;
+
+                    if(!batches.jobOrder){
+                        batches.jobOrder = new JobOrder();
+                    }
+
+                    batches.jobOrder.addBatchToTable(batch, ns);
                 }
 
                 remove = true;
@@ -674,16 +756,16 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
 
     const batchesAreSaturated = targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks);
     const over5TrillionDollars = ns.getServerMoneyAvailable("home") > 5_000_000_000_000;
-    
+
     let addNewServerToAttack = false;
 
-    if (batchesAreSaturated && !weNeedToBuyServers){
+    if (batchesAreSaturated && !weNeedToBuyServers) {
         addNewServerToAttack = true;
     }
 
     if (over5TrillionDollars) {
         addNewServerToAttack = true;
-    }    
+    }
 
     if ((batchQueue.size < 2 || addNewServerToAttack) && batchQueue.size < 30) {
         const helpers = new Helpers(ns);
