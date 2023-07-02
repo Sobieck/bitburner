@@ -10,6 +10,11 @@ export async function main(ns) {
     const growScript = 'scripts/advanced-hacks/grow.js';
     const weakenScript = 'scripts/advanced-hacks/weaken.js';
 
+    let memoryLimited = false;
+    if(ns.fileExists('data/ramObservations.txt') || ns.fileExists('buyOrUpgradeServerFlag.txt')){
+        memoryLimited = true;
+    }
+
 
     let batchTargets = [];
 
@@ -44,7 +49,7 @@ export async function main(ns) {
         .filter(x => !x.server.hasAdminRights)
         .map(x => helpers.hackMachine(x.name));
 
-    const allMachinesByOrderOfValue = allHackableMachines
+    let allMachinesByOrderOfValue = allHackableMachines
         .filter(x => !x.server.purchasedByPlayer && !batchTargets.includes(x.name) && x.server.moneyMax > 0)
         .sort((a, b) => b.server.moneyMax - a.server.moneyMax)
         .map(x => new HackedRecord(
@@ -54,9 +59,14 @@ export async function main(ns) {
             x.server.hackDifficulty,
             x.server.moneyAvailable,
         ))
-        .slice(0, 20);
+
+    if(memoryLimited){
+        allMachinesByOrderOfValue = allHackableMachines.slice(0, 15);
+    }
 
     cleanProcessesAttackingBatchTarget(ns, recordOfWhoIsBeingHacked, batchTargets);
+    
+    cleanRecordOfWhoIsBeingHacked(ns, recordOfWhoIsBeingHacked);
 
     const machinesNextInQueueToHack = getMachinesToHack(allMachinesByOrderOfValue, recordOfWhoIsBeingHacked, ns);
 
@@ -397,4 +407,14 @@ function getNumberOfThreadsToWeaken(ns, cpuCores, amountToWeaken) {
     //add a small margin
     numberOfThreadsToWeaken += 20;
     return numberOfThreadsToWeaken;
+}
+
+function cleanRecordOfWhoIsBeingHacked(ns, recordOfWhoIsBeingHacked) {
+    for (const key of recordOfWhoIsBeingHacked.keys()) {
+        const record = recordOfWhoIsBeingHacked.get(key);
+        
+        if(!ns.isRunning(record.pid)){
+            recordOfWhoIsBeingHacked.delete(key);
+        }
+    }
 }

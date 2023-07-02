@@ -72,7 +72,7 @@ export async function main(ns) {
     if (upgradedOrPurchased) {
         ns.rm(ramObservationsTextFile);
         type.changeType();
-        ns.tprint("bought server");
+        ns.toast(`More than ${additionalRamNeeded} GB bought for server`, "success", null);
     }
 
     ns.rm(typeRecord);

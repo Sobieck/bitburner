@@ -116,6 +116,7 @@ class JobHasTo {
     ramCost = 0;
     machineRunningOn;
     pid;
+    executedAt;
 
     constructor(endAfter, endBefore, type) {
         this.endAfter = endAfter;
@@ -218,7 +219,7 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDi
             queueOfBatches.successesInTheLastHour = 0;
             queueOfBatches.failuresInTheLastHour = 0;
 
-            if (ratioOfFailuresThisHour > 0.6 && totalRunsThisHour > 10 && countOfDeleted < 2) {
+            if (ratioOfFailuresThisHour > 0.8 && totalRunsThisHour > 10 && countOfDeleted < 2) {
                 for (const batch of queueOfBatches.batchesQueue) {
                     batch.jobs.map(x => {
                         if (x.pid) {
@@ -345,9 +346,11 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                             shouldExecute = true;
                         }
 
-                        if (ifStartedNowWeakenDoneAt > endBeforeDate) {
-                            batchOfJobs.poisonedBatch = true;
-                        }
+                        // if(nameOfTarget === "nwo" && job.type === "weaken-after-grow"){
+                        //     ns.tprint(`Earliest End : ${new Date(job.endAfter).toLocaleTimeString()}`)
+                        //     ns.tprint(`Current End  : ${ifStartedNowWeakenDoneAt.toLocaleTimeString()}`)
+                        //     ns.tprint(`Latest End   : ${new Date(job.endBefore).toLocaleTimeString()}`)
+                        // }
 
                         if (ifStartedNowWeakenDoneAt > endBeforeDate) {
                             const howMuchOff = ifStartedNowWeakenDoneAt - endBeforeDate;
@@ -386,9 +389,13 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                             shouldExecute = true;
                         }
 
-                        if (ifStartedNowGrowDoneAt > new Date(job.endBefore)) {
-                            batchOfJobs.poisonedBatch = true;
-                        }
+
+
+                        // if (nameOfTarget === "nwo") {
+                        //     ns.tprint(`Earliest End : ${new Date(job.endAfter).toLocaleTimeString()}`)
+                        //     ns.tprint(`Current End  : ${ifStartedNowGrowDoneAt.toLocaleTimeString()}`)
+                        //     ns.tprint(`Latest End   : ${new Date(job.endBefore).toLocaleTimeString()}`)
+                        // }
                     }
 
                     if (job.type.startsWith("hack")) {
@@ -427,6 +434,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         job.executing = true;
                         job.machineRunningOn = machineToRunOn.hostname;
                         job.pid = pid;
+                        job.executedAt = new Date();
 
                         if (!batchOfJobs.startTime) {
                             batchOfJobs.startTime = new Date();
@@ -690,7 +698,7 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
             server.hackDifficulty = server.minDifficulty;
             const chanceOfHackingAtMinDif = ns.formulas.hacking.hackChance(server, player);
 
-            if (chanceOfHackingAtMinDif > 0.9) {
+            if (chanceOfHackingAtMinDif > 0.8) {
                 mostValuableMachine = hackPossibility;
                 break;
             }
@@ -699,7 +707,6 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
         if (mostValuableMachine) {
             batchQueue.set(mostValuableMachine.name, new BatchQueueForTarget());
         }
-
     }
 }
 

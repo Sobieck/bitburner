@@ -2,7 +2,7 @@ export async function main(ns) {
     const ramObservationsTextFile = '../../data/ramObservations.txt';
     const stopInvestingFileName = "stopInvesting.txt";
     if (ns.fileExists(stopInvestingFileName)) {
-        if(ns.fileExists(ramObservationsTextFile)){
+        if (ns.fileExists(ramObservationsTextFile)) {
             ns.rm(ramObservationsTextFile);
         }
         return;
@@ -21,24 +21,24 @@ export async function main(ns) {
         }
     }
 
-    upgradeHomeMachine(ns);
+    await upgradeHomeMachine(ns);
 
     const environment = JSON.parse(ns.read("data/enviroment.txt"));
     const countOfPurchasedServersWithLessThan2048Gigs = environment
         .filter(x => x.server.maxRam < 2048 && x.server.purchasedByPlayer)
         .length;
 
-    if((numberOfPurchasedServers < 10 || countOfPurchasedServersWithLessThan2048Gigs !== 0) && !ns.fileExists("Formulas.exe")){ 
+    if ((numberOfPurchasedServers < 10 || countOfPurchasedServersWithLessThan2048Gigs !== 0) && !ns.fileExists("Formulas.exe")) {
         let upgradeOnly = false;
 
-        if(countOfPurchasedServersWithLessThan2048Gigs !== 0){
+        if (countOfPurchasedServersWithLessThan2048Gigs !== 0) {
             upgradeOnly = true;
         }
 
         ns.run("scripts/investments/purchase-server.js", 1, 2048, upgradeOnly)
     }
 
-    if (ns.fileExists("Formulas.exe")){
+    if (ns.fileExists("Formulas.exe")) {
         ns.run('scripts/investments/purchase-server.js');
     }
 
@@ -68,38 +68,44 @@ export async function main(ns) {
     }
 }
 
-function upgradeHomeMachine(ns) {
-    upgradeHomeMachine(ns, 100_000_000);
-    upgradeHomeMachine(ns, 30_000_000_000);
-    upgradeHomeMachine(ns, 100_000_000_000);
-    upgradeHomeMachine(ns, 1_000_000_000_000);
-    upgradeHomeMachine(ns, 10_000_000_000_000);
-    upgradeHomeMachine(ns, 100_000_000_000_000);
-    upgradeHomeMachine(ns, 1_000_000_000_000_000);
+async function upgradeHomeMachine(ns) {
+        await upgradeHomeRamOrCpu(ns, 100_000_000);
+        await upgradeHomeRamOrCpu(ns, 30_000_000_000);
+        await upgradeHomeRamOrCpu(ns, 100_000_000_000);
+        await upgradeHomeRamOrCpu(ns, 1_000_000_000_000);
+        await upgradeHomeRamOrCpu(ns, 10_000_000_000_000);
+        await upgradeHomeRamOrCpu(ns, 100_000_000_000_000);
+        await upgradeHomeRamOrCpu(ns, 1_000_000_000_000_000);
 }
 
-function upgradeHomeMachine(ns, moneyLeftLimit) {
-    
+async function upgradeHomeRamOrCpu(ns, moneyLeftLimit) {
+
     const ramUpgradeCost = ns.singularity.getUpgradeHomeRamCost();
     const coreUpgradeCost = ns.singularity.getUpgradeHomeCoresCost();
-    
+
+    if (ramUpgradeCost > moneyLeftLimit || coreUpgradeCost > moneyLeftLimit) {
+        return;
+    }
+
     const moneyAvailable = ns.getServerMoneyAvailable("home");
-    
-    if(ramUpgradeCost < coreUpgradeCost){
+
+    if (ramUpgradeCost < coreUpgradeCost) {
 
         const moneyLeftOverForRam = moneyAvailable - ramUpgradeCost;
-        
+
         if (moneyLeftOverForRam > moneyLeftLimit) {
             ns.singularity.upgradeHomeRam();
-            ns.tprint("upgraded home ram")
+            ns.toast(`Upgraded home ram`, "success", null);
+            await ns.sleep(100);
         }
 
     } else {
         const moneyLeftOverForCores = moneyAvailable - coreUpgradeCost;
 
-        if (moneyLeftOverForCores > moneyLeftLimit){
+        if (moneyLeftOverForCores > moneyLeftLimit) {
             ns.singularity.upgradeHomeCores()
-            ns.tprint("upgraded home cores")
+            ns.toast(`Upgraded home core`, "success", null);
+            await ns.sleep(100);
         }
     }
 }
