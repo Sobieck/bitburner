@@ -1,0 +1,6 @@
+Figure out how to make batches more reliable.
+
+Home Ram reserve auto figure. 
+    Coord + singularity Coord + top 2 ram intensive scripts is how much we should reserve on home. 
+
+Auto sleep

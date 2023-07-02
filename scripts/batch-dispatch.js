@@ -43,8 +43,8 @@ export async function main(ns) {
 
     ns.rm(batchQueuesFileName);
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
-
-    if (ns.getServerMoneyAvailable("home") > 1_000_000_000_000) {
+    
+    if (ns.getServerMoneyAvailable("home") > 1_000_000_000_000 || targetNames.map(x => batchQueueForDifferentTargets.get(x)).every(x => !x.targetMachineSaturatedWithAttacks)) {
         ns.run('scripts/advanced-dispatch.js');
     }
 }
@@ -117,6 +117,12 @@ class JobHasTo {
     machineRunningOn;
     pid;
     executedAt;
+    expectedEndTime;
+
+    firstLookStartedNowEndAt;
+
+    lastMissForDoneBeforeWindow;
+    firstMissForAfterWindow;
 
     constructor(endAfter, endBefore, type) {
         this.endAfter = endAfter;
@@ -310,7 +316,6 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                 const targetServer = ns.getServer(nameOfTarget);
 
                 if (job.executing === false) {
-
                     let machineToRunOn;
                     let script;
                     let numberOfThreads;
@@ -340,32 +345,8 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         }
 
                         const ifStartedNowWeakenDoneAt = getWeakenEndDate(ns, targetServer, player);
-                        const endBeforeDate = new Date(job.endBefore);
+                        shouldExecute = shouldWeExecute(job, ifStartedNowWeakenDoneAt);
 
-                        if (new Date(job.endAfter) < ifStartedNowWeakenDoneAt && ifStartedNowWeakenDoneAt < endBeforeDate) {
-                            shouldExecute = true;
-                        }
-
-                        // if(nameOfTarget === "nwo" && job.type === "weaken-after-grow"){
-                        //     ns.tprint(`Earliest End : ${new Date(job.endAfter).toLocaleTimeString()}`)
-                        //     ns.tprint(`Current End  : ${ifStartedNowWeakenDoneAt.toLocaleTimeString()}`)
-                        //     ns.tprint(`Latest End   : ${new Date(job.endBefore).toLocaleTimeString()}`)
-                        // }
-
-                        if (ifStartedNowWeakenDoneAt > endBeforeDate) {
-                            const howMuchOff = ifStartedNowWeakenDoneAt - endBeforeDate;
-                            const howMuchOffSeconds = new Date(howMuchOff).getSeconds()
-                            if (howMuchOffSeconds < batchForTarget.executionWindowSizeInSeconds / 2) {
-
-                                // if(nameOfTarget === "megacorp"){
-                                //     ns.tprint(nameOfTarget);
-                                //     ns.tprint(ifStartedNowWeakenDoneAt);
-                                //     ns.tprint(endBeforeDate);
-                                // }
-
-                                // i think we need to adjust weakens sometimes when they miss their window. But that time isn't now. 
-                            }
-                        }
                     }
 
                     if (job.type.startsWith("grow")) {
@@ -385,17 +366,8 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         }
 
                         const ifStartedNowGrowDoneAt = getGrowEndDate(ns, targetServer, player);
-                        if (new Date(job.endAfter) < ifStartedNowGrowDoneAt && ifStartedNowGrowDoneAt < new Date(job.endBefore)) {
-                            shouldExecute = true;
-                        }
-
-
-
-                        // if (nameOfTarget === "nwo") {
-                        //     ns.tprint(`Earliest End : ${new Date(job.endAfter).toLocaleTimeString()}`)
-                        //     ns.tprint(`Current End  : ${ifStartedNowGrowDoneAt.toLocaleTimeString()}`)
-                        //     ns.tprint(`Latest End   : ${new Date(job.endBefore).toLocaleTimeString()}`)
-                        // }
+                        
+                        shouldExecute = shouldWeExecute(job, ifStartedNowGrowDoneAt);
                     }
 
                     if (job.type.startsWith("hack")) {
@@ -417,9 +389,8 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment);
 
                         const ifStartedNowHackDoneAt = getHackEndDate(ns, targetServer, player);
-                        if (new Date(job.endAfter) < ifStartedNowHackDoneAt && ifStartedNowHackDoneAt < new Date(job.endBefore)) {
-                            shouldExecute = true;
-                        }
+
+                        shouldExecute = shouldWeExecute(job, ifStartedNowHackDoneAt);
                     }
 
                     if (shouldExecute && machineToRunOn) {
@@ -444,6 +415,32 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
             }
         }
     }
+}
+
+function shouldWeExecute(job, ifStartedNowWeWouldBeDoneAt) {
+    const endBeforeDate = new Date(job.endBefore);
+    const endAfterDate = new Date(job.endAfter);
+
+    if (!job.firstLookStartedNowEndAt) {
+        job.firstLookStartedNowEndAt = ifStartedNowWeWouldBeDoneAt;
+    }
+
+    if (endAfterDate > ifStartedNowWeWouldBeDoneAt) {
+        job.lastMissForDoneBeforeWindow = ifStartedNowWeWouldBeDoneAt;
+    }
+
+    if (ifStartedNowWeWouldBeDoneAt > endBeforeDate) {
+        if (!job.firstMissForAfterWindow) {
+            job.firstMissForAfterWindow = ifStartedNowWeWouldBeDoneAt;
+        }
+    }
+
+    if (endAfterDate < ifStartedNowWeWouldBeDoneAt && ifStartedNowWeWouldBeDoneAt < endBeforeDate) {
+        job.expectedEndTime = ifStartedNowWeWouldBeDoneAt;
+        return true;
+    }
+
+    return false;
 }
 
 function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
@@ -673,8 +670,22 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player) {
     const ramObservationsForPurchasingNewServer = 'data/ramObservations.txt';
+    const weNeedToBuyServers = ns.fileExists(ramObservationsForPurchasingNewServer);
 
-    if ((batchQueue.size < 2 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && !ns.fileExists(ramObservationsForPurchasingNewServer))) {
+    const batchesAreSaturated = targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks);
+    const over5TrillionDollars = ns.getServerMoneyAvailable("home") > 5_000_000_000_000;
+    
+    let addNewServerToAttack = false;
+
+    if (batchesAreSaturated && !weNeedToBuyServers){
+        addNewServerToAttack = true;
+    }
+
+    if (over5TrillionDollars) {
+        addNewServerToAttack = true;
+    }    
+
+    if ((batchQueue.size < 2 || addNewServerToAttack) && batchQueue.size < 30) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();

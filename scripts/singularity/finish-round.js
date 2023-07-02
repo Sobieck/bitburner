@@ -34,6 +34,14 @@ export async function main(ns) {
         targetFaction.maximumAugRep = 276_000;
     }
 
+    if(!ownedAugmentations.includes("Embedded Netburner Module Direct Memory Access Upgrade") && factionToMax === "Daedalus"){
+        targetFaction.maximumAugRep = 1_000_000;
+    }
+
+    if(ownedAugmentations.includes("Embedded Netburner Module Direct Memory Access Upgrade")  && !ownedAugmentations.includes("Embedded Netburner Module Core V3 Upgrade") && factionToMax === "Daedalus"){
+        targetFaction.maximumAugRep = 1_750_000;
+    }
+
     if (targetFaction.maximumAugRep > ns.singularity.getFactionRep(targetFaction.faction)) {
         return;
     }
