@@ -8,6 +8,21 @@ export async function main(ns) {
     }
 
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
+
+    const playerServers = enviroment
+        .filter(x => x.server.purchasedByPlayer);
+
+    const homeServer = getServer(ns, "home");
+
+    playerServers.push({ name: "home", server: homeServer })
+
+    const totalBoughtMemory = playerServers.reduce((acc, x) => acc + x.server.maxRam, 0);
+
+    if (totalBoughtMemory < 105_000) {
+        ns.run('scripts/advanced-dispatch.js');
+        return;
+    }
+
     const targetNames = Array.from(batchQueueForDifferentTargets.keys());
     const player = ns.getPlayer();
 
@@ -29,7 +44,9 @@ export async function main(ns) {
     ns.rm(batchQueuesFileName);
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
 
-    ns.run('scripts/advanced-dispatch.js');
+    if (ns.getServerMoneyAvailable("home") > 1_000_000_000_000) {
+        ns.run('scripts/advanced-dispatch.js');
+    }
 }
 
 class BatchQueueForTarget {
@@ -326,8 +343,8 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
 
                         if (new Date(job.endAfter) < ifStartedNowWeakenDoneAt && ifStartedNowWeakenDoneAt < endBeforeDate) {
                             shouldExecute = true;
-                        }                        
-                        
+                        }
+
                         if (ifStartedNowWeakenDoneAt > endBeforeDate) {
                             batchOfJobs.poisonedBatch = true;
                         }
@@ -649,11 +666,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player) {
     const ramObservationsForPurchasingNewServer = 'data/ramObservations.txt';
 
-    if (ns.fileExists(ramObservationsForPurchasingNewServer)) {
-        return;
-    }
-
-    if ((batchQueue.size < 2 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && batchQueue.size < 25)) {
+    if ((batchQueue.size < 2 || (targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks)) && !ns.fileExists(ramObservationsForPurchasingNewServer))) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();

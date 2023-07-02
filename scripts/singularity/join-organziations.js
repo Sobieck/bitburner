@@ -3,8 +3,8 @@ export async function main(ns) {
     const organizationTextFileName = "data/organizations.txt";
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
-    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand"];
-    const lowPriority = ["Chongqing", "Tian Di Hui", "Sector-12"];
+    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand", "Netburners"];
+    const lowPriority = ["Chongqing", "Tian Di Hui", "Sector-12", "Netburners"];
 
     const factionInvitations = ns.singularity.checkFactionInvitations();
     const moneyAvailable = ns.getServerMoneyAvailable("home");

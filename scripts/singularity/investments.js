@@ -21,19 +21,7 @@ export async function main(ns) {
         }
     }
 
-    const homeUpgradeCost = ns.singularity.getUpgradeHomeRamCost();
-
-    if (homeUpgradeCost < 100_000_000 && moneyAvailable > homeUpgradeCost) {
-        ns.singularity.upgradeHomeRam()
-    }
-
-    if (homeUpgradeCost < 30_000_000_000 && moneyAvailable > homeUpgradeCost && moneyAvailable > 30_000_000_000) {
-        ns.singularity.upgradeHomeRam()
-    }
-
-    if (homeUpgradeCost < 100_000_000_000 && moneyAvailable > homeUpgradeCost && moneyAvailable > 100_000_000_000) {
-        ns.singularity.upgradeHomeRam()
-    }
+    upgradeHomeMachine(ns);
 
     const environment = JSON.parse(ns.read("data/enviroment.txt"));
     const countOfPurchasedServersWithLessThan2048Gigs = environment
@@ -77,6 +65,42 @@ export async function main(ns) {
     if (!ns.fileExists("SQLInject.exe")) {
         checkTor(ns);
         ns.singularity.purchaseProgram("SQLInject.exe");
+    }
+}
+
+function upgradeHomeMachine(ns) {
+    upgradeHomeMachine(ns, 100_000_000);
+    upgradeHomeMachine(ns, 30_000_000_000);
+    upgradeHomeMachine(ns, 100_000_000_000);
+    upgradeHomeMachine(ns, 1_000_000_000_000);
+    upgradeHomeMachine(ns, 10_000_000_000_000);
+    upgradeHomeMachine(ns, 100_000_000_000_000);
+    upgradeHomeMachine(ns, 1_000_000_000_000_000);
+}
+
+function upgradeHomeMachine(ns, moneyLeftLimit) {
+    
+    const ramUpgradeCost = ns.singularity.getUpgradeHomeRamCost();
+    const coreUpgradeCost = ns.singularity.getUpgradeHomeCoresCost();
+    
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+    
+    if(ramUpgradeCost < coreUpgradeCost){
+
+        const moneyLeftOverForRam = moneyAvailable - ramUpgradeCost;
+        
+        if (moneyLeftOverForRam > moneyLeftLimit) {
+            ns.singularity.upgradeHomeRam();
+            ns.tprint("upgraded home ram")
+        }
+
+    } else {
+        const moneyLeftOverForCores = moneyAvailable - coreUpgradeCost;
+
+        if (moneyLeftOverForCores > moneyLeftLimit){
+            ns.singularity.upgradeHomeCores()
+            ns.tprint("upgraded home cores")
+        }
     }
 }
 

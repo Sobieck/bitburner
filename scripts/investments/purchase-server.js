@@ -44,7 +44,6 @@ export async function main(ns) {
         }
     }
 
-
     let maxRam = 1048576;
     let upgradeOnly = false;
 
@@ -82,22 +81,20 @@ export async function main(ns) {
 
 function purchaseServer(ns, maxRam, additionalRamNeeded) {
     let currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
-    let ram = 128;
+    let ramToBuy = 128;
 
     if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
 
-        let purchaseCost = ns.getPurchasedServerCost(ram);
+        let purchaseCost =  ns.getPurchasedServerCost(ramToBuy);
         let moneyAvailable = ns.getServerMoneyAvailable("home");
 
         if (moneyAvailable > purchaseCost) {
 
-            let ramToBuy = ram;
-
-            while (moneyAvailable > purchaseCost && ramToBuy > additionalRamNeeded) {
+            while (moneyAvailable > purchaseCost && ramToBuy < additionalRamNeeded) {
                 
                 ramToBuy = ramToBuy * 2;
             
-                purchaseCost = ns.getPurchasedServerCost(ramToBuy)
+                purchaseCost = ns.getPurchasedServerCost(ramToBuy);
             }
             
             if(ramToBuy > maxRam){
@@ -140,7 +137,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         return true;
     } else {
-        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+        ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
         if (upgradeOnly === false) {
             return purchaseServer(ns, maxRam, additionalRamNeeded);
         }
