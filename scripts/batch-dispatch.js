@@ -5,12 +5,7 @@ let lastTimeVisited = new Date();
 let secondsBetweenVisits = [];
 
 export async function main(ns) {
-    const now = new Date();
-    const secondsSinceLastVisit = Math.abs(now.getTime() - lastTimeVisited.getTime())/1000;
-    lastTimeVisited = now;
-    if(secondsSinceLastVisit !== 0){
-        secondsBetweenVisits.push(secondsSinceLastVisit);
-    }
+
     
     const batchQueuesFileName = "data/batchQueue.txt"
 
@@ -57,7 +52,16 @@ export async function main(ns) {
     ns.write(batchQueuesFileName, JSON.stringify(Array.from(batchQueueForDifferentTargets.entries()), "W"));
 
     const total = failuresThisRun + successesThisRun;
-  
+    const now = new Date();
+    const secondsSinceLastVisit = Math.abs(now.getTime() - lastTimeVisited.getTime())/1000;
+    lastTimeVisited = now;
+    if(secondsSinceLastVisit !== 0){
+        secondsBetweenVisits.push(secondsSinceLastVisit);
+    }
+
+
+    const moneyWeHaveNow = ns.getServerMoneyAvailable("home");
+    
     if (total >= 100) {
         const timeStamp = `[${String(now.getHours()).padStart(2,0)}:${String(now.getMinutes()).padStart(2,0)}]`
 
@@ -65,22 +69,39 @@ export async function main(ns) {
         ns.tprint(`${timeStamp} Error Rate ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })} Successes: ${successesThisRun} Failures: ${failuresThisRun}`);
         
         const averageTimeBetweenVisits = secondsBetweenVisits.reduce((acc, b) => acc + b, 0) / secondsBetweenVisits.length;
-        ns.tprint(`${timeStamp} Average of ${averageTimeBetweenVisits} between visits`)
+        ns.tprint(`${timeStamp} Average of ${averageTimeBetweenVisits.toFixed(2)} seconds between visits`)
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+
+        const moneyFormatted = formatter.format(moneyWeHaveNow);
+
+        ns.tprint(`${timeStamp} Money we have now: ${moneyFormatted}`)
+
+        ns.tprint(`${timeStamp} Number of targeted server: ${targetNames.length}`)
 
         const reliabilityForBatchFile = 'data/reliabilityForEvery100Batches.txt';
         let batchReliability = [];
+
         if (ns.fileExists(reliabilityForBatchFile)) {
             batchReliability = JSON.parse(ns.read(reliabilityForBatchFile));
         }
-        batchReliability.push({errorRate, averageTimeBetweenVisits, now });
+
+        batchReliability.push({errorRate, averageTimeBetweenVisits, now, moneyWeHaveNow, numberOfTargetedServers: targetNames.length });
+        
+        
         ns.rm(reliabilityForBatchFile);
         ns.write(reliabilityForBatchFile, JSON.stringify(batchReliability), "W");
+        
+        
         failuresThisRun = 0;
         successesThisRun = 0;
-        secondsBetweenVisits = [];
+        secondsBetweenVisits.length = 0;
     }
 
-    if (ns.getServerMoneyAvailable("home") > 1_000_000_000_000 || targetNames.map(x => batchQueueForDifferentTargets.get(x)).every(x => !x.targetMachineSaturatedWithAttacks)) {
+    if (moneyWeHaveNow > 1_000_000_000_000 || targetNames.map(x => batchQueueForDifferentTargets.get(x)).every(x => !x.targetMachineSaturatedWithAttacks)) {
         ns.run('scripts/advanced-dispatch.js');
     }
 }
@@ -110,7 +131,7 @@ class BatchQueueForTarget {
     failuresInTheLastHour = 0;
     lastResetHour = 0
 
-    executionWindowSizeInSeconds = 15;
+    executionWindowSizeInSeconds = 6;
 
     batchesQueue = [];
 
@@ -289,7 +310,7 @@ function createBatchesOfJobs(batchForTarget, ns, targetServer, player) {
 
             let noMoreJobsAfter = new Date(noJobsRunningAfter);
 
-            const defaultStartTime = getWeakenEndDate(ns, targetServer, player);
+            const defaultStartTime = getWeakenEndDate(ns, targetServer, player, batchForTarget.securityWeNeedToReduceAfterFullGrowth);
 
             if (noJobsRunningAfter < 0 || defaultStartTime > noMoreJobsAfter) {
 
@@ -351,15 +372,6 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                     let shouldExecute = false;
 
                     if (job.type.startsWith("weaken")) {
-                        const ifStartedNowWeakenDoneAt = getWeakenEndDate(ns, targetServer, player);
-                        shouldExecute = shouldWeExecute(job, ifStartedNowWeakenDoneAt);
-
-                        if (shouldExecute === false) {
-                            continue;
-                        }
-
-                        script = weakenScript;
-
                         let amountToWeaken = targetServer.hackDifficulty - targetServer.minDifficulty;
 
                         if (job.type === "weaken-after-hack") {
@@ -369,6 +381,16 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         if (job.type === "weaken-after-grow") {
                             amountToWeaken = batchForTarget.securityWeNeedToReduceAfterFullGrowth;
                         }
+
+                        const ifStartedNowWeakenDoneAt = getWeakenEndDate(ns, targetServer, player, amountToWeaken);
+                        shouldExecute = shouldWeExecute(job, ifStartedNowWeakenDoneAt, batchOfJobs, ns);
+
+                        if (shouldExecute === false) {
+                            continue;
+                        }
+
+                        script = weakenScript;
+
 
                         numberOfThreads = getNumberOfThreadsToWeaken(ns, 1, amountToWeaken);
                         ramCost = ramNeededForWeaken * numberOfThreads;
@@ -382,7 +404,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
 
                     if (job.type.startsWith("grow")) {
                         const ifStartedNowGrowDoneAt = getGrowEndDate(ns, targetServer, player);
-                        shouldExecute = shouldWeExecute(job, ifStartedNowGrowDoneAt);
+                        shouldExecute = shouldWeExecute(job, ifStartedNowGrowDoneAt, batchOfJobs, ns);
 
                         if (shouldExecute === false) {
                             continue;
@@ -406,7 +428,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
 
                     if (job.type.startsWith("hack")) {
                         const ifStartedNowHackDoneAt = getHackEndDate(ns, targetServer, player);
-                        shouldExecute = shouldWeExecute(job, ifStartedNowHackDoneAt);
+                        shouldExecute = shouldWeExecute(job, ifStartedNowHackDoneAt, batchOfJobs, ns);
 
                         if (shouldExecute === false) {
                             continue;
@@ -454,9 +476,11 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
     }
 }
 
-function shouldWeExecute(job, ifStartedNowWeWouldBeDoneAt) {
+function shouldWeExecute(job, ifStartedNowWeWouldBeDoneAtString, batchOfJobs, ns) {
+
     const endBeforeDate = new Date(job.endBefore);
     const endAfterDate = new Date(job.endAfter);
+    const ifStartedNowWeWouldBeDoneAt = new Date(ifStartedNowWeWouldBeDoneAtString)
 
     if (!job.firstLookStartedNowEndAt) {
         job.firstLookStartedNowEndAt = ifStartedNowWeWouldBeDoneAt;
@@ -469,6 +493,7 @@ function shouldWeExecute(job, ifStartedNowWeWouldBeDoneAt) {
     if (ifStartedNowWeWouldBeDoneAt > endBeforeDate) {
         if (!job.firstMissForAfterWindow) {
             job.firstMissForAfterWindow = ifStartedNowWeWouldBeDoneAt;
+            batchOfJobs.poisonedBatch = true;
         }
     }
 
@@ -563,7 +588,7 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfT
             if (currentTime > new Date(batchForTarget.weakeningDoneAfter) || !batchForTarget.weakeningDoneAfter) {
                 if (amountToWeaken !== 0) {
                     let endDate = new Date();
-                    endDate = getWeakenEndDate(ns, targetServer, player);
+                    endDate = getWeakenEndDate(ns, targetServer, player, targetServer.hackDifficulty - targetServer.minDifficulty);
                     addSecondsToDate(endDate, 10);
 
                     const job = new JobHasTo(new Date(), endDate, "weaken-dynamic");
@@ -699,6 +724,8 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                         ns.kill(x.pid);
                     }
                 });
+
+                ns.tprint("poisoned");
             }
 
             if (remove) {
@@ -717,15 +744,19 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
 
     let addNewServerToAttack = false;
 
-    if (batchesAreSaturated && !weNeedToBuyServers) {
+    if (!weNeedToBuyServers && batchQueue.size < 10) {
         addNewServerToAttack = true;
     }
 
-    if (over5TrillionDollars) {
+    if (batchQueue.size < 15 && batchesAreSaturated && !weNeedToBuyServers){
         addNewServerToAttack = true;
     }
 
-    if ((batchQueue.size < 2 || addNewServerToAttack) && batchQueue.size < 30) {
+    if (over5TrillionDollars && batchesAreSaturated) {
+        addNewServerToAttack = true;
+    }
+
+    if (batchQueue.size < 2 || addNewServerToAttack) {
         const helpers = new Helpers(ns);
         const portsWeCanPop = helpers.numberOfPortsWeCanPop();
         const currentHackingLevel = ns.getHackingLevel();
@@ -790,8 +821,10 @@ function addMillisecondsToDate(date, msToAdd) {
     date.setMilliseconds(date.getMilliseconds() + msToAdd);
 }
 
-function getWeakenEndDate(ns, targetServer, player) {
+function getWeakenEndDate(ns, targetServer, player, difficultyToWeaken) {
     let endDate = new Date();
+    targetServer.hackDifficulty = targetServer.minDifficulty + difficultyToWeaken;
+
     const howLongToWeaken = ns.formulas.hacking.weakenTime(targetServer, player);
 
     endDate.setMilliseconds(endDate.getMilliseconds() + howLongToWeaken);
@@ -800,6 +833,9 @@ function getWeakenEndDate(ns, targetServer, player) {
 
 function getGrowEndDate(ns, targetServer, player) {
     let endDate = new Date();
+    targetServer.moneyAvailable = 0;
+    targetServer.hackDifficulty = targetServer.minDifficulty;
+
     const howLongToGrow = ns.formulas.hacking.growTime(targetServer, player);
 
     endDate.setMilliseconds(endDate.getMilliseconds() + howLongToGrow);
@@ -808,6 +844,9 @@ function getGrowEndDate(ns, targetServer, player) {
 
 function getHackEndDate(ns, targetServer, player) {
     let endDate = new Date();
+    targetServer.moneyAvailable = targetServer.moneyMax;
+    targetServer.hackDifficulty = targetServer.minDifficulty;
+
     const howLongToHack = ns.formulas.hacking.hackTime(targetServer, player);
 
     endDate.setMilliseconds(endDate.getMilliseconds() + howLongToHack);

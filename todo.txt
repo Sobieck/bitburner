@@ -1,9 +1,4 @@
-Figure out how to make batches more reliable.
-    order jobs by weaken-after-grow, weaken-after-hack, grow, hack
-        only check a job if the one behind it has executed. Otherwise poison the batch. 
-            lessen the number of calls. 
-
-So few jobs?
+Move onto new bitnode
 
 Home Ram reserve auto figure. 
     Coord + singularity Coord + top 2 ram intensive scripts is how much we should reserve on home. 
