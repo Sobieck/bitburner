@@ -76,10 +76,6 @@ class BatchQueueForTarget {
 
     executionWindowSizeInSeconds = 15;
 
-
-    jobOrder = new JobOrder();
-
-
     batchesQueue = [];
 
     lastFailure;
@@ -94,76 +90,6 @@ class BatchQueueForTarget {
     thereAreNoJobsRunningAfter() {
         return Math.max(...this.batchesQueue.map(x => x.wholeBatchFinishsBefore()));
     }
-}
-
-class JobOrder {
-    constructor(obj) {
-        obj && Object.assign(this, obj);
-    }
-
-    weakenAfterGrowStartPlace = [];
-    weakenAfterHackPlace = [];
-    growPlace = [];
-    hackPlace = [];
-
-    addBatchToTable(batch, ns) {
-        batch.jobs.sort((a,b) => new Date(a.executedAt) - new Date(b.executedAt));
-
-        for (let i = 0; i < batch.jobs.length; i++) {
-            const job = batch.jobs[i];
-            this.addToTable(job.type, i);
-        }
-    }
-
-    addToTable(type, place) {
-        if (type === 'weaken-after-grow') {
-            const placeCount = this.weakenAfterGrowStartPlace.find(x => x.place === place);
-            if (placeCount) {
-                placeCount.countOfPlace++;
-            } else {
-                const newPlace = new PlaceCount(place);
-                this.weakenAfterGrowStartPlace.push(newPlace);
-            }
-        }
-
-        if (type === 'weaken-after-hack') {
-            const placeCount = this.weakenAfterHackPlace.find(x => x.place === place);
-            if (placeCount) {
-                placeCount.countOfPlace++;
-            } else {
-                const newPlace = new PlaceCount(place);
-                this.weakenAfterHackPlace.push(newPlace);
-            }
-        }
-
-        if (type === 'grow') {
-            const placeCount = this.growPlace.find(x => x.place === place);
-            if (placeCount) {
-                placeCount.countOfPlace++;
-            } else {
-                const newPlace = new PlaceCount(place);
-                this.growPlace.push(newPlace);
-            }
-        }
-
-        if (type === 'hack') {
-            const placeCount = this.hackPlace.find(x => x.place === place);
-            if (placeCount) {
-                placeCount.countOfPlace++;
-            } else {
-                const newPlace = new PlaceCount(place);
-                this.hackPlace.push(newPlace);
-            }
-        }
-    }
-}
-
-class PlaceCount {
-    constructor(place) {
-        this.place = place;
-    }
-
-    countOfPlace = 1;
 }
 
 class BatchOfJobs {
@@ -688,7 +614,6 @@ function giveBatchQueueStructure(targetNames, batchQueue) {
     for (const target of targetNames) {
         let targetObject = batchQueue.get(target);
         targetObject = new BatchQueueForTarget(targetObject);
-        targetObject.jobOrder = new JobOrder(targetObject.jobOrder);
 
         for (let i = 0; i < targetObject.batchesQueue.length; i++) {
             targetObject.batchesQueue[i] = new BatchOfJobs(targetObject.batchesQueue[i]);
@@ -717,12 +642,6 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                 } else {
                     batches.successes++;
                     batches.successesInTheLastHour++;
-
-                    if(!batches.jobOrder){
-                        batches.jobOrder = new JobOrder();
-                    }
-
-                    batches.jobOrder.addBatchToTable(batch, ns);
                 }
 
                 remove = true;
