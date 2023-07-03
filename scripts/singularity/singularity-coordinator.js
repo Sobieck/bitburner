@@ -13,4 +13,8 @@ export async function main(ns) {
     await ns.sleep(200);
 
     ns.run('scripts/singularity/finish-round.js');
+
+    await ns.sleep(200);
+
+    ns.run('scripts/singularity/finish-bitnode.js');
 }

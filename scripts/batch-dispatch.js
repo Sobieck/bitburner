@@ -752,7 +752,11 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
         addNewServerToAttack = true;
     }
 
-    if (over5TrillionDollars && batchesAreSaturated) {
+    if (over5TrillionDollars && batchQueue.size < 20) {
+        addNewServerToAttack = true;
+    }
+
+    if (over5TrillionDollars && batchesAreSaturated && batchQueue.size < 40) {
         addNewServerToAttack = true;
     }
 
