@@ -10,6 +10,12 @@ export async function main(ns) {
     }
 
     const player = ns.getPlayer();
+    const installedAugmentations = ns.singularity.getOwnedAugmentations(false);
+
+    if(installedAugmentations.includes("The Red Pill")){
+        return;
+    }
+      
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
     const mostRepExpensiveForEachFaction = [];

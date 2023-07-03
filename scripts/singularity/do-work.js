@@ -79,17 +79,6 @@ export async function main(ns) {
                     }                    
                 }
             }
-
-            const workTarget = "ECorp";
-
-            if (player.jobs.ECorp) {
-
-                if (!currentWork || !currentWork.type === "COMPANY") {
-                    await ns.singularity.workForCompany(workTarget, player.jobs.ECorp);
-                }
-
-                await ns.singularity.applyToCompany(workTarget, "software");
-            }
         }
     }
 }

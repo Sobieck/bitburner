@@ -25,4 +25,8 @@ export async function main(ns) {
     await ns.sleep(200);
 
     ns.run('scripts/singularity/create-early-programs.js');
+
+    await ns.sleep(200);
+
+    ns.run('scripts/singularity/do-job.js');
 }
