@@ -66,10 +66,10 @@ export async function main(ns) {
         const timeStamp = `[${String(now.getHours()).padStart(2,0)}:${String(now.getMinutes()).padStart(2,0)}]`
 
         const errorRate = 1 - (successesThisRun / total);
-        ns.tprint(`${timeStamp} Error Rate ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })} Successes: ${successesThisRun} Failures: ${failuresThisRun}`);
+        // ns.tprint(`${timeStamp} Error Rate ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })} Successes: ${successesThisRun} Failures: ${failuresThisRun}`);
         
         const averageTimeBetweenVisits = secondsBetweenVisits.reduce((acc, b) => acc + b, 0) / secondsBetweenVisits.length;
-        ns.tprint(`${timeStamp} Average of ${averageTimeBetweenVisits.toFixed(2)} seconds between visits`)
+        // ns.tprint(`${timeStamp} Average of ${averageTimeBetweenVisits.toFixed(2)} seconds between visits`)
 
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -261,8 +261,9 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDi
 
     for (const nameOfTarget of targetNames) {
         const queueOfBatches = batchQueueForDifferentTargets.get(nameOfTarget);
+        const currentHour = currentTime.getHours()
 
-        if (currentTime.getHours() !== queueOfBatches.lastResetHour) {
+        if (currentHour !== queueOfBatches.lastResetHour) {
             if (queueOfBatches.failuresInTheLastHour === 0 && queueOfBatches.successesInTheLastHour > 0 && queueOfBatches.executionWindowSizeInSeconds > 3) {
                 queueOfBatches.executionWindowSizeInSeconds--;
             }
@@ -275,7 +276,7 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDi
             }
 
 
-            queueOfBatches.lastResetHour = currentTime.getHours();
+            queueOfBatches.lastResetHour = currentHour;
             queueOfBatches.successesInTheLastHour = 0;
             queueOfBatches.failuresInTheLastHour = 0;
 
@@ -578,7 +579,6 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfT
     if (amountToWeaken === 0 && serverHasMaxMoney && batchForTarget.securityWeNeedToReduceAfterFullHack && batchForTarget.securityWeNeedToReduceAfterFullGrowth && batchForTarget.prepStage && batchForTarget.originalNumberOfThreadsForFullMoney) {
         batchForTarget.prepStage = false;
         batchForTarget.targetMachineSaturatedWithAttacks = false;
-        batchForTarget.executionWindowSizeInSeconds = 15;
     }
 
     if (batchForTarget.prepStage) {

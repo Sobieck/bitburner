@@ -7,12 +7,11 @@ export async function main(ns) {
 
     let factionToMax;
 
-    if(ns.fileExists(factionToMaxFile)){
+    if (ns.fileExists(factionToMaxFile)) {
         factionToMax = ns.read(factionToMaxFile);
     }
 
     const organizations = JSON.parse(ns.read(organizationTextFileName));
-
 
     let workingOnGettingAugmentsOrPrograms = false;
 
@@ -26,7 +25,9 @@ export async function main(ns) {
             .filter(x => !ownedAugmentations.includes(x))
             .map(x => ns.singularity.getAugmentationRepReq(x)));
 
-        if (maximumAugRep > 0) {
+        const favor = ns.singularity.getFactionFavor(faction);
+
+        if (maximumAugRep > 0 && favor < 150) {
             mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
         }
     }
@@ -35,7 +36,7 @@ export async function main(ns) {
         .filter(x => x.maximumAugRep > 0 && !organizations.lowPriority.includes(x.faction))
         .sort((a, b) => a.maximumAugRep - b.maximumAugRep);
 
-    if(sortedFactions.length > 0 && !factionToMax){
+    if (sortedFactions.length > 0 && !factionToMax) {
         factionToMax = sortedFactions[0].faction;
         ns.write(factionToMaxFile, factionToMax, "W");
     }
@@ -74,9 +75,9 @@ export async function main(ns) {
                         await ns.singularity.workForFaction(cityThatProvidesThatAugment, "hacking", true);
                     }
                 } else {
-                    if(currentWork && currentWork.factionName === cityThatProvidesThatAugment){
+                    if (currentWork && currentWork.factionName === cityThatProvidesThatAugment) {
                         ns.singularity.stopAction();
-                    }                    
+                    }
                 }
             }
         }

@@ -1,19 +1,35 @@
 export async function main(ns) {
+    const companiesWeWantToBecomePartOf = ["Blade Industries", "ECorp"];
 
-    const player = ns.getPlayer();
+    for (const companyName of companiesWeWantToBecomePartOf) {
+        ns.singularity.applyToCompany(companyName, "software");
+    }
+
     const currentWork = ns.singularity.getCurrentWork();
 
+    if (!currentWork || (currentWork && currentWork.type !== "FACTION" || currentWork.type !== "CREATE_PROGRAM")) {
 
-    if (!currentWork || currentWork.type !== "FACTION" || currentWork.type !== "CREATE_PROGRAM") {
+        const player = ns.getPlayer();
 
-        const workTarget = "ECorp";
+        const companiesWorkingForWithoutBeinginFaction = Object.keys(player.jobs)
+            .filter(x => !player.factions.includes(x));
 
-        ns.singularity.applyToCompany(workTarget, "software");
+        for (const company of companiesWorkingForWithoutBeinginFaction) {
+            const positionInCompany = player.jobs[company];
+            const currentPositionInfo = ns.singularity.getCompanyPositionInfo(company, positionInCompany);
+            const nextPositionInfo = ns.singularity.getCompanyPositionInfo(company, currentPositionInfo.nextPosition);
+            const companyRep = ns.singularity.getCompanyRep(company);
 
-        if (player.jobs.ECorp) {
-
-            if (!currentWork || !currentWork.type === "COMPANY") {
-                await ns.singularity.workForCompany(workTarget, player.jobs.ECorp);
+            if (nextPositionInfo.requiredReputation < companyRep && nextPositionInfo.requiredSkills.charisma > player.skills.charisma) {
+                if (!currentWork || currentWork.type !== "CLASS") {
+                    ns.singularity.universityCourse("Rothman University", "Leadership", true);
+                    break;
+                }
+            } else {
+                if(!currentWork || currentWork.type !== "COMPANY"){
+                    ns.singularity.workForCompany(company, true);
+                }
+                break;
             }
         }
     }

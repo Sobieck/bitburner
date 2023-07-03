@@ -4,21 +4,21 @@
         "max": 10
     },
     "skills": {
-        "hacking": 5228,
+        "hacking": 5282,
         "strength": 5,
         "defense": 6,
         "dexterity": 3,
         "agility": 3,
-        "charisma": 2,
+        "charisma": 114,
         "intelligence": 0
     },
     "exp": {
-        "hacking": 5537087450.122801,
+        "hacking": 6549435308.49506,
         "strength": 0,
         "defense": 0,
         "dexterity": 0,
         "agility": 0,
-        "charisma": 0,
+        "charisma": 1243.5835809294529,
         "intelligence": 0
     },
     "mults": {
@@ -55,10 +55,12 @@
     },
     "city": "Sector-12",
     "numPeopleKilled": 0,
-    "money": 121656797023139.72,
-    "location": "Alpha Enterprises",
-    "totalPlaytime": 1862713800,
-    "jobs": {},
+    "money": 143689862115845.47,
+    "location": "ECorp",
+    "totalPlaytime": 1864245200,
+    "jobs": {
+        "ECorp": "Junior Software Engineer"
+    },
     "factions": [
         "Daedalus",
         "BitRunners",
@@ -68,7 +70,7 @@
         "CyberSec"
     ],
     "entropy": 0,
-    "playtimeSinceLastAug": 10337400,
-    "playtimeSinceLastBitnode": 317655600,
+    "playtimeSinceLastAug": 11868800,
+    "playtimeSinceLastBitnode": 319187000,
     "bitNodeN": 4
 }

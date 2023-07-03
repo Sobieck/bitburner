@@ -3,8 +3,8 @@ export async function main(ns) {
     const organizationTextFileName = "data/organizations.txt";
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
-    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand", "Netburners"];
-    const lowPriority = ["Chongqing", "Tian Di Hui", "Sector-12", "Netburners"];
+    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand", "Netburners", "Illuminati", "The Covenant", "Blade Industries"]; //?? Bachman instead of Ecorp? 
+    const lowPriority = ["Chongqing", "Tian Di Hui", "Netburners"];
 
     const factionInvitations = ns.singularity.checkFactionInvitations();
     const moneyAvailable = ns.getServerMoneyAvailable("home");
@@ -19,6 +19,10 @@ export async function main(ns) {
     } else if (!ownedAugmentations.includes("CashRoot Starter Kit")) {
         toJoin.push("Sector-12");
         lowPriority.push("Sector-12");
+    } else if (moneyAvailable > 1_000_000_000 && ns.singularity.getFactionRep("Tian Di Hui") === 0) {
+        if (ns.singularity.getFactionRep("Chongqing") === 0) {
+            ns.singularity.travelToCity("Chongqing");
+        }
     }
 
     const organzations = { toJoin, lowPriority };
