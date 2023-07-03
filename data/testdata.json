@@ -1,56 +1,106 @@
 [
     {
-        "executing": true,
-        "ramCost": 452.2,
-        "firstLookStartedNowEndAt": "2023-07-02T19:42:34.759Z",
-        "lastMissForDoneBeforeWindow": "2023-07-02T19:44:52.305Z",
-        "endAfter": "2023-07-02T19:44:54.090Z",
-        "endBefore": "2023-07-02T19:45:07.090Z",
-        "type": "hack",
-        "expectedEndTime": "2023-07-02T19:45:04.353Z",
-        "machineRunningOn": "home",
-        "pid": 129558,
-        "executedAt": "2023-07-02T19:44:29.807Z"
+        "ram": 1.7,
+        "name": "scripts/advanced-hacks/hack-until-worked.js"
     },
     {
-        "executing": true,
-        "ramCost": 5827.5,
-        "firstLookStartedNowEndAt": "2023-07-02T19:43:50.844Z",
-        "lastMissForDoneBeforeWindow": "2023-07-02T19:45:19.949Z",
-        "endAfter": "2023-07-02T19:45:20.092Z",
-        "endBefore": "2023-07-02T19:45:33.092Z",
-        "type": "grow",
-        "firstMissForAfterWindow": "2023-07-02T19:45:35.877Z",
-        "expectedEndTime": "2023-07-02T19:45:21.972Z",
-        "machineRunningOn": "home",
-        "pid": 129231,
-        "executedAt": "2023-07-02T19:44:03.490Z"
+        "ram": 1.7,
+        "name": "scripts/advanced-hacks/hack.js"
     },
     {
-        "executing": true,
-        "ramCost": 491.75,
-        "firstLookStartedNowEndAt": "2023-07-02T19:44:18.511Z",
-        "lastMissForDoneBeforeWindow": "2023-07-02T19:45:31.497Z",
-        "endAfter": "2023-07-02T19:45:33.093Z",
-        "endBefore": "2023-07-02T19:45:46.093Z",
-        "type": "weaken-after-grow",
-        "firstMissForAfterWindow": "2023-07-02T19:46:03.522Z",
-        "expectedEndTime": "2023-07-02T19:45:33.521Z",
-        "machineRunningOn": "home",
-        "pid": 129130,
-        "executedAt": "2023-07-02T19:43:55.418Z"
+        "ram": 1.75,
+        "name": "scripts/advanced-hacks/grow.js"
     },
     {
-        "executing": true,
-        "ramCost": 36.75,
-        "firstLookStartedNowEndAt": "2023-07-02T19:44:18.511Z",
-        "lastMissForDoneBeforeWindow": "2023-07-02T19:44:28.847Z",
-        "endAfter": "2023-07-02T19:45:07.091Z",
-        "endBefore": "2023-07-02T19:45:20.091Z",
-        "type": "weaken-after-hack",
-        "expectedEndTime": "2023-07-02T19:45:11.020Z",
-        "machineRunningOn": "home",
-        "pid": 128345,
-        "executedAt": "2023-07-02T19:42:52.721Z"
+        "ram": 1.75,
+        "name": "scripts/advanced-hacks/weaken.js"
+    },
+    {
+        "ram": 1.9,
+        "name": "scripts/script-ram-usage-finder.js"
+    },
+    {
+        "ram": 1.9,
+        "name": "scripts/test.js"
+    },
+    {
+        "ram": 2.2,
+        "name": "scripts/investments/upgrade-small-servers.js"
+    },
+    {
+        "ram": 2.6,
+        "name": "scripts/singularity/singularity-coordinator.js"
+    },
+    {
+        "ram": 2.85,
+        "name": "scripts/coordinator.js"
+    },
+    {
+        "ram": 3.1,
+        "name": "scripts/clean.js"
+    },
+    {
+        "ram": 3.6,
+        "name": "scripts/connect-to.js"
+    },
+    {
+        "ram": 4.6,
+        "name": "scripts/singularity/study-computer-science.js"
+    },
+    {
+        "ram": 5.7,
+        "name": "scripts/investments/invest-in-nodes.js"
+    },
+    {
+        "ram": 5.8,
+        "name": "scripts/scan.js"
+    },
+    {
+        "ram": 7.2,
+        "name": "scripts/singularity/create-early-programs.js"
+    },
+    {
+        "ram": 7.7,
+        "name": "scripts/singularity/game-automation.js"
+    },
+    {
+        "ram": 7.95,
+        "name": "scripts/investments/purchase-server.js"
+    },
+    {
+        "ram": 10.85,
+        "name": "scripts/advanced-dispatch.js"
+    },
+    {
+        "ram": 13.85,
+        "name": "scripts/batch-dispatch.js"
+    },
+    {
+        "ram": 19.1,
+        "name": "scripts/singularity/investments.js"
+    },
+    {
+        "ram": 20.7,
+        "name": "scripts/singularity/join-organziations.js"
+    },
+    {
+        "ram": 24.8,
+        "name": "scripts/investments/invest-in-stocks.js"
+    },
+    {
+        "ram": 26.2,
+        "name": "scripts/singularity/do-work.js"
+    },
+    {
+        "ram": 29.8,
+        "name": "scripts/contracts/coding-contracts.js"
+    },
+    {
+        "ram": 38.6,
+        "name": "scripts/singularity/finish-bitnode.js"
+    },
+    {
+        "ram": 42.3,
+        "name": "scripts/singularity/finish-round.js"
     }
 ]

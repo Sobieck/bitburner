@@ -17,4 +17,12 @@ export async function main(ns) {
     await ns.sleep(200);
 
     ns.run('scripts/singularity/finish-bitnode.js');
+
+    await ns.sleep(200);
+
+    ns.run('scripts/singularity/study-computer-science.js');
+
+    await ns.sleep(200);
+
+    ns.run('scripts/singularity/create-early-programs.js');
 }

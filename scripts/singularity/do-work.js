@@ -13,29 +13,8 @@ export async function main(ns) {
 
     const organizations = JSON.parse(ns.read(organizationTextFileName));
 
+
     let workingOnGettingAugmentsOrPrograms = false;
-
-    if (!currentWork || currentWork.type !== "CREATE_PROGRAM") {
-        if (!ns.fileExists("BruteSSH.exe")) {
-            const worked = ns.singularity.createProgram("BruteSSH.exe", true);
-            if (worked) {
-                workingOnGettingAugmentsOrPrograms = true;
-            }
-
-        }
-
-        if (!ns.fileExists("FTPCrack.exe")) {
-            const worked = ns.singularity.createProgram("FTPCrack.exe", true);
-            if (worked) {
-                workingOnGettingAugmentsOrPrograms = true;
-            }
-        }
-    }
-
-    if (!player.factions) {
-        ns.singularity.universityCourse("Rothman University", "Computer Science", true);
-        return;
-    }
 
     const mostRepExpensiveForEachFaction = [];
 
