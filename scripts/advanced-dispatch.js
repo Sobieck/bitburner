@@ -1,6 +1,5 @@
 export async function main(ns) {
 
-    const helpers = new Helpers(ns);
     const nameOfrecordOfWhoIsBeingHacked = 'data/recordOfWhoIsBeingHacked.txt';
     const batchQueuesFileName = "data/batchQueue.txt";
 
@@ -16,9 +15,6 @@ export async function main(ns) {
     const homeMemoryLimitations = JSON.parse(ns.read("data/ramToReserveOnHome.txt"));
 
     let batchTargets = [];
-
-    const portsWeCanPop = helpers.numberOfPortsWeCanPop();
-    const currentHackingLevel = ns.getHackingLevel();
 
     let recordOfWhoIsBeingHacked = new Map();
 
@@ -40,11 +36,10 @@ export async function main(ns) {
 
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
 
-    const allHackableMachines = enviroment
-        .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
-        .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
+    const allHackedMachines = enviroment
+        .filter(x => x.server.hasAdminRights);
 
-    let allMachinesByOrderOfValue = allHackableMachines
+    let allMachinesByOrderOfValue = allHackedMachines
         .filter(x => !x.server.purchasedByPlayer && !batchTargets.includes(x.name) && x.server.moneyMax > 0)
         .sort((a, b) => b.server.moneyMax - a.server.moneyMax)
         .map(x => new HackedRecord(
@@ -56,7 +51,7 @@ export async function main(ns) {
         ))
 
     if(memoryLimited){
-        allMachinesByOrderOfValue = allHackableMachines.slice(0, 15);
+        allMachinesByOrderOfValue = allMachinesByOrderOfValue.slice(0, 15);
     }
 
     cleanProcessesAttackingBatchTarget(ns, recordOfWhoIsBeingHacked, batchTargets);
@@ -210,13 +205,8 @@ function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread
 function getMachineWithEnoughRam(ns, ramNeeded, enviroment, homeMemoryLimitations) {
     let machineToRunOn;
 
-    const helpers = new Helpers(ns);
-    const portsWeCanPop = helpers.numberOfPortsWeCanPop();
-    const currentHackingLevel = ns.getHackingLevel();
-
     const allHackableMachines = enviroment
-        .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
-        .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
+        .filter(x => x.server.hasAdminRights);
 
     const homeServer = getServer(ns, "home", homeMemoryLimitations);
 
@@ -325,41 +315,6 @@ export class HackedRecord {
         this.isWeakening = false;
         this.isGrowing = false;
         this.isHacking = true;
-    }
-}
-
-export class Helpers {
-    constructor(ns) {
-        this.ns = ns;
-    }
-
-    numberOfPortsWeCanPop() {
-        let portsWeCanPop = 0;
-        if (this.fileExists("BruteSSH.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("FTPCrack.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("relaySMTP.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("HTTPWorm.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("SQLInject.exe")) {
-            portsWeCanPop++;
-        }
-
-        return portsWeCanPop;
-    }
-
-    fileExists(fileName) {
-        return this.ns.fileExists(fileName, "home");
     }
 }
 

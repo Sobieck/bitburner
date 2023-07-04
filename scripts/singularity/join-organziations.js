@@ -1,25 +1,26 @@
 export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
     const organizationTextFileName = "data/organizations.txt";
-    const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
-    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand", "Netburners", "Illuminati", "The Covenant", "Blade Industries"]; //?? Bachman instead of Ecorp? 
-    const lowPriority = ["Chongqing", "Tian Di Hui", "Netburners"];
+
+    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand", "Netburners", "Illuminati", "The Covenant", "Blade Industries", "OmniTek Incorporated", "NWO", "Aevum", "Volhaven", "New Tokyo", "Ishima"];
+    const lowPriority = ["Chongqing", "Tian Di Hui", "Netburners", "Aevum", "Volhaven", "New Tokyo", "Ishima"];
 
     const factionInvitations = ns.singularity.checkFactionInvitations();
     const moneyAvailable = ns.getServerMoneyAvailable("home");
+    const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
-
-    if (!ownedAugmentations.includes('Neuregen Gene Modification')) {
-        if (moneyAvailable > 1_000_000_000) {
-            if (ns.singularity.getFactionRep("Chongqing") === 0) {
-                ns.singularity.travelToCity("Chongqing");
-            }
-        }
-    } else if (!ownedAugmentations.includes("CashRoot Starter Kit")) {
+    if (travelToGetUniqueAugments(ns, "Neuregen Gene Modification", "Chongqing")) { } 
+    else if (travelToGetUniqueAugments(ns, 'PCMatrix', "Aevum")) { }
+    else if (!ownedAugmentations.includes("CashRoot Starter Kit")) {
         toJoin.push("Sector-12");
         lowPriority.push("Sector-12");
-    } else if (moneyAvailable > 1_000_000_000 && ns.singularity.getFactionRep("Tian Di Hui") === 0) {
+    } 
+    else if (travelToGetUniqueAugments(ns, "DermaForce Particle Barrier", "Volhaven")) { }
+    else if (travelToGetUniqueAugments(ns, "NutriGen Implant", "New Tokyo")) { }
+    else if (travelToGetUniqueAugments(ns, "INFRARET Enhancement", "Ishima")) { }
+    
+    if (moneyAvailable > 10_000_000_000 && ns.singularity.getFactionRep("Tian Di Hui") === 0) {
         if (ns.singularity.getFactionRep("Chongqing") === 0) {
             ns.singularity.travelToCity("Chongqing");
         }
@@ -53,6 +54,21 @@ export async function main(ns) {
             await ns.singularity.joinFaction(orgServerName);
         }
     }
+}
 
+
+function travelToGetUniqueAugments(ns, augmentWanted, city) {
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+
+    const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
+    if (!ownedAugmentations.includes(augmentWanted)) {
+        if (moneyAvailable > 1_000_000_000) {
+            if (ns.singularity.getFactionRep(city) === 0) {
+                ns.singularity.travelToCity(city);
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

@@ -3,10 +3,11 @@ let successesThisRun = 0;
 
 let lastTimeVisited = new Date();
 let secondsBetweenVisits = [];
+let lastRecordedToConsole = new Date();
 
 export async function main(ns) {
 
-    
+
     const batchQueuesFileName = "data/batchQueue.txt"
 
     let batchQueueForDifferentTargets = new Map();
@@ -55,23 +56,29 @@ export async function main(ns) {
 
     const total = failuresThisRun + successesThisRun;
     const now = new Date();
-    const secondsSinceLastVisit = Math.abs(now.getTime() - lastTimeVisited.getTime())/1000;
+    const secondsSinceLastVisit = Math.abs(now.getTime() - lastTimeVisited.getTime()) / 1000;
     lastTimeVisited = now;
-    if(secondsSinceLastVisit !== 0){
+    if (secondsSinceLastVisit !== 0) {
         secondsBetweenVisits.push(secondsSinceLastVisit);
     }
 
 
     const moneyWeHaveNow = ns.getServerMoneyAvailable("home");
-    
-    if (total >= 100) {
-        const timeStamp = `[${String(now.getHours()).padStart(2,0)}:${String(now.getMinutes()).padStart(2,0)}]`
+
+    if (now.getMinutes() !== lastRecordedToConsole.getMinutes() && total > 0) {
+        const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
 
         const errorRate = 1 - (successesThisRun / total);
-        // ns.tprint(`${timeStamp} Error Rate ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })} Successes: ${successesThisRun} Failures: ${failuresThisRun}`);
-        
+
+        if (errorRate > 0.03) {
+            ns.toast(`${timeStamp} Error Rate in batches ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })}`, "error", null);
+        }
+
         const averageTimeBetweenVisits = secondsBetweenVisits.reduce((acc, b) => acc + b, 0) / secondsBetweenVisits.length;
-        // ns.tprint(`${timeStamp} Average of ${averageTimeBetweenVisits.toFixed(2)} seconds between visits`)
+
+        if (averageTimeBetweenVisits > 2.1) {
+            ns.toast(`${timeStamp} Average of ${averageTimeBetweenVisits.toFixed(2)} seconds between visits`, "warning", null)
+        }
 
         const formatter = new Intl.NumberFormat('en-US', {
             style: 'currency',
@@ -80,9 +87,7 @@ export async function main(ns) {
 
         const moneyFormatted = formatter.format(moneyWeHaveNow);
 
-        ns.tprint(`${timeStamp} Money we have now: ${moneyFormatted}`)
-
-        ns.tprint(`${timeStamp} Number of targeted server: ${targetNames.length}`)
+        ns.tprint(`${timeStamp} Money we have now: ${moneyFormatted} | Number of targeted server: ${targetNames.length}`)
 
         const reliabilityForBatchFile = 'data/reliabilityForEvery100Batches.txt';
         let batchReliability = [];
@@ -91,16 +96,17 @@ export async function main(ns) {
             batchReliability = JSON.parse(ns.read(reliabilityForBatchFile));
         }
 
-        batchReliability.push({errorRate, averageTimeBetweenVisits, now, moneyWeHaveNow, numberOfTargetedServers: targetNames.length });
-        
-        
+        batchReliability.push({ errorRate, averageTimeBetweenVisits, now, moneyWeHaveNow, numberOfTargetedServers: targetNames.length });
+
+
         ns.rm(reliabilityForBatchFile);
         ns.write(reliabilityForBatchFile, JSON.stringify(batchReliability), "W");
-        
-        
+
+
         failuresThisRun = 0;
         successesThisRun = 0;
         secondsBetweenVisits.length = 0;
+        lastRecordedToConsole = now;
     }
 
     if (moneyWeHaveNow > 1_000_000_000_000 || targetNames.map(x => batchQueueForDifferentTargets.get(x)).every(x => !x.targetMachineSaturatedWithAttacks)) {
@@ -133,7 +139,7 @@ class BatchQueueForTarget {
     failuresInTheLastHour = 0;
     lastResetHour = 0
 
-    executionWindowSizeInSeconds = 6;
+    executionWindowSizeInSeconds = 4;
 
     batchesQueue = [];
 
@@ -189,43 +195,6 @@ class JobHasTo {
     }
 }
 
-export class Helpers {
-    constructor(ns) {
-        this.ns = ns;
-    }
-
-    numberOfPortsWeCanPop() {
-        let portsWeCanPop = 0;
-        if (this.fileExists("BruteSSH.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("FTPCrack.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("relaySMTP.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("HTTPWorm.exe")) {
-            portsWeCanPop++;
-        }
-
-        if (this.fileExists("SQLInject.exe")) {
-            portsWeCanPop++;
-        }
-
-        return portsWeCanPop;
-    }
-
-    fileExists(fileName) {
-        return this.ns.fileExists(fileName, "home");
-    }
-}
-
-
-
 function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDifferentTargets, targetNames) {
     const currentTime = new Date();
     let countOfDeleted = 0;
@@ -235,7 +204,7 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDi
         const currentHour = currentTime.getHours()
 
         if (currentHour !== queueOfBatches.lastResetHour) {
-            if (queueOfBatches.failuresInTheLastHour === 0 && queueOfBatches.successesInTheLastHour > 0 && queueOfBatches.executionWindowSizeInSeconds > 3) {
+            if (queueOfBatches.failuresInTheLastHour === 0 && queueOfBatches.successesInTheLastHour > 0 && queueOfBatches.executionWindowSizeInSeconds > 2) {
                 queueOfBatches.executionWindowSizeInSeconds--;
             }
 
@@ -480,19 +449,14 @@ function shouldWeExecute(job, ifStartedNowWeWouldBeDoneAtString, batchOfJobs, ns
 function getMachineWithEnoughRam(ns, ramNeeded, enviroment, homeMemoryLimitations) {
     let machineToRunOn;
 
-    const helpers = new Helpers(ns);
-    const portsWeCanPop = helpers.numberOfPortsWeCanPop();
-    const currentHackingLevel = ns.getHackingLevel();
-
-    const allHackableMachines = enviroment
-        .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
-        .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
+    const allHackedMachines = enviroment
+        .filter(x => x.server.hasAdminRights);
 
     const homeServer = getServer(ns, "home", homeMemoryLimitations);
 
-    allHackableMachines.push({ name: "home", server: homeServer })
+    allHackedMachines.push({ name: "home", server: homeServer })
 
-    const machinesWithRamAvailable = allHackableMachines
+    const machinesWithRamAvailable = allHackedMachines
         .filter(x => x.server.ramUsed < x.server.maxRam && x.server.maxRam !== 0);
 
     const serversWithEnoughRam = machinesWithRamAvailable
@@ -533,7 +497,7 @@ function getServer(ns, serverName, homeMemoryLimitations) {
 
         let ramToReserve = homeMemoryLimitations.ramToReserve;
 
-        if(server.maxRam < ramToReserve){
+        if (server.maxRam < ramToReserve) {
             ramToReserve = homeMemoryLimitations.ramToReserveInLimitedEnvironment;
         }
 
@@ -703,7 +667,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                     }
                 });
 
-                ns.tprint("poisoned");
+                // ns.toast("poisoned", "error", 5000);
             }
 
             if (remove) {
@@ -726,7 +690,7 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
         addNewServerToAttack = true;
     }
 
-    if (batchQueue.size < 15 && batchesAreSaturated && !weNeedToBuyServers){
+    if (batchQueue.size < 15 && batchesAreSaturated && !weNeedToBuyServers) {
         addNewServerToAttack = true;
     }
 
@@ -734,20 +698,16 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
         addNewServerToAttack = true;
     }
 
-    if (over5TrillionDollars && batchesAreSaturated && batchQueue.size < 40) {
+    if (over5TrillionDollars && batchesAreSaturated && batchQueue.size < 50) {
         addNewServerToAttack = true;
     }
 
     if (batchQueue.size < 2 || addNewServerToAttack) {
-        const helpers = new Helpers(ns);
-        const portsWeCanPop = helpers.numberOfPortsWeCanPop();
-        const currentHackingLevel = ns.getHackingLevel();
 
-        const allHackableMachines = enviroment
-            .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
-            .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
+        const allHackedMachines = enviroment
+            .filter(x => x.server.hasAdminRights);
 
-        const allMachinesByOrderOfValue = allHackableMachines
+        const allMachinesByOrderOfValue = allHackedMachines
             .filter(x => !x.server.purchasedByPlayer && x.server.moneyMax !== 0 && !targetNames.includes(x.name))
             .sort((a, b) => b.server.moneyMax - a.server.moneyMax);
 

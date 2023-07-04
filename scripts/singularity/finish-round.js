@@ -36,24 +36,9 @@ export async function main(ns) {
         .filter(x => x.faction === factionToMax)
         .pop();
 
-    if (!ownedAugmentations.includes("Artificial Bio-neural Network Implant") && factionToMax === "BitRunners") {
-        targetFaction.maximumAugRep = 276_000;
-    }
-
-    if (!ownedAugmentations.includes("Embedded Netburner Module Direct Memory Access Upgrade") && factionToMax === "Daedalus") {
-        targetFaction.maximumAugRep = 1_000_000;
-    }
-
-    if (ownedAugmentations.includes("Embedded Netburner Module Direct Memory Access Upgrade") && !ownedAugmentations.includes("Embedded Netburner Module Core V3 Upgrade") && factionToMax === "Daedalus") {
-        targetFaction.maximumAugRep = 1_750_000;
-    }
-
-    if (ownedAugmentations.includes("Graphene Bionic Legs Upgrade") && factionToMax === "ECorp") {
-        targetFaction.maximumAugRep = 750_000;
-    }
+    setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns, "Artificial Bio-neural Network Implant", "BitRunners");
 
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction)
-
     const targetRep = ns.formulas.reputation.calculateFavorToRep(150)
 
 
@@ -101,62 +86,67 @@ export async function main(ns) {
             return;
         }
 
+
         const buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
 
         const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-        if (moneyAvailable < buyAugmentsWhenWeHaveMoreThanThisMuchMoney) {
-            return;
-        }
-
-        const stopStockTradingFileName = "stopTrading.txt";
-        if (!ns.fileExists(stopStockTradingFileName)) {
-            ns.write(stopStockTradingFileName, "", "W")
-            return;
-        }
+        if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > 1_000_000_000_000_000) {
+            const stopStockTradingFileName = "stopTrading.txt";
+            if (!ns.fileExists(stopStockTradingFileName)) {
+                ns.write(stopStockTradingFileName, "", "W")
+                return;
+            }
 
 
+            const purchasableAugments = new Map();
 
-        const purchasableAugments = new Map();
-
-        for (const factionWithAugments of factionsWithAugmentsToBuy) {
-            for (const augment of factionWithAugments.factionAugmentsThatIDontOwnAndCanAfford) {
-                if (purchasableAugments.has(augment.augmentName) === false) {
-                    const item = {
-                        augmentationRepCost: augment.augmentationRepCost,
-                        price: augment.price,
-                        prereqs: augment.prereqs,
-                        faction: factionWithAugments.faction
+            for (const factionWithAugments of factionsWithAugmentsToBuy) {
+                for (const augment of factionWithAugments.factionAugmentsThatIDontOwnAndCanAfford) {
+                    if (purchasableAugments.has(augment.augmentName) === false) {
+                        const item = {
+                            augmentationRepCost: augment.augmentationRepCost,
+                            price: augment.price,
+                            prereqs: augment.prereqs,
+                            faction: factionWithAugments.faction
+                        }
+                        purchasableAugments.set(augment.augmentName, item)
                     }
-                    purchasableAugments.set(augment.augmentName, item)
                 }
             }
+
+            const targetFactionsAugments = factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction);
+
+            for (const augmentData of targetFactionsAugments.factionAugmentsThatIDontOwnAndCanAfford) {
+                purchaseAug(ns, targetFactionsAugments.faction, augmentData.augmentName, augmentData.prereqs, purchasableAugments);
+            }
+
+            const augmentsLeft = Array.from(purchasableAugments.entries());
+
+            for (const augmentData of augmentsLeft) {
+                const augment = augmentData[0];
+                const data = augmentData[1];
+
+                purchaseAug(ns, data.faction, augment, data.prereqs, purchasableAugments);
+            }
+
+            upgradeHomeMachine(ns);
+
+            const factionsByRating = factionsWithAugmentsToBuy.sort((a, b) => b.factionRep - a.factionRep);
+
+            purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction);
+
+            ns.singularity.installAugmentations('scripts/coordinator.js')
         }
-
-        const targetFactionsAugments = factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction);
-
-        for (const augmentData of targetFactionsAugments.factionAugmentsThatIDontOwnAndCanAfford) {
-            purchaseAug(ns, targetFactionsAugments.faction, augmentData.augmentName, augmentData.prereqs, purchasableAugments);
-        }
-
-        const augmentsLeft = Array.from(purchasableAugments.entries());
-
-        for (const augmentData of augmentsLeft) {
-            const augment = augmentData[0];
-            const data = augmentData[1];
-
-            purchaseAug(ns, data.faction, augment, data.prereqs, purchasableAugments);
-        }
-
-        upgradeHomeMachine(ns);
-
-        const factionsByRating = factionsWithAugmentsToBuy.sort((a, b) => b.factionRep - a.factionRep);
-
-        purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction);
-
-        ns.singularity.installAugmentations('scripts/coordinator.js')
     }
 }
+
+function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns, goalAugment, goalFaction) {
+    if (!ownedAugmentations.includes(goalAugment) && factionToMax === goalFaction) {
+        targetFaction.maximumAugRep = ns.singularity.getAugmentationRepReq(goalAugment);
+    }
+}
+
 function purchaseNeuroFluxGovernors(ns, faction) {
     const augmentName = "NeuroFlux Governor"
     const price = ns.singularity.getAugmentationPrice(augmentName);

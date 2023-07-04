@@ -26,9 +26,13 @@ export async function main(ns) {
             dispatchScript = 'scripts/batch-dispatch.js'
         }
 
+        
         ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
 
+
+        ns.run('scripts/hack-all-machines.js');
+        await ns.sleep(individualSleepAmount);
 
 
         const moneyAvailable = ns.getServerMoneyAvailable("home");
@@ -40,9 +44,6 @@ export async function main(ns) {
         }
         await ns.sleep(individualSleepAmount);
 
-
-        ns.run('scripts/hack-all-machines.js');
-        await ns.sleep(individualSleepAmount);
 
 
         ns.run('scripts/contracts/coding-contracts.js');
@@ -58,7 +59,7 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-        
+
         await singularityStuff(ns);
     }
 
