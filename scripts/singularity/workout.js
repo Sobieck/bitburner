@@ -17,7 +17,7 @@ export async function main(ns) {
     }
 
     const currentWork = ns.singularity.getCurrentWork();
-    if(currentWork.type === "CLASS"){
+    if(currentWork && currentWork.type === "CLASS"){
         ns.singularity.stopAction();
     }
 

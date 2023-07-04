@@ -1,5 +1,3 @@
-/** @param {NS} ns */
-//run scripts/advanced-dispatch.js 
 export async function main(ns) {
 
     const helpers = new Helpers(ns);
@@ -45,10 +43,6 @@ export async function main(ns) {
     const allHackableMachines = enviroment
         .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
         .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
-
-    allHackableMachines
-        .filter(x => !x.server.hasAdminRights)
-        .map(x => helpers.hackMachine(x.name));
 
     let allMachinesByOrderOfValue = allHackableMachines
         .filter(x => !x.server.purchasedByPlayer && !batchTargets.includes(x.name) && x.server.moneyMax > 0)
@@ -337,37 +331,6 @@ export class HackedRecord {
 export class Helpers {
     constructor(ns) {
         this.ns = ns;
-    }
-
-    hackMachine(hostname) {
-        if (this.fileExists("BruteSSH.exe")) {
-            this.ns.brutessh(hostname);
-        }
-
-        if (this.fileExists("FTPCrack.exe")) {
-            this.ns.ftpcrack(hostname);
-        }
-
-        if (this.fileExists("relaySMTP.exe")) {
-            this.ns.relaysmtp(hostname)
-        }
-
-        if (this.fileExists("HTTPWorm.exe")) {
-            this.ns.httpworm(hostname)
-        }
-
-        if (this.fileExists("SQLInject.exe")) {
-            this.ns.sqlinject(hostname)
-        }
-
-        this.ns.nuke(hostname);
-        this.ns.killall(hostname);
-
-        if (hostname !== "home") {
-            this.ns
-                .ls(hostname, '.js')
-                .map(y => this.ns.rm(y, hostname))
-        }
     }
 
     numberOfPortsWeCanPop() {

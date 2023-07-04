@@ -2,7 +2,7 @@
 export async function main(ns) {
     const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 5;
+    const numberOfDifferentSleeps = 6;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/advanced-dispatch.js';
 
@@ -41,7 +41,8 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-
+        ns.run('scripts/hack-all-machines.js');
+        await ns.sleep(individualSleepAmount);
 
 
         ns.run('scripts/contracts/coding-contracts.js');
@@ -56,6 +57,8 @@ export async function main(ns) {
 
         await ns.sleep(individualSleepAmount);
 
+
+        
         await singularityStuff(ns);
     }
 
@@ -77,7 +80,7 @@ export async function main(ns) {
     async function doSingularityWork(ns, script){
         ns.run(`scripts/singularity/${script}.js`);
     
-        await ns.sleep(individualSleepAmount / 10);
+        await ns.sleep(individualSleepAmount / 11);
     }
 }
 

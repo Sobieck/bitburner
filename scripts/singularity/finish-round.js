@@ -97,6 +97,9 @@ export async function main(ns) {
 
         const priceOfMostExpensiveAugment = Math.max(...factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction).factionAugmentsThatIDontOwnAndCanAfford.map(x => x.price));
 
+        if (priceOfMostExpensiveAugment < 0) {
+            return;
+        }
 
         const buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
 

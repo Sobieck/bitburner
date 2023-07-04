@@ -194,37 +194,6 @@ export class Helpers {
         this.ns = ns;
     }
 
-    hackMachine(hostname) {
-        if (this.fileExists("BruteSSH.exe")) {
-            this.ns.brutessh(hostname);
-        }
-
-        if (this.fileExists("FTPCrack.exe")) {
-            this.ns.ftpcrack(hostname);
-        }
-
-        if (this.fileExists("relaySMTP.exe")) {
-            this.ns.relaysmtp(hostname)
-        }
-
-        if (this.fileExists("HTTPWorm.exe")) {
-            this.ns.httpworm(hostname)
-        }
-
-        if (this.fileExists("SQLInject.exe")) {
-            this.ns.sqlinject(hostname)
-        }
-
-        this.ns.nuke(hostname);
-        this.ns.killall(hostname);
-
-        if (hostname !== "home") {
-            this.ns
-                .ls(hostname, '.js')
-                .map(y => this.ns.rm(y, hostname))
-        }
-    }
-
     numberOfPortsWeCanPop() {
         let portsWeCanPop = 0;
         if (this.fileExists("BruteSSH.exe")) {
@@ -777,10 +746,6 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
         const allHackableMachines = enviroment
             .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
             .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
-
-        allHackableMachines
-            .filter(x => !x.server.hasAdminRights)
-            .map(x => helpers.hackMachine(x.name));
 
         const allMachinesByOrderOfValue = allHackableMachines
             .filter(x => !x.server.purchasedByPlayer && x.server.moneyMax !== 0 && !targetNames.includes(x.name))
