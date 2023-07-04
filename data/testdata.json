@@ -20,10 +20,6 @@
         "name": "scripts/script-ram-usage-finder.js"
     },
     {
-        "ram": 1.9,
-        "name": "scripts/test.js"
-    },
-    {
         "ram": 2.2,
         "name": "scripts/investments/upgrade-small-servers.js"
     },
@@ -38,6 +34,10 @@
     {
         "ram": 3.1,
         "name": "scripts/clean.js"
+    },
+    {
+        "ram": 3.1,
+        "name": "scripts/test.js"
     },
     {
         "ram": 3.6,
@@ -68,8 +68,16 @@
         "name": "scripts/investments/purchase-server.js"
     },
     {
+        "ram": 9.6,
+        "name": "scripts/singularity/workout.js"
+    },
+    {
         "ram": 10.85,
         "name": "scripts/advanced-dispatch.js"
+    },
+    {
+        "ram": 13.6,
+        "name": "scripts/singularity/do-job.js"
     },
     {
         "ram": 13.85,
@@ -84,23 +92,27 @@
         "name": "scripts/singularity/join-organziations.js"
     },
     {
+        "ram": 21.2,
+        "name": "scripts/singularity/do-work.js"
+    },
+    {
         "ram": 24.8,
         "name": "scripts/investments/invest-in-stocks.js"
     },
     {
-        "ram": 26.2,
-        "name": "scripts/singularity/do-work.js"
+        "ram": 27.7,
+        "name": "scripts/singularity/buy-rep.js"
     },
     {
         "ram": 29.8,
         "name": "scripts/contracts/coding-contracts.js"
     },
     {
-        "ram": 38.6,
-        "name": "scripts/singularity/finish-bitnode.js"
-    },
-    {
         "ram": 42.3,
         "name": "scripts/singularity/finish-round.js"
+    },
+    {
+        "ram": 42.65,
+        "name": "scripts/singularity/finish-bitnode.js"
     }
 ]

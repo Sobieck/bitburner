@@ -14,12 +14,14 @@ export async function main(ns) {
         batchQueueForDifferentTargets = new Map(JSON.parse(ns.read(batchQueuesFileName)));
     }
 
+    const homeMemoryLimitations = JSON.parse(ns.read("data/ramToReserveOnHome.txt"));
+
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
 
     const playerServers = enviroment
         .filter(x => x.server.purchasedByPlayer);
 
-    const homeServer = getServer(ns, "home");
+    const homeServer = getServer(ns, "home", homeMemoryLimitations);
 
     playerServers.push({ name: "home", server: homeServer })
 
@@ -44,7 +46,7 @@ export async function main(ns) {
         createBatchesOfJobs(batchForTarget, ns, targetServer, player);
     }
 
-    await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment);
+    await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment, homeMemoryLimitations);
     addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player);
     adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDifferentTargets, targetNames);
 
@@ -344,7 +346,7 @@ function createBatchesOfJobs(batchForTarget, ns, targetServer, player) {
     }
 }
 
-async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, environment) {
+async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, environment, homeMemoryLimitations) {
     const hackScript = 'scripts/advanced-hacks/hack.js';
     const growScript = 'scripts/advanced-hacks/grow.js';
     const weakenScript = 'scripts/advanced-hacks/weaken.js';
@@ -396,7 +398,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         numberOfThreads = getNumberOfThreadsToWeaken(ns, 1, amountToWeaken);
                         ramCost = ramNeededForWeaken * numberOfThreads;
 
-                        machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment);
+                        machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment, homeMemoryLimitations);
 
                         if (machineToRunOn && machineToRunOn.cpuCores > 1) {
                             numberOfThreads = getNumberOfThreadsToWeaken(ns, machineToRunOn.cpuCores, amountToWeaken);
@@ -420,7 +422,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
                         numberOfThreads = getGrowThreads(ns, targetServer, player, 1);
                         ramCost = ramNeededForGrow * numberOfThreads;
 
-                        machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment);
+                        machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment, homeMemoryLimitations);
 
                         if (machineToRunOn && machineToRunOn.cpuCores > 1) {
                             numberOfThreads = getGrowThreads(ns, targetServer, player, machineToRunOn.cpuCores);
@@ -450,7 +452,7 @@ async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, playe
 
                         ramCost = ramNeededForHack * numberOfThreads;
 
-                        machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment);
+                        machineToRunOn = getMachineWithEnoughRam(ns, ramCost, environment, homeMemoryLimitations);
                     }
 
                     if (shouldExecute && machineToRunOn) {
@@ -506,7 +508,7 @@ function shouldWeExecute(job, ifStartedNowWeWouldBeDoneAtString, batchOfJobs, ns
     return false;
 }
 
-function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
+function getMachineWithEnoughRam(ns, ramNeeded, enviroment, homeMemoryLimitations) {
     let machineToRunOn;
 
     const helpers = new Helpers(ns);
@@ -517,7 +519,7 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
         .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
         .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
 
-    const homeServer = getServer(ns, "home");
+    const homeServer = getServer(ns, "home", homeMemoryLimitations);
 
     allHackableMachines.push({ name: "home", server: homeServer })
 
@@ -529,7 +531,7 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
         .sort((b, a) => b.server.maxRam - a.server.maxRam);
 
     for (const potentialServerToRun of serversWithEnoughRam) {
-        const server = getServer(ns, potentialServerToRun.name);
+        const server = getServer(ns, potentialServerToRun.name, homeMemoryLimitations);
         const freeRam = server.maxRam - server.ramUsed;
         if (freeRam > ramNeeded) {
             machineToRunOn = server;
@@ -555,12 +557,19 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
     return machineToRunOn;
 }
 
-function getServer(ns, serverName) {
+function getServer(ns, serverName, homeMemoryLimitations) {
     const server = ns.getServer(serverName);
 
     if (serverName === "home") {
-        server.maxRam -= 128;
-        server.ramUsed -= 128;
+
+        let ramToReserve = homeMemoryLimitations.ramToReserve;
+
+        if(server.maxRam < ramToReserve){
+            ramToReserve = homeMemoryLimitations.ramToReserveInLimitedEnvironment;
+        }
+
+        server.maxRam -= ramToReserve;
+        server.ramUsed -= ramToReserve;
 
         if (server.ramUsed < 0) {
             server.ramUsed = 0;

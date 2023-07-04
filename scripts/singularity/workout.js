@@ -2,36 +2,52 @@ export async function main(ns) {
 
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(false);
     const includesHVMind = ownedAugmentations.includes("ECorp HVMind Implant");
+    const covenantName = "The Covenant"
 
     if (!includesHVMind) {
         return;
     }
 
+    if(getBuffForFaction(ns, "The Covenant", 850)){
+        return;
+    } 
+
+    if(getBuffForFaction(ns, "Illuminati", 1200)){
+        return;
+    }
+
+    const currentWork = ns.singularity.getCurrentWork();
+    if(currentWork.type === "CLASS"){
+        ns.singularity.stopAction();
+    }
+
+}
+
+function getBuffForFaction(ns, faction, targetForAttributes){
     const player = ns.getPlayer();
     const currentWork = ns.singularity.getCurrentWork();
 
-    if (!player.factions.includes("The Covenant") && (!currentWork || currentWork.type === "CLASS")) {
+    if (!player.factions.includes(faction) && (!currentWork || currentWork.type === "CLASS")) {
         
-        // if(doExersizeIfAppropriate(player.skills.agility, currentWork, ns, 'agi')){
-        //     return;
-        // }
+        if(doExersizeIfAppropriate(player.skills.agility, currentWork, ns, 'agi', targetForAttributes)){
+            return true;
+        }
 
-        // if(doExersizeIfAppropriate(player.skills.defense, currentWork, ns, 'def')){
-        //     return;
-        // }
+        if(doExersizeIfAppropriate(player.skills.defense, currentWork, ns, 'def', targetForAttributes)){
+            return true;
+        }
 
-        // if(doExersizeIfAppropriate(player.skills.strength, currentWork, ns, 'str')){
-        //     return;
-        // }
+        if(doExersizeIfAppropriate(player.skills.strength, currentWork, ns, 'str', targetForAttributes)){
+            return true;
+        }
 
-        // if(doExersizeIfAppropriate(player.skills.dexterity, currentWork, ns, 'dex')){
-        //     return;
-        // }
+        if(doExersizeIfAppropriate(player.skills.dexterity, currentWork, ns, 'dex', targetForAttributes)){
+            return true;
+        }
     }
 }
 
-function doExersizeIfAppropriate(skill, currentWork, ns, type) {
-    const targetForAttributes = 850;
+function doExersizeIfAppropriate(skill, currentWork, ns, type, targetForAttributes) {
     if (skill < targetForAttributes) {
         if (!currentWork || currentWork.classType !== type) {
             ns.singularity.gymWorkout("powerhouse gym", type, true);

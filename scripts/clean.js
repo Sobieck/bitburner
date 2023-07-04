@@ -36,4 +36,5 @@ export async function main(ns) {
     ns.rm('stopTrading.txt');
     ns.rm('data/reliabilityForEvery100Batches.txt');
     ns.rm('data/factionDonatation.txt');
+    ns.rm('data/ramToReserveOnHome.txt');
 }

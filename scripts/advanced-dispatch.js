@@ -15,6 +15,7 @@ export async function main(ns) {
         memoryLimited = true;
     }
 
+    const homeMemoryLimitations = JSON.parse(ns.read("data/ramToReserveOnHome.txt"));
 
     let batchTargets = [];
 
@@ -87,7 +88,7 @@ export async function main(ns) {
 
         let numberOfThreads = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable));
         const ramNeeded = ramNeededForOneHackThread * numberOfThreads;
-        let machineToRunOn = getMachineWithEnoughRam(ns, ramNeeded, enviroment);
+        let machineToRunOn = getMachineWithEnoughRam(ns, ramNeeded, enviroment, homeMemoryLimitations);
 
         if (machineToRunOn && numberOfThreads > 0) {
             ns.scp(hackScript, machineToRunOn.hostname);
@@ -113,7 +114,7 @@ export async function main(ns) {
             target.growing();
 
             script = growScript;
-            const serverToHack = getServer(ns, target.name);
+            const serverToHack = getServer(ns, target.name, homeMemoryLimitations);
             const player = ns.getPlayer();
 
             if (ns.fileExists('Formulas.exe')) {
@@ -126,10 +127,10 @@ export async function main(ns) {
                 }
             }
 
-            machineToRunOn = getMachineWithEnoughRam(ns, threadsNeeded * ramNeededForGrow, enviroment);
+            machineToRunOn = getMachineWithEnoughRam(ns, threadsNeeded * ramNeededForGrow, enviroment, homeMemoryLimitations);
 
             if (!machineToRunOn) {
-                [threadsNeeded, machineToRunOn] = getMachineWithNumberOfThreads(ns, enviroment, threadsNeeded, ramNeededForGrow);
+                [threadsNeeded, machineToRunOn] = getMachineWithNumberOfThreads(ns, enviroment, threadsNeeded, ramNeededForGrow, homeMemoryLimitations);
             }
 
             if (machineToRunOn && machineToRunOn.cpuCores > 1 && ns.fileExists('Formulas.exe')) {
@@ -145,10 +146,10 @@ export async function main(ns) {
 
             threadsNeeded = getNumberOfThreadsToWeaken(ns, 1, amountToWeaken);
 
-            machineToRunOn = getMachineWithEnoughRam(ns, threadsNeeded * ramNeededForWeaken, enviroment);
+            machineToRunOn = getMachineWithEnoughRam(ns, threadsNeeded * ramNeededForWeaken, enviroment, homeMemoryLimitations);
 
             if (!machineToRunOn) {
-                [threadsNeeded, machineToRunOn] = getMachineWithNumberOfThreads(ns, enviroment, threadsNeeded, ramNeededForWeaken);
+                [threadsNeeded, machineToRunOn] = getMachineWithNumberOfThreads(ns, enviroment, threadsNeeded, ramNeededForWeaken, homeMemoryLimitations);
             }
 
             if (machineToRunOn && machineToRunOn.cpuCores > 1) {
@@ -186,7 +187,7 @@ export async function main(ns) {
     }
 }
 
-function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread) {
+function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread, homeMemoryLimitations) {
     let machineToRunOn;
     const buyOrUpgradeServerFlag = 'buyOrUpgradeServerFlag.txt';
     let originalAmountNeeded = ramCostPerThread * threads;
@@ -206,13 +207,13 @@ function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread
     while (threads > 0 && !machineToRunOn) {
         threads--;
 
-        machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment)
+        machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment, homeMemoryLimitations)
     }
 
     return [threads, machineToRunOn];
 }
 
-function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
+function getMachineWithEnoughRam(ns, ramNeeded, enviroment, homeMemoryLimitations) {
     let machineToRunOn;
 
     const helpers = new Helpers(ns);
@@ -223,7 +224,7 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
         .filter(x => x.server.requiredHackingSkill < currentHackingLevel)
         .filter(x => x.server.numOpenPortsRequired <= portsWeCanPop || x.server.purchasedByPlayer);
 
-    const homeServer = getServer(ns, "home");
+    const homeServer = getServer(ns, "home", homeMemoryLimitations);
 
     allHackableMachines.push({ name: "home", server: homeServer })
 
@@ -235,7 +236,7 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
         .sort((b, a) => b.server.maxRam - a.server.maxRam);
 
     for (const potentialServerToRun of serversWithEnoughRam) {
-        const server = getServer(ns, potentialServerToRun.name);
+        const server = getServer(ns, potentialServerToRun.name, homeMemoryLimitations);
         const freeRam = server.maxRam - server.ramUsed;
         if (freeRam > ramNeeded) {
             machineToRunOn = server;
@@ -247,12 +248,19 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment) {
 }
 
 
-function getServer(ns, serverName) {
+function getServer(ns, serverName, homeMemoryLimitations) {
     const server = ns.getServer(serverName);
 
     if (serverName === "home") {
-        server.maxRam -= 32;
-        server.ramUsed -= 32;
+
+        let ramToReserve = homeMemoryLimitations.ramToReserve;
+
+        if(server.maxRam < ramToReserve){
+            ramToReserve = homeMemoryLimitations.ramToReserveInLimitedEnvironment;
+        }
+
+        server.maxRam -= ramToReserve;
+        server.ramUsed -= ramToReserve;
 
         if (server.ramUsed < 0) {
             server.ramUsed = 0;

@@ -16,6 +16,10 @@ export async function main(ns) {
         await ns.sleep(1000);
     }
 
+    ns.run('scripts/script-ram-usage-finder.js')
+
+    await ns.sleep(200);
+
     while (true) {
 
         if (ns.fileExists('Formulas.exe')) {
@@ -24,12 +28,6 @@ export async function main(ns) {
 
         ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
         await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
-        
-
-
-
-        ns.run('scripts/singularity/singularity-coordinator.js');
-        await ns.sleep(individualSleepAmount);
 
 
 
@@ -37,7 +35,7 @@ export async function main(ns) {
 
         if (moneyAvailable > 1_000_000_000_000) {
             const endDate = new Date();
-            endDate.setHours(endDate.getHours() + 24);
+            endDate.setHours(endDate.getHours() + 6);
             ns.run('scripts/investments/invest-in-nodes.js', 1, endDate.toISOString())
         }
         await ns.sleep(individualSleepAmount);
@@ -57,5 +55,29 @@ export async function main(ns) {
         }
 
         await ns.sleep(individualSleepAmount);
+
+        await singularityStuff(ns);
+    }
+
+
+    async function singularityStuff(ns) { 
+        await doSingularityWork(ns, 'join-organziations');
+        await doSingularityWork(ns, 'do-work');
+        await doSingularityWork(ns, 'investments');
+        await doSingularityWork(ns, 'finish-round');
+        await doSingularityWork(ns, 'finish-bitnode');
+        await doSingularityWork(ns, 'study-computer-science');
+        await doSingularityWork(ns, 'create-early-programs');
+        await doSingularityWork(ns, 'do-job');
+        await doSingularityWork(ns, 'buy-rep');
+        await doSingularityWork(ns, 'workout');
+        await doSingularityWork(ns, 'upgade-home-machine');
+    }
+    
+    async function doSingularityWork(ns, script){
+        ns.run(`scripts/singularity/${script}.js`);
+    
+        await ns.sleep(individualSleepAmount / 10);
     }
 }
+

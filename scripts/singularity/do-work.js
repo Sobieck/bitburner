@@ -60,6 +60,7 @@ export async function main(ns) {
                     break;
                 } else {
                     ns.toast(`Done working for ${faction}`, "success", null);
+                    // ns.singularity.stopAction();
                 }
             }
         }
