@@ -1,5 +1,5 @@
 export async function main(ns) {
-    const companiesWeWantToBecomePartOf = ["NWO", "OmniTek Incorporated", "Blade Industries", "ECorp"]; 
+    const companiesWeWantToBecomePartOf = ["Bachman & Associates", "NWO", "OmniTek Incorporated", "Blade Industries", "ECorp"]; 
 
     for (const companyName of companiesWeWantToBecomePartOf) {
         ns.singularity.applyToCompany(companyName, "software");

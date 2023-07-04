@@ -37,4 +37,5 @@ export async function main(ns) {
     ns.rm('data/reliabilityForEvery100Batches.txt');
     ns.rm('data/factionDonatation.txt');
     ns.rm('data/ramToReserveOnHome.txt');
+    ns.rm('data/ownedAugs.txt');
 }

@@ -1,8 +1,6 @@
 export async function main(ns) {
     const player = ns.getPlayer();
-    const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
     const currentWork = ns.singularity.getCurrentWork();
-    const organizationTextFileName = "data/organizations.txt";
     const factionToMaxFile = "data/factionToMax.txt";
 
     let factionToMax;
@@ -11,7 +9,8 @@ export async function main(ns) {
         factionToMax = ns.read(factionToMaxFile);
     }
 
-    const organizations = JSON.parse(ns.read(organizationTextFileName));
+    const ownedAugmentations = JSON.parse(ns.read("data/ownedAugs.txt"));
+    const organizations = JSON.parse(ns.read("data/organizations.txt"));
 
     let workingOnGettingAugmentsOrPrograms = false;
 

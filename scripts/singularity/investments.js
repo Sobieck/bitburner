@@ -39,29 +39,18 @@ export async function main(ns) {
         ns.run('scripts/investments/purchase-server.js');
     }
 
-    if (!ns.fileExists("BruteSSH.exe")) {
-        checkTor(ns);
-        ns.singularity.purchaseProgram("BruteSSH.exe");
-    }
+    purchaseProgram(ns, 50, "BruteSSH.exe");
+    purchaseProgram(ns, 100, "FTPCrack.exe");
+    purchaseProgram(ns, 250, "relaySMTP.exe");
+    purchaseProgram(ns, 500, "HTTPWorm.exe");
+    purchaseProgram(ns, 750, "SQLInject.exe");
+}
 
-    if (!ns.fileExists("FTPCrack.exe")) {
+function purchaseProgram(ns, atWhatHackingLevelToBuy, programToBuy) {
+    const playerHackingLevel = ns.getHackingLevel();
+    if (!ns.fileExists(programToBuy) && playerHackingLevel > atWhatHackingLevelToBuy) {
         checkTor(ns);
-        ns.singularity.purchaseProgram("FTPCrack.exe");
-    }
-
-    if (!ns.fileExists("relaySMTP.exe")) {
-        checkTor(ns);
-        ns.singularity.purchaseProgram("relaySMTP.exe");
-    }
-
-    if (!ns.fileExists("HTTPWorm.exe")) {
-        checkTor(ns);
-        ns.singularity.purchaseProgram("HTTPWorm.exe");
-    }
-
-    if (!ns.fileExists("SQLInject.exe")) {
-        checkTor(ns);
-        ns.singularity.purchaseProgram("SQLInject.exe");
+        ns.singularity.purchaseProgram(programToBuy);
     }
 }
 

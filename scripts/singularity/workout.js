@@ -2,15 +2,14 @@ export async function main(ns) {
 
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(false);
     const includesHVMind = ownedAugmentations.includes("ECorp HVMind Implant");
-    const covenantName = "The Covenant"
 
     if (!includesHVMind) {
         return;
     }
 
-    if(getBuffForFaction(ns, "The Covenant", 850)){
-        return;
-    } 
+    // if(getBuffForFaction(ns, "The Covenant", 850)){
+    //     return;
+    // } 
 
     if(getBuffForFaction(ns, "Illuminati", 1200)){
         return;

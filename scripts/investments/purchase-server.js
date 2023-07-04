@@ -81,7 +81,7 @@ export async function main(ns) {
 
 function purchaseServer(ns, maxRam, additionalRamNeeded) {
     let currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
-    let ramToBuy = 128;
+    let ramToBuy = 64;
 
     if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
 
@@ -109,7 +109,7 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
             }
         }
         else {
-            ns.tprint("Not enough money to buy new server")
+            ns.toast("Not enough money to buy new server", "warning", 3000)
         }
     } else {
         ns.tprint("max servers already bought");

@@ -1,9 +1,9 @@
 export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
-    const organizationTextFileName = "data/organizations.txt";
 
 
-    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand", "Netburners", "Illuminati", "The Covenant", "Blade Industries", "OmniTek Incorporated", "NWO", "Aevum", "Volhaven", "New Tokyo", "Ishima"];
+
+    const toJoin = ["CSEC", "I.I.I.I", "avmnite-02h", "Chongqing", "run4theh111z", "ecorp", "Tian Di Hui", "Daedalus", "BitRunners", "The Black Hand", "Netburners", "Illuminati", "Blade Industries", "OmniTek Incorporated", "NWO", "Aevum", "Volhaven", "New Tokyo", "Ishima", "Bachman & Associates"]; //"The Covenant"
     const lowPriority = ["Chongqing", "Tian Di Hui", "Netburners", "Aevum", "Volhaven", "New Tokyo", "Ishima"];
 
     const factionInvitations = ns.singularity.checkFactionInvitations();
@@ -28,8 +28,13 @@ export async function main(ns) {
 
     const organzations = { toJoin, lowPriority };
 
+    const organizationTextFileName = "data/organizations.txt";
     ns.rm(organizationTextFileName);
     ns.write(organizationTextFileName, JSON.stringify(organzations), "W");
+
+    const ownedAugsTextFileName = "data/ownedAugs.txt";
+    ns.rm(ownedAugsTextFileName);
+    ns.write(ownedAugsTextFileName, JSON.stringify(ownedAugmentations), "W");
 
     for (const orgServerName of organzations.toJoin) {
 
