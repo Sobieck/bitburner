@@ -1,6 +1,6 @@
 export async function main(ns) {
     const player = ns.getPlayer();
-    const currentWork = ns.singularity.getCurrentWork();
+
     const factionToMaxFile = "data/factionToMax.txt";
 
     let factionToMax;
@@ -11,75 +11,77 @@ export async function main(ns) {
 
     const ownedAugmentations = JSON.parse(ns.read("data/ownedAugs.txt"));
     const organizations = JSON.parse(ns.read("data/organizations.txt"));
+    const organizationsToJoinInTheOrderWeWantToComplete = organizations.toJoinInOrderInWhichIWantToComplete;
+    const doNoWorkFor = organizations.doNoWorkFor;
 
-    let workingOnGettingAugmentsOrPrograms = false;
+    const factionsWithAugsToBuyAndNotEnoughtFavor = [];
 
-    const mostRepExpensiveForEachFaction = [];
+    for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
+        if (player.factions.includes(faction) && !doNoWorkFor.includes(faction)) {
 
-    for (const faction of player.factions) {
-        const maximumAugRep = Math.max(...ns
-            .singularity
-            .getAugmentationsFromFaction(faction)
-            .filter(x => x !== "NeuroFlux Governor")
-            .filter(x => !ownedAugmentations.includes(x))
-            .map(x => ns.singularity.getAugmentationRepReq(x)));
+            const maximumAugRep = Math.max(...ns
+                .singularity
+                .getAugmentationsFromFaction(faction)
+                .filter(x => x !== "NeuroFlux Governor")
+                .filter(x => !ownedAugmentations.includes(x))
+                .map(x => ns.singularity.getAugmentationRepReq(x)));
 
-        const favor = ns.singularity.getFactionFavor(faction);
+            const favor = ns.singularity.getFactionFavor(faction);
 
-        if (maximumAugRep > 0 && favor < 150) {
-            mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
+            if (maximumAugRep > 0 && favor < 150) {
+                factionsWithAugsToBuyAndNotEnoughtFavor.push({ faction, maximumAugRep });
+            }
         }
     }
 
-    const sortedFactions = mostRepExpensiveForEachFaction
-        .filter(x => x.maximumAugRep > 0 && !organizations.lowPriority.includes(x.faction))
-        .sort((a, b) => a.maximumAugRep - b.maximumAugRep);
 
-    if (sortedFactions.length > 0 && !factionToMax) {
-        factionToMax = sortedFactions[0].faction;
-        ns.write(factionToMaxFile, factionToMax, "W");
+    for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
+        if (factionsWithAugsToBuyAndNotEnoughtFavor.includes(x => x.faction === faction)) {
+            const newFactionToMax = factionsWithAugsToBuyAndNotEnoughtFavor[0].faction;
+
+            if (factionToMax !== newFactionToMax) {
+                factionToMax = newFactionToMax;
+                ns.rm(factionToMaxFile);
+                ns.write(factionToMaxFile, factionToMax, "W");
+            }
+
+            break;
+        }
+    }
+    // ns.tprint(factionsWithAugsToBuyAndNotEnoughtFavor);
+
+    const currentWork = ns.singularity.getCurrentWork();
+
+    if (currentWork && currentWork.type === "CREATE_PROGRAM") {
+        return;
     }
 
-    if (!currentWork || currentWork.type === "FACTION" || currentWork.type === "COMPANY") {
-        for (const factionWithTheirMostExpensiveAug of sortedFactions) {
-            const faction = factionWithTheirMostExpensiveAug.faction;
-            const maxRepNeeded = factionWithTheirMostExpensiveAug.maximumAugRep;
-            const factionRep = ns.singularity.getFactionRep(faction);
+    for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
 
-            if (maxRepNeeded > factionRep) {
-                if (!currentWork || currentWork.factionName !== faction || currentWork.type === "COMPANY") {
-                    await ns.singularity.workForFaction(faction, "hacking", true);
-                    workingOnGettingAugmentsOrPrograms = true;
-                }
-            }
-
-            if (!currentWork || currentWork.type === "FACTION" && currentWork.factionName === faction) {
-                if (maxRepNeeded > factionRep) {
-                    workingOnGettingAugmentsOrPrograms = true;
-                    break;
-                } else {
-                    ns.toast(`Done working for ${faction}`, "success", null);
-                    // ns.singularity.stopAction();
-                }
-            }
+        if (currentWork &&
+            currentWork.type === "COMPANY" &&
+            currentWork.companyName === faction &&
+            !player.factions.includes(faction)) {
+                
+            break;
         }
 
-        if (workingOnGettingAugmentsOrPrograms === false) {
+        const factionsAugs = factionsWithAugsToBuyAndNotEnoughtFavor.find(x => x.faction === faction);
 
-            const veryGoodHackingAugment = "Neuregen Gene Modification";
-            const cityThatProvidesThatAugment = "Chongqing";
-            if (!ownedAugmentations.includes(veryGoodHackingAugment)) {
+        if (!factionsAugs) {
+            continue;
+        }
 
-                if (ns.singularity.getFactionRep(cityThatProvidesThatAugment) < ns.singularity.getAugmentationRepReq(veryGoodHackingAugment)) {
-                    if (!currentWork || currentWork.factionName !== cityThatProvidesThatAugment || currentWork.type === "COMPANY") {
-                        await ns.singularity.workForFaction(cityThatProvidesThatAugment, "hacking", true);
-                    }
-                } else {
-                    if (currentWork && currentWork.factionName === cityThatProvidesThatAugment) {
-                        ns.singularity.stopAction();
-                    }
-                }
+        const maxRepNeeded = factionsAugs.maximumAugRep;
+        const factionRep = ns.singularity.getFactionRep(faction);
+
+        if (maxRepNeeded > factionRep) {
+
+            if (!currentWork || currentWork.factionName !== faction) {
+                await ns.singularity.workForFaction(faction, "hacking", true);
             }
+
+            break;
         }
     }
 }

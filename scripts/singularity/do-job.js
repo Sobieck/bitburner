@@ -1,5 +1,7 @@
 export async function main(ns) {
-    const companiesWeWantToBecomePartOf = ["Bachman & Associates", "NWO", "OmniTek Incorporated", "Blade Industries", "ECorp"]; 
+    const organizations = JSON.parse(ns.read("data/organizations.txt"));
+    const companiesWeWantToBecomePartOf = organizations.companiesWeWantToBecomePartOf;
+    const orderedFactions = organizations.toJoinInOrderInWhichIWantToComplete;
 
     for (const companyName of companiesWeWantToBecomePartOf) {
         ns.singularity.applyToCompany(companyName, "software");
@@ -7,32 +9,62 @@ export async function main(ns) {
 
     const currentWork = ns.singularity.getCurrentWork();
 
-
-    if (currentWork && (currentWork.type === "FACTION" || currentWork.type === "CREATE_PROGRAM")) {
+    if (currentWork && currentWork.type === "CREATE_PROGRAM") {
         return;
     }
 
+    let factionWeAreWorkingAtNow;
+    if (currentWork && currentWork.type === "FACTION") {
+        factionWeAreWorkingAtNow = currentWork.factionName;
+    }
+
+    if (currentWork && currentWork.type === "COMPANY") {
+        factionWeAreWorkingAtNow = currentWork.companyName;
+    }
+
     const player = ns.getPlayer();
+    let company;
 
-    const companiesWorkingForWithoutBeinginFaction = Object.keys(player.jobs)
-        .filter(x => !player.factions.includes(x));
+    for (const potentialCompany of companiesWeWantToBecomePartOf) {
+        if (!player.factions.includes(potentialCompany)) {
 
-    for (const company of companiesWorkingForWithoutBeinginFaction) {
-        const positionInCompany = player.jobs[company];
-        const currentPositionInfo = ns.singularity.getCompanyPositionInfo(company, positionInCompany);
-        const nextPositionInfo = ns.singularity.getCompanyPositionInfo(company, currentPositionInfo.nextPosition);
-        const companyRep = ns.singularity.getCompanyRep(company);
-
-        if (nextPositionInfo.requiredReputation < companyRep && nextPositionInfo.requiredSkills.charisma > player.skills.charisma) {
-            if (!currentWork || currentWork.type !== "CLASS") {
-                ns.singularity.universityCourse("Rothman University", "Leadership", true);
+            if (!factionWeAreWorkingAtNow) {
+                company = potentialCompany;
                 break;
             }
-        } else {
-            if (!currentWork || currentWork.type !== "COMPANY") {
-                ns.singularity.workForCompany(company, true);
+
+            for (const faction of orderedFactions) {
+                if (faction === potentialCompany) {
+                    company = potentialCompany;
+                    break;
+                }
+
+                if (faction === factionWeAreWorkingAtNow) {
+                    break;
+                }
             }
-            break;
         }
+    }
+
+    if (!company) {
+        return;
+    }
+
+
+    const positionInCompany = player.jobs[company];
+    const currentPositionInfo = ns.singularity.getCompanyPositionInfo(company, positionInCompany);
+    const nextPositionInfo = ns.singularity.getCompanyPositionInfo(company, currentPositionInfo.nextPosition);
+    const companyRep = ns.singularity.getCompanyRep(company);
+
+    if (nextPositionInfo.requiredReputation < companyRep && nextPositionInfo.requiredSkills.charisma > player.skills.charisma) {
+        if (!currentWork || currentWork.type !== "CLASS") {
+            ns.singularity.universityCourse("Rothman University", "Leadership", true);
+            return;
+        }
+    } else {
+        if (!currentWork || currentWork.type !== "COMPANY") {
+            ns.singularity.workForCompany(company, true);
+        }
+        return;
     }
 }

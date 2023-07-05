@@ -1,3 +1,5 @@
+let visitedBefore = false;
+
 export async function main(ns) {
     const ramObservationsTextFile = '../../data/ramObservations.txt';
     const stopInvestingFileName = "stopInvesting.txt";
@@ -8,14 +10,17 @@ export async function main(ns) {
         return;
     }
 
-    await upgradeHomeRamOrCpu(ns, 11_000_000);
-    await upgradeHomeRamOrCpu(ns, 100_000_000);
-    await upgradeHomeRamOrCpu(ns, 30_000_000_000);
-    await upgradeHomeRamOrCpu(ns, 100_000_000_000);
-    await upgradeHomeRamOrCpu(ns, 1_000_000_000_000);
-    await upgradeHomeRamOrCpu(ns, 10_000_000_000_000);
-    await upgradeHomeRamOrCpu(ns, 100_000_000_000_000);
-    await upgradeHomeRamOrCpu(ns, 1_000_000_000_000_000);
+    visitedBefore = false;
+
+//figure out why this doesn't work
+    // await upgradeHomeRamOrCpu(ns, 11_000_000);
+    // await upgradeHomeRamOrCpu(ns, 100_000_000);
+    // await upgradeHomeRamOrCpu(ns, 30_000_000_000);
+    // await upgradeHomeRamOrCpu(ns, 100_000_000_000);
+    // await upgradeHomeRamOrCpu(ns, 1_000_000_000_000);
+    // await upgradeHomeRamOrCpu(ns, 10_000_000_000_000);
+    // await upgradeHomeRamOrCpu(ns, 100_000_000_000_000);
+    // await upgradeHomeRamOrCpu(ns, 1_000_000_000_000_000);
 }
 
 async function upgradeHomeRamOrCpu(ns, moneyLeftLimit) {
@@ -24,7 +29,7 @@ async function upgradeHomeRamOrCpu(ns, moneyLeftLimit) {
     const coreUpgradeCost = ns.singularity.getUpgradeHomeCoresCost();
 
     const moneyAvailable = ns.getServerMoneyAvailable("home");
-
+    
     if (ramUpgradeCost < coreUpgradeCost) {
 
         const moneyLeftOverForRam = moneyAvailable - ramUpgradeCost;
