@@ -2,8 +2,8 @@ export async function main(ns) {
     const toJoinInOrderInWhichIWantToComplete = [
         "CyberSec",
         "NiteSec",
-        "The Black Hand",
         "Chongqing",
+        "The Black Hand",
         "Bachman & Associates",
         "BitRunners",
         "Daedalus",
@@ -38,9 +38,20 @@ export async function main(ns) {
         "Netburners"
     ];
 
+    const stopAtAugments = [
+        { final: true, faction: "Chongqing", augmentToStopAt: "Neuregen Gene Modification" },
+        { final: false, faction: "BitRunners", augmentToStopAt: "Artificial Bio-neural Network Implant" },
+    ]
+
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+    if (moneyAvailable > 150_000_000) {
+        toJoinInOrderInWhichIWantToComplete.push("Sector-12");
+        doNoWorkFor.push("Sector-12");
+    }
+
     const factionInvitations = ns.singularity.checkFactionInvitations();
 
-    const organzations = { toJoinInOrderInWhichIWantToComplete, companiesWeWantToBecomePartOf, doNoWorkFor };
+    const organzations = { toJoinInOrderInWhichIWantToComplete, companiesWeWantToBecomePartOf, doNoWorkFor, stopAtAugments };
 
     const organizationTextFileName = "data/organizations.txt";
     ns.rm(organizationTextFileName);

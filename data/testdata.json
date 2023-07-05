@@ -1,0 +1,12 @@
+[
+    {
+        "final": true,
+        "faction": "Chongqing",
+        "augmentToStopAt": "Neuregen Gene Modification"
+    },
+    {
+        "final": false,
+        "faction": "BitRunners",
+        "augmentToStopAt": "Artificial Bio-neural Network Implant"
+    }
+]

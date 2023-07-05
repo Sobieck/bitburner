@@ -37,6 +37,7 @@ export async function main(ns) {
         .pop();
 
     setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns, "Artificial Bio-neural Network Implant", "BitRunners");
+    setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns, "Neuregen Gene Modification", "Chongqing");
 
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction)
 
@@ -98,13 +99,10 @@ export async function main(ns) {
         let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
 
         if(targetFaction.faction === "CyberSec"){
-            ns.tprint("asdfs")
             buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 10;
         }
 
         const moneyAvailable = ns.getServerMoneyAvailable("home");
-
-        ns.tprint(moneyAvailable - buyAugmentsWhenWeHaveMoreThanThisMuchMoney)
 
         if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > 1_000_000_000_000_000) {
             const stopStockTradingFileName = "stopTrading.txt";
@@ -113,7 +111,6 @@ export async function main(ns) {
                 return;
             }
 
-            ns.tprint("his")
             const purchasableAugments = new Map();
 
             for (const factionWithAugments of factionsWithAugmentsToBuy) {
@@ -156,9 +153,17 @@ export async function main(ns) {
     }
 }
 
-function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns, goalAugment, goalFaction) {
-    if (!ownedAugmentations.includes(goalAugment) && factionToMax === goalFaction) {
-        targetFaction.maximumAugRep = ns.singularity.getAugmentationRepReq(goalAugment);
+function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
+    const organizations = JSON.parse(ns.read("data/organizations.txt"));
+
+    for (const stopAtAugment of organizations.stopAtAugments) {
+        const goalAugment = stopAtAugment.augmentToStopAt;
+        const goalFaction = stopAtAugment.faction;
+
+        if (!ownedAugmentations.includes(goalAugment) && factionToMax === goalFaction) {
+            targetFaction.maximumAugRep = ns.singularity.getAugmentationRepReq(goalAugment);
+            break;
+        }
     }
 }
 

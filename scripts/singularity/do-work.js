@@ -13,15 +13,31 @@ export async function main(ns) {
     const organizations = JSON.parse(ns.read("data/organizations.txt"));
     const organizationsToJoinInTheOrderWeWantToComplete = organizations.toJoinInOrderInWhichIWantToComplete;
     const doNoWorkFor = organizations.doNoWorkFor;
+    const stopAtAugments = organizations.stopAtAugments;
 
     const factionsWithAugsToBuyAndNotEnoughtFavor = [];
 
     for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
         if (player.factions.includes(faction) && !doNoWorkFor.includes(faction)) {
 
-            const maximumAugRep = Math.max(...ns
+            let augmentsForFaction = ns
                 .singularity
-                .getAugmentationsFromFaction(faction)
+                .getAugmentationsFromFaction(faction);
+
+            let stopAtAugmentForFaction = stopAtAugments
+                .find(x => x.faction === faction);
+
+            if (stopAtAugmentForFaction) {
+                if (ownedAugmentations.includes(stopAtAugmentForFaction.augmentToStopAt) && stopAtAugmentForFaction.final) {
+                    augmentsForFaction = [];
+                } else if (ownedAugmentations.includes(stopAtAugmentForFaction.augmentToStopAt) && !stopAtAugmentForFaction.final) {
+                    augmentsForFaction = augmentsForFaction;
+                } else {
+                    augmentsForFaction = augmentsForFaction.filter(x => x === stopAtAugmentForFaction.augmentToStopAt);
+                }
+            }
+
+            const maximumAugRep = Math.max(...augmentsForFaction
                 .filter(x => x !== "NeuroFlux Governor")
                 .filter(x => !ownedAugmentations.includes(x))
                 .map(x => ns.singularity.getAugmentationRepReq(x)));
@@ -34,11 +50,13 @@ export async function main(ns) {
         }
     }
 
-
     for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
-        if (factionsWithAugsToBuyAndNotEnoughtFavor.includes(x => x.faction === faction)) {
-            const newFactionToMax = factionsWithAugsToBuyAndNotEnoughtFavor[0].faction;
+        factionsWithAugsToBuyAndNotEnoughtFavor.find(x => x.faction === faction);
 
+        if (factionsWithAugsToBuyAndNotEnoughtFavor) {
+
+            const newFactionToMax = factionsWithAugsToBuyAndNotEnoughtFavor[0].faction;
+            
             if (factionToMax !== newFactionToMax) {
                 factionToMax = newFactionToMax;
                 ns.rm(factionToMaxFile);
@@ -48,7 +66,6 @@ export async function main(ns) {
             break;
         }
     }
-    // ns.tprint(factionsWithAugsToBuyAndNotEnoughtFavor);
 
     const currentWork = ns.singularity.getCurrentWork();
 
@@ -62,7 +79,7 @@ export async function main(ns) {
             currentWork.type === "COMPANY" &&
             currentWork.companyName === faction &&
             !player.factions.includes(faction)) {
-                
+
             break;
         }
 

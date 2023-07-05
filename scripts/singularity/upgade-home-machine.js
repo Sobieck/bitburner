@@ -12,24 +12,32 @@ export async function main(ns) {
 
     visitedBefore = false;
 
-//figure out why this doesn't work
-    // await upgradeHomeRamOrCpu(ns, 11_000_000);
-    // await upgradeHomeRamOrCpu(ns, 100_000_000);
-    // await upgradeHomeRamOrCpu(ns, 30_000_000_000);
-    // await upgradeHomeRamOrCpu(ns, 100_000_000_000);
-    // await upgradeHomeRamOrCpu(ns, 1_000_000_000_000);
-    // await upgradeHomeRamOrCpu(ns, 10_000_000_000_000);
-    // await upgradeHomeRamOrCpu(ns, 100_000_000_000_000);
-    // await upgradeHomeRamOrCpu(ns, 1_000_000_000_000_000);
+    await upgradeHomeRamOrCpu(ns, 11_000_000);
+    await upgradeHomeRamOrCpu(ns, 100_000_000);
+    await upgradeHomeRamOrCpu(ns, 30_000_000_000);
+    await upgradeHomeRamOrCpu(ns, 100_000_000_000);
+    await upgradeHomeRamOrCpu(ns, 1_000_000_000_000);
+    await upgradeHomeRamOrCpu(ns, 10_000_000_000_000);
+    await upgradeHomeRamOrCpu(ns, 100_000_000_000_000);
+    await upgradeHomeRamOrCpu(ns, 1_000_000_000_000_000);
 }
 
 async function upgradeHomeRamOrCpu(ns, moneyLeftLimit) {
+    if(visitedBefore){
+        return;
+    }
 
     const ramUpgradeCost = ns.singularity.getUpgradeHomeRamCost();
     const coreUpgradeCost = ns.singularity.getUpgradeHomeCoresCost();
 
     const moneyAvailable = ns.getServerMoneyAvailable("home");
-    
+
+    if(moneyLeftLimit < coreUpgradeCost || moneyLeftLimit < ramUpgradeCost){
+        return;
+    } else {
+        visitedBefore = true;
+    }
+
     if (ramUpgradeCost < coreUpgradeCost) {
 
         const moneyLeftOverForRam = moneyAvailable - ramUpgradeCost;
