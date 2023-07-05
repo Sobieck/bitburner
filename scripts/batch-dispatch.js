@@ -29,7 +29,7 @@ export async function main(ns) {
     const totalBoughtMemory = playerServers.reduce((acc, x) => acc + x.server.maxRam, 0);
 
     if (totalBoughtMemory < 105_000) {
-        ns.run('scripts/advanced-dispatch.js');
+        ns.run('scripts/memory-starved-dispatch.js');
         return;
     }
 
@@ -502,10 +502,11 @@ function getServer(ns, serverName, homeMemoryLimitations) {
         }
 
         server.maxRam -= ramToReserve;
-        server.ramUsed -= ramToReserve;
 
-        if (server.ramUsed < 0) {
-            server.ramUsed = 0;
+        const freeRam = server.maxRam - server.ramUsed
+
+        if (freeRam < 0) {
+            server.ramUsed = server.maxRam;
         }
     }
 

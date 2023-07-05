@@ -1,0 +1,321 @@
+[
+    [
+        "omega-net",
+        {
+            "name": "omega-net",
+            "moneyThreshhold": 132012447.890625,
+            "securityThreshholdTarget": 14,
+            "hackDifficulty": 13.111999999999982,
+            "moneyAvailable": 167191503.3767336,
+            "minDifficulty": 9,
+            "pids": [
+                4461,
+                4462,
+                4463,
+                4464,
+                4465,
+                4466,
+                4467,
+                4468,
+                4469,
+                4470,
+                4471,
+                4472,
+                4473,
+                4474,
+                4475,
+                4476,
+                4477,
+                4478,
+                4479
+            ],
+            "runningOn": [
+                {
+                    "machineToRunOn": "CLOUD-000",
+                    "threads": 301
+                },
+                {
+                    "machineToRunOn": "silver-helix",
+                    "threads": 37
+                },
+                {
+                    "machineToRunOn": "iron-gym",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "zer0",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "omega-net",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "max-hardware",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "phantasy",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "neo-net",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "foodnstuff",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "sigma-cosmetics",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "joesguns",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "hong-fang-tea",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "harakiri-sushi",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "nectar-net",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "avmnite-02h",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "CSEC",
+                    "threads": 4
+                },
+                {
+                    "machineToRunOn": "home",
+                    "threads": 4
+                },
+                {
+                    "machineToRunOn": "home",
+                    "threads": 3
+                },
+                {
+                    "machineToRunOn": "n00dles",
+                    "threads": 2
+                }
+            ],
+            "isHacking": false,
+            "readyForNextProcess": false
+        }
+    ],
+    [
+        "crush-fitness",
+        {
+            "name": "crush-fitness",
+            "moneyThreshhold": 115220093.203125,
+            "securityThreshholdTarget": 19,
+            "hackDifficulty": 42.55,
+            "moneyAvailable": 40967144.25,
+            "minDifficulty": 14,
+            "pids": [
+                4953,
+                4954,
+                4955,
+                4956,
+                4957,
+                4958,
+                4959,
+                4960,
+                4961,
+                4962,
+                4963
+            ],
+            "runningOn": [
+                {
+                    "machineToRunOn": "silver-helix",
+                    "threads": 36
+                },
+                {
+                    "machineToRunOn": "iron-gym",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "omega-net",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "phantasy",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "neo-net",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "sigma-cosmetics",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "hong-fang-tea",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "harakiri-sushi",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "nectar-net",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "home",
+                    "threads": 4
+                },
+                {
+                    "machineToRunOn": "home",
+                    "threads": 3
+                }
+            ],
+            "isHacking": false,
+            "readyForNextProcess": false
+        }
+    ],
+    [
+        "silver-helix",
+        {
+            "name": "silver-helix",
+            "moneyThreshhold": 94921875,
+            "securityThreshholdTarget": 15,
+            "hackDifficulty": 15.068000000000008,
+            "moneyAvailable": 43186427.76614217,
+            "minDifficulty": 10,
+            "pids": [
+                5434
+            ],
+            "runningOn": [
+                {
+                    "machineToRunOn": "CLOUD-000",
+                    "threads": 120
+                }
+            ],
+            "isHacking": false,
+            "readyForNextProcess": false
+        }
+    ],
+    [
+        "phantasy",
+        {
+            "name": "phantasy",
+            "moneyThreshhold": 50625000,
+            "securityThreshholdTarget": 12,
+            "hackDifficulty": 12.057999999999979,
+            "moneyAvailable": 51907960.95281866,
+            "minDifficulty": 7,
+            "pids": [
+                5932
+            ],
+            "runningOn": [
+                {
+                    "machineToRunOn": "CLOUD-000",
+                    "threads": 120
+                }
+            ],
+            "isHacking": false,
+            "readyForNextProcess": false
+        }
+    ],
+    [
+        "iron-gym",
+        {
+            "name": "iron-gym",
+            "moneyThreshhold": 42187500,
+            "securityThreshholdTarget": 15,
+            "hackDifficulty": 13.734000000000005,
+            "moneyAvailable": 22523591.153905217,
+            "minDifficulty": 10,
+            "pids": [
+                5933,
+                5934,
+                5935,
+                5936,
+                5937,
+                5938
+            ],
+            "runningOn": [
+                {
+                    "machineToRunOn": "CLOUD-000",
+                    "threads": 52
+                },
+                {
+                    "machineToRunOn": "zer0",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "max-hardware",
+                    "threads": 18
+                },
+                {
+                    "machineToRunOn": "foodnstuff",
+                    "threads": 9
+                },
+                {
+                    "machineToRunOn": "CSEC",
+                    "threads": 4
+                },
+                {
+                    "machineToRunOn": "n00dles",
+                    "threads": 2
+                }
+            ],
+            "isHacking": false,
+            "readyForNextProcess": false
+        }
+    ],
+    [
+        "max-hardware",
+        {
+            "name": "max-hardware",
+            "moneyThreshhold": 21093750,
+            "securityThreshholdTarget": 10,
+            "hackDifficulty": 6.464,
+            "moneyAvailable": 19706809.017583665,
+            "minDifficulty": 5,
+            "pids": [
+                6069
+            ],
+            "runningOn": [
+                {
+                    "machineToRunOn": "avmnite-02h",
+                    "threads": 9
+                }
+            ],
+            "isHacking": false,
+            "readyForNextProcess": false
+        }
+    ],
+    [
+        "zer0",
+        {
+            "name": "zer0",
+            "moneyThreshhold": 15820312.5,
+            "securityThreshholdTarget": 13,
+            "hackDifficulty": 12.839999999999996,
+            "moneyAvailable": 15329409.57526105,
+            "minDifficulty": 8,
+            "pids": [
+                6390
+            ],
+            "runningOn": [
+                {
+                    "machineToRunOn": "home",
+                    "threads": 4
+                }
+            ],
+            "isHacking": false,
+            "readyForNextProcess": false
+        }
+    ]
+]

@@ -4,7 +4,7 @@ export async function main(ns) {
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
     const numberOfDifferentSleeps = 6;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
-    let dispatchScript = 'scripts/advanced-dispatch.js';
+    let dispatchScript = 'scripts/memory-starved-dispatch.js';
 
     let runClean = true;
     if (ns.args[0] === 'old') {
@@ -65,6 +65,7 @@ export async function main(ns) {
 
 
     async function singularityStuff(ns) { 
+        await doSingularityWork(ns, 'backdoor-all-machines')
         await doSingularityWork(ns, 'join-organziations');
         await doSingularityWork(ns, 'do-work');
         await doSingularityWork(ns, 'investments');
@@ -76,12 +77,13 @@ export async function main(ns) {
         await doSingularityWork(ns, 'buy-rep');
         await doSingularityWork(ns, 'workout');
         await doSingularityWork(ns, 'upgade-home-machine');
+        await doSingularityWork(ns, 'travel-to-get-augs');
     }
     
     async function doSingularityWork(ns, script){
         ns.run(`scripts/singularity/${script}.js`);
     
-        await ns.sleep(individualSleepAmount / 11);
+        await ns.sleep(individualSleepAmount / 13);
     }
 }
 

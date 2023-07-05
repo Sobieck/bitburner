@@ -8,7 +8,6 @@ export async function main(ns) {
     "scripts/singularity/buy-rep.js",
     "scripts/investments/invest-in-stocks.js",
     "scripts/singularity/do-work.js",
-    "scripts/singularity/join-organziations.js",
     "scripts/batch-dispatch.js",
     "scripts/singularity/workout.js",
     "scripts/singularity/do-job.js"
@@ -35,6 +34,13 @@ export async function main(ns) {
 
   ns.rm(ramReserveFile);
   ns.write(ramReserveFile, JSON.stringify({ramToReserve, ramToReserveInLimitedEnvironment, earlyGameLimiter}), "W");
+
+  const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
+
+  const ownedAugsTextFileName = "data/ownedAugs.txt";
+  ns.rm(ownedAugsTextFileName);
+  ns.write(ownedAugsTextFileName, JSON.stringify(ownedAugmentations), "W");
+  
 }
 
 class ScriptRam {

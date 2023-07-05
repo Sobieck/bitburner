@@ -39,7 +39,14 @@ export async function main(ns) {
     setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns, "Artificial Bio-neural Network Implant", "BitRunners");
 
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction)
-    const targetRep = ns.formulas.reputation.calculateFavorToRep(150)
+
+    const currentFavor = ns.singularity.getFactionFavor(targetFaction.faction);
+    const favorNeeded = 150 - currentFavor;
+    
+    let targetRep = 700_000;
+    if (ns.fileExists("Formulas.exe")) {
+        targetRep = ns.formulas.reputation.calculateFavorToRep(favorNeeded)
+    }
 
 
     if (targetFaction.maximumAugRep < currentFactionRep || targetRep < currentFactionRep || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
@@ -49,6 +56,7 @@ export async function main(ns) {
             ns.write(stopInvestingFileName, "", "W")
             return;
         }
+
 
         const factionsWithAugmentsToBuy =
             mostRepExpensiveForEachFaction
@@ -87,9 +95,16 @@ export async function main(ns) {
         }
 
 
-        const buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
+        let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
+
+        if(targetFaction.faction === "CyberSec"){
+            ns.tprint("asdfs")
+            buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 10;
+        }
 
         const moneyAvailable = ns.getServerMoneyAvailable("home");
+
+        ns.tprint(moneyAvailable - buyAugmentsWhenWeHaveMoreThanThisMuchMoney)
 
         if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > 1_000_000_000_000_000) {
             const stopStockTradingFileName = "stopTrading.txt";
@@ -98,7 +113,7 @@ export async function main(ns) {
                 return;
             }
 
-
+            ns.tprint("his")
             const purchasableAugments = new Map();
 
             for (const factionWithAugments of factionsWithAugmentsToBuy) {
@@ -153,10 +168,29 @@ function purchaseNeuroFluxGovernors(ns, faction) {
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
     const augmentRepPrice = ns.singularity.getAugmentationRepReq(augmentName);
-    const factionRep = ns.singularity.getFactionRep(faction);
+    let factionRep = ns.singularity.getFactionRep(faction);
 
-    if (moneyAvailable > price && factionRep > augmentRepPrice) {
-        ns.singularity.purchaseAugmentation(faction, augmentName);
+    if (moneyAvailable > price) {
+        if (factionRep < augmentRepPrice){
+            if(ns.fileExists("Formulas.exe")){
+                const repNeeded = augmentRepPrice - factionRep;
+                let dollarsDonated = 0;
+                let purchasedRep = 0;
+                while(repNeeded > purchasedRep){
+                    dollarsDonated += 1_000_000;
+                    purchasedRep = ns.formulas.reputation.repFromDonation(dollarsDonated, player);
+                }
+
+                ns.singularity.donateToFaction(faction, dollarsDonated);
+            }
+        }
+
+        factionRep = ns.singularity.getFactionRep(faction);
+
+        if (factionRep > augmentRepPrice){
+            ns.singularity.purchaseAugmentation(faction, augmentName);
+        }
+        
     } else {
         return;
     }

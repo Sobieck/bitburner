@@ -19,6 +19,10 @@ export async function main(ns) {
             type = new TypeOfPurchase(tempType);
         }
 
+        if(!type.lastPurchaseDate){
+            type.lastPurchaseDate = new Date();
+        }
+
         if (ns.fileExists(ramObservationsTextFile)) {
             ramObservations = JSON.parse(ns.read(ramObservationsTextFile));
             ns.rm(ramObservationsTextFile);
@@ -31,6 +35,11 @@ export async function main(ns) {
         ns.rm(buyOrUpgradeServerFlag);
         ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
 
+        const lastPurchaseDatePlusOneHour = new Date(type.lastPurchaseDate).setHours(new Date(type.lastPurchaseDate).getHours() + 1)
+        
+        // ns.tprint(`Last Purchase Date: ${new Date(type.lastPurchaseDate)}`);
+        // ns.tprint(`Plus One Hour     : ${new Date(lastPurchaseDatePlusOneHour)}`);
+
         if (type.min) {
             additionalRamNeeded = Math.min(...ramObservations);
         }
@@ -41,7 +50,7 @@ export async function main(ns) {
 
         if (type.max) {
             additionalRamNeeded = Math.max(...ramObservations);
-        }
+        } 
     }
 
     let maxRam = 1048576;
@@ -137,7 +146,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         return true;
     } else {
-        ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
         if (upgradeOnly === false) {
             return purchaseServer(ns, maxRam, additionalRamNeeded);
         }
@@ -151,6 +160,7 @@ class TypeOfPurchase {
     max = false;
     min = true;
     average = false;
+    lastPurchaseDate = new Date();
 
     constructor(obj) {
         obj && Object.assign(this, obj);
@@ -179,5 +189,7 @@ class TypeOfPurchase {
             this.max = false;
             return;
         }
+
+        this.lastPurchaseDate = new Date();
     }
 }

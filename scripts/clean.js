@@ -38,4 +38,5 @@ export async function main(ns) {
     ns.rm('data/factionDonatation.txt');
     ns.rm('data/ramToReserveOnHome.txt');
     ns.rm('data/ownedAugs.txt');
+    ns.rm('data/memoryStarvedQueue.txt');
 }

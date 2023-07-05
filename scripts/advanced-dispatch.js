@@ -16,6 +16,11 @@ export async function main(ns) {
 
     let batchTargets = [];
 
+    if (ns.fileExists(batchQueuesFileName)) {
+        const batchQueue = JSON.parse(ns.read(batchQueuesFileName));
+        batchTargets = batchQueue.map(x => x[0]);
+    }
+
     let recordOfWhoIsBeingHacked = new Map();
 
     if (ns.fileExists(nameOfrecordOfWhoIsBeingHacked)) {
@@ -27,11 +32,6 @@ export async function main(ns) {
         if (record.pid === 0) {
             recordOfWhoIsBeingHacked.delete(recordKey);
         }
-    }
-
-    if (ns.fileExists(batchQueuesFileName)) {
-        const batchQueue = JSON.parse(ns.read(batchQueuesFileName));
-        batchTargets = batchQueue.map(x => x[0]);
     }
 
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
