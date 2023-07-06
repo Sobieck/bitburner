@@ -56,7 +56,7 @@ export async function main(ns) {
         if (factionInAugsMix) {
 
             const newFactionToMax = factionInAugsMix.faction;
-            
+
             if (factionToMax !== newFactionToMax) {
                 factionToMax = newFactionToMax;
                 ns.rm(factionToMaxFile);
@@ -76,12 +76,19 @@ export async function main(ns) {
     for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
 
         if (currentWork &&
-            (currentWork.type === "COMPANY" || currentWork.type === "CLASS") &&
-            (currentWork.companyName === faction || currentWork.classType === "Leadership") &&
+            currentWork.type === "COMPANY" &&
+            currentWork.companyName === faction &&
             !player.factions.includes(faction)) {
 
             break;
         }
+
+        if (currentWork &&
+            currentWork.type === "CLASS" && 
+            currentWork.classType === "Leadership") {
+                
+                break;
+            } 
 
         const factionsAugs = factionsWithAugsToBuyAndNotEnoughtFavor.find(x => x.faction === faction);
 

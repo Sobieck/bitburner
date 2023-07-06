@@ -52,6 +52,11 @@ export async function main(ns) {
 
 
     const positionInCompany = player.jobs[company];
+
+    if(!positionInCompany){
+        return;
+    }
+
     const currentPositionInfo = ns.singularity.getCompanyPositionInfo(company, positionInCompany);
     const nextPositionInfo = ns.singularity.getCompanyPositionInfo(company, currentPositionInfo.nextPosition);
     const companyRep = ns.singularity.getCompanyRep(company);

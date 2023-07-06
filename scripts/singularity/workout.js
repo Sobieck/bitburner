@@ -49,6 +49,7 @@ function getBuffForFaction(ns, faction, targetForAttributes){
 function doExersizeIfAppropriate(skill, currentWork, ns, type, targetForAttributes) {
     if (skill < targetForAttributes) {
         if (!currentWork || currentWork.classType !== type) {
+            ns.singularity.travelToCity("Sector-12");
             ns.singularity.gymWorkout("powerhouse gym", type, true);
         }
         return true;

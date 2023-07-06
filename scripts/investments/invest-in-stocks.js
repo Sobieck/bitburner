@@ -65,7 +65,14 @@ export async function main(ns) {
     const commission = 100_001;
     const moneyAvailable = ns.getServerMoneyAvailable("home") - commission;
 
-    if (moneyAvailable > 10_000_000_000 && !stopTradingExists) {
+    //amount to invest is 10 billion when running towards buying augs, otherwise it should be 100 billion
+
+    let onlyInvestIfWeHaveMoreThan = 100_000_000_000
+    if(!ns.fileExists('../../stopInvesting.txt')){
+        onlyInvestIfWeHaveMoreThan = 10_000_000_000;
+    }
+    
+    if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
         const stocksToGoLong = stockRecords
             .filter(stock => stock.investedShares !== stock.maxShares && stock.forecast > 0.6)
             .sort((a, b) => b.volatility - a.volatility);

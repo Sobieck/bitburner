@@ -32,7 +32,7 @@ export async function main(ns) {
         const moneySources = ns.getMoneySources();
 
         for (let [key, value] of Object.entries(moneySources.sinceInstall)) {
-            if (key !== "total" && value > 0) {
+            if (key !== "total" && value > 0 && key !== "stock") {
                 totalIncomeSinceAugInstall += value;
             }
         }
