@@ -1,4 +1,5 @@
 let incomePerHourEstimate;
+let updatedMoneyEstimate = false;
 
 export async function main(ns) {
 
@@ -26,19 +27,31 @@ export async function main(ns) {
     }
 
     if (lastObservationRecordedMoney.getMinutes() !== lastObservation.getMinutes()) {
-        const totalIncomeSinceAugInstall = ns.getMoneySources().sinceInstall.total;
+        let totalIncomeSinceAugInstall = 0
 
+        const moneySources = ns.getMoneySources();
+
+        for (let [key, value] of Object.entries(moneySources.sinceInstall)) {
+            if (key !== "total" && value > 0) {
+                totalIncomeSinceAugInstall += value;
+            }
+        }
         incomeObservations.push(totalIncomeSinceAugInstall);
 
-        if (incomeObservations.length > 59) {
-            const totalIncome30MinutesAgo = incomeObservations.shift();
+        const totalIncome30MinutesAgo = incomeObservations[0];
 
-            const incomePerMinute = (totalIncomeSinceAugInstall - totalIncome30MinutesAgo) / 60;
-            incomePerHourEstimate = incomePerMinute * 60;
+        const incomePerMinute = (totalIncomeSinceAugInstall - totalIncome30MinutesAgo) / incomeObservations.length;
+        incomePerHourEstimate = incomePerMinute * 60;
+        updatedMoneyEstimate = true;
+
+        if (incomeObservations.length > 30) {
+            incomeObservations.shift();
         }
 
         ns.rm(incomeEveryMinuteObservationsFile);
         ns.write(incomeEveryMinuteObservationsFile, JSON.stringify({ incomeObservations, lastObservation }), "W");
+    } else {
+        updatedMoneyEstimate = false;
     }
 
     if (ns.fileExists(factionToMaxFile) || ns.fileExists(factionDonationFile)) {
@@ -138,7 +151,12 @@ export async function main(ns) {
 
         if (moneyFormatted !== "$NaN") {
             const hoursTillInstall = Math.floor(buyAugmentsWhenWeHaveMoreThanThisMuchMoney / incomePerHourEstimate);
-            ns.toast(`Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall}`, "success", 180000)
+            if (updatedMoneyEstimate) {
+                const now = new Date();
+                const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+
+                ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall}`, "success", 60000)
+            }
         }
 
         if (estimatedIncomeForTheNextFourHours > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney) {
@@ -147,8 +165,8 @@ export async function main(ns) {
             if (!ns.fileExists(stopInvestingFileName)) {
                 ns.write(stopInvestingFileName, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, "W")
                 return;
-            } 
-            
+            }
+
             if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > 1_000_000_000_000_000) {
                 const stopStockTradingFileName = "stopTrading.txt";
                 if (!ns.fileExists(stopStockTradingFileName)) {

@@ -58,6 +58,7 @@ export async function main(ns) {
 
     if (nextPositionInfo.requiredReputation < companyRep && nextPositionInfo.requiredSkills.charisma > player.skills.charisma) {
         if (!currentWork || currentWork.type !== "CLASS") {
+            ns.singularity.travelToCity("Sector-12");
             ns.singularity.universityCourse("Rothman University", "Leadership", true);
             return;
         }

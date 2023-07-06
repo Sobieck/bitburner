@@ -12,8 +12,9 @@ export async function main(ns) {
         if (travelToGetUniqueAugments(ns, "INFRARET Enhancement", "Ishima", ownedAugmentations)) { return; }
     }
 
-    if (moneyAvailable > 250_000_000 && ns.singularity.getFactionRep("Tian Di Hui")) {
-        if (ns.singularity.getFactionRep("Chongqing") === 0) {
+    const playersLocation = ns.getPlayer().city
+    if (moneyAvailable > 250_000_000) {
+        if (ns.singularity.getFactionRep("Tian Di Hui") === 0 && playersLocation !== "Chongqing") {
             ns.singularity.travelToCity("Chongqing");
         }
     }
@@ -21,8 +22,6 @@ export async function main(ns) {
 
 function notInAnyCityFaction(ns){
     const cityFactions = ["Chongqing", "Aevum", "Sector-12", "Volhaven", "New Tokyo", "Ishima"];
-
-    const player = ns.getPlayer()
 
     for (const city of cityFactions) {
         if(ns.singularity.getFactionRep(city)){
@@ -34,10 +33,10 @@ function notInAnyCityFaction(ns){
 }
 
 function travelToGetUniqueAugments(ns, augmentWanted, city, ownedAugmentations) {
-
     if (!ownedAugmentations.includes(augmentWanted)) {
 
-        if (ns.singularity.getFactionRep(city) === 0) {
+        const playersLocation = ns.getPlayer().city
+        if (ns.singularity.getFactionRep(city) === 0 && playersLocation !== city) {
             ns.singularity.travelToCity(city);
         }
 

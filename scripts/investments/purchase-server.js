@@ -1,4 +1,5 @@
-let countOfVisits = 0;
+let countOfTriesToBuyServers = 0;
+let countOfVisitsWithoutTryingToBuy = 0;
 
 export async function main(ns) {
     const buyOrUpgradeServerFlag = "../../buyOrUpgradeServerFlag.txt";
@@ -9,10 +10,20 @@ export async function main(ns) {
     let ramObservations = [];
     let type = new TypeOfPurchase();
 
-    if (!ns.fileExists(buyOrUpgradeServerFlag)) {
+    if(ns.fileExists(ramObservationsTextFile)){
+        countOfVisitsWithoutTryingToBuy++;
+    } else {
+        countOfVisitsWithoutTryingToBuy = 0;
+    }
+    
+    if (ns.fileExists(buyOrUpgradeServerFlag)) {
+        countOfVisitsWithoutTryingToBuy = 0;
+    }
+
+    if (!ns.fileExists(buyOrUpgradeServerFlag) || countOfVisitsWithoutTryingToBuy > 300) {
         return;
     } else {
-        countOfVisits++;
+        countOfTriesToBuyServers++;
 
         if (ns.fileExists(typeRecord)) {
             const tempType = JSON.parse(ns.read(typeRecord));
@@ -25,16 +36,19 @@ export async function main(ns) {
 
         if (ns.fileExists(ramObservationsTextFile)) {
             ramObservations = JSON.parse(ns.read(ramObservationsTextFile));
-            ns.rm(ramObservationsTextFile);
+
         }
 
-        const latestRamNeeded = JSON.parse(ns.read(buyOrUpgradeServerFlag));
+        if(ns.fileExists(buyOrUpgradeServerFlag)){
+            const latestRamNeeded = JSON.parse(ns.read(buyOrUpgradeServerFlag));
 
-        ramObservations.push(latestRamNeeded);
-
-        ns.rm(buyOrUpgradeServerFlag);
-        ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
-
+            ramObservations.push(latestRamNeeded);
+    
+            ns.rm(buyOrUpgradeServerFlag);
+         
+            ns.rm(ramObservationsTextFile);
+            ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
+        }
 
         if(ramObservations.length < 10){
             return;
@@ -154,11 +168,11 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         return true;
     } else {
-        if(countOfVisits > 100){
+        if(countOfTriesToBuyServers > 100){
             const now = new Date();
             const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
             ns.toast(`${timeStamp} Too expensive to buy ${ramToBuy} $${Number((costOfRamToBuy).toFixed(2)).toLocaleString()}`, "warning", null);
-            countOfVisits = 0;
+            countOfTriesToBuyServers = 0;
         }
 
         

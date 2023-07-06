@@ -7,8 +7,16 @@ let lastRecordedToConsole = new Date();
 
 let visitsToFunction = 0;
 
+let countOfSuccesses = [];
+let countOfFailures = [];
+let averageErrorRateOver10Minutes = 0;
+let errorRateAtWhichWeAllowNewThings = 0.1;
+
 export async function main(ns) {
     visitsToFunction++;
+    
+    const buyOrUpgradeServerFlagFile = 'buyOrUpgradeServerFlag.txt';
+    const memoryConstrained = ns.fileExists('data/ramObservations.txt') || ns.fileExists(buyOrUpgradeServerFlagFile);
 
     const batchQueuesFileName = "data/batchQueue.txt"
 
@@ -50,22 +58,24 @@ export async function main(ns) {
         .map(x => batchQueueForDifferentTargets.get(x))
         .filter(x => !x.prepStage)
         .length > 0;
-
-    const memoryConstrained = ns.fileExists('data/ramObservations.txt') || ns.fileExists('buyOrUpgradeServerFlag.txt');
+    
+    const noMoreInvestingForEndGame = ns.fileExists("stopInvesting.txt");
 
     for (const nameOfTarget of targetNames) {
         const targetServer = ns.getServer(nameOfTarget);
         const batchForTarget = batchQueueForDifferentTargets.get(nameOfTarget);
 
-        if (!memoryConstrained || !anyBatchNotPrepping) {
-            prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget);
+        if (averageErrorRateOver10Minutes < errorRateAtWhichWeAllowNewThings || !anyBatchNotPrepping) {
+            if(!noMoreInvestingForEndGame){
+                prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget);
+            }
         }
 
         createBatchesOfJobs(batchForTarget, ns, targetServer, player);
     }
 
     await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment, homeMemoryLimitations);
-    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player, memoryConstrained);
+    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player, noMoreInvestingForEndGame);
     adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDifferentTargets, targetNames);
 
     ns.rm(batchQueuesFileName);
@@ -88,7 +98,7 @@ export async function main(ns) {
         const errorRate = 1 - (successesThisRun / total);
 
         if (errorRate > 0.03) {
-            ns.toast(`${timeStamp} Error Rate in batches ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })}`, "error", null);
+            ns.toast(`${timeStamp} Error Rate in batches ${errorRate.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })}`, "error", 60000);
         }
 
         const averageTimeBetweenVisits = secondsBetweenVisits.reduce((acc, b) => acc + b, 0) / secondsBetweenVisits.length;
@@ -124,6 +134,28 @@ export async function main(ns) {
 
         ns.rm(reliabilityForBatchFile);
         ns.write(reliabilityForBatchFile, JSON.stringify(batchReliability), "W");
+
+
+        countOfFailures.push(failuresThisRun);
+        countOfSuccesses.push(successesThisRun);
+
+        if(countOfFailures.length > 10){
+            countOfFailures.shift();
+        }
+
+        if(countOfSuccesses.length > 10){
+            countOfSuccesses.shift();
+        }
+
+        const successesIn10Minutes = countOfSuccesses.reduce((acc, b) => acc + b, 0);
+        const failuresIn10Minutes = countOfFailures.reduce((acc, b) => acc + b, 0);
+        const totalIn10Minutes = successesIn10Minutes + failuresIn10Minutes;
+
+        averageErrorRateOver10Minutes = 1 - (successesIn10Minutes / totalIn10Minutes);
+
+        if (averageErrorRateOver10Minutes > errorRateAtWhichWeAllowNewThings) {
+            ns.toast(`${timeStamp} Error Rate over 10 minutes is: ${averageErrorRateOver10Minutes.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })}`, "error", 60000);
+        }
 
 
         failuresThisRun = 0;
@@ -694,8 +726,6 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
                         ns.kill(x.pid);
                     }
                 });
-
-                // ns.toast("poisoned", "error", 5000);
             }
 
             if (remove) {
@@ -705,13 +735,13 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
     }
 }
 
-function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player, memoryConstrained) {
+function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player, noMoreInvestingForEndGame) {
     const batchesAreSaturated = targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks);
     const over5TrillionDollars = ns.getServerMoneyAvailable("home") > 5_000_000_000_000;
 
     let addNewServerToAttack = false;
 
-    if (batchQueue.size < 15 && batchesAreSaturated && !memoryConstrained) {
+    if (batchQueue.size < 15 && batchesAreSaturated && averageErrorRateOver10Minutes < errorRateAtWhichWeAllowNewThings && !noMoreInvestingForEndGame) {
         addNewServerToAttack = true;
     }
 

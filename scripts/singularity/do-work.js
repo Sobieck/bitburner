@@ -76,8 +76,8 @@ export async function main(ns) {
     for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
 
         if (currentWork &&
-            currentWork.type === "COMPANY" &&
-            currentWork.companyName === faction &&
+            (currentWork.type === "COMPANY" || currentWork.type === "CLASS") &&
+            (currentWork.companyName === faction || currentWork.classType === "Leadership") &&
             !player.factions.includes(faction)) {
 
             break;
