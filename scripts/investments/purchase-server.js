@@ -44,13 +44,18 @@ export async function main(ns) {
             additionalRamNeeded = Math.min(...ramObservations);
         }
 
+        const average = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
+
         if (type.average) {
-            additionalRamNeeded = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
+            additionalRamNeeded = average;
         }
 
         if (type.max) {
-            const average = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
-            additionalRamNeeded = average * 2; //Math.max(...ramObservations);
+            if(ns.fileExists('batchQueue.txt')){
+                additionalRamNeeded = Math.max(...ramObservations);
+            } else {
+                additionalRamNeeded = average * 2;
+            }
         } 
     }
 
@@ -82,7 +87,9 @@ export async function main(ns) {
     if (upgradedOrPurchased) {
         ns.rm(ramObservationsTextFile);
         type.changeType();
-        ns.toast(`More than ${Math.round(additionalRamNeeded)} GB bought for server`, "success", null);
+        const now = new Date();
+        const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+        ns.toast(`${timeStamp} More than ${Math.round(additionalRamNeeded)} GB bought for server`, "success", null);
     }
 
     ns.rm(typeRecord);
@@ -148,7 +155,9 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         return true;
     } else {
         if(countOfVisits > 100){
-            ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+            const now = new Date();
+            const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+            ns.toast(`${timeStamp} Too expensive to buy ${ramToBuy} $${Number((costOfRamToBuy).toFixed(2)).toLocaleString()}`, "warning", null);
             countOfVisits = 0;
         }
 

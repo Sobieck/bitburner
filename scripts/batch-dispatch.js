@@ -5,8 +5,10 @@ let lastTimeVisited = new Date();
 let secondsBetweenVisits = [];
 let lastRecordedToConsole = new Date();
 
-export async function main(ns) {
+let visitsToFunction = 0;
 
+export async function main(ns) {
+    visitsToFunction++;
 
     const batchQueuesFileName = "data/batchQueue.txt"
 
@@ -29,6 +31,11 @@ export async function main(ns) {
     const totalBoughtMemory = playerServers.reduce((acc, x) => acc + x.server.maxRam, 0);
 
     if (totalBoughtMemory < 105_000) {
+        if (visitsToFunction > 100) {
+            visitsToFunction = 0;
+            ns.toast(`Ram Needed to Start Batches: ${Math.round(105_000 - totalBoughtMemory)}`, "warning", 180000)
+        }
+
         ns.run('scripts/memory-starved-dispatch.js');
         return;
     }
@@ -39,16 +46,26 @@ export async function main(ns) {
     giveBatchQueueStructure(targetNames, batchQueueForDifferentTargets);
     cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueueForDifferentTargets, ns);
 
+    const anyBatchNotPrepping = targetNames
+        .map(x => batchQueueForDifferentTargets.get(x))
+        .filter(x => !x.prepStage)
+        .length > 0;
+
+    const memoryConstrained = ns.fileExists('data/ramObservations.txt') || ns.fileExists('buyOrUpgradeServerFlag.txt');
+
     for (const nameOfTarget of targetNames) {
         const targetServer = ns.getServer(nameOfTarget);
         const batchForTarget = batchQueueForDifferentTargets.get(nameOfTarget);
 
-        prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget);
+        if (!memoryConstrained || !anyBatchNotPrepping) {
+            prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget);
+        }
+
         createBatchesOfJobs(batchForTarget, ns, targetServer, player);
     }
 
     await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment, homeMemoryLimitations);
-    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player);
+    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player, memoryConstrained);
     adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDifferentTargets, targetNames);
 
     ns.rm(batchQueuesFileName);
@@ -87,7 +104,13 @@ export async function main(ns) {
 
         const moneyFormatted = formatter.format(moneyWeHaveNow);
 
-        ns.tprint(`${timeStamp} Money we have now: ${moneyFormatted} | Number of targeted server: ${targetNames.length}`)
+        let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted} | Number of targeted server: ${String(targetNames.length).padStart(2,0)}`;
+
+        if(memoryConstrained){
+            consoleUpdate += " | Memory Constrained";
+        }
+
+        ns.tprint(consoleUpdate);
 
         const reliabilityForBatchFile = 'data/reliabilityForEvery100Batches.txt';
         let batchReliability = [];
@@ -109,8 +132,13 @@ export async function main(ns) {
         lastRecordedToConsole = now;
     }
 
-    if (moneyWeHaveNow > 1_000_000_000_000 || targetNames.map(x => batchQueueForDifferentTargets.get(x)).every(x => !x.targetMachineSaturatedWithAttacks)) {
-        ns.run('scripts/advanced-dispatch.js');
+    if (moneyWeHaveNow > 1_000_000_000_000 ||
+        targetNames
+            .map(x => batchQueueForDifferentTargets.get(x))
+            .every(x => !x.targetMachineSaturatedWithAttacks)) {
+        if (!memoryConstrained) {
+            ns.run('scripts/advanced-dispatch.js');
+        }
     }
 }
 
@@ -220,7 +248,7 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDi
             queueOfBatches.successesInTheLastHour = 0;
             queueOfBatches.failuresInTheLastHour = 0;
 
-            if (ratioOfFailuresThisHour > 0.8 && totalRunsThisHour > 10 && countOfDeleted < 2) {
+            if (ratioOfFailuresThisHour > 0.9 && totalRunsThisHour > 10 && countOfDeleted < 2) {
                 for (const batch of queueOfBatches.batchesQueue) {
                     batch.jobs.map(x => {
                         if (x.pid) {
@@ -514,7 +542,6 @@ function getServer(ns, serverName, homeMemoryLimitations) {
 }
 
 function prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget) {
-
     const amountToWeaken = targetServer.hackDifficulty - targetServer.minDifficulty;
     const serverHasMaxMoney = targetServer.moneyMax === targetServer.moneyAvailable;
     const currentTime = new Date();
@@ -678,20 +705,13 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
     }
 }
 
-function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player) {
-    const ramObservationsForPurchasingNewServer = 'data/ramObservations.txt';
-    const weNeedToBuyServers = ns.fileExists(ramObservationsForPurchasingNewServer);
-
+function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player, memoryConstrained) {
     const batchesAreSaturated = targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks);
     const over5TrillionDollars = ns.getServerMoneyAvailable("home") > 5_000_000_000_000;
 
     let addNewServerToAttack = false;
 
-    if (!weNeedToBuyServers && batchQueue.size < 10) {
-        addNewServerToAttack = true;
-    }
-
-    if (batchQueue.size < 15 && batchesAreSaturated && !weNeedToBuyServers) {
+    if (batchQueue.size < 15 && batchesAreSaturated && !memoryConstrained) {
         addNewServerToAttack = true;
     }
 
