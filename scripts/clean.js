@@ -18,25 +18,7 @@ export async function main(ns) {
             })
     }
 
-
-    ns.rm('data/enviroment.txt');
-    ns.rm('data/dataOnWhatHappensEachRound.txt');
-    ns.rm('data/recordOfWhoIsBeingHacked.txt');
-    ns.rm('data/salesLedger.txt');
-    ns.rm('stopInvesting.txt');
-    ns.rm('data/stockHistory.txt');
-    ns.rm('data/contractData.txt');
-    ns.rm('data/serversUsedForBatching.txt');
-    ns.rm('data/batchQueue.txt')
-    ns.rm('buyOrUpgradeServerFlag.txt');
-    ns.rm('data/organizations.txt');
-    ns.rm('data/ramObservations.txt');
-    ns.rm('data/typeOfServerPurchase.txt');
-    ns.rm("data/factionToMax.txt");
-    ns.rm('stopTrading.txt');
-    ns.rm('data/reliabilityForEvery100Batches.txt');
-    ns.rm('data/factionDonatation.txt');
-    ns.rm('data/ramToReserveOnHome.txt');
-    ns.rm('data/ownedAugs.txt');
-    ns.rm('data/memoryStarvedQueue.txt');
+    for (const textFile of ns.ls("home", ".txt")) {
+        ns.rm(textFile);
+    }
 }

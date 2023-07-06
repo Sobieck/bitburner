@@ -1,7 +1,8 @@
 export async function main(ns) {
     const ownedAugmentations = JSON.parse(ns.read("data/ownedAugs.txt"));
     const moneyAvailable = ns.getServerMoneyAvailable("home");
-    if (moneyAvailable > 10_000_000) {
+
+    if (moneyAvailable > 10_000_000 && notInAnyCityFaction(ns)) {
 
         if (travelToGetUniqueAugments(ns, "Neuregen Gene Modification", "Chongqing", ownedAugmentations)) { return; }
         if (travelToGetUniqueAugments(ns, 'PCMatrix', "Aevum", ownedAugmentations)) { return; }
@@ -11,11 +12,25 @@ export async function main(ns) {
         if (travelToGetUniqueAugments(ns, "INFRARET Enhancement", "Ishima", ownedAugmentations)) { return; }
     }
 
-    if (moneyAvailable > 250_000_000 && ns.singularity.getFactionRep("Tian Di Hui") === 0) {
+    if (moneyAvailable > 250_000_000 && ns.singularity.getFactionRep("Tian Di Hui")) {
         if (ns.singularity.getFactionRep("Chongqing") === 0) {
             ns.singularity.travelToCity("Chongqing");
         }
     }
+}
+
+function notInAnyCityFaction(ns){
+    const cityFactions = ["Chongqing", "Aevum", "Sector-12", "Volhaven", "New Tokyo", "Ishima"];
+
+    const player = ns.getPlayer()
+
+    for (const city of cityFactions) {
+        if(ns.singularity.getFactionRep(city)){
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function travelToGetUniqueAugments(ns, augmentWanted, city, ownedAugmentations) {

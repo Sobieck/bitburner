@@ -1,5 +1,7 @@
 export async function main(ns) {
     const ramObservationsTextFile = '../../data/ramObservations.txt';
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+    
     const stopInvestingFileName = "stopInvesting.txt";
     if (ns.fileExists(stopInvestingFileName)) {
         if (ns.fileExists(ramObservationsTextFile)) {
@@ -8,7 +10,7 @@ export async function main(ns) {
         return;
     }
 
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
+
     const numberOfPurchasedServers = ns.getPurchasedServers().length;
 
     if (moneyAvailable > 5_000_000_000) {

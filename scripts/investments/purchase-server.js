@@ -1,7 +1,5 @@
-// replace servers with this as well. just a bool passed in, put them both in their own methods.
+let countOfVisits = 0;
 
-/** @param {NS} ns */
-//run scripts/purchase-servers.js
 export async function main(ns) {
     const buyOrUpgradeServerFlag = "../../buyOrUpgradeServerFlag.txt";
     const ramObservationsTextFile = '../../data/ramObservations.txt';
@@ -14,6 +12,8 @@ export async function main(ns) {
     if (!ns.fileExists(buyOrUpgradeServerFlag)) {
         return;
     } else {
+        countOfVisits++;
+
         if (ns.fileExists(typeRecord)) {
             const tempType = JSON.parse(ns.read(typeRecord));
             type = new TypeOfPurchase(tempType);
@@ -35,10 +35,10 @@ export async function main(ns) {
         ns.rm(buyOrUpgradeServerFlag);
         ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
 
-        const lastPurchaseDatePlusOneHour = new Date(type.lastPurchaseDate).setHours(new Date(type.lastPurchaseDate).getHours() + 1)
-        
-        // ns.tprint(`Last Purchase Date: ${new Date(type.lastPurchaseDate)}`);
-        // ns.tprint(`Plus One Hour     : ${new Date(lastPurchaseDatePlusOneHour)}`);
+
+        if(ramObservations.length < 10){
+            return;
+        }
 
         if (type.min) {
             additionalRamNeeded = Math.min(...ramObservations);
@@ -49,7 +49,8 @@ export async function main(ns) {
         }
 
         if (type.max) {
-            additionalRamNeeded = Math.max(...ramObservations);
+            const average = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
+            additionalRamNeeded = average * 2; //Math.max(...ramObservations);
         } 
     }
 
@@ -81,7 +82,7 @@ export async function main(ns) {
     if (upgradedOrPurchased) {
         ns.rm(ramObservationsTextFile);
         type.changeType();
-        ns.toast(`More than ${additionalRamNeeded} GB bought for server`, "success", null);
+        ns.toast(`More than ${Math.round(additionalRamNeeded)} GB bought for server`, "success", null);
     }
 
     ns.rm(typeRecord);
@@ -146,7 +147,12 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         return true;
     } else {
-        // ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+        if(countOfVisits > 100){
+            ns.tprint("too expensive to buy ", ramToBuy, " $", Number((costOfRamToBuy).toFixed(2)).toLocaleString());
+            countOfVisits = 0;
+        }
+
+        
         if (upgradeOnly === false) {
             return purchaseServer(ns, maxRam, additionalRamNeeded);
         }

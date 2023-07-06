@@ -51,11 +51,11 @@ export async function main(ns) {
     }
 
     for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
-        factionsWithAugsToBuyAndNotEnoughtFavor.find(x => x.faction === faction);
+        const factionInAugsMix = factionsWithAugsToBuyAndNotEnoughtFavor.find(x => x.faction === faction);
 
-        if (factionsWithAugsToBuyAndNotEnoughtFavor) {
+        if (factionInAugsMix) {
 
-            const newFactionToMax = factionsWithAugsToBuyAndNotEnoughtFavor[0].faction;
+            const newFactionToMax = factionInAugsMix.faction;
             
             if (factionToMax !== newFactionToMax) {
                 factionToMax = newFactionToMax;
