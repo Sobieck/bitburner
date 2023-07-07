@@ -103,7 +103,7 @@ export async function main(ns) {
         type.changeType();
         const now = new Date();
         const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
-        ns.toast(`${timeStamp} More than ${Math.round(additionalRamNeeded)} GB bought for server`, "success", null);
+        ns.toast(`${timeStamp} More than ${Math.round(additionalRamNeeded)} GB bought for server`, "success", 300000);
     }
 
     ns.rm(typeRecord);
@@ -171,7 +171,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         if(countOfTriesToBuyServers > 100){
             const now = new Date();
             const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
-            ns.toast(`${timeStamp} Too expensive to buy ${ramToBuy} $${Number((costOfRamToBuy).toFixed(2)).toLocaleString()}`, "warning", null);
+            ns.toast(`${timeStamp} Too expensive to buy ${ramToBuy} $${Number((costOfRamToBuy).toFixed(2)).toLocaleString()}`, "warning", 300000);
             countOfTriesToBuyServers = 0;
         }
 

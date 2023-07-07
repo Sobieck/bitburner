@@ -33,7 +33,8 @@ export async function main(ns) {
         ledger = JSON.parse(ns.read(nameOfLedger));
     }
 
-    const stopTradingExists = ns.fileExists("../../stopTrading.txt") || ns.fileExists('../../data/ramObservations.txt');
+    const stopTradingExists = ns.fileExists("../../stopTrading.txt");
+    
     // sell short term positions;
     stockRecords.map(stock => {
         const investedShares = stock.investedShares;
@@ -68,7 +69,7 @@ export async function main(ns) {
     //amount to invest is 10 billion when running towards buying augs, otherwise it should be 100 billion
 
     let onlyInvestIfWeHaveMoreThan = 100_000_000_000
-    if(!ns.fileExists('../../stopInvesting.txt')){
+    if(ns.fileExists('../../stopInvesting.txt')){
         onlyInvestIfWeHaveMoreThan = 10_000_000_000;
     }
     

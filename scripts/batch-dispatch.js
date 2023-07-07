@@ -14,7 +14,7 @@ let errorRateAtWhichWeAllowNewThings = 0.1;
 
 export async function main(ns) {
     visitsToFunction++;
-    
+
     const buyOrUpgradeServerFlagFile = 'buyOrUpgradeServerFlag.txt';
     const memoryConstrained = ns.fileExists('data/ramObservations.txt') || ns.fileExists(buyOrUpgradeServerFlagFile);
 
@@ -54,21 +54,20 @@ export async function main(ns) {
     giveBatchQueueStructure(targetNames, batchQueueForDifferentTargets);
     cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueueForDifferentTargets, ns);
 
-    const anyBatchNotPrepping = targetNames
-        .map(x => batchQueueForDifferentTargets.get(x))
-        .filter(x => !x.prepStage)
-        .length > 0;
-    
     const noMoreInvestingForEndGame = ns.fileExists("stopInvesting.txt");
+
+    const anyBatchNotPrepping = targetNames
+    .map(x => batchQueueForDifferentTargets.get(x))
+    .filter(x => !x.prepStage)
+    .length > 0;
+
 
     for (const nameOfTarget of targetNames) {
         const targetServer = ns.getServer(nameOfTarget);
         const batchForTarget = batchQueueForDifferentTargets.get(nameOfTarget);
 
-        if (averageErrorRateOver10Minutes < errorRateAtWhichWeAllowNewThings || !anyBatchNotPrepping) {
-            if(!noMoreInvestingForEndGame){
-                prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget);
-            }
+        if (!noMoreInvestingForEndGame) {
+            prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget, anyBatchNotPrepping);
         }
 
         createBatchesOfJobs(batchForTarget, ns, targetServer, player);
@@ -114,9 +113,9 @@ export async function main(ns) {
 
         const moneyFormatted = formatter.format(moneyWeHaveNow);
 
-        let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted} | Number of targeted server: ${String(targetNames.length).padStart(2,0)}`;
+        let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted} | Number of targeted server: ${String(targetNames.length).padStart(2, 0)}`;
 
-        if(memoryConstrained){
+        if (memoryConstrained) {
             consoleUpdate += " | Memory Constrained";
         }
 
@@ -139,11 +138,11 @@ export async function main(ns) {
         countOfFailures.push(failuresThisRun);
         countOfSuccesses.push(successesThisRun);
 
-        if(countOfFailures.length > 10){
+        if (countOfFailures.length > 10) {
             countOfFailures.shift();
         }
 
-        if(countOfSuccesses.length > 10){
+        if (countOfSuccesses.length > 10) {
             countOfSuccesses.shift();
         }
 
@@ -573,14 +572,17 @@ function getServer(ns, serverName, homeMemoryLimitations) {
     return server;
 }
 
-function prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget) {
+function prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfTarget, anyBatchNotPrepping) {
     const amountToWeaken = targetServer.hackDifficulty - targetServer.minDifficulty;
     const serverHasMaxMoney = targetServer.moneyMax === targetServer.moneyAvailable;
     const currentTime = new Date();
 
     if (amountToWeaken === 0 && serverHasMaxMoney && batchForTarget.securityWeNeedToReduceAfterFullHack && batchForTarget.securityWeNeedToReduceAfterFullGrowth && batchForTarget.prepStage && batchForTarget.originalNumberOfThreadsForFullMoney) {
-        batchForTarget.prepStage = false;
-        batchForTarget.targetMachineSaturatedWithAttacks = false;
+
+        if (averageErrorRateOver10Minutes < errorRateAtWhichWeAllowNewThings || !anyBatchNotPrepping) {
+            batchForTarget.prepStage = false;
+            batchForTarget.targetMachineSaturatedWithAttacks = false;
+        }
     }
 
     if (batchForTarget.prepStage) {
