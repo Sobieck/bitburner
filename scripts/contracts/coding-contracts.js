@@ -1,4 +1,6 @@
-//run scripts/coding-contracts.js
+const now = new Date();
+let contractsFileName = `contracts/${now.toISOString().split('T')[0]}-${String(now.getHours()).padStart(2, 0)}-${String(now.getMinutes()).padStart(2, 0)}.txt`
+
 export async function main(ns) {
     const solverRegistry = [
         new LzDecompression2Handler(),
@@ -48,8 +50,8 @@ export async function main(ns) {
             }
         });
 
-    ns.rm("../../data/contractData.txt");
-    ns.write("../../data/contractData.txt", JSON.stringify(allContracts), "W");
+    ns.rm(contractsFileName);
+    ns.write(contractsFileName, JSON.stringify(allContracts), "W");
 }
 
 class Contract {

@@ -153,7 +153,7 @@ export async function main(ns) {
         averageErrorRateOver10Minutes = 1 - (successesIn10Minutes / totalIn10Minutes);
 
         if (averageErrorRateOver10Minutes > errorRateAtWhichWeAllowNewThings) {
-            ns.toast(`${timeStamp} Error Rate over 10 minutes is: ${averageErrorRateOver10Minutes.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })}`, "error", 60000);
+            ns.toast(`${timeStamp} Error Rate over 10 minutes is: ${averageErrorRateOver10Minutes.toLocaleString(undefined, { style: 'percent', minimumFractionDigits: 2 })}`, "error", 15000);
         }
 
 

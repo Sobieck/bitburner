@@ -18,7 +18,7 @@ export async function main(ns) {
             })
     }
 
-    const doNoDeleteFolders = ["analytics"]
+    const doNoDeleteFolders = ["analytics", "contracts"]
 
 
     for (const textFile of ns.ls("home", ".txt")) {
