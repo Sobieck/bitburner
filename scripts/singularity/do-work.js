@@ -84,11 +84,11 @@ export async function main(ns) {
         }
 
         if (currentWork &&
-            currentWork.type === "CLASS" && 
+            currentWork.type === "CLASS" &&
             currentWork.classType === "Leadership") {
-                
-                break;
-            } 
+
+            break;
+        }
 
         const factionsAugs = factionsWithAugsToBuyAndNotEnoughtFavor.find(x => x.faction === faction);
 

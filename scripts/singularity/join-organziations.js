@@ -39,8 +39,7 @@ export async function main(ns) {
     ];
 
     const stopAtAugments = [
-        { final: true, faction: "Chongqing", augmentToStopAt: "Neuregen Gene Modification" },
-        { final: false, faction: "BitRunners", augmentToStopAt: "Artificial Bio-neural Network Implant" },
+        { final: true, faction: "Chongqing", augmentToStopAt: "Neuregen Gene Modification" }
     ]
 
     const moneyAvailable = ns.getServerMoneyAvailable("home");

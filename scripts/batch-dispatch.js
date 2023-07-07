@@ -57,9 +57,9 @@ export async function main(ns) {
     const noMoreInvestingForEndGame = ns.fileExists("stopInvesting.txt");
 
     const anyBatchNotPrepping = targetNames
-    .map(x => batchQueueForDifferentTargets.get(x))
-    .filter(x => !x.prepStage)
-    .length > 0;
+        .map(x => batchQueueForDifferentTargets.get(x))
+        .filter(x => !x.prepStage)
+        .length > 0;
 
 
     for (const nameOfTarget of targetNames) {

@@ -11,7 +11,7 @@ export async function main(ns) {
 
     let incomeObservations = [];
     const lastObservation = new Date();
-    let lastObservationRecordedMoney;
+    let lastObservationRecordedMoney = new Date();
 
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -54,15 +54,36 @@ export async function main(ns) {
         updatedMoneyEstimate = false;
     }
 
+    let analytics = new EndOfRoundAnalytics();
+    const endOfRoundAnalyticsFile = "analytics/end-round.txt";
+    if (ns.fileExists(endOfRoundAnalyticsFile)) {
+        analytics = JSON.parse(ns.read(endOfRoundAnalyticsFile));
+    }
+
     if (ns.fileExists(factionToMaxFile) || ns.fileExists(factionDonationFile)) {
         if (ns.fileExists(factionToMaxFile)) {
             factionToMax = ns.read(factionToMaxFile);
+
+            if (!analytics.firstAssignFactionToMax) {
+                analytics.firstAssignFactionToMax = new Date();
+            }
         } else {
             factionToMax = ns.read(factionDonationFile);
+
+            if (!analytics.firstAssignFactionToMaxViaDonation) {
+                analytics.firstAssignFactionToMaxViaDonation = new Date();
+            }
         }
     } else {
         return;
     }
+
+    if (!analytics.factionsToMax.find(x => x.factionToMax === factionToMax)) {
+        const firstTime = new Date();
+        analytics.factionsToMax.push({ factionToMax, firstTime });
+    }
+
+    saveAnalytics(ns, analytics);
 
     const player = ns.getPlayer();
 
@@ -93,12 +114,25 @@ export async function main(ns) {
     const currentFavor = ns.singularity.getFactionFavor(targetFaction.faction);
     const favorNeeded = 150 - currentFavor;
 
-    let targetRep = 700_000;
+    let targetRepForGettingToFavor = 700_000;
     if (ns.fileExists("Formulas.exe")) {
-        targetRep = ns.formulas.reputation.calculateFavorToRep(favorNeeded)
+        targetRepForGettingToFavor = ns.formulas.reputation.calculateFavorToRep(favorNeeded)
     }
 
-    if (targetFaction.maximumAugRep < currentFactionRep || targetRep < currentFactionRep || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
+    if (!analytics.firstEncounterOfRepTrigger) {
+        const repTrigger = populateRepTrigger(targetFaction, currentFactionRep, targetRepForGettingToFavor, ns, factionDonationFile, factionToMaxFile);
+        analytics.firstEncounterOfRepTrigger = repTrigger;
+        saveAnalytics(ns, analytics);
+    }
+
+
+    if (targetFaction.maximumAugRep < currentFactionRep || targetRepForGettingToFavor < currentFactionRep || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
+
+        if (!analytics.repTrigger) {
+            const repTrigger = populateRepTrigger(targetFaction, currentFactionRep, targetRepForGettingToFavor, ns, factionDonationFile, factionToMaxFile);
+            analytics.repTrigger = repTrigger;
+            saveAnalytics(ns, analytics);
+        }
 
         const factionsWithAugmentsToBuy =
             mostRepExpensiveForEachFaction
@@ -132,6 +166,8 @@ export async function main(ns) {
 
         const priceOfMostExpensiveAugment = Math.max(...factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction).factionAugmentsThatIDontOwnAndCanAfford.map(x => x.price));
 
+
+
         if (priceOfMostExpensiveAugment < 0) {
             return;
         }
@@ -159,6 +195,15 @@ export async function main(ns) {
             }
         }
 
+        const superLargeAmountOfMoney = 1_000_000_000_000_000;
+
+        if (!analytics.firstEncoundedMoneyTrigger) {
+            const moneyTrigger = createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, superLargeAmountOfMoney, formatter);
+
+            analytics.firstEncoundedMoneyTrigger = moneyTrigger;
+            saveAnalytics(ns, analytics);
+        }
+
         if (estimatedIncomeForTheNextFourHours > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney) {
 
             const stopInvestingFileName = "stopInvesting.txt";
@@ -167,11 +212,18 @@ export async function main(ns) {
                 return;
             }
 
-            if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > 1_000_000_000_000_000) {
+            if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > superLargeAmountOfMoney) {
                 const stopStockTradingFileName = "stopTrading.txt";
                 if (!ns.fileExists(stopStockTradingFileName)) {
                     ns.write(stopStockTradingFileName, "", "W")
                     return;
+                }
+
+                if (!analytics.moneyTrigger) {
+                    const moneyTrigger = createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, superLargeAmountOfMoney, formatter);
+
+                    analytics.moneyTrigger = moneyTrigger;
+                    saveAnalytics(ns, analytics);
                 }
 
                 const purchasableAugments = new Map();
@@ -190,31 +242,69 @@ export async function main(ns) {
                     }
                 }
 
-                const targetFactionsAugments = factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction);
-
-                for (const augmentData of targetFactionsAugments.factionAugmentsThatIDontOwnAndCanAfford) {
-                    purchaseAug(ns, targetFactionsAugments.faction, augmentData.augmentName, augmentData.prereqs, purchasableAugments);
-                }
-
-                const augmentsLeft = Array.from(purchasableAugments.entries());
+                const augmentsLeft = Array.from(purchasableAugments.entries()).sort((a,b) => b[1].price - a[1].price);
 
                 for (const augmentData of augmentsLeft) {
                     const augment = augmentData[0];
                     const data = augmentData[1];
 
-                    purchaseAug(ns, data.faction, augment, data.prereqs, purchasableAugments);
+                    purchaseAug(ns, data.faction, augment, data.prereqs, purchasableAugments, analytics);
                 }
 
-                upgradeHomeMachine(ns);
+                upgradeHomeMachine(ns, analytics);
 
                 const factionsByRating = factionsWithAugmentsToBuy.sort((a, b) => b.factionRep - a.factionRep);
 
                 purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction);
 
+                analytics.moneyLeft = ns.getServerMoneyAvailable("home");
+
+                saveAnalytics(ns, analytics, true);
+
                 ns.singularity.installAugmentations('scripts/coordinator.js')
             }
         }
     }
+
+    saveAnalytics(ns, analytics);
+}
+
+function createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, superLargeAmountOfMoney, formatter) {
+    const moneyTrigger = new MoneyTrigger();
+    moneyTrigger.estimatedIncomeTriggered = estimatedIncomeForTheNextFourHours > buyAugmentsWhenWeHaveMoreThanThisMuchMoney;
+    moneyTrigger.moneyIsGreaterThanTriggered = moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney;
+    moneyTrigger.triggedWithSuperLargeAmountOfMoney = moneyAvailable > superLargeAmountOfMoney;
+
+    moneyTrigger.estimatedIncomeForTheNextFourHours = formatter.format(estimatedIncomeForTheNextFourHours);
+    moneyTrigger.moneyRightNow = formatter.format(moneyAvailable);
+    moneyTrigger.buyArgumentsWhenWeHave = formatter.format(buyAugmentsWhenWeHaveMoreThanThisMuchMoney);
+    return moneyTrigger;
+}
+
+function populateRepTrigger(targetFaction, currentFactionRep, targetRepForGettingToFavor, ns, factionDonationFile, factionToMaxFile) {
+    const repTrigger = new RepTrigger();
+    repTrigger.factionRepGreaterThanMaximumAug = targetFaction.maximumAugRep < currentFactionRep;
+    repTrigger.factionRepGreaterThanTargetToGetToFavorNeeded = targetRepForGettingToFavor < currentFactionRep;
+    repTrigger.factionDonationTrigger = ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile);
+
+    repTrigger.maximumAugRepNeeded = targetFaction.maximumAugRep;
+    repTrigger.currentFactionRep = currentFactionRep;
+    repTrigger.targetRepForGettingToFavor = targetRepForGettingToFavor;
+    return repTrigger;
+}
+
+function saveAnalytics(ns, analytics, final = false) {
+    let endOfRoundAnalyticsFile = "analytics/end-round.txt";
+    ns.rm(endOfRoundAnalyticsFile);
+
+    if (final) {
+        const now = new Date()
+        const factionToMax = analytics.factionsToMax[analytics.factionsToMax.length - 1].factionToMax.replaceAll(' ', '');
+        endOfRoundAnalyticsFile = `analytics/${now.toISOString().split('T')[0]}-${String(now.getHours()).padStart(2, 0)}-${String(now.getMinutes()).padStart(2, 0)}-${factionToMax}-end-round.txt`;
+    }
+
+    analytics.lastSaved = new Date();
+    ns.write(endOfRoundAnalyticsFile, JSON.stringify(analytics), "W");
 }
 
 function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
@@ -231,7 +321,7 @@ function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
     }
 }
 
-function purchaseNeuroFluxGovernors(ns, faction) {
+function purchaseNeuroFluxGovernors(ns, faction, analytics) {
     const augmentName = "NeuroFlux Governor"
     const price = ns.singularity.getAugmentationPrice(augmentName);
     const moneyAvailable = ns.getServerMoneyAvailable("home");
@@ -239,12 +329,13 @@ function purchaseNeuroFluxGovernors(ns, faction) {
     const augmentRepPrice = ns.singularity.getAugmentationRepReq(augmentName);
     let factionRep = ns.singularity.getFactionRep(faction);
 
-    if (moneyAvailable > price) {
+    if (moneyAvailable > price && ns.singularity.getFactionFavor(faction) > 150) {
         if (factionRep < augmentRepPrice) {
             if (ns.fileExists("Formulas.exe")) {
                 const repNeeded = augmentRepPrice - factionRep;
                 let dollarsDonated = 0;
                 let purchasedRep = 0;
+                const player = ns.getPlayer();
                 while (repNeeded > purchasedRep) {
                     dollarsDonated += 1_000_000;
                     purchasedRep = ns.formulas.reputation.repFromDonation(dollarsDonated, player);
@@ -264,10 +355,10 @@ function purchaseNeuroFluxGovernors(ns, faction) {
         return;
     }
 
-    purchaseNeuroFluxGovernors(ns, faction);
+    purchaseNeuroFluxGovernors(ns, faction, analytics);
 }
 
-function upgradeHomeMachine(ns) {
+function upgradeHomeMachine(ns, analytics) {
     const ramCost = ns.singularity.getUpgradeHomeRamCost();
     const coreCost = ns.singularity.getUpgradeHomeCoresCost();
     const moneyAvailable = ns.getServerMoneyAvailable("home");
@@ -277,15 +368,17 @@ function upgradeHomeMachine(ns) {
     }
 
     if (ramCost > coreCost) {
+        analytics.moneySpent.homeCores += coreCost;
         ns.singularity.upgradeHomeCores();
     } else {
+        analytics.moneySpent.homeRam += ramCost;
         ns.singularity.upgradeHomeRam();
     }
 
-    return upgradeHomeMachine(ns);
+    return upgradeHomeMachine(ns, analytics);
 }
 
-function purchaseAug(ns, faction, augmentName, prereqs, purchasableAugments) {
+function purchaseAug(ns, faction, augmentName, prereqs, purchasableAugments, analytics) {
     const ownedAugments = ns.singularity.getOwnedAugmentations(true)
 
     if (ownedAugments.includes(augmentName) === false) {
@@ -293,14 +386,86 @@ function purchaseAug(ns, faction, augmentName, prereqs, purchasableAugments) {
             if (!ownedAugments.includes(prereq)) {
                 const prereqAugment = purchasableAugments.get(prereq);
                 if (prereqAugment) {
-                    purchaseAug(ns, prereqAugment.faction, prereq, prereqAugment.prereqs, purchasableAugments);
+                    purchaseAug(ns, prereqAugment.faction, prereq, prereqAugment.prereqs, purchasableAugments, analytics);
                 }
             }
         }
 
-        if (ns.singularity.getAugmentationPrice(augmentName) < ns.getServerMoneyAvailable("home")) {
+        const augmentPrice = ns.singularity.getAugmentationPrice(augmentName);
+        const amountOfMoneyWeHave = ns.getServerMoneyAvailable("home")
+
+        if (augmentPrice < amountOfMoneyWeHave) {
+            analytics.moneySpent.augments += augmentPrice;
+            if(!analytics.augsBought) {
+                analytics.augsBought = [];
+            }
+            analytics.augsBought.push(augmentName)
+
             ns.singularity.purchaseAugmentation(faction, augmentName);
             purchasableAugments.delete(augmentName);
         }
     }
+}
+
+
+class EndOfRoundAnalytics {
+    firstStarted = new Date();
+
+
+    firstAssignFactionToMax;
+    firstAssignFactionToMaxViaDonation;
+
+    factionsToMax = [];
+
+    firstEncounterOfRepTrigger;
+    repTrigger;
+
+
+    firstEncoundedMoneyTrigger;
+    moneyTrigger;
+
+    augsBought = [];
+
+    // amountOfRamIncrease
+    // amountOfCoresIncrease
+
+    moneySpent = new MoneySpent();
+
+    moneyLeft = 0;
+    lastSaved;
+}
+
+class MoneyTrigger {
+    estimatedIncomeTriggered;
+    moneyIsGreaterThanTriggered;
+    triggedWithSuperLargeAmountOfMoney
+
+    estimatedIncomeForTheNextFourHours;
+    moneyRightNow;
+    buyArgumentsWhenWeHave;
+
+    time = new Date();
+}
+
+class MoneySpent {
+
+    augments = 0;
+    homeCores = 0;
+    homeRam = 0;
+    fluxGovernors = 0;
+
+}
+
+class RepTrigger {
+
+    factionRepGreaterThanMaximumAug;
+    factionRepGreaterThanTargetToGetToFavorNeeded;
+    factionDonationTrigger;
+
+
+    maximumAugRepNeeded;
+    currentFactionRep;
+    targetRepForGettingToFavor;
+
+    time = new Date();
 }

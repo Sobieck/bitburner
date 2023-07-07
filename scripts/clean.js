@@ -18,7 +18,12 @@ export async function main(ns) {
             })
     }
 
+    const doNoDeleteFolders = ["analytics"]
+
+
     for (const textFile of ns.ls("home", ".txt")) {
-        ns.rm(textFile);
+        if(!doNoDeleteFolders.find(x => textFile.startsWith(x))){
+            ns.rm(textFile);
+        }
     }
 }

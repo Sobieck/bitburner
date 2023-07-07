@@ -1,0 +1,57 @@
+{
+    "firstStarted": "2023-07-07T16:19:40.262Z",
+    "firstAssignFactionToMax": "2023-07-07T16:19:40.262Z",
+    "factionsToMax": [
+        {
+            "factionToMax": "BitRunners",
+            "firstTime": "2023-07-07T16:19:40.262Z"
+        }
+    ],
+    "firstEncounterOfRepTrigger": {
+        "factionRepGreaterThanMaximumAug": false,
+        "factionRepGreaterThanTargetToGetToFavorNeeded": false,
+        "factionDonationTrigger": false,
+        "maximumAugRepNeeded": 275000,
+        "currentFactionRep": 0,
+        "targetRepForGettingToFavor": 700000,
+        "time": "2023-07-07T16:19:40.262Z"
+    },
+    "augsBought": [
+        "Neural Accelerator"
+    ],
+    "moneySpent": {
+        "augments": 0,
+        "homeCores": 0,
+        "homeRam": 0,
+        "fluxGovernors": 0,
+        "augment": null
+    },
+    "lastSaved": "2023-07-07T19:03:34.187Z",
+    "repTrigger": {
+        "factionRepGreaterThanMaximumAug": false,
+        "factionRepGreaterThanTargetToGetToFavorNeeded": true,
+        "factionDonationTrigger": false,
+        "maximumAugRepNeeded": 275000,
+        "currentFactionRep": 207528.18490936968,
+        "targetRepForGettingToFavor": 207510.3723,
+        "time": "2023-07-07T19:03:30.139Z"
+    },
+    "firstEncoundedMoneyTrigger": {
+        "estimatedIncomeTriggered": true,
+        "moneyIsGreaterThanTriggered": true,
+        "triggedWithSuperLargeAmountOfMoney": false,
+        "estimatedIncomeForTheNextFourHours": "$11,781,091,031,741.60",
+        "moneyRightNow": "$1,303,091,345,518.27",
+        "buyArgumentsWhenWeHave": "$175,000,000,000.00",
+        "time": "2023-07-07T19:03:30.139Z"
+    },
+    "moneyTrigger": {
+        "estimatedIncomeTriggered": true,
+        "moneyIsGreaterThanTriggered": true,
+        "triggedWithSuperLargeAmountOfMoney": false,
+        "estimatedIncomeForTheNextFourHours": "$11,781,091,031,741.60",
+        "moneyRightNow": "$2,544,403,997,543.49",
+        "buyArgumentsWhenWeHave": "$175,000,000,000.00",
+        "time": "2023-07-07T19:03:34.186Z"
+    }
+}
