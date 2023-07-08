@@ -8,7 +8,7 @@ export async function main(ns) {
     "scripts/singularity/buy-rep.js",
     "scripts/investments/invest-in-stocks.js",
     "scripts/singularity/do-work.js",
-    "scripts/batch-dispatch.js",
+    "scripts/hacking/batch-dispatch.js",
     "scripts/singularity/workout.js",
     "scripts/singularity/do-job.js"
   ];

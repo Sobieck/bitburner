@@ -1,6 +1,6 @@
-const hackScript = 'scripts/advanced-hacks/hack.js';
-const growScript = 'scripts/advanced-hacks/grow.js';
-const weakenScript = 'scripts/advanced-hacks/weaken.js';
+const hackScript = 'scripts/hacking/hack.js';
+const growScript = 'scripts/hacking/grow.js';
+const weakenScript = 'scripts/hacking/weaken.js';
 
 let ranOnHomeThisTime = false;
 

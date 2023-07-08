@@ -44,7 +44,7 @@ export async function main(ns) {
             ns.toast(`Ram Needed to Start Batches: ${Math.round(105_000 - totalBoughtMemory)}`, "warning", 180000)
         }
 
-        ns.run('scripts/memory-starved-dispatch.js');
+        ns.run('scripts/hacking/memory-starved-dispatch.js');
         return;
     }
 
@@ -169,7 +169,7 @@ export async function main(ns) {
             .map(x => batchQueueForDifferentTargets.get(x))
             .every(x => !x.targetMachineSaturatedWithAttacks)) {
         if (!memoryConstrained) {
-            ns.run('scripts/advanced-dispatch.js');
+            ns.run('scripts/hacking/advanced-dispatch.js');
         }
     }
 }
@@ -345,9 +345,9 @@ function createBatchesOfJobs(batchForTarget, ns, targetServer, player) {
 }
 
 async function executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, environment, homeMemoryLimitations) {
-    const hackScript = 'scripts/advanced-hacks/hack.js';
-    const growScript = 'scripts/advanced-hacks/grow.js';
-    const weakenScript = 'scripts/advanced-hacks/weaken.js';
+    const hackScript = 'scripts/hacking/hack.js';
+    const growScript = 'scripts/hacking/grow.js';
+    const weakenScript = 'scripts/hacking/weaken.js';
 
     const ramNeededForWeaken = ns.getScriptRam(weakenScript);
     const ramNeededForGrow = ns.getScriptRam(growScript);
