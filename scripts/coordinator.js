@@ -16,7 +16,7 @@ export async function main(ns) {
         await ns.sleep(1000);
     }
 
-    ns.run('scripts/script-ram-usage-finder.js')
+    ns.run('scripts/precalculate-important-data.js')
 
     await ns.sleep(200);
 
@@ -27,8 +27,8 @@ export async function main(ns) {
         }
 
         
-        ns.run("scripts/scan.js", 1, dispatchScript); // this triggers all hacks. But we need to analyse the environment first. 
-        await ns.sleep(individualSleepAmount); // need rest between actions for some fing reason. 
+        ns.run("scripts/scan.js", 1, dispatchScript); 
+        await ns.sleep(individualSleepAmount); 
 
 
         ns.run('scripts/hack-all-machines.js');
