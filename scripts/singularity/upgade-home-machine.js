@@ -32,7 +32,7 @@ async function upgradeHomeRamOrCpu(ns, moneyLeftLimit) {
 
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-    if(moneyLeftLimit < coreUpgradeCost || moneyLeftLimit < ramUpgradeCost){
+    if(moneyLeftLimit < coreUpgradeCost && moneyLeftLimit < ramUpgradeCost){
         return;
     } else {
         visitedBefore = true;

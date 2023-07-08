@@ -4,7 +4,6 @@ export async function main(ns) {
   const notImportantScriptsForEarlyGame = [
     "scripts/singularity/finish-bitnode.js", 
     "scripts/singularity/finish-round.js", 
-    "scripts/contracts/coding-contracts.js",
     "scripts/singularity/buy-rep.js",
     "scripts/investments/invest-in-stocks.js",
     "scripts/singularity/do-work.js",
@@ -20,7 +19,8 @@ export async function main(ns) {
 
   const mostExpensiveScript = orderedScriptsByRamUsage[0];
   const coordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/coordinator.js")
-  const ramToReserve = coordinator.ram + mostExpensiveScript.ram;
+  const contractCoordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/contracts/contract-coordinator.js")
+  const ramToReserve = coordinator.ram + mostExpensiveScript.ram + contractCoordinator.ram;
 
   const earlyGameScriptsUsage = orderedScriptsByRamUsage
     .filter(x => !notImportantScriptsForEarlyGame.includes(x.name));

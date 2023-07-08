@@ -1,4 +1,4 @@
-let contractsFileName;
+
 
 export async function main(ns) {
     const solverRegistry = [
@@ -11,30 +11,8 @@ export async function main(ns) {
         new Encryption1Handler(),
     ]
 
-    const allContracts = [];
-
-    JSON
-        .parse(ns.read('../../data/enviroment.txt'))
-        .map(server => {
-            const hostName = server.name;
-            ns
-                .ls(hostName)
-                .filter(file => file.endsWith('.cct'))
-                .map(contract => {
-                    const cont = new Contract(
-                        hostName,
-                        contract,
-                        ns.codingcontract.getContractType(contract, hostName),
-                        ns.codingcontract.getNumTriesRemaining(contract, hostName),
-                        ns.codingcontract.getData(contract, hostName),
-                        ns.codingcontract.getDescription(contract, hostName),
-                    );
-
-                    allContracts.push(cont);
-                });
-        });
-
-    allContracts
+    const contracts = JSON.parse(ns.read(thisRoundsContractsFileName));
+    contracts
         .forEach(contract => {
             if (contract.attemptsLeft === 10 || contract.attemptsLeft === 5) {
                 const solver = solverRegistry.find(x => x.type === contract.type);
@@ -44,40 +22,20 @@ export async function main(ns) {
                     if (success === "") {
                         const failuresContractsFileName = `contracts/failure/${contract.server}-${contract.name}-${contract.type.replaceAll(" ", "")}.txt`;
 
-                        const saveThis = {contract, result};
-                        
-                        ns.rm(failuresContractsFileName);
+                        const saveThis = { contract, wrongResult: result };
+
                         ns.write(failuresContractsFileName, JSON.stringify(saveThis), "W");
 
-
-                        ns.alert(`${contract.name} on ${contract.server} had a problem solving. You need to figure this out.`);
+                        ns.alert(`${contract.name} on ${contract.server} had a problem solving. You need to figure this out. Type: ${contract.type}`);
                     } else {
-                        ns.toast(`Contract completed: ${success}`, "success", null);
+                        ns.toast(`Contract completed: ${success} Type: ${contract.type}`, "success", null);
                     }
                 }
             }
         });
-
-    const savedContracts = JSON.parse(ns.read(contractsFileName));
-    if (allContracts.length === 0 && savedContracts.length > 0){
-        const now = new Date();
-        contractsFileName = `contracts/${now.toISOString().split('T')[0]}-${String(now.getHours()).padStart(2, 0)}-${String(now.getMinutes()).padStart(2, 0)}.txt`
-    }
-
-    ns.rm(contractsFileName);
-    ns.write(contractsFileName, JSON.stringify(allContracts), "W");
 }
 
-class Contract {
-    constructor(server, name, type, attemptsLeft, input, description) {
-        this.server = server;
-        this.name = name;
-        this.type = type;
-        this.attemptsLeft = attemptsLeft;
-        this.input = input;
-        this.description = description;
-    }
-}
+const thisRoundsContractsFileName = "data/contracts.txt";
 
 class LzDecompression2Handler {
     type = 'Compression II: LZ Decompression';
@@ -283,12 +241,12 @@ class SpiralizeMatrixHandler {
     type = "Spiralize Matrix";
 
     solve(matrix) {
-        return this.solveRecursively(matrix);
+        return this.solveRecursively(Array.from(matrix));
     }
 
-    solveRecursively(matrix, spiralOrderResult = []){
+    solveRecursively(matrix, spiralOrderResult = []) {
 
-        if(matrix.length === 0){
+        if (matrix.length === 0) {
             return spiralOrderResult;
         }
 
@@ -296,7 +254,7 @@ class SpiralizeMatrixHandler {
             if (i === 0 || i === matrix.length - 1) {
                 let rowToEmpty = matrix[i];
 
-                if(i === matrix.length - 1 && i !== 0){
+                if (i === matrix.length - 1 && i !== 0) {
                     rowToEmpty.reverse()
                 }
 
@@ -311,11 +269,11 @@ class SpiralizeMatrixHandler {
 
                 spiralOrderResult.push(rowBeingUsed.pop());
             }
-        }      
+        }
 
-        
+
         for (let i = matrix.length - 1; i > -1; i--) {
-            if(matrix[i].length === 0){
+            if (matrix[i].length === 0) {
                 matrix.splice(i, 1);
             }
         }
@@ -324,7 +282,7 @@ class SpiralizeMatrixHandler {
             const row = matrix[i];
             row.reverse();
             spiralOrderResult.push(row.pop());
-            row.reverse();            
+            row.reverse();
         }
 
         return this.solveRecursively(matrix, spiralOrderResult)

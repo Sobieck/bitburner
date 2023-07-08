@@ -34,8 +34,7 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-
-        ns.run('scripts/contracts/coding-contracts.js');
+        ns.run('scripts/contracts/contract-coordinator.js');
         await ns.sleep(individualSleepAmount);
 
 
