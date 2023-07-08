@@ -10,12 +10,12 @@ export async function main(ns) {
     let ramObservations = [];
     let type = new TypeOfPurchase();
 
-    if(ns.fileExists(ramObservationsTextFile)){
+    if (ns.fileExists(ramObservationsTextFile)) {
         countOfVisitsWithoutTryingToBuy++;
     } else {
         countOfVisitsWithoutTryingToBuy = 0;
     }
-    
+
     if (ns.fileExists(buyOrUpgradeServerFlag)) {
         countOfVisitsWithoutTryingToBuy = 0;
     }
@@ -30,7 +30,7 @@ export async function main(ns) {
             type = new TypeOfPurchase(tempType);
         }
 
-        if(!type.lastPurchaseDate){
+        if (!type.lastPurchaseDate) {
             type.lastPurchaseDate = new Date();
         }
 
@@ -39,18 +39,18 @@ export async function main(ns) {
 
         }
 
-        if(ns.fileExists(buyOrUpgradeServerFlag)){
+        if (ns.fileExists(buyOrUpgradeServerFlag)) {
             const latestRamNeeded = JSON.parse(ns.read(buyOrUpgradeServerFlag));
 
             ramObservations.push(latestRamNeeded);
-    
+
             ns.rm(buyOrUpgradeServerFlag);
-         
+
             ns.rm(ramObservationsTextFile);
             ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
         }
 
-        if(ramObservations.length < 10){
+        if (ramObservations.length < 10) {
             return;
         }
 
@@ -65,12 +65,12 @@ export async function main(ns) {
         }
 
         if (type.max) {
-            if(ns.fileExists('batchQueue.txt')){
+            if (ns.fileExists('batchQueue.txt')) {
                 additionalRamNeeded = Math.max(...ramObservations);
             } else {
                 additionalRamNeeded = average * 2;
             }
-        } 
+        }
     }
 
     let maxRam = 1048576;
@@ -116,19 +116,19 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
 
     if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
 
-        let purchaseCost =  ns.getPurchasedServerCost(ramToBuy);
+        let purchaseCost = ns.getPurchasedServerCost(ramToBuy);
         let moneyAvailable = ns.getServerMoneyAvailable("home");
 
         if (moneyAvailable > purchaseCost) {
 
             while (moneyAvailable > purchaseCost && ramToBuy < additionalRamNeeded) {
-                
+
                 ramToBuy = ramToBuy * 2;
-            
+
                 purchaseCost = ns.getPurchasedServerCost(ramToBuy);
             }
-            
-            if(ramToBuy > maxRam){
+
+            if (ramToBuy > maxRam) {
                 ramToBuy = maxRam;
             }
 
@@ -140,7 +140,10 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
             }
         }
         else {
-            ns.toast("Not enough money to buy new server", "warning", 3000)
+            if (countOfTriesToBuyServers > 100) {
+                ns.toast("Not enough money to buy new server", "warning", 3000)
+                countOfTriesToBuyServers = 0;
+            }
         }
     } else {
         ns.tprint("max servers already bought");
@@ -168,14 +171,14 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         return true;
     } else {
-        if(countOfTriesToBuyServers > 100){
+        if (countOfTriesToBuyServers > 100) {
             const now = new Date();
             const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
             ns.toast(`${timeStamp} Too expensive to buy ${ramToBuy} $${Number((costOfRamToBuy).toFixed(2)).toLocaleString()}`, "warning", 300000);
             countOfTriesToBuyServers = 0;
         }
 
-        
+
         if (upgradeOnly === false) {
             return purchaseServer(ns, maxRam, additionalRamNeeded);
         }

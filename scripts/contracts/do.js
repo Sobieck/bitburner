@@ -9,6 +9,7 @@ export async function main(ns) {
         new AlgorithmicStockTrading2Handler(),
         new SpiralizeMatrixHandler(),
         new Encryption1Handler(),
+        new Encryption2Handler(),
     ]
 
     const contracts = JSON.parse(ns.read(thisRoundsContractsFileName));
@@ -319,5 +320,48 @@ class Encryption1Handler {
         }
 
         return returnString;
+    }
+}
+
+
+class Encryption2Handler {
+    type = 'Encryption II: Vigenère Cipher';
+
+    solve([plainText, key]) {
+
+        let encryptedText = "";
+
+        if(plainText){
+            let keyIndex = 0;
+
+            for (let i = 0; i < plainText.length; i++) {
+                const plainTextCharacter = plainText[i];
+
+                if(plainTextCharacter === " "){
+                    encryptedText += " ";
+                } else {
+                    const keyCharCode = key[keyIndex].charCodeAt(0);
+                    const shift = keyCharCode - 65;
+
+                    const plainTextCode = plainTextCharacter.charCodeAt(0);
+                    let encryptedCharacterCode = plainTextCode + shift;
+
+                    if (encryptedCharacterCode > 91) {
+                        const amountMoreThan91 = encryptedCharacterCode - 91;
+                        encryptedCharacterCode = amountMoreThan91 + 65;
+                    }
+
+                    encryptedText += String.fromCharCode(encryptedCharacterCode);
+                }
+
+                
+                keyIndex++;
+                if(keyIndex >= key.length){
+                    keyIndex = 0;
+                }
+            }
+        }
+
+        return encryptedText;
     }
 }

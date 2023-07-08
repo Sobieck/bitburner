@@ -30,7 +30,7 @@ describe("caesar cipher", () => {
 
     it("should return D A SHBOARD when given D A SHBOARD and A.", () => {
         const result = new Encryption2Handler().solve(['D A SHBOARD', 'A']);
-        expect(result).toBe('D A HBOARD')
+        expect(result).toBe('D A SHBOARD')
     });
 
     it("should return '' when given '' and A.", () => {
@@ -54,15 +54,31 @@ class Encryption2Handler {
 
         if(plainText){
             let keyIndex = 0;
+
             for (let i = 0; i < plainText.length; i++) {
-                const keyChar = key[i];
+                const plainTextCharacter = plainText[i];
 
-                const character = plainText[i];
-
-                if(character === " "){
+                if(plainTextCharacter === " "){
                     encryptedText += " ";
                 } else {
-                    
+                    const keyCharCode = key[keyIndex].charCodeAt(0);
+                    const shift = keyCharCode - 65;
+
+                    const plainTextCode = plainTextCharacter.charCodeAt(0);
+                    let encryptedCharacterCode = plainTextCode + shift;
+
+                    if (encryptedCharacterCode > 91) {
+                        const amountMoreThan91 = encryptedCharacterCode - 91;
+                        encryptedCharacterCode = amountMoreThan91 + 65;
+                    }
+
+                    encryptedText += String.fromCharCode(encryptedCharacterCode);
+                }
+
+                
+                keyIndex++;
+                if(keyIndex >= key.length){
+                    keyIndex = 0;
                 }
             }
         }
