@@ -74,7 +74,7 @@ export async function main(ns) {
     }
 
     await executeJobs(ns, targetNames, batchQueueForDifferentTargets, player, enviroment, homeMemoryLimitations);
-    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player, noMoreInvestingForEndGame);
+    addNewTargetsToQueueIfNeeded(batchQueueForDifferentTargets, targetNames, ns, enviroment, player, noMoreInvestingForEndGame, homeMemoryLimitations);
     adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDifferentTargets, targetNames);
 
     ns.rm(batchQueuesFileName);
@@ -164,6 +164,7 @@ export async function main(ns) {
     }
 
     if (moneyWeHaveNow > 1_000_000_000_000 ||
+        homeServer.maxRam - homeServer.ramUsed > 300000 ||
         targetNames
             .map(x => batchQueueForDifferentTargets.get(x))
             .every(x => !x.targetMachineSaturatedWithAttacks)) {
@@ -737,9 +738,10 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
     }
 }
 
-function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player, noMoreInvestingForEndGame) {
+function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player, noMoreInvestingForEndGame, homeMemoryLimitations) {
     const batchesAreSaturated = targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks);
     const over5TrillionDollars = ns.getServerMoneyAvailable("home") > 5_000_000_000_000;
+    const massiveRamOnHome = getServer(ns, "home", homeMemoryLimitations).maxRam > 400_000;
 
     let addNewServerToAttack = false;
 
@@ -752,6 +754,10 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
     }
 
     if (over5TrillionDollars && batchesAreSaturated && batchQueue.size < 50) {
+        addNewServerToAttack = true;
+    }
+
+    if(massiveRamOnHome && batchQueue.size < 50){
         addNewServerToAttack = true;
     }
 

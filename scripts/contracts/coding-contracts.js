@@ -1,5 +1,4 @@
-const now = new Date();
-let contractsFileName = `contracts/${now.toISOString().split('T')[0]}-${String(now.getHours()).padStart(2, 0)}-${String(now.getMinutes()).padStart(2, 0)}.txt`
+let contractsFileName;
 
 export async function main(ns) {
     const solverRegistry = [
@@ -42,6 +41,14 @@ export async function main(ns) {
                     const result = solver.solve(contract.input);
                     const success = ns.codingcontract.attempt(result, contract.name, contract.server);
                     if (success === "") {
+                        const failuresContractsFileName = `contracts/failure/${contract.server}-${contract.name}-${contract.type.replaceAll(" ", "")}.txt`;
+
+                        const saveThis = {contract, result};
+                        
+                        ns.rm(failuresContractsFileName);
+                        ns.write(failuresContractsFileName, JSON.stringify(saveThis), "W");
+
+
                         ns.alert(`${contract.name} on ${contract.server} had a problem solving. You need to figure this out.`);
                     } else {
                         ns.toast(`Contract completed: ${success}`, "success", null);
@@ -49,6 +56,11 @@ export async function main(ns) {
                 }
             }
         });
+
+    if (allContracts.length = 0){
+        const now = new Date();
+        contractsFileName = `contracts/${now.toISOString().split('T')[0]}-${String(now.getHours()).padStart(2, 0)}-${String(now.getMinutes()).padStart(2, 0)}.txt`
+    }
 
     ns.rm(contractsFileName);
     ns.write(contractsFileName, JSON.stringify(allContracts), "W");

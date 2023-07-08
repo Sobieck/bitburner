@@ -1,12 +1,69 @@
-[
-    {
-        "final": true,
-        "faction": "Chongqing",
-        "augmentToStopAt": "Neuregen Gene Modification"
+{
+    "firstStarted": "2023-07-08T01:27:34.503Z",
+    "firstAssignFactionToMax": "2023-07-08T01:27:34.503Z",
+    "factionsToMax": [
+        {
+            "factionToMax": "NWO",
+            "firstTime": "2023-07-08T01:27:34.503Z"
+        }
+    ],
+    "firstEncounterOfRepTrigger": {
+        "factionRepGreaterThanMaximumAug": false,
+        "factionRepGreaterThanTargetToGetToFavorNeeded": false,
+        "factionDonationTrigger": false,
+        "maximumAugRepNeeded": 1750000,
+        "currentFactionRep": 0,
+        "targetRepForGettingToFavor": 462490.0692,
+        "time": "2023-07-08T01:27:34.503Z"
     },
-    {
-        "final": false,
-        "faction": "BitRunners",
-        "augmentToStopAt": "Artificial Bio-neural Network Implant"
+    "augsBought": [
+        "Embedded Netburner Module Core V2 Upgrade",
+        "Embedded Netburner Module Core V3 Upgrade",
+        "Embedded Netburner Module Direct Memory Access Upgrade",
+        "Embedded Netburner Module Analyze Engine",
+        "BitRunners Neurolink",
+        "NEMEAN Subdermal Weave",
+        "Synthetic Heart",
+        "Power Recirculation Core",
+        "Neurotrainer III",
+        "Combat Rib I",
+        "Combat Rib II",
+        "DermaForce Particle Barrier",
+        "The Red Pill"
+    ],
+    "moneySpent": {
+        "augments": 501848779077.36707,
+        "homeCores": 0,
+        "homeRam": 99817008059070.77,
+        "fluxGovernors": 0
+    },
+    "moneyLeft": 75733371162620.36,
+    "lastSaved": "2023-07-08T03:54:59.353Z",
+    "repTrigger": {
+        "factionRepGreaterThanMaximumAug": false,
+        "factionRepGreaterThanTargetToGetToFavorNeeded": true,
+        "factionDonationTrigger": false,
+        "maximumAugRepNeeded": 1750000,
+        "currentFactionRep": 462501.05086586776,
+        "targetRepForGettingToFavor": 462490.0692,
+        "time": "2023-07-08T03:54:55.304Z"
+    },
+    "firstEncoundedMoneyTrigger": {
+        "estimatedIncomeTriggered": true,
+        "moneyIsGreaterThanTriggered": true,
+        "triggedWithSuperLargeAmountOfMoney": false,
+        "estimatedIncomeForTheNextFourHours": "$526,824,656,393,874.44",
+        "moneyRightNow": "$251,999,971,224,510.60",
+        "buyArgumentsWhenWeHave": "$18,000,000,000.00",
+        "time": "2023-07-08T03:54:55.304Z"
+    },
+    "moneyTrigger": {
+        "estimatedIncomeTriggered": true,
+        "moneyIsGreaterThanTriggered": true,
+        "triggedWithSuperLargeAmountOfMoney": false,
+        "estimatedIncomeForTheNextFourHours": "$526,824,656,393,874.44",
+        "moneyRightNow": "$253,602,470,575,079.72",
+        "buyArgumentsWhenWeHave": "$18,000,000,000.00",
+        "time": "2023-07-08T03:54:59.351Z"
     }
-]
+}

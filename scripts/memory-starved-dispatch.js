@@ -158,14 +158,6 @@ function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread
         threads--;
 
         machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment, homeMemoryLimitations)
-
-        if(machineToRunOn && machineToRunOn.maxRam > 200 && threads < 20){
-            machineToRunOn = undefined;
-        }
-
-        if(machineToRunOn && machineToRunOn.maxRam > 900 && threads < 90){
-            machineToRunOn = undefined;
-        }
     }
 
     return { threads, machineToRunOn };
