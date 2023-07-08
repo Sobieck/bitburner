@@ -8,6 +8,7 @@ export async function main(ns) {
         new AlgorithmicStockTrading1Handler(),
         new AlgorithmicStockTrading2Handler(),
         new SpiralizeMatrixHandler(),
+        new Encryption1Handler(),
     ]
 
     const allContracts = [];
@@ -57,7 +58,8 @@ export async function main(ns) {
             }
         });
 
-    if (allContracts.length = 0){
+    const savedContracts = JSON.parse(ns.read(contractsFileName));
+    if (allContracts.length === 0 && savedContracts.length > 0){
         const now = new Date();
         contractsFileName = `contracts/${now.toISOString().split('T')[0]}-${String(now.getHours()).padStart(2, 0)}-${String(now.getMinutes()).padStart(2, 0)}.txt`
     }
@@ -329,3 +331,35 @@ class SpiralizeMatrixHandler {
     }
 }
 
+class Encryption1Handler {
+    type = 'Encryption I: Caesar Cipher';
+
+    solve([string, shift]) {
+
+        let returnString = "";
+
+        if (string) {
+            for (const character of string) {
+                if (character === " ") {
+                    returnString += " ";
+                }
+                else {
+                    const charCode = character.charCodeAt(0);
+
+                    if (charCode) {
+                        let newCharCode = charCode - shift;
+
+                        if (newCharCode < 65) {
+                            const amountLessThan65 = 65 - newCharCode;
+                            newCharCode = 91 - amountLessThan65;
+                        }
+
+                        returnString += String.fromCharCode(newCharCode);
+                    }
+                }
+            }
+        }
+
+        return returnString;
+    }
+}
