@@ -1,5 +1,6 @@
 let countOfTriesToBuyServers = 0;
 let countOfVisitsWithoutTryingToBuy = 0;
+const beforeFormulasServerSpendFile = "data/beforeFormulasServerSpend.txt";
 
 export async function main(ns) {
     const buyOrUpgradeServerFlag = "../../buyOrUpgradeServerFlag.txt";
@@ -54,35 +55,29 @@ export async function main(ns) {
             return;
         }
 
-        if (type.min) {
-            additionalRamNeeded = Math.min(...ramObservations);
-        }
-
-        const average = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
+        additionalRamNeeded = Math.min(...ramObservations);
 
         if (type.average) {
-            additionalRamNeeded = average;
+            additionalRamNeeded = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
         }
 
-        if (type.max) {
-            if (ns.fileExists('batchQueue.txt')) {
+        if (ns.fileExists('Formulas.exe')) {
+            if (type.max) {
                 additionalRamNeeded = Math.max(...ramObservations);
-            } else {
-                additionalRamNeeded = average * 2;
+            }
+        }
+
+        const ramNeededForBatchesFile = "data/ramNeededToStartBatches.txt";
+        if(ns.fileExists(ramNeededForBatchesFile)){
+            const ramNeededToStartBatches = Number(ns.read(ramNeededForBatchesFile));
+            
+            if(ramNeededToStartBatches < additionalRamNeeded){
+                additionalRamNeeded = ramNeededToStartBatches;
             }
         }
     }
 
     let maxRam = 1048576;
-    let upgradeOnly = false;
-
-    if (ns.args[0]) {
-        maxRam = ns.args[0];
-    }
-
-    if (ns.args[1]) {
-        upgradeOnly = true;
-    }
 
     const enviroment = JSON.parse(ns.read('../../data/enviroment.txt'));
 
@@ -95,7 +90,7 @@ export async function main(ns) {
         upgradedOrPurchased = purchaseServer(ns, maxRam, additionalRamNeeded);
     } else {
         const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
-        upgradedOrPurchased = upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeOnly, additionalRamNeeded);
+        upgradedOrPurchased = upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded);
     }
 
     if (upgradedOrPurchased) {
@@ -117,7 +112,7 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
     if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
 
         let purchaseCost = ns.getPurchasedServerCost(ramToBuy);
-        let moneyAvailable = ns.getServerMoneyAvailable("home");
+        let moneyAvailable = getMoneyAvailable(ns);
 
         if (moneyAvailable > purchaseCost) {
 
@@ -135,6 +130,7 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
             if (moneyAvailable > purchaseCost && ramToBuy > additionalRamNeeded) {
                 const hostname = "CLOUD-" + String(currentNumberOfPurchasedServers).padStart(3, '0')
                 ns.purchaseServer(hostname, ramToBuy);
+                updateMoneySpent(ns, purchaseCost);
 
                 return true;
             }
@@ -152,7 +148,7 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
     return false;
 }
 
-function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeOnly, additionalRamNeeded) {
+function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded) {
 
     let ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 2;
 
@@ -165,10 +161,11 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
     }
 
     const costOfRamToBuy = ns.getPurchasedServerUpgradeCost(smallestPlayerPurchasedServer.name, ramToBuy);
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
+    const moneyAvailable = getMoneyAvailable(ns);
 
     if (moneyAvailable > costOfRamToBuy) {
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
+        updateMoneySpent(ns, costOfRamToBuy);
         return true;
     } else {
         if (countOfTriesToBuyServers > 100) {
@@ -178,14 +175,43 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, upgradeO
             countOfTriesToBuyServers = 0;
         }
 
+        return purchaseServer(ns, maxRam, additionalRamNeeded);
+    }
+}
 
-        if (upgradeOnly === false) {
-            return purchaseServer(ns, maxRam, additionalRamNeeded);
+function updateMoneySpent(ns, moneySpent) {
+    if (!ns.fileExists("Formulas.exe")) {
+        let moneyLeftToSpendOnServers = 2_000_000_000;
+
+        if (ns.fileExists(beforeFormulasServerSpendFile)) {
+            moneyLeftToSpendOnServers = ns.read(beforeFormulasServerSpendFile);
+        }
+
+        moneyLeftToSpendOnServers -= moneySpent;
+
+        ns.rm(beforeFormulasServerSpendFile);
+        ns.write(beforeFormulasServerSpendFile, JSON.stringify(moneyLeftToSpendOnServers), "W");
+    }
+}
+
+function getMoneyAvailable(ns) {
+    let moneyToSpend = ns.getServerMoneyAvailable("home");
+
+    if (!ns.fileExists("Formulas.exe")) {
+        let moneyLeftToSpendOnServers = 2_000_000_000;
+
+        if (ns.fileExists(beforeFormulasServerSpendFile)) {
+            moneyLeftToSpendOnServers = JSON.parse(ns.read(beforeFormulasServerSpendFile));
+        }
+
+        if (moneyToSpend > moneyLeftToSpendOnServers) {
+            moneyToSpend = moneyLeftToSpendOnServers;
         }
     }
 
-    return false;
+    return moneyToSpend;
 }
+
 
 class TypeOfPurchase {
 

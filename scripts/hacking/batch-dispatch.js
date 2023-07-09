@@ -9,7 +9,7 @@ let visitsToFunction = 0;
 
 let countOfSuccesses = [];
 let countOfFailures = [];
-let averageErrorRateOver10Minutes = 0;
+let averageErrorRateOver10Minutes = 1;
 let errorRateAtWhichWeAllowNewThings = 0.1;
 
 export async function main(ns) {
@@ -38,14 +38,23 @@ export async function main(ns) {
 
     const totalBoughtMemory = playerServers.reduce((acc, x) => acc + x.server.maxRam, 0);
 
-    if (totalBoughtMemory < 105_000) {
+    const ramNeededForBatchesFile = "data/ramNeededToStartBatches.txt";
+    const memoryNeededForBatches = 105_000;
+
+    if (totalBoughtMemory < memoryNeededForBatches) {
+        const ramNeededToStartBatches = Math.round(memoryNeededForBatches - totalBoughtMemory);
+        ns.rm(ramNeededForBatchesFile);
+        ns.write(ramNeededForBatchesFile, ramNeededToStartBatches, "W");
+
         if (visitsToFunction > 100) {
             visitsToFunction = 0;
-            ns.toast(`Ram Needed to Start Batches: ${Math.round(105_000 - totalBoughtMemory)}`, "warning", 180000)
+            ns.toast(`Ram Needed to Start Batches: ${ramNeededToStartBatches}`, "warning", 180000)
         }
 
         ns.run('scripts/hacking/memory-starved-dispatch.js');
         return;
+    } else {
+        ns.rm(ramNeededForBatchesFile);
     }
 
     const targetNames = Array.from(batchQueueForDifferentTargets.keys());
@@ -280,7 +289,7 @@ function adjustTimingsOrOutrightDeleteDependingOnReliability(ns, batchQueueForDi
             queueOfBatches.successesInTheLastHour = 0;
             queueOfBatches.failuresInTheLastHour = 0;
 
-            if (ratioOfFailuresThisHour > 0.9 && totalRunsThisHour > 10 && countOfDeleted < 2) {
+            if (ratioOfFailuresThisHour > 0.9 && totalRunsThisHour > 10 && countOfDeleted < 2 && targetNames.length > 2) {
                 for (const batch of queueOfBatches.batchesQueue) {
                     batch.jobs.map(x => {
                         if (x.pid) {

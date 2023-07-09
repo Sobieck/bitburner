@@ -19,6 +19,6 @@ export async function main(ns) {
         }
 
 
-        ns.singularity.destroyW0r1dD43m0n(3, 'scripts/coordinator.js'); // 10 - 5 - 
+        ns.singularity.destroyW0r1dD43m0n(3, 'scripts/coordinator.js'); // 5 (formula.exe + int passive) - 10 (new) 
     }
 }
