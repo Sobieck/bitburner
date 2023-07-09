@@ -242,7 +242,7 @@ class SpiralizeMatrixHandler {
     type = "Spiralize Matrix";
 
     solve(matrix) {
-        return this.solveRecursively(Array.from(matrix));
+        return this.solveRecursively(JSON.parse(JSON.stringify(matrix)));
     }
 
     solveRecursively(matrix, spiralOrderResult = []) {
@@ -261,14 +261,18 @@ class SpiralizeMatrixHandler {
 
                 for (let x = 0; x < rowToEmpty.length; x++) {
                     const number = rowToEmpty[x];
+                    
                     spiralOrderResult.push(number);
                 }
 
                 rowToEmpty.length = 0
             } else {
                 let rowBeingUsed = matrix[i];
+                const number = rowBeingUsed.pop()
 
-                spiralOrderResult.push(rowBeingUsed.pop());
+                if(number){
+                    spiralOrderResult.push(number);
+                }
             }
         }
 
@@ -346,7 +350,7 @@ class Encryption2Handler {
                     const plainTextCode = plainTextCharacter.charCodeAt(0);
                     let encryptedCharacterCode = plainTextCode + shift;
 
-                    if (encryptedCharacterCode > 91) {
+                    if (encryptedCharacterCode > 90) {
                         const amountMoreThan91 = encryptedCharacterCode - 91;
                         encryptedCharacterCode = amountMoreThan91 + 65;
                     }

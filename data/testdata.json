@@ -1,68 +1,67 @@
 {
-    "firstStarted": "2023-07-08T07:45:28.397Z",
-    "firstAssignFactionToMax": "2023-07-08T07:45:28.397Z",
+    "firstStarted": "2023-07-08T16:31:11.237Z",
+    "firstAssignFactionToMax": "2023-07-08T16:31:11.237Z",
     "factionsToMax": [
         {
-            "factionToMax": "ECorp",
-            "firstTime": "2023-07-08T07:45:28.397Z"
-        },
-        {
-            "factionToMax": "CyberSec",
-            "firstTime": "2023-07-08T15:55:34.597Z"
+            "factionToMax": "NiteSec",
+            "firstTime": "2023-07-08T16:31:11.237Z"
         }
     ],
     "firstEncounterOfRepTrigger": {
         "factionRepGreaterThanMaximumAug": false,
         "factionRepGreaterThanTargetToGetToFavorNeeded": false,
         "factionDonationTrigger": false,
-        "maximumAugRepNeeded": 1625000,
-        "currentFactionRep": 7.83489646900019,
-        "targetRepForGettingToFavor": 462490.0692,
-        "time": "2023-07-08T07:45:28.397Z"
+        "maximumAugRepNeeded": 112500,
+        "currentFactionRep": 0,
+        "targetRepForGettingToFavor": 700000,
+        "time": "2023-07-08T16:31:11.237Z"
     },
     "augsBought": [
-        "Embedded Netburner Module",
-        "Cranial Signal Processors - Gen I",
-        "Cranial Signal Processors - Gen II",
-        "Artificial Synaptic Potentiation",
-        "Neurotrainer II",
-        "BitWire",
-        "Synaptic Enhancement Implant",
-        "Neurotrainer I"
+        "Cranial Signal Processors - Gen III",
+        "DataJack",
+        "Neuregen Gene Modification",
+        "Neural-Retention Enhancement",
+        "CRTX42-AA Gene Modification",
+        "Speech Processor Implant",
+        "Social Negotiation Assistant (S.N.A)",
+        "Nuoptimal Nootropic Injector Implant",
+        "ADR-V1 Pheromone Gene",
+        "Speech Enhancement",
+        "Wired Reflexes"
     ],
     "moneySpent": {
-        "augments": 2927417203.1,
-        "homeCores": 0,
-        "homeRam": 132545749.31540185,
+        "augments": 20381378226.862747,
+        "homeCores": 7500000000,
+        "homeRam": 14539978074.787807,
         "fluxGovernors": 0
     },
-    "moneyLeft": 76065861.37635517,
-    "lastSaved": "2023-07-08T15:55:38.636Z",
+    "moneyLeft": 12810898749.805788,
+    "lastSaved": "2023-07-09T10:42:24.377Z",
     "repTrigger": {
         "factionRepGreaterThanMaximumAug": true,
         "factionRepGreaterThanTargetToGetToFavorNeeded": false,
         "factionDonationTrigger": false,
-        "maximumAugRepNeeded": 18750,
-        "currentFactionRep": 19144.520172309567,
-        "targetRepForGettingToFavor": 700000,
-        "time": "2023-07-08T15:55:34.597Z"
+        "maximumAugRepNeeded": 112500,
+        "currentFactionRep": 112505.95319020352,
+        "targetRepForGettingToFavor": 274320.6381,
+        "time": "2023-07-09T04:32:21.711Z"
     },
     "firstEncoundedMoneyTrigger": {
         "estimatedIncomeTriggered": false,
-        "moneyIsGreaterThanTriggered": true,
+        "moneyIsGreaterThanTriggered": false,
         "triggedWithSuperLargeAmountOfMoney": false,
-        "estimatedIncomeForTheNextFourHours": "$NaN",
-        "moneyRightNow": "$3,136,028,813.79",
-        "buyArgumentsWhenWeHave": "$1,250,000,000.00",
-        "time": "2023-07-08T15:55:34.597Z"
+        "estimatedIncomeForTheNextFourHours": "$25,622,206,359.90",
+        "moneyRightNow": "$5,243,979,923.03",
+        "buyArgumentsWhenWeHave": "$55,000,000,000.00",
+        "time": "2023-07-09T04:32:21.712Z"
     },
     "moneyTrigger": {
         "estimatedIncomeTriggered": false,
         "moneyIsGreaterThanTriggered": true,
         "triggedWithSuperLargeAmountOfMoney": false,
-        "estimatedIncomeForTheNextFourHours": "$NaN",
-        "moneyRightNow": "$3,136,028,813.79",
-        "buyArgumentsWhenWeHave": "$1,250,000,000.00",
-        "time": "2023-07-08T15:55:38.627Z"
+        "estimatedIncomeForTheNextFourHours": "$37,197,430,004.03",
+        "moneyRightNow": "$55,232,255,051.46",
+        "buyArgumentsWhenWeHave": "$55,000,000,000.00",
+        "time": "2023-07-09T10:42:24.369Z"
     }
 }

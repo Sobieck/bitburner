@@ -42,6 +42,16 @@ describe("caesar cipher", () => {
         const result = new Encryption2Handler().solve([' ', 'A']);
         expect(result).toBe(' ')
     });
+
+    it("should work", () => {
+        const result = new Encryption2Handler().solve(['E', 'W']);
+        expect(result).not.toBe("[");
+    });
+
+    it("should return ' ' when given ' ' and A.", () => {
+        const result = new Encryption2Handler().solve(['FRAMEMODEMQUEUETRASHCACHE', 'MALWARE']);
+        expect(result).toBe('RRLIEDSPEXMUVYQTCWSYGMCSA')
+    });
 });
 
 
@@ -67,7 +77,7 @@ class Encryption2Handler {
                     const plainTextCode = plainTextCharacter.charCodeAt(0);
                     let encryptedCharacterCode = plainTextCode + shift;
 
-                    if (encryptedCharacterCode > 91) {
+                    if (encryptedCharacterCode > 90) {
                         const amountMoreThan91 = encryptedCharacterCode - 91;
                         encryptedCharacterCode = amountMoreThan91 + 65;
                     }

@@ -1,31 +1,70 @@
 [
     {
-        "server": "darkweb",
-        "name": "contract-764401.cct",
-        "type": "Find Largest Prime Factor",
+        "server": "max-hardware",
+        "name": "contract-489132.cct",
+        "type": "Compression III: LZ Compression",
         "attemptsLeft": 10,
-        "input": 95929624,
-        "description": "A prime factor is a factor that is a prime number. What is the largest prime factor of 95929624?"
+        "input": "5ddddddddM0C1ag3juL3juL3jQaVwdNEQdNGShqNEQdNGSrBfBf2rBfBr1OvIK6r1OvIa",
+        "description": "Lempel-Ziv (LZ) compression is a data compression technique which encodes data using references to earlier parts of the data. In this variant of LZ, data is encoded in two types of chunk. Each chunk begins with a length L, encoded as a single ASCII digit from 1 to 9, followed by the chunk data, which is either:\n\n 1. Exactly L characters, which are to be copied directly into the uncompressed data.\n 2. A reference to an earlier part of the uncompressed data. To do this, the length is followed by a second ASCII digit X: each of the L output characters is a copy of the character X places before it in the uncompressed data.\n\n For both chunk types, a length of 0 instead means the chunk ends immediately, and the next character is the start of a new chunk. The two chunk types alternate, starting with type 1, and the final chunk may be of either type.\n\n You are given the following input string:\n &nbsp; &nbsp; 5ddddddddM0C1ag3juL3juL3jQaVwdNEQdNGShqNEQdNGSrBfBf2rBfBr1OvIK6r1OvIa\n Encode it using Lempel-Ziv encoding with the minimum possible output length.\n\n Examples (some have other possible encodings of minimal length):\n &nbsp; &nbsp; abracadabra &nbsp; &nbsp; -> &nbsp;7abracad47\n &nbsp; &nbsp; mississippi &nbsp; &nbsp; -> &nbsp;4miss433ppi\n &nbsp; &nbsp; aAAaAAaAaAA &nbsp; &nbsp; -> &nbsp;3aAA53035\n &nbsp; &nbsp; 2718281828 &nbsp; &nbsp; &nbsp;-> &nbsp;627182844\n &nbsp; &nbsp; abcdefghijk &nbsp; &nbsp; -> &nbsp;9abcdefghi02jk\n &nbsp; &nbsp; aaaaaaaaaaaa &nbsp; &nbsp;-> &nbsp;3aaa91\n &nbsp; &nbsp; aaaaaaaaaaaaa &nbsp; -> &nbsp;1a91031\n &nbsp; &nbsp; aaaaaaaaaaaaaa &nbsp;-> &nbsp;1a91041"
     },
     {
-        "server": "computek",
-        "name": "contract-412757-IcarusMicrosystems.cct",
+        "server": "summit-uni",
+        "name": "contract-875528.cct",
+        "type": "Unique Paths in a Grid I",
+        "attemptsLeft": 10,
+        "input": [
+            11,
+            9
+        ],
+        "description": "You are in a grid with 11 rows and 9 columns, and you are positioned in the top-left corner of that grid. You are trying to reach the bottom-right corner of the grid, but you can only move down or right on each step. Determine how many unique paths there are from start to finish.\n\n NOTE: The data returned for this contract is an array with the number of rows and columns:\n\n [11, 9]"
+    },
+    {
+        "server": ".",
+        "name": "contract-450371-NWO.cct",
+        "type": "Compression I: RLE Compression",
+        "attemptsLeft": 10,
+        "input": "zzzzzzzzzzVVVVVVVVVff66666dddddd3Dxjjjjjjjjjjjll3nMIEooooooooooIrrQQ3333333333GGGGG220",
+        "description": "Run-length encoding (RLE) is a data compression technique which encodes data as a series of runs of a repeated single character. Runs are encoded as a length, followed by the character itself. Lengths are encoded as a single ASCII digit; runs of 10 characters or more are encoded by splitting them into multiple runs.\n\n You are given the following input string:\n &nbsp; &nbsp; zzzzzzzzzzVVVVVVVVVff66666dddddd3Dxjjjjjjjjjjjll3nMIEooooooooooIrrQQ3333333333GGGGG220\n Encode it using run-length encoding with the minimum possible output length.\n\n Examples:\n &nbsp; &nbsp; aaaaabccc &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;5a1b3c\n &nbsp; &nbsp; aAaAaA &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp;1a1A1a1A1a1A\n &nbsp; &nbsp; 111112333 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp;511233\n &nbsp; &nbsp; zzzzzzzzzzzzzzzzzzz &nbsp;-> &nbsp;9z9z1z &nbsp;(or 9z8z2z, etc.)\n"
+    },
+    {
+        "server": "defcomm",
+        "name": "contract-741436-TianDiHui.cct",
+        "type": "Spiralize Matrix",
+        "attemptsLeft": 9,
+        "input": [
+            [
+                41, 7
+            ],
+            [
+                46, 49
+            ],
+            [
+                18, 23
+            ],
+            [
+                1, 16
+            ],
+            [
+                46, 1
+            ],
+            [
+                49, 27
+            ]
+        ],
+        "description": "Given the following array of arrays of numbers representing a 2D matrix, return the elements of the matrix as an array in spiral order:\n\n&nbsp;&nbsp;&nbsp;&nbsp;[\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[41, 7]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[46,49]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[18,23]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[ 1,16]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[46, 1]\n&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[49,27]\n&nbsp;&nbsp;&nbsp;&nbsp;]\n\nHere is an example of what spiral order should be:\n\n &nbsp;&nbsp;&nbsp;&nbsp;[\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1, 2, 3]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[4, 5, 6]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[7, 8, 9]\n &nbsp;&nbsp;&nbsp;&nbsp;]\n\n Answer: [1, 2, 3, 6, 9, 8 ,7, 4, 5]\n\n Note that the matrix will not always be square:\n\n &nbsp;&nbsp;&nbsp;&nbsp;[\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[1,&nbsp;&nbsp;2,&nbsp;&nbsp;3,&nbsp;&nbsp;4]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[5,&nbsp;&nbsp;6,&nbsp;&nbsp;7,&nbsp;&nbsp;8]\n &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[9,&nbsp;10,&nbsp;11,&nbsp;12]\n &nbsp;&nbsp;&nbsp;&nbsp;]\n\n Answer: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]"
+    },
+    {
+        "server": "snap-fitness",
+        "name": "contract-481575.cct",
         "type": "Array Jumping Game",
         "attemptsLeft": 1,
         "input": [
-            3,
+            10,
+            10,
             2,
-            0,
-            9,
-            1,
-            5,
-            5,
-            0,
             4,
-            9,
-            5,
-            0
+            4
         ],
-        "description": "You are given the following array of integers:\n\n 3,2,0,9,1,5,5,0,4,9,5,0\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine whether you are able to reach the last index.\n\n Your answer should be submitted as 1 or 0, representing true and false respectively"
+        "description": "You are given the following array of integers:\n\n 10,10,2,4,4\n\n Each element in the array represents your MAXIMUM jump length at that position. This means that if you are at position i and your maximum jump length is n, you can jump to any position from i to i+n. \n\nAssuming you are initially positioned at the start of the array, determine whether you are able to reach the last index.\n\n Your answer should be submitted as 1 or 0, representing true and false respectively"
     }
 ]

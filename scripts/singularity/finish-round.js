@@ -329,8 +329,8 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
     const augmentRepPrice = ns.singularity.getAugmentationRepReq(augmentName);
     let factionRep = ns.singularity.getFactionRep(faction);
 
-    if (moneyAvailable > price && ns.singularity.getFactionFavor(faction) > 150) {
-        if (factionRep < augmentRepPrice) {
+    if (moneyAvailable > price) {
+        if (factionRep < augmentRepPrice && ns.singularity.getFactionFavor(faction) > 150) {
             if (ns.fileExists("Formulas.exe")) {
                 const repNeeded = augmentRepPrice - factionRep;
                 let dollarsDonated = 0;
@@ -341,6 +341,7 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
                     purchasedRep = ns.formulas.reputation.repFromDonation(dollarsDonated, player);
                 }
 
+                analytics.moneySpent.repPurchased += dollarsDonated;
                 ns.singularity.donateToFaction(faction, dollarsDonated);
             }
         }
@@ -348,9 +349,9 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
         factionRep = ns.singularity.getFactionRep(faction);
 
         if (factionRep > augmentRepPrice) {
+            analytics.moneySpent.fluxGovernors += price;
             ns.singularity.purchaseAugmentation(faction, augmentName);
         }
-
     } else {
         return;
     }
@@ -359,9 +360,11 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
 }
 
 function upgradeHomeMachine(ns, analytics) {
+    const home = "home";
     const ramCost = ns.singularity.getUpgradeHomeRamCost();
     const coreCost = ns.singularity.getUpgradeHomeCoresCost();
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
+    const moneyAvailable = ns.getServerMoneyAvailable(home);
+    const orginalSpecs = ns.getServer(home);
 
     if (ramCost > moneyAvailable && coreCost > moneyAvailable) {
         return;
@@ -374,6 +377,11 @@ function upgradeHomeMachine(ns, analytics) {
         analytics.moneySpent.homeRam += ramCost;
         ns.singularity.upgradeHomeRam();
     }
+
+    const upgradedServer = ns.getServer(home);
+
+    analytics.amountOfRamIncrease += upgradedServer.maxRam - orginalSpecs.maxRam;
+    analytics.amountOfCoresIncrease += upgradedServer.cpuCores - orginalSpecs.cpuCores;
 
     return upgradeHomeMachine(ns, analytics);
 }
@@ -426,8 +434,8 @@ class EndOfRoundAnalytics {
 
     augsBought = [];
 
-    // amountOfRamIncrease
-    // amountOfCoresIncrease
+    amountOfRamIncrease
+    amountOfCoresIncrease
 
     moneySpent = new MoneySpent();
 
@@ -453,7 +461,7 @@ class MoneySpent {
     homeCores = 0;
     homeRam = 0;
     fluxGovernors = 0;
-
+    repPurchased = 0;
 }
 
 class RepTrigger {
