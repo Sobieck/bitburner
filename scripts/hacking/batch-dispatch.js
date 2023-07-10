@@ -749,7 +749,7 @@ function cleanFinishedAndPoisonedJobsFromQueue(targetNames, batchQueue, ns) {
 
 function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, player, noMoreInvestingForEndGame, homeMemoryLimitations) {
     const batchesAreSaturated = targetNames.map(x => batchQueue.get(x)).every(x => x.targetMachineSaturatedWithAttacks);
-    const over5TrillionDollars = ns.getServerMoneyAvailable("home") > 5_000_000_000_000;
+    const over2andAHalfTrillionDollars = ns.getServerMoneyAvailable("home") > 2_500_000_000_000;
     const massiveRamOnHome = getServer(ns, "home", homeMemoryLimitations).maxRam > 400_000;
 
     let addNewServerToAttack = false;
@@ -758,11 +758,11 @@ function addNewTargetsToQueueIfNeeded(batchQueue, targetNames, ns, enviroment, p
         addNewServerToAttack = true;
     }
 
-    if (over5TrillionDollars && batchQueue.size < 20) {
+    if (over2andAHalfTrillionDollars && batchQueue.size < 20) {
         addNewServerToAttack = true;
     }
 
-    if (over5TrillionDollars && batchesAreSaturated && batchQueue.size < 50) {
+    if (over2andAHalfTrillionDollars && batchesAreSaturated && batchQueue.size < 50) {
         addNewServerToAttack = true;
     }
 

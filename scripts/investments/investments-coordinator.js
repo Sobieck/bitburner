@@ -1,7 +1,6 @@
 export async function main(ns) {
     const ramObservationsTextFile = '../../data/ramObservations.txt';
     const moneyAvailable = ns.getServerMoneyAvailable("home");
-  
     
     const stopInvestingFileName = "stopInvesting.txt";
     if (ns.fileExists(stopInvestingFileName)) {
@@ -11,17 +10,26 @@ export async function main(ns) {
         return;
     }
 
-    if (moneyAvailable > 5_000_000_000) {
+    const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+    let stockMarketReserveMoney = new ReserveForTrading();
+    if (ns.fileExists(stockMarketReserveMoneyFile)) {
+        stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
+    }
+
+    if (moneyAvailable > 1_000_000_000) {
         if (!ns.fileExists("Formulas.exe")) {
             checkTor(ns);
-            ns.singularity.purchaseProgram("Formulas.exe");
-            ns.rm(ramObservationsTextFile);
-            ns.rm('../../buyOrUpgradeServerFlag.txt');
+            const formulasCost = ns.singularity.getDarkwebProgramCost("Formulas.exe")
+            if(stockMarketReserveMoney.canSpend(ns, formulasCost)){
+                ns.singularity.purchaseProgram("Formulas.exe");
+                ns.rm(ramObservationsTextFile);
+                ns.rm('../../buyOrUpgradeServerFlag.txt');
+            }
         }
     }
 
     ns.run('scripts/investments/purchase-server.js');
-
+    
     purchaseProgram(ns, 50, "BruteSSH.exe");
     purchaseProgram(ns, 100, "FTPCrack.exe");
     purchaseProgram(ns, 250, "relaySMTP.exe");
@@ -40,13 +48,98 @@ export async function main(ns) {
 function purchaseProgram(ns, atWhatHackingLevelToBuy, programToBuy) {
     const playerHackingLevel = ns.getHackingLevel();
     if (!ns.fileExists(programToBuy) && playerHackingLevel > atWhatHackingLevelToBuy) {
-        checkTor(ns);
-        ns.singularity.purchaseProgram(programToBuy);
+
+        const cost = ns.singularity.getDarkwebProgramCost(programToBuy)
+        
+        if(stockMarketReserveMoney.canSpend(ns, cost)){
+            checkTor(ns);
+            ns.singularity.purchaseProgram(programToBuy);
+        }
     }
 }
 
 function checkTor(ns) {
     if (!ns.hasTorRouter()) {
         ns.singularity.purchaseTor()
+    }
+}
+
+class ReserveForTrading {
+    stockMarketReserveMoneyLimit = 1_000_000_000_000;
+    capitalToReserveForTrading = 0;
+    moneyInvested = 0;
+    moneyRequested = new Map();
+    countOfVisitedWithoutFillingRequest = 0;
+
+    constructor(obj) {
+        obj && Object.assign(this, obj);
+    }
+
+    setMoneyInvested(moneyInvested, ns){
+        this.moneyInvested = moneyInvested;
+
+        const potentialCapitalReserve = moneyInvested / 2;
+        
+        this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
+
+        if(this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit){
+            this.capitalToReserveForTrading = this.stockMarketReserveMoneyLimit;
+        }
+
+        this.countOfVisitedWithoutFillingRequest++;
+    }
+
+    canSpend(ns, moneyNeeded){
+        const moneyOnHome = ns.getServerMoneyAvailable("home");
+
+        let moneyToSaveForTrading = this.capitalToReserveForTrading - this.moneyInvested;
+
+        if(moneyToSaveForTrading < 0){
+            moneyToSaveForTrading = 0;
+        }
+
+        if(moneyToSaveForTrading > this.stockMarketReserveMoneyLimit){
+            moneyToSaveForTrading = this.stockMarketReserveMoneyLimit;
+        }
+
+        const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
+
+        if(canSpend === false){
+            this.requestMoney(ns, moneyNeeded);
+        } else {
+            this.moneyRequested = new Map(Array.from(this.moneyRequested));
+
+            const nameOfRequest = "investments-coordinator";
+            this.moneyRequested.delete(nameOfRequest);
+            const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+            ns.rm(stockMarketReserveMoneyFile);
+            ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+        }
+
+        return canSpend;
+    }
+
+    requestMoney(ns, amount){
+        const nameOfRequest = "investments-coordinator";
+        this.moneyRequested = new Map(Array.from(this.moneyRequested));
+
+        const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
+        if(moneyRequestedPreviously){
+            if(moneyRequestedPreviously < amount){
+                this.moneyRequested.set(nameOfRequest, amount);
+                this.moneyRequested = Array.from(this.moneyRequested);
+
+                const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+                ns.rm(stockMarketReserveMoneyFile);
+                ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+            }
+        } else {
+            this.moneyRequested.set(nameOfRequest, amount);
+            this.moneyRequested = Array.from(this.moneyRequested);
+
+            const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+            ns.rm(stockMarketReserveMoneyFile);
+            ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+        }
     }
 }
