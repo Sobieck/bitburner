@@ -45,23 +45,58 @@ export async function main(ns) {
         ledger = JSON.parse(ns.read(nameOfLedger));
     }
 
+    stockMarketReserveMoney.moneyRequested = new Map(Array.from(stockMarketReserveMoney.moneyRequested));
+    const reserveMoneyKeys = stockMarketReserveMoney.moneyRequested.keys();
+    let moneyRequested = 0;
+
+    for (const requestKey of reserveMoneyKeys) {
+        moneyRequested += stockMarketReserveMoney.moneyRequested.get(requestKey);
+    }
+
+    if (moneyRequested === 0) {
+        stockMarketReserveMoney.countOfVisitedWithoutFillingRequest = 0;
+    }
+
+    let sellSharesToSatisfyMoneyDemands = false;
+    if (stockMarketReserveMoney.countOfVisitedWithoutFillingRequest > 90) {
+        sellSharesToSatisfyMoneyDemands = true;
+    }
+
+    const commission = 100_001;
+
     const stopTradingExists = ns.fileExists("../../stopTrading.txt");
-
     stockRecords.map(stock => {
-        const investedShares = stock.investedShares;
+        let sharesToSell = stock.investedShares;
 
-        if (investedShares > 0) {
-            // do not allow clean to run if invest-in-stocks.js is running on server. We need clean closes for this.  
-            if (stock.sellTrend || stopTradingExists) {
-                const salePrice = ns.stock.sellStock(stock.symbol, investedShares);
+        if (sellSharesToSatisfyMoneyDemands) {
+            if(stockMarketReserveMoney.canSellAmountAndStillHaveReserve(moneyRequested)){
+                sharesToSell = Math.ceil(moneyRequested / stock.bid)
+
+                if (sharesToSell > stock.investedShares) {
+                    sharesToSell = stock.investedShares;
+                }
+            } else {
+                sellSharesToSatisfyMoneyDemands = false;
+                stockMarketReserveMoney.countOfVisitedWithoutFillingRequest = 0;
+            }
+        }
+
+
+        if (sharesToSell > 0) {
+            if (stock.sellTrend || stopTradingExists || sellSharesToSatisfyMoneyDemands) {
+                const salePrice = ns.stock.sellStock(stock.symbol, sharesToSell);
                 ledger.push(new LedgerItem(
                     stock.symbol,
                     salePrice,
                     stock.averagePrice,
-                    investedShares,
+                    sharesToSell,
                     "Short-Term Long Sale",
                     stock.forecast
                 ))
+
+                if (sellSharesToSatisfyMoneyDemands) {
+                    sellSharesToSatisfyMoneyDemands = false;
+                }
 
                 if (stopTradingExists) {
                     ns.toast("Stopped trading", "success", null)
@@ -73,29 +108,15 @@ export async function main(ns) {
     ns.rm(nameOfLedger);
     ns.write(nameOfLedger, JSON.stringify(ledger), "W");
 
-    stockMarketReserveMoney.moneyRequested = new Map(Array.from(stockMarketReserveMoney.moneyRequested));
 
-    const reserveMoneyKeys = stockMarketReserveMoney.moneyRequested.keys();
-
-    let moneyRequested = 0;
-
-    for (const requestKey of reserveMoneyKeys) {
-        moneyRequested += stockMarketReserveMoney.moneyRequested.get(requestKey);
-    }
-
-    if(moneyRequested === 0){
-        stockMarketReserveMoney.countOfVisitedWithoutFillingRequest = 0;
-    }
-
-    const commission = 100_001;
     let moneyAvailable = ns.getServerMoneyAvailable("home") - commission - moneyRequested;
 
-    if(moneyAvailable > (26_000_000_000 * 2) && !ns.stock.has4SDataTIXAPI()){
+    if (moneyAvailable > 30_000_000_000 && !ns.stock.has4SDataTIXAPI()) {
         ns.stock.purchase4SMarketData();
         ns.stock.purchase4SMarketDataTixApi();
     }
 
-    if(moneyAvailable > 1_000_000_000 && !ns.stock.has4SDataTIXAPI()){
+    if (moneyAvailable > 1_000_000_000 && !ns.stock.has4SDataTIXAPI()) {
         moneyAvailable = 1_000_000_000;
     }
 
@@ -122,7 +143,7 @@ export async function main(ns) {
 
             const ticker = stockToLookAt.symbol;
 
-            if(!ns.stock.has4SDataTIXAPI() && stockToLookAt.investedShares > 0){
+            if (!ns.stock.has4SDataTIXAPI() && stockToLookAt.investedShares > 0) {
                 return;
             }
 
@@ -147,36 +168,40 @@ class ReserveForTrading {
         obj && Object.assign(this, obj);
     }
 
-    setMoneyInvested(moneyInvested, ns){
+    canSellAmountAndStillHaveReserve(amountToSell) {
+        return (this.moneyInvested - amountToSell) > this.capitalToReserveForTrading;
+    }
+
+    setMoneyInvested(moneyInvested, ns) {
         this.moneyInvested = moneyInvested;
 
         const potentialCapitalReserve = moneyInvested / 2;
-        
+
         this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
 
-        if(this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit){
+        if (this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit) {
             this.capitalToReserveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         this.countOfVisitedWithoutFillingRequest++;
     }
 
-    canSpend(ns, moneyNeeded){
+    canSpend(ns, moneyNeeded) {
         const moneyOnHome = ns.getServerMoneyAvailable("home");
 
         let moneyToSaveForTrading = this.capitalToReserveForTrading - this.moneyInvested;
 
-        if(moneyToSaveForTrading < 0){
+        if (moneyToSaveForTrading < 0) {
             moneyToSaveForTrading = 0;
         }
 
-        if(moneyToSaveForTrading > this.stockMarketReserveMoneyLimit){
+        if (moneyToSaveForTrading > this.stockMarketReserveMoneyLimit) {
             moneyToSaveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
 
-        if(canSpend === false){
+        if (canSpend === false) {
             this.requestMoney(ns, moneyNeeded);
         } else {
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
@@ -191,13 +216,13 @@ class ReserveForTrading {
         return canSpend;
     }
 
-    requestMoney(ns, amount){
+    requestMoney(ns, amount) {
         const nameOfRequest = "purchase-server";
         this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
         const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
-        if(moneyRequestedPreviously){
-            if(moneyRequestedPreviously < amount){
+        if (moneyRequestedPreviously) {
+            if (moneyRequestedPreviously < amount) {
                 this.moneyRequested.set(nameOfRequest, amount);
                 this.moneyRequested = Array.from(this.moneyRequested);
 
@@ -278,7 +303,7 @@ class StockHistoricData {
         const hasOracle = ns.stock.has4SDataTIXAPI();
 
 
-        if(!hasOracle){
+        if (!hasOracle) {
             if (record.countOfPositive >= 8) {
                 record.buyTrend = true;
             }
@@ -369,7 +394,7 @@ function SaveHistoricData(stockRecords, historicalData, ns, nameOfStockHistorica
     stockRecords.map(x => {
         if (historicalData.has(x.symbol)) {
             const data = historicalData.get(x.symbol);
-           
+
             if (data.shortTermRecords[data.shortTermRecords.length - 1]?.price !== x.price) {
                 const record = new StockHistoricData(data);
                 record.addRecord(x, ns);

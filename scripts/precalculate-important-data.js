@@ -5,11 +5,7 @@ export async function main(ns) {
     "scripts/singularity/finish-bitnode.js", 
     "scripts/singularity/finish-round.js", 
     "scripts/singularity/buy-rep.js",
-    "scripts/investments/invest-in-stocks.js",
-    "scripts/singularity/do-work.js",
     "scripts/hacking/batch-dispatch.js",
-    "scripts/singularity/workout.js",
-    "scripts/singularity/do-job.js"
   ];
 
   const orderedScriptsByRamUsage = ns.ls("home")

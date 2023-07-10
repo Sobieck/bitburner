@@ -1,7 +1,7 @@
 {
     "stockMarketReserveMoneyLimit": 1000000000000,
-    "capitalToReserveForTrading": 382089825881.14856,
-    "moneyInvested": 762504943428.0067,
+    "capitalToReserveForTrading": 1000000000000,
+    "moneyInvested": 0,
     "moneyRequested": {},
     "countOfVisitedWithoutFillingRequest": 0
 }
