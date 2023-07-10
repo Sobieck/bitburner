@@ -21,7 +21,13 @@ export async function main(ns) {
         countOfVisitsWithoutTryingToBuy = 0;
     }
 
-    if (!ns.fileExists(buyOrUpgradeServerFlag) || countOfVisitsWithoutTryingToBuy > 300) {
+    let tryToBuy = ns.fileExists(buyOrUpgradeServerFlag);
+
+    if(tryToBuy === false && countOfVisitsWithoutTryingToBuy < 300){
+        tryToBuy = true;
+    }
+
+    if (tryToBuy === false) {
         return;
     } else {
         countOfTriesToBuyServers++;
@@ -70,7 +76,7 @@ export async function main(ns) {
         const ramNeededForBatchesFile = "data/ramNeededToStartBatches.txt";
         if(ns.fileExists(ramNeededForBatchesFile)){
             const ramNeededToStartBatches = Number(ns.read(ramNeededForBatchesFile));
-            
+
             if(ramNeededToStartBatches < additionalRamNeeded){
                 additionalRamNeeded = ramNeededToStartBatches;
             }
@@ -81,16 +87,23 @@ export async function main(ns) {
 
     const enviroment = JSON.parse(ns.read('../../data/enviroment.txt'));
 
+    const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+    let stockMarketReserveMoney = new ReserveForTrading();
+    if (ns.fileExists(stockMarketReserveMoneyFile)) {
+        stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
+    }
+
+
     const playerPurchasedServers = enviroment
         .filter(x => x.server.purchasedByPlayer && x.server.maxRam < maxRam)
         .sort((b, a) => a.server.maxRam - b.server.maxRam)
 
     let upgradedOrPurchased = false;
     if (playerPurchasedServers.length === 0) {
-        upgradedOrPurchased = purchaseServer(ns, maxRam, additionalRamNeeded);
+        upgradedOrPurchased = purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney);
     } else {
         const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
-        upgradedOrPurchased = upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded);
+        upgradedOrPurchased = upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded, stockMarketReserveMoney);
     }
 
     if (upgradedOrPurchased) {
@@ -105,14 +118,14 @@ export async function main(ns) {
     ns.write(typeRecord, JSON.stringify(type), "W");
 }
 
-function purchaseServer(ns, maxRam, additionalRamNeeded) {
+function purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney) {
     let currentNumberOfPurchasedServers = ns.getPurchasedServers().length;
     let ramToBuy = 64;
 
     if (currentNumberOfPurchasedServers < ns.getPurchasedServerLimit()) {
 
         let purchaseCost = ns.getPurchasedServerCost(ramToBuy);
-        let moneyAvailable = getMoneyAvailable(ns);
+        let moneyAvailable = ns.getServerMoneyAvailable("home");
 
         if (moneyAvailable > purchaseCost) {
 
@@ -127,7 +140,9 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
                 ramToBuy = maxRam;
             }
 
-            if (moneyAvailable > purchaseCost && ramToBuy > additionalRamNeeded) {
+            const canBuy = canSpendThatMoney(ns, stockMarketReserveMoney, purchaseCost);
+
+            if (canBuy && ramToBuy > additionalRamNeeded) {
                 const hostname = "CLOUD-" + String(currentNumberOfPurchasedServers).padStart(3, '0')
                 ns.purchaseServer(hostname, ramToBuy);
                 updateMoneySpent(ns, purchaseCost);
@@ -148,7 +163,7 @@ function purchaseServer(ns, maxRam, additionalRamNeeded) {
     return false;
 }
 
-function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded) {
+function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded, stockMarketReserveMoney) {
 
     let ramToBuy = smallestPlayerPurchasedServer.server.maxRam * 2;
 
@@ -161,9 +176,9 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, addition
     }
 
     const costOfRamToBuy = ns.getPurchasedServerUpgradeCost(smallestPlayerPurchasedServer.name, ramToBuy);
-    const moneyAvailable = getMoneyAvailable(ns);
+    const canSpendMoney = canSpendThatMoney(ns, stockMarketReserveMoney, costOfRamToBuy);
 
-    if (moneyAvailable > costOfRamToBuy) {
+    if (canSpendMoney) {
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
         updateMoneySpent(ns, costOfRamToBuy);
         return true;
@@ -175,7 +190,7 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, addition
             countOfTriesToBuyServers = 0;
         }
 
-        return purchaseServer(ns, maxRam, additionalRamNeeded);
+        return purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney);
     }
 }
 
@@ -194,8 +209,8 @@ function updateMoneySpent(ns, moneySpent) {
     }
 }
 
-function getMoneyAvailable(ns) {
-    let moneyToSpend = ns.getServerMoneyAvailable("home");
+function canSpendThatMoney(ns, stockMarketReserveMoney, costOfRamToBuy) {
+    let moneyToSpend = costOfRamToBuy;
 
     if (!ns.fileExists("Formulas.exe")) {
         let moneyLeftToSpendOnServers = 2_000_000_000;
@@ -209,7 +224,11 @@ function getMoneyAvailable(ns) {
         }
     }
 
-    return moneyToSpend;
+    if (moneyToSpend !== costOfRamToBuy){
+        return false;
+    }
+
+    return stockMarketReserveMoney.canSpend(ns, costOfRamToBuy);
 }
 
 
@@ -249,5 +268,86 @@ class TypeOfPurchase {
         }
 
         this.lastPurchaseDate = new Date();
+    }
+}
+
+
+class ReserveForTrading {
+    stockMarketReserveMoneyLimit = 1_000_000_000_000;
+    capitalToReserveForTrading = 0;
+    moneyInvested = 0;
+    moneyRequested = new Map();
+    countOfVisitedWithoutFillingRequest = 0;
+
+    constructor(obj) {
+        obj && Object.assign(this, obj);
+    }
+
+    setMoneyInvested(moneyInvested, ns){
+        this.moneyInvested = moneyInvested;
+
+        const potentialCapitalReserve = moneyInvested / 2;
+        
+        this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
+
+        if(this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit){
+            this.capitalToReserveForTrading = this.stockMarketReserveMoneyLimit;
+        }
+
+        this.countOfVisitedWithoutFillingRequest++;
+    }
+
+    canSpend(ns, moneyNeeded){
+        const moneyOnHome = ns.getServerMoneyAvailable("home");
+
+        let moneyToSaveForTrading = this.capitalToReserveForTrading - this.moneyInvested;
+
+        if(moneyToSaveForTrading < 0){
+            moneyToSaveForTrading = 0;
+        }
+
+        if(moneyToSaveForTrading > this.stockMarketReserveMoneyLimit){
+            moneyToSaveForTrading = this.stockMarketReserveMoneyLimit;
+        }
+
+        const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
+
+        if(canSpend === false){
+            this.requestMoney(ns, moneyNeeded);
+        } else {
+            this.moneyRequested = new Map(Array.from(this.moneyRequested));
+
+            const nameOfRequest = "purchase-server";
+            this.moneyRequested.delete(nameOfRequest);
+            const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+            ns.rm(stockMarketReserveMoneyFile);
+            ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+        }
+
+        return canSpend;
+    }
+
+    requestMoney(ns, amount){
+        const nameOfRequest = "purchase-server";
+        this.moneyRequested = new Map(Array.from(this.moneyRequested));
+
+        const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
+        if(moneyRequestedPreviously){
+            if(moneyRequestedPreviously < amount){
+                this.moneyRequested.set(nameOfRequest, amount);
+                this.moneyRequested = Array.from(this.moneyRequested);
+
+                const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+                ns.rm(stockMarketReserveMoneyFile);
+                ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+            }
+        } else {
+            this.moneyRequested.set(nameOfRequest, amount);
+            this.moneyRequested = Array.from(this.moneyRequested);
+
+            const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+            ns.rm(stockMarketReserveMoneyFile);
+            ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+        }
     }
 }

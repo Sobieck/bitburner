@@ -38,7 +38,7 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-        if(ns.stock.has4SDataTIXAPI()){
+        if(ns.stock.hasTIXAPIAccess()){
             ns.run('scripts/investments/invest-in-stocks.js');
         }
         await ns.sleep(individualSleepAmount);
@@ -47,7 +47,6 @@ export async function main(ns) {
 
         ns.run('scripts/investments/investments-coordinator.js');
         await ns.sleep(individualSleepAmount);
-
 
 
 

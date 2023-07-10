@@ -1,67 +1,7 @@
 {
-    "firstStarted": "2023-07-08T16:31:11.237Z",
-    "firstAssignFactionToMax": "2023-07-08T16:31:11.237Z",
-    "factionsToMax": [
-        {
-            "factionToMax": "NiteSec",
-            "firstTime": "2023-07-08T16:31:11.237Z"
-        }
-    ],
-    "firstEncounterOfRepTrigger": {
-        "factionRepGreaterThanMaximumAug": false,
-        "factionRepGreaterThanTargetToGetToFavorNeeded": false,
-        "factionDonationTrigger": false,
-        "maximumAugRepNeeded": 112500,
-        "currentFactionRep": 0,
-        "targetRepForGettingToFavor": 700000,
-        "time": "2023-07-08T16:31:11.237Z"
-    },
-    "augsBought": [
-        "Cranial Signal Processors - Gen III",
-        "DataJack",
-        "Neuregen Gene Modification",
-        "Neural-Retention Enhancement",
-        "CRTX42-AA Gene Modification",
-        "Speech Processor Implant",
-        "Social Negotiation Assistant (S.N.A)",
-        "Nuoptimal Nootropic Injector Implant",
-        "ADR-V1 Pheromone Gene",
-        "Speech Enhancement",
-        "Wired Reflexes"
-    ],
-    "moneySpent": {
-        "augments": 20381378226.862747,
-        "homeCores": 7500000000,
-        "homeRam": 14539978074.787807,
-        "fluxGovernors": 0
-    },
-    "moneyLeft": 12810898749.805788,
-    "lastSaved": "2023-07-09T10:42:24.377Z",
-    "repTrigger": {
-        "factionRepGreaterThanMaximumAug": true,
-        "factionRepGreaterThanTargetToGetToFavorNeeded": false,
-        "factionDonationTrigger": false,
-        "maximumAugRepNeeded": 112500,
-        "currentFactionRep": 112505.95319020352,
-        "targetRepForGettingToFavor": 274320.6381,
-        "time": "2023-07-09T04:32:21.711Z"
-    },
-    "firstEncoundedMoneyTrigger": {
-        "estimatedIncomeTriggered": false,
-        "moneyIsGreaterThanTriggered": false,
-        "triggedWithSuperLargeAmountOfMoney": false,
-        "estimatedIncomeForTheNextFourHours": "$25,622,206,359.90",
-        "moneyRightNow": "$5,243,979,923.03",
-        "buyArgumentsWhenWeHave": "$55,000,000,000.00",
-        "time": "2023-07-09T04:32:21.712Z"
-    },
-    "moneyTrigger": {
-        "estimatedIncomeTriggered": false,
-        "moneyIsGreaterThanTriggered": true,
-        "triggedWithSuperLargeAmountOfMoney": false,
-        "estimatedIncomeForTheNextFourHours": "$37,197,430,004.03",
-        "moneyRightNow": "$55,232,255,051.46",
-        "buyArgumentsWhenWeHave": "$55,000,000,000.00",
-        "time": "2023-07-09T10:42:24.369Z"
-    }
+    "stockMarketReserveMoneyLimit": 1000000000000,
+    "capitalToReserveForTrading": 382089825881.14856,
+    "moneyInvested": 762504943428.0067,
+    "moneyRequested": {},
+    "countOfVisitedWithoutFillingRequest": 0
 }

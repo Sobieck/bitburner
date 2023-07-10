@@ -173,6 +173,7 @@ export async function main(ns) {
         }
 
 
+        // My augment script ranks every augment that hasn't been purchased by price, and then calculates how many of them I can buy (taking into account the 1.9x price increase per augment, and the additional 1.14x increase per NeuroFlux Governor level). 
         let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
 
         if (targetFaction.faction === "CyberSec") {
@@ -255,7 +256,7 @@ export async function main(ns) {
 
                 const factionsByRating = factionsWithAugmentsToBuy.sort((a, b) => b.factionRep - a.factionRep);
 
-                purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction);
+                purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics);
 
                 analytics.moneyLeft = ns.getServerMoneyAvailable("home");
 

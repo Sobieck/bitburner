@@ -11,9 +11,6 @@ export async function main(ns) {
         return;
     }
 
-
-    const numberOfPurchasedServers = ns.getPurchasedServers().length;
-
     if (moneyAvailable > 5_000_000_000) {
         if (!ns.fileExists("Formulas.exe")) {
             checkTor(ns);
