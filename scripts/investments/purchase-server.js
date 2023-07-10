@@ -23,7 +23,7 @@ export async function main(ns) {
 
     let tryToBuy = ns.fileExists(buyOrUpgradeServerFlag);
 
-    if(tryToBuy === false && countOfVisitsWithoutTryingToBuy < 300){
+    if (tryToBuy === false && countOfVisitsWithoutTryingToBuy < 300) {
         tryToBuy = true;
     }
 
@@ -57,65 +57,68 @@ export async function main(ns) {
             ns.write(ramObservationsTextFile, JSON.stringify(ramObservations), "W");
         }
 
-        if (ramObservations.length < 10) {
+        if (ramObservations.length === 0) {
             return;
         }
 
-        additionalRamNeeded = Math.min(...ramObservations);
+        if (ramObservations.length > 10 || countOfTriesToBuyServers > 300) {
 
-        if (type.average) {
-            additionalRamNeeded = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
-        }
+            additionalRamNeeded = Math.min(...ramObservations);
 
-        if (ns.fileExists('Formulas.exe')) {
-            if (type.max) {
-                additionalRamNeeded = Math.max(...ramObservations);
+            if (type.average) {
+                additionalRamNeeded = ramObservations.reduce((a, b) => a + b) / ramObservations.length;
+            }
+
+            if (ns.fileExists('Formulas.exe')) {
+                if (type.max) {
+                    additionalRamNeeded = Math.max(...ramObservations);
+                }
+            }
+
+            const ramNeededForBatchesFile = "data/ramNeededToStartBatches.txt";
+            if (ns.fileExists(ramNeededForBatchesFile)) {
+                const ramNeededToStartBatches = Number(ns.read(ramNeededForBatchesFile));
+
+                if (ramNeededToStartBatches < additionalRamNeeded) {
+                    additionalRamNeeded = ramNeededToStartBatches;
+                }
             }
         }
 
-        const ramNeededForBatchesFile = "data/ramNeededToStartBatches.txt";
-        if(ns.fileExists(ramNeededForBatchesFile)){
-            const ramNeededToStartBatches = Number(ns.read(ramNeededForBatchesFile));
+        let maxRam = 1048576;
 
-            if(ramNeededToStartBatches < additionalRamNeeded){
-                additionalRamNeeded = ramNeededToStartBatches;
-            }
+        const enviroment = JSON.parse(ns.read('../../data/enviroment.txt'));
+
+        const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+        let stockMarketReserveMoney = new ReserveForTrading();
+        if (ns.fileExists(stockMarketReserveMoneyFile)) {
+            stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
         }
+
+
+        const playerPurchasedServers = enviroment
+            .filter(x => x.server.purchasedByPlayer && x.server.maxRam < maxRam)
+            .sort((b, a) => a.server.maxRam - b.server.maxRam)
+
+        let upgradedOrPurchased = false;
+        if (playerPurchasedServers.length === 0) {
+            upgradedOrPurchased = purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney);
+        } else {
+            const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
+            upgradedOrPurchased = upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded, stockMarketReserveMoney);
+        }
+
+        if (upgradedOrPurchased) {
+            ns.rm(ramObservationsTextFile);
+            type.changeType();
+            const now = new Date();
+            const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+            ns.toast(`${timeStamp} More than ${Math.round(additionalRamNeeded)} GB bought for server`, "success", 300000);
+        }
+
+        ns.rm(typeRecord);
+        ns.write(typeRecord, JSON.stringify(type), "W");
     }
-
-    let maxRam = 1048576;
-
-    const enviroment = JSON.parse(ns.read('../../data/enviroment.txt'));
-
-    const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
-    let stockMarketReserveMoney = new ReserveForTrading();
-    if (ns.fileExists(stockMarketReserveMoneyFile)) {
-        stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
-    }
-
-
-    const playerPurchasedServers = enviroment
-        .filter(x => x.server.purchasedByPlayer && x.server.maxRam < maxRam)
-        .sort((b, a) => a.server.maxRam - b.server.maxRam)
-
-    let upgradedOrPurchased = false;
-    if (playerPurchasedServers.length === 0) {
-        upgradedOrPurchased = purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney);
-    } else {
-        const smallestPlayerPurchasedServer = playerPurchasedServers.pop();
-        upgradedOrPurchased = upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, additionalRamNeeded, stockMarketReserveMoney);
-    }
-
-    if (upgradedOrPurchased) {
-        ns.rm(ramObservationsTextFile);
-        type.changeType();
-        const now = new Date();
-        const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
-        ns.toast(`${timeStamp} More than ${Math.round(additionalRamNeeded)} GB bought for server`, "success", 300000);
-    }
-
-    ns.rm(typeRecord);
-    ns.write(typeRecord, JSON.stringify(type), "W");
 }
 
 function purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney) {
@@ -224,7 +227,7 @@ function canSpendThatMoney(ns, stockMarketReserveMoney, costOfRamToBuy) {
         }
     }
 
-    if (moneyToSpend !== costOfRamToBuy){
+    if (moneyToSpend !== costOfRamToBuy) {
         return false;
     }
 
@@ -283,36 +286,36 @@ class ReserveForTrading {
         obj && Object.assign(this, obj);
     }
 
-    setMoneyInvested(moneyInvested, ns){
+    setMoneyInvested(moneyInvested, ns) {
         this.moneyInvested = moneyInvested;
 
         const potentialCapitalReserve = moneyInvested / 2;
-        
+
         this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
 
-        if(this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit){
+        if (this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit) {
             this.capitalToReserveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         this.countOfVisitedWithoutFillingRequest++;
     }
 
-    canSpend(ns, moneyNeeded){
+    canSpend(ns, moneyNeeded) {
         const moneyOnHome = ns.getServerMoneyAvailable("home");
 
         let moneyToSaveForTrading = this.capitalToReserveForTrading - this.moneyInvested;
 
-        if(moneyToSaveForTrading < 0){
+        if (moneyToSaveForTrading < 0) {
             moneyToSaveForTrading = 0;
         }
 
-        if(moneyToSaveForTrading > this.stockMarketReserveMoneyLimit){
+        if (moneyToSaveForTrading > this.stockMarketReserveMoneyLimit) {
             moneyToSaveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
 
-        if(canSpend === false){
+        if (canSpend === false) {
             this.requestMoney(ns, moneyNeeded);
         } else {
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
@@ -327,13 +330,13 @@ class ReserveForTrading {
         return canSpend;
     }
 
-    requestMoney(ns, amount){
+    requestMoney(ns, amount) {
         const nameOfRequest = "purchase-server";
         this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
         const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
-        if(moneyRequestedPreviously){
-            if(moneyRequestedPreviously < amount){
+        if (moneyRequestedPreviously) {
+            if (moneyRequestedPreviously < amount) {
                 this.moneyRequested.set(nameOfRequest, amount);
                 this.moneyRequested = Array.from(this.moneyRequested);
 

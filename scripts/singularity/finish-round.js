@@ -173,7 +173,7 @@ export async function main(ns) {
         }
 
 
-        // My augment script ranks every augment that hasn't been purchased by price, and then calculates how many of them I can buy (taking into account the 1.9x price increase per augment, and the additional 1.14x increase per NeuroFlux Governor level). 
+
         let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
 
         if (targetFaction.faction === "CyberSec") {
@@ -205,6 +205,42 @@ export async function main(ns) {
             saveAnalytics(ns, analytics);
         }
 
+
+        // --------
+                // My augment script ranks every augment that hasn't been purchased by price, and then calculates how many of them I can buy (taking into account the 1.9x price increase per augment, and the additional 1.14x increase per NeuroFlux Governor level). 
+
+        const purchasableAugments = new Map();
+
+        for (const factionWithAugments of factionsWithAugmentsToBuy) {
+            for (const augment of factionWithAugments.factionAugmentsThatIDontOwnAndCanAfford) {
+                if (purchasableAugments.has(augment.augmentName) === false) {
+                    const item = {
+                        augmentationRepCost: augment.augmentationRepCost,
+                        price: augment.price,
+                        prereqs: augment.prereqs,
+                        faction: factionWithAugments.faction
+                    }
+                    purchasableAugments.set(augment.augmentName, item)
+                }
+            }
+        }
+
+        const augmentsLeft = Array.from(purchasableAugments.entries()).sort((a,b) => b[1].price - a[1].price);
+
+        // arrange with prereqs in mind
+        // then 1.9X the cost every purchase
+        // then figure out how many NeuroFlux governors we can buy with the rep, and then figure out how much that would cost. 
+
+        // new order ->
+            // augments
+            // neuroflux
+            // computer
+            // if we have extra money, then we buy more neuroflux with purchased rep
+
+
+
+        /// ------
+
         if (estimatedIncomeForTheNextFourHours > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney) {
 
             const stopInvestingFileName = "stopInvesting.txt";
@@ -226,24 +262,6 @@ export async function main(ns) {
                     analytics.moneyTrigger = moneyTrigger;
                     saveAnalytics(ns, analytics);
                 }
-
-                const purchasableAugments = new Map();
-
-                for (const factionWithAugments of factionsWithAugmentsToBuy) {
-                    for (const augment of factionWithAugments.factionAugmentsThatIDontOwnAndCanAfford) {
-                        if (purchasableAugments.has(augment.augmentName) === false) {
-                            const item = {
-                                augmentationRepCost: augment.augmentationRepCost,
-                                price: augment.price,
-                                prereqs: augment.prereqs,
-                                faction: factionWithAugments.faction
-                            }
-                            purchasableAugments.set(augment.augmentName, item)
-                        }
-                    }
-                }
-
-                const augmentsLeft = Array.from(purchasableAugments.entries()).sort((a,b) => b[1].price - a[1].price);
 
                 for (const augmentData of augmentsLeft) {
                     const augment = augmentData[0];

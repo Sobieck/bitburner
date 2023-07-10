@@ -96,6 +96,7 @@ export async function main(ns) {
 
                 if (sellSharesToSatisfyMoneyDemands) {
                     sellSharesToSatisfyMoneyDemands = false;
+                    ns.toast(`Sold $${moneyRequested} for money request.`, "success", null)
                 }
 
                 if (stopTradingExists) {
