@@ -1,7 +1,62 @@
 {
-    "stockMarketReserveMoneyLimit": 1000000000000,
-    "capitalToReserveForTrading": 1000000000000,
-    "moneyInvested": 0,
-    "moneyRequested": {},
-    "countOfVisitedWithoutFillingRequest": 0
+    "firstStarted": "2023-07-11T10:42:16.637Z",
+    "firstAssignFactionToMax": "2023-07-11T10:42:16.638Z",
+    "factionsToMax": [
+        {
+            "factionToMax": "NWO",
+            "firstTime": "2023-07-11T10:42:16.638Z"
+        },
+        {
+            "factionToMax": "BitRunners",
+            "firstTime": "2023-07-11T10:46:46.120Z"
+        }
+    ],
+    "firstEncounterOfRepTrigger": {
+        "factionRepGreaterThanMaximumAug": false,
+        "factionRepGreaterThanTargetToGetToFavorNeeded": false,
+        "factionDonationTrigger": false,
+        "maximumAugRepNeeded": 1750000,
+        "currentFactionRep": 0,
+        "targetRepForGettingToFavor": 462490.0692,
+        "time": "2023-07-11T10:42:16.638Z"
+    },
+    "augsBought": [
+        "Neural Accelerator"
+    ],
+    "moneySpent": {
+        "augments": 1750000000,
+        "homeCores": 0,
+        "homeRam": 0,
+        "fluxGovernors": 4554283656849.052,
+        "repPurchased": 0
+    },
+    "moneyLeft": 1755961103764.4956,
+    "lastSaved": "2023-07-11T12:24:47.532Z",
+    "repTrigger": {
+        "factionRepGreaterThanMaximumAug": false,
+        "factionRepGreaterThanTargetToGetToFavorNeeded": true,
+        "factionDonationTrigger": false,
+        "maximumAugRepNeeded": 1000000,
+        "currentFactionRep": 78668.58510156769,
+        "targetRepForGettingToFavor": 78604.3905,
+        "time": "2023-07-11T11:26:08.909Z"
+    },
+    "firstEncoundedMoneyTrigger": {
+        "estimatedIncomeTriggered": true,
+        "moneyIsGreaterThanTriggered": true,
+        "triggedWithSuperLargeAmountOfMoney": false,
+        "estimatedIncomeForTheNextFourHours": "$74,796,262,687,719.81",
+        "moneyRightNow": "$5,775,539,522,926.99",
+        "buyArgumentsWhenWeHave": "$175,000,000,000.00",
+        "time": "2023-07-11T12:24:43.465Z"
+    },
+    "moneyTrigger": {
+        "estimatedIncomeTriggered": true,
+        "moneyIsGreaterThanTriggered": true,
+        "triggedWithSuperLargeAmountOfMoney": false,
+        "estimatedIncomeForTheNextFourHours": "$74,796,262,687,719.81",
+        "moneyRightNow": "$6,311,994,760,613.55",
+        "buyArgumentsWhenWeHave": "$175,000,000,000.00",
+        "time": "2023-07-11T12:24:47.531Z"
+    }
 }

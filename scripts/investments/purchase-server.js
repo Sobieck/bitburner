@@ -85,6 +85,10 @@ export async function main(ns) {
             }
         }
 
+        if (additionalRamNeeded === 0) {
+            return;
+        }
+
         let maxRam = 1048576;
 
         const enviroment = JSON.parse(ns.read('../../data/enviroment.txt'));
@@ -118,6 +122,9 @@ export async function main(ns) {
 
         ns.rm(typeRecord);
         ns.write(typeRecord, JSON.stringify(type), "W");
+        if (countOfTriesToBuyServers > 100) {
+            countOfTriesToBuyServers = 0;
+        }
     }
 }
 
@@ -159,8 +166,6 @@ function purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney
                 countOfTriesToBuyServers = 0;
             }
         }
-    } else {
-        ns.tprint("max servers already bought");
     }
 
     return false;

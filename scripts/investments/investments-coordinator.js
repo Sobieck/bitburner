@@ -30,11 +30,11 @@ export async function main(ns) {
 
     ns.run('scripts/investments/purchase-server.js');
     
-    purchaseProgram(ns, 50, "BruteSSH.exe");
-    purchaseProgram(ns, 100, "FTPCrack.exe");
-    purchaseProgram(ns, 250, "relaySMTP.exe");
-    purchaseProgram(ns, 500, "HTTPWorm.exe");
-    purchaseProgram(ns, 750, "SQLInject.exe");
+    purchaseProgram(ns, 50, "BruteSSH.exe", stockMarketReserveMoney);
+    purchaseProgram(ns, 100, "FTPCrack.exe", stockMarketReserveMoney);
+    purchaseProgram(ns, 250, "relaySMTP.exe", stockMarketReserveMoney);
+    purchaseProgram(ns, 500, "HTTPWorm.exe", stockMarketReserveMoney);
+    purchaseProgram(ns, 750, "SQLInject.exe", stockMarketReserveMoney);
 
 
     if (moneyAvailable > 1_000_000_000_000) {
@@ -45,7 +45,7 @@ export async function main(ns) {
   
 }
 
-function purchaseProgram(ns, atWhatHackingLevelToBuy, programToBuy) {
+function purchaseProgram(ns, atWhatHackingLevelToBuy, programToBuy, stockMarketReserveMoney) {
     const playerHackingLevel = ns.getHackingLevel();
     if (!ns.fileExists(programToBuy) && playerHackingLevel > atWhatHackingLevelToBuy) {
 

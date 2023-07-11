@@ -111,12 +111,9 @@ export async function main(ns) {
 
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction)
 
-    const currentFavor = ns.singularity.getFactionFavor(targetFaction.faction);
-    const favorNeeded = 150 - currentFavor;
-
     let targetRepForGettingToFavor = 700_000;
     if (ns.fileExists("Formulas.exe")) {
-        targetRepForGettingToFavor = ns.formulas.reputation.calculateFavorToRep(favorNeeded)
+        targetRepForGettingToFavor = ns.formulas.reputation.calculateFavorToRep(150)
     }
 
     if (!analytics.firstEncounterOfRepTrigger) {
