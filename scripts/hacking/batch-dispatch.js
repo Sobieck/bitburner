@@ -592,6 +592,7 @@ function prepServerForBatching(targetServer, batchForTarget, ns, player, nameOfT
         if (averageErrorRateOver10Minutes < errorRateAtWhichWeAllowNewThings || !anyBatchNotPrepping) {
             batchForTarget.prepStage = false;
             batchForTarget.targetMachineSaturatedWithAttacks = false;
+            ns.toast(`Added ${nameOfTarget} to in process batch attack.`, 'success')
         }
     }
 
