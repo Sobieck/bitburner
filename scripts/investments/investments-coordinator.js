@@ -15,8 +15,8 @@ export async function main(ns) {
     if (ns.fileExists(stockMarketReserveMoneyFile)) {
         stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
     }
-
-    if (moneyAvailable > 1_000_000_000) {
+    
+    if (stockMarketReserveMoney.moneyInvested > 7_000_000_000) {
         if (!ns.fileExists("Formulas.exe")) {
             checkTor(ns);
             const formulasCost = ns.singularity.getDarkwebProgramCost("Formulas.exe")

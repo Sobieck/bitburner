@@ -66,14 +66,35 @@ export async function main(ns) {
 
     const stopTradingExists = ns.fileExists("../../stopTrading.txt");
     stockRecords.map(stock => {
-        let sharesToSell = stock.investedShares;
+        let sharesToSell = 0;
+        let type = "Short-Term Long Sale";
+        let averagePrice = 0;
+        let coverShort = false;
+
+        if (stock.investedShares > 0) {
+            sharesToSell = stock.investedShares;
+            type = "Short-Term Long Sale";
+            averagePrice = stock.averagePrice;
+            coverShort = false;
+        }
+
+        if (stock.sharesShort > 0) {
+            sharesToSell = stock.sharesShort;
+            type = "Short-Term Cover Short";
+            averagePrice = stock.averageShortPrice;
+            coverShort = true;
+        }
 
         if (sellSharesToSatisfyMoneyDemands) {
-            if(stockMarketReserveMoney.canSellAmountAndStillHaveReserve(moneyRequested)){
+            if (stockMarketReserveMoney.canSellAmountAndStillHaveReserve(moneyRequested)) {
                 sharesToSell = Math.ceil(moneyRequested / stock.bid)
 
                 if (sharesToSell > stock.investedShares) {
                     sharesToSell = stock.investedShares;
+                }
+
+                if (sharesToSell > stock.sharesShort) {
+                    sharesToSell = stock.sharesShort;
                 }
             } else {
                 sellSharesToSatisfyMoneyDemands = false;
@@ -83,14 +104,20 @@ export async function main(ns) {
 
 
         if (sharesToSell > 0) {
-            if (stock.sellTrend || stopTradingExists || sellSharesToSatisfyMoneyDemands) {
-                const salePrice = ns.stock.sellStock(stock.symbol, sharesToSell);
+            if ((stock.sellTrend && coverShort === false) || stopTradingExists || sellSharesToSatisfyMoneyDemands || (stock.coverShortTrend && coverShort)) {
+                let salePrice;
+                if (coverShort) {
+                    salePrice = ns.stock.sellShort(stock.symbol, sharesToSell);
+                } else {
+                    salePrice = ns.stock.sellStock(stock.symbol, sharesToSell);
+                }
+
                 ledger.push(new LedgerItem(
                     stock.symbol,
                     salePrice,
-                    stock.averagePrice,
+                    averagePrice,
                     sharesToSell,
-                    "Short-Term Long Sale",
+                    type,
                     stock.forecast
                 ))
 
@@ -112,7 +139,7 @@ export async function main(ns) {
 
     let moneyAvailable = ns.getServerMoneyAvailable("home") - commission - moneyRequested;
 
-    if (moneyAvailable > 30_000_000_000 && !ns.stock.has4SDataTIXAPI()) {
+    if (moneyAvailable > 26_500_000_000 && !ns.stock.has4SDataTIXAPI()) {
         ns.stock.purchase4SMarketData();
         ns.stock.purchase4SMarketDataTixApi();
     }
@@ -127,29 +154,48 @@ export async function main(ns) {
     }
 
     if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
-        const stocksToGoLong = stockRecords
-            .filter(stock => stock.investedShares !== stock.maxShares && stock.buyTrend)
+        let stocksToTrade = stockRecords
+            .filter(stock => 
+                (stock.buyTrend && stock.investedShares !== stock.maxShares) || 
+                (stock.sellShortTrend && stock.maxShares !== stock.sharesShort))
             .sort((a, b) => b.volatility - a.volatility);
 
-        if (stocksToGoLong.length > 0) {
-            const stockToLookAt = stocksToGoLong[0];
+        if (!ns.stock.has4SDataTIXAPI()) {
+            stocksToTrade = stockRecords
+                .filter(stock => 
+                    (stock.buyTrend && stock.investedShares === 0) || 
+                    (stock.sellShortTrend && stock.sharesShort === 0))
+        }
 
-            let sharesToBuy = Math.round(moneyAvailable / stockToLookAt.ask);
+        if (stocksToTrade.length > 0) {
+            const stockToLookAt = stocksToTrade[0];
 
-            const totalSharesAfterBuy = sharesToBuy + stockToLookAt.investedShares;
-
-            if (stockToLookAt.maxShares < totalSharesAfterBuy) {
-                sharesToBuy = stockToLookAt.maxShares - stockToLookAt.investedShares;
-            }
-
+            let sharesToBuy = 0;
             const ticker = stockToLookAt.symbol;
 
-            if (!ns.stock.has4SDataTIXAPI() && stockToLookAt.investedShares > 0) {
-                return;
-            }
+            if (stockToLookAt.buyTrend){
+                sharesToBuy = Math.round(moneyAvailable / stockToLookAt.ask);
 
-            // ns.toast(`${ticker} SHARES: ${sharesToBuy} FORECAST: ${stockToLookAt.forecast}`, "success", null)
-            ns.stock.buyStock(ticker, sharesToBuy);
+                const totalSharesAfterBuy = sharesToBuy + stockToLookAt.investedShares;
+
+                if (stockToLookAt.maxShares < totalSharesAfterBuy) {
+                    sharesToBuy = stockToLookAt.maxShares - stockToLookAt.investedShares;
+                }
+
+                ns.stock.buyStock(ticker, sharesToBuy);
+            }             
+
+            if (stockToLookAt.sellShortTrend){
+                sharesToBuy = Math.round(moneyAvailable / stockToLookAt.bid);
+
+                const totalSharesAfterBuy = sharesToBuy + stockToLookAt.sharesShort;
+
+                if (stockToLookAt.maxShares < totalSharesAfterBuy) {
+                    sharesToBuy = stockToLookAt.maxShares - stockToLookAt.sharesShort;
+                }
+
+                ns.stock.buyShort(ticker, sharesToBuy);
+            }         
         }
     }
 
@@ -250,7 +296,11 @@ class LedgerItem {
             currency: 'USD',
         });
 
-        const numberProfit = (price - averagePurchasePrice) * shares
+        let numberProfit = (price - averagePurchasePrice) * shares;
+
+        if(type === "Short-Term Cover Short"){
+            numberProfit = (averagePurchasePrice - price) * shares;
+        }
 
         this.date = new Date().toLocaleString();
         this.symbol = symbol;
@@ -279,7 +329,7 @@ class StockHistoricData {
         this.shortTermRecords.push(record);
         this.recentTicksOfPrices.push(record.price);
 
-        if (this.recentTicksOfPrices.length === 11) {
+        if (this.recentTicksOfPrices.length === 21) {
             record.countOfNegative = 0;
             record.countOfPositive = 0;
 
@@ -305,19 +355,19 @@ class StockHistoricData {
 
 
         if (!hasOracle) {
-            if (record.countOfPositive >= 8) {
+            if (record.countOfPositive >= 16) {
                 record.buyTrend = true;
             }
 
-            if (record.countOfPositive <= 6) {
+            if (record.countOfPositive <= 12 && record.investedShares > 0) {
                 record.sellTrend = true;
             }
 
-            if (record.countOfNegative >= 8) {
+            if (record.countOfNegative >= 16) {
                 record.sellShortTrend = true;
             }
 
-            if (record.countOfNegative <= 6) {
+            if (record.countOfNegative <= 12 && record.sharesShort > 0) {
                 record.coverShortTrend = true;
             }
         }
@@ -327,7 +377,7 @@ class StockHistoricData {
                 record.buyTrend = true;
             }
 
-            if (record.forecast < .5) {
+            if (record.forecast < .5 && record.investedShares > 0) {
                 record.sellTrend = true;
             }
 
@@ -335,7 +385,7 @@ class StockHistoricData {
                 record.sellShortTrend = true;
             }
 
-            if (0.5 < record.forecast) {
+            if (0.5 < record.forecast && record.sharesShort > 0) {
                 record.coverShortTrend = true;
             }
         }

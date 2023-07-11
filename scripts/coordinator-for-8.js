@@ -2,7 +2,7 @@
 export async function main(ns) {
     const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 6;
+    const numberOfDifferentSleeps = 5;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/hacking/memory-starved-dispatch.js';
 
@@ -51,14 +51,14 @@ export async function main(ns) {
         await doSingularityWork(ns, 'backdoor-all-machines')
         await doSingularityWork(ns, 'join-organziations');
         await doSingularityWork(ns, 'do-work');
-        await doSingularityWork(ns, 'finish-round');
-        await doSingularityWork(ns, 'finish-bitnode');
+        // await doSingularityWork(ns, 'finish-round');
+        // await doSingularityWork(ns, 'finish-bitnode');
         await doSingularityWork(ns, 'study-computer-science');
         await doSingularityWork(ns, 'create-early-programs');
         await doSingularityWork(ns, 'do-job');
         await doSingularityWork(ns, 'buy-rep');
         await doSingularityWork(ns, 'workout');
-        await doSingularityWork(ns, 'upgade-home-machine');
+        // await doSingularityWork(ns, 'upgade-home-machine');
         await doSingularityWork(ns, 'travel-to-get-augs');
     }
     

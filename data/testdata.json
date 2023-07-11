@@ -1,62 +1,262 @@
-{
-    "firstStarted": "2023-07-11T10:42:16.637Z",
-    "firstAssignFactionToMax": "2023-07-11T10:42:16.638Z",
-    "factionsToMax": [
-        {
-            "factionToMax": "NWO",
-            "firstTime": "2023-07-11T10:42:16.638Z"
-        },
-        {
-            "factionToMax": "BitRunners",
-            "firstTime": "2023-07-11T10:46:46.120Z"
-        }
-    ],
-    "firstEncounterOfRepTrigger": {
-        "factionRepGreaterThanMaximumAug": false,
-        "factionRepGreaterThanTargetToGetToFavorNeeded": false,
-        "factionDonationTrigger": false,
-        "maximumAugRepNeeded": 1750000,
-        "currentFactionRep": 0,
-        "targetRepForGettingToFavor": 462490.0692,
-        "time": "2023-07-11T10:42:16.638Z"
+[
+    {
+        "date": "7/11/2023, 4:18:45 PM",
+        "symbol": "KGI",
+        "price": 19212.57782601239,
+        "averagePurchasePrice": 19567.11371751366,
+        "profit": "-$4,345,191.89",
+        "profitPercent": "-1.81%",
+        "shares": 12256,
+        "type": "Short-Term Long Sale"
     },
-    "augsBought": [
-        "Neural Accelerator"
-    ],
-    "moneySpent": {
-        "augments": 1750000000,
-        "homeCores": 0,
-        "homeRam": 0,
-        "fluxGovernors": 4554283656849.052,
-        "repPurchased": 0
+    {
+        "date": "7/11/2023, 4:21:33 PM",
+        "symbol": "HLS",
+        "price": 10607.741131143985,
+        "averagePurchasePrice": 10388.486460491727,
+        "profit": "$4,965,460.53",
+        "profitPercent": "2.11%",
+        "shares": 22647,
+        "type": "Short-Term Long Sale"
     },
-    "moneyLeft": 1755961103764.4956,
-    "lastSaved": "2023-07-11T12:24:47.532Z",
-    "repTrigger": {
-        "factionRepGreaterThanMaximumAug": false,
-        "factionRepGreaterThanTargetToGetToFavorNeeded": true,
-        "factionDonationTrigger": false,
-        "maximumAugRepNeeded": 1000000,
-        "currentFactionRep": 78668.58510156769,
-        "targetRepForGettingToFavor": 78604.3905,
-        "time": "2023-07-11T11:26:08.909Z"
+    {
+        "date": "7/11/2023, 4:22:09 PM",
+        "symbol": "AERO",
+        "price": 14648.12031107694,
+        "averagePurchasePrice": 14847.240999811262,
+        "profit": "-$3,219,184.17",
+        "profitPercent": "-1.34%",
+        "shares": 16167,
+        "type": "Short-Term Long Sale"
     },
-    "firstEncoundedMoneyTrigger": {
-        "estimatedIncomeTriggered": true,
-        "moneyIsGreaterThanTriggered": true,
-        "triggedWithSuperLargeAmountOfMoney": false,
-        "estimatedIncomeForTheNextFourHours": "$74,796,262,687,719.81",
-        "moneyRightNow": "$5,775,539,522,926.99",
-        "buyArgumentsWhenWeHave": "$175,000,000,000.00",
-        "time": "2023-07-11T12:24:43.465Z"
+    {
+        "date": "7/11/2023, 4:23:16 PM",
+        "symbol": "ECP",
+        "price": 22267.06852233681,
+        "averagePurchasePrice": 22043.404443493666,
+        "profit": "$2,400,810.22",
+        "profitPercent": "1.01%",
+        "shares": 10734,
+        "type": "Short-Term Long Sale"
     },
-    "moneyTrigger": {
-        "estimatedIncomeTriggered": true,
-        "moneyIsGreaterThanTriggered": true,
-        "triggedWithSuperLargeAmountOfMoney": false,
-        "estimatedIncomeForTheNextFourHours": "$74,796,262,687,719.81",
-        "moneyRightNow": "$6,311,994,760,613.55",
-        "buyArgumentsWhenWeHave": "$175,000,000,000.00",
-        "time": "2023-07-11T12:24:47.531Z"
+    {
+        "date": "7/11/2023, 4:23:26 PM",
+        "symbol": "MGCP",
+        "price": 28830.551364067018,
+        "averagePurchasePrice": 29087.784501051727,
+        "profit": "-$2,111,884.05",
+        "profitPercent": "-0.88%",
+        "shares": 8210,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:24:14 PM",
+        "symbol": "CLRK",
+        "price": 11771.509849712678,
+        "averagePurchasePrice": 11917.666876678204,
+        "profit": "-$2,900,486.20",
+        "profitPercent": "-1.23%",
+        "shares": 19845,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:24:50 PM",
+        "symbol": "WDS",
+        "price": 6925.819397594388,
+        "averagePurchasePrice": 7244.103705389339,
+        "profit": "-$10,255,120.40",
+        "profitPercent": "-4.39%",
+        "shares": 32220,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:26:33 PM",
+        "symbol": "OMTK",
+        "price": 48662.76014385484,
+        "averagePurchasePrice": 47213.701194129826,
+        "profit": "$6,842,456.36",
+        "profitPercent": "3.07%",
+        "shares": 4722,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:27:18 PM",
+        "symbol": "GPH",
+        "price": 24319.797099382093,
+        "averagePurchasePrice": 24578.974985504425,
+        "profit": "-$2,420,980.63",
+        "profitPercent": "-1.05%",
+        "shares": 9341,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:30:15 PM",
+        "symbol": "FSIG",
+        "price": 86420.25750629941,
+        "averagePurchasePrice": 82050.9509379057,
+        "profit": "$12,085,501.97",
+        "profitPercent": "5.33%",
+        "shares": 2766,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:30:39 PM",
+        "symbol": "RHOC",
+        "price": 3310.4129781137945,
+        "averagePurchasePrice": 3370.50287950461,
+        "profit": "-$4,258,391.04",
+        "profitPercent": "-1.78%",
+        "shares": 70867,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:35:50 PM",
+        "symbol": "OMTK",
+        "price": 55674.87640486327,
+        "averagePurchasePrice": 53329.21239242035,
+        "profit": "$10,309,193.33",
+        "profitPercent": "4.40%",
+        "shares": 4395,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:38:50 PM",
+        "symbol": "CLRK",
+        "price": 13648.19230795947,
+        "averagePurchasePrice": 13289.807194550673,
+        "profit": "$6,593,569.32",
+        "profitPercent": "2.70%",
+        "shares": 18398,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:39:39 PM",
+        "symbol": "OMTK",
+        "price": 56897.88891407343,
+        "averagePurchasePrice": 57628.19352082707,
+        "profit": "-$3,176,825.04",
+        "profitPercent": "-1.27%",
+        "shares": 4350,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:43:57 PM",
+        "symbol": "MDYN",
+        "price": 35950.06444204543,
+        "averagePurchasePrice": 35584.73822282966,
+        "profit": "$2,539,017.22",
+        "profitPercent": "1.03%",
+        "shares": 6950,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:46:27 PM",
+        "symbol": "NVMD",
+        "price": 17934.96340463664,
+        "averagePurchasePrice": 17569.091095193464,
+        "profit": "$5,199,045.52",
+        "profitPercent": "2.08%",
+        "shares": 14210,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:54:08 PM",
+        "symbol": "ECP",
+        "price": 19698.848437410605,
+        "averagePurchasePrice": 18791.036137461906,
+        "profit": "$12,302,672.29",
+        "profitPercent": "4.83%",
+        "shares": 13552,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:55:33 PM",
+        "symbol": "DCOMM",
+        "price": 24733.36215623509,
+        "averagePurchasePrice": 24798.981681693975,
+        "profit": "-$705,869.24",
+        "profitPercent": "-0.26%",
+        "shares": 10757,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 4:58:03 PM",
+        "symbol": "CTK",
+        "price": 5791.29825792955,
+        "averagePurchasePrice": 5810.742797146036,
+        "profit": "-$889,646.00",
+        "profitPercent": "-0.33%",
+        "shares": 45753,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 5:00:38 PM",
+        "symbol": "FSIG",
+        "price": 73365.0501699342,
+        "averagePurchasePrice": 74035.13811655315,
+        "profit": "-$2,396,234.50",
+        "profitPercent": "-0.91%",
+        "shares": 3576,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 5:03:09 PM",
+        "symbol": "AERO",
+        "price": 14751.916105790893,
+        "averagePurchasePrice": 14834.577013265107,
+        "profit": "-$1,460,866.22",
+        "profitPercent": "-0.56%",
+        "shares": 17673,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 5:06:09 PM",
+        "symbol": "ECP",
+        "price": 20464.26339472337,
+        "averagePurchasePrice": 20497.736978981025,
+        "profit": "-$425,415.78",
+        "profitPercent": "-0.16%",
+        "shares": 12709,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 5:08:21 PM",
+        "symbol": "CLRK",
+        "price": 14004.764553888703,
+        "averagePurchasePrice": 13885.674111658811,
+        "profit": "$2,228,896.72",
+        "profitPercent": "0.86%",
+        "shares": 18716,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 5:11:57 PM",
+        "symbol": "BLD",
+        "price": 20294.489089182163,
+        "averagePurchasePrice": 19403.80795689724,
+        "profit": "$12,022,413.92",
+        "profitPercent": "4.59%",
+        "shares": 13498,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 5:15:52 PM",
+        "symbol": "SLRS",
+        "price": 29298.26549571335,
+        "averagePurchasePrice": 28060.81924996224,
+        "profit": "$12,071,288.13",
+        "profitPercent": "4.41%",
+        "shares": 9755,
+        "type": "Short-Term Long Sale"
+    },
+    {
+        "date": "7/11/2023, 5:18:21 PM",
+        "symbol": "DCOMM",
+        "price": 24315.813299693375,
+        "averagePurchasePrice": 24824.73433004369,
+        "profit": "-$5,855,136.45",
+        "profitPercent": "-2.05%",
+        "shares": 11505,
+        "type": "Short-Term Long Sale"
     }
-}
+]

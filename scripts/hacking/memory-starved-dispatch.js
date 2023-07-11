@@ -123,7 +123,7 @@ async function executeScriptAcrossFleet(ns, script, enviroment, homeMemoryLimita
             const pid = ns.exec(script, machineToRunOn, threads, target.name);
 
             if (pid !== 0) {
-                if(machineToRunOn === "home"){
+                if (machineToRunOn === "home") {
                     ranOnHomeThisTime = true;
                 }
                 target.pids.push(pid);
@@ -154,10 +154,12 @@ function getMachineWithNumberOfThreads(ns, enviroment, threads, ramCostPerThread
         ns.write(buyOrUpgradeServerFlag, globalMaxAmountNeeded, "W");
     }
 
+    machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment, homeMemoryLimitations);
+
     while (threads > 0 && !machineToRunOn) {
         threads--;
 
-        machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment, homeMemoryLimitations)
+        machineToRunOn = getMachineWithEnoughRam(ns, threads * ramCostPerThread, enviroment, homeMemoryLimitations);
     }
 
     return { threads, machineToRunOn };
@@ -169,11 +171,9 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment, homeMemoryLimitation
     const allHackableMachines = enviroment
         .filter(x => x.server.hasAdminRights);
 
-    if (!ranOnHomeThisTime) {
-        const homeServer = getServer(ns, "home", homeMemoryLimitations);
+    const homeServer = getServer(ns, "home", homeMemoryLimitations);
 
-        allHackableMachines.push({ name: "home", server: homeServer })
-    }
+    allHackableMachines.push({ name: "home", server: homeServer })
 
     const machinesWithRamAvailable = allHackableMachines
         .filter(x => x.server.ramUsed < x.server.maxRam && x.server.maxRam !== 0);

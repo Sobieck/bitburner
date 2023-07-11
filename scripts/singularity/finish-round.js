@@ -109,11 +109,15 @@ export async function main(ns) {
 
     setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns);
 
-    const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction)
+    const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction);
+    const currentFactionFavor = ns.singularity.getFactionFavor(targetFaction.faction);
 
     let targetRepForGettingToFavor = 700_000;
     if (ns.fileExists("Formulas.exe")) {
-        targetRepForGettingToFavor = ns.formulas.reputation.calculateFavorToRep(150)
+        const favorGain = ns.singularity.getFactionFavorGain(targetFaction.faction);
+        if (favorGain + currentFactionFavor > 150) {
+            targetRepForGettingToFavor = currentFactionFavor;
+        }
     }
 
     if (!analytics.firstEncounterOfRepTrigger) {
@@ -121,7 +125,6 @@ export async function main(ns) {
         analytics.firstEncounterOfRepTrigger = repTrigger;
         saveAnalytics(ns, analytics);
     }
-
 
     if (targetFaction.maximumAugRep < currentFactionRep || targetRepForGettingToFavor < currentFactionRep || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
 
@@ -164,47 +167,12 @@ export async function main(ns) {
         const priceOfMostExpensiveAugment = Math.max(...factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction).factionAugmentsThatIDontOwnAndCanAfford.map(x => x.price));
 
 
-
         if (priceOfMostExpensiveAugment < 0) {
             return;
         }
 
-
-
-        let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 100;
-
-        if (targetFaction.faction === "CyberSec") {
-            buyAugmentsWhenWeHaveMoreThanThisMuchMoney = priceOfMostExpensiveAugment * 10;
-        }
-
-        const estimatedIncomeForTheNextFourHours = incomePerHourEstimate * 4;
-
-        const moneyAvailable = ns.getServerMoneyAvailable("home");
-
-        const moneyFormatted = formatter.format(incomePerHourEstimate);
-
-        if (moneyFormatted !== "$NaN") {
-            const hoursTillInstall = Math.floor(buyAugmentsWhenWeHaveMoreThanThisMuchMoney / incomePerHourEstimate);
-            if (updatedMoneyEstimate) {
-                const now = new Date();
-                const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
-
-                ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall}`, "success", 60000)
-            }
-        }
-
-        const superLargeAmountOfMoney = 1_000_000_000_000_000;
-
-        if (!analytics.firstEncoundedMoneyTrigger) {
-            const moneyTrigger = createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, superLargeAmountOfMoney, formatter);
-
-            analytics.firstEncoundedMoneyTrigger = moneyTrigger;
-            saveAnalytics(ns, analytics);
-        }
-
-
         // --------
-                // My augment script ranks every augment that hasn't been purchased by price, and then calculates how many of them I can buy (taking into account the 1.9x price increase per augment, and the additional 1.14x increase per NeuroFlux Governor level). 
+        // My augment script ranks every augment that hasn't been purchased by price, and then calculates how many of them I can buy (taking into account the 1.9x price increase per augment, and the additional 1.14x increase per NeuroFlux Governor level). 
 
         const purchasableAugments = new Map();
 
@@ -222,21 +190,89 @@ export async function main(ns) {
             }
         }
 
-        const augmentsLeft = Array.from(purchasableAugments.entries()).sort((a,b) => b[1].price - a[1].price);
+        const augmentsLeft = Array.from(purchasableAugments.entries()).sort((a, b) => b[1].price - a[1].price);
 
+        const orderedAugments = []; // { factionName, augmentName, basePrice, multipledPrice}
+
+        function addPrereqs(prereqName) {
+            const augment = purchasableAugments.get(prereqName);
+
+            if (augment && !ownedAugmentations.includes(prereqName) && !orderedAugments.includes(x => x.augmentName === prereqName)) {
+
+                if (augment.prereqs.length > 0) {//it has prereqs, pass it into this. 
+                    for (const prereq of augment.prereqs) {
+                        addPrereqs(prereq)
+                    }
+                }
+
+                orderedAugments.push({ faction: augment.faction, augmentName: prereqName, basePrice: augment.price });
+            }
+        }
+
+        for (const augmentData of augmentsLeft) {
+            const augmentName = augmentData[0];
+            const augment = augmentData[1];
+
+            if (augment.prereqs.length > 0) {
+                for (const prereqName of augment.prereqs) {
+                    addPrereqs(prereqName);
+                }
+            }
+
+            orderedAugments.push( {faction: augment.faction, augmentName: augmentName, basePrice: augment.price, multipledPrice: 0})
+        }
+
+        let priceMultipler = 1;
+
+        for (const augment of orderedAugments) {
+            augment.multipledPrice = augment.basePrice * priceMultipler;
+            priceMultipler *= 1.9;
+        }
+
+        const moneyNeededForAugments = orderedAugments.reduce((acc, x) => acc + x.multipledPrice, 0);
+
+        // make a pass for multiplied price
+
+        // (faction, augmentName)
         // arrange with prereqs in mind
         // then 1.9X the cost every purchase
         // then figure out how many NeuroFlux governors we can buy with the rep, and then figure out how much that would cost. 
 
         // new order ->
-            // augments
-            // neuroflux
-            // computer
-            // if we have extra money, then we buy more neuroflux with purchased rep
+        // augments
+        // neuroflux
+        // computer
+        // if we have extra money, then we buy more neuroflux with purchased rep
 
 
 
         /// ------
+
+        
+        let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments;
+
+        const estimatedIncomeForTheNextFourHours = incomePerHourEstimate * 4;
+
+        const moneyAvailable = ns.getServerMoneyAvailable("home");
+
+        const moneyFormatted = formatter.format(incomePerHourEstimate);
+
+        if (moneyFormatted !== "$NaN") {
+            const hoursTillInstall = Math.floor(buyAugmentsWhenWeHaveMoreThanThisMuchMoney / incomePerHourEstimate);
+            if (updatedMoneyEstimate) {
+                const now = new Date();
+                const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+
+                ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall}`, "success", 60000)
+            }
+        }
+
+        if (!analytics.firstEncoundedMoneyTrigger) {
+            const moneyTrigger = createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, formatter);
+
+            analytics.firstEncoundedMoneyTrigger = moneyTrigger;
+            saveAnalytics(ns, analytics);
+        }
 
         if (estimatedIncomeForTheNextFourHours > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney) {
 
@@ -246,7 +282,7 @@ export async function main(ns) {
                 return;
             }
 
-            if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney || moneyAvailable > superLargeAmountOfMoney) {
+            if (moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney) {
                 const stopStockTradingFileName = "stopTrading.txt";
                 if (!ns.fileExists(stopStockTradingFileName)) {
                     ns.write(stopStockTradingFileName, "", "W")
@@ -254,17 +290,14 @@ export async function main(ns) {
                 }
 
                 if (!analytics.moneyTrigger) {
-                    const moneyTrigger = createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, superLargeAmountOfMoney, formatter);
+                    const moneyTrigger = createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, formatter);
 
                     analytics.moneyTrigger = moneyTrigger;
                     saveAnalytics(ns, analytics);
                 }
 
-                for (const augmentData of augmentsLeft) {
-                    const augment = augmentData[0];
-                    const data = augmentData[1];
-
-                    purchaseAug(ns, data.faction, augment, data.prereqs, purchasableAugments, analytics);
+                for (const augment of orderedAugments) {
+                    purchaseAug(ns, augment, analytics);
                 }
 
                 upgradeHomeMachine(ns, analytics);
@@ -281,15 +314,14 @@ export async function main(ns) {
             }
         }
     }
-
+    
     saveAnalytics(ns, analytics);
 }
 
-function createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, superLargeAmountOfMoney, formatter) {
+function createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenWeHaveMoreThanThisMuchMoney, moneyAvailable, formatter) {
     const moneyTrigger = new MoneyTrigger();
     moneyTrigger.estimatedIncomeTriggered = estimatedIncomeForTheNextFourHours > buyAugmentsWhenWeHaveMoreThanThisMuchMoney;
     moneyTrigger.moneyIsGreaterThanTriggered = moneyAvailable > buyAugmentsWhenWeHaveMoreThanThisMuchMoney;
-    moneyTrigger.triggedWithSuperLargeAmountOfMoney = moneyAvailable > superLargeAmountOfMoney;
 
     moneyTrigger.estimatedIncomeForTheNextFourHours = formatter.format(estimatedIncomeForTheNextFourHours);
     moneyTrigger.moneyRightNow = formatter.format(moneyAvailable);
@@ -402,31 +434,22 @@ function upgradeHomeMachine(ns, analytics) {
     return upgradeHomeMachine(ns, analytics);
 }
 
-function purchaseAug(ns, faction, augmentName, prereqs, purchasableAugments, analytics) {
-    const ownedAugments = ns.singularity.getOwnedAugmentations(true)
+function purchaseAug(ns, augment, analytics) {
+    const ownedAugments = ns.singularity.getOwnedAugmentations(true);
+    const augmentName = augment.augmentName;
 
     if (ownedAugments.includes(augmentName) === false) {
-        for (const prereq of prereqs) {
-            if (!ownedAugments.includes(prereq)) {
-                const prereqAugment = purchasableAugments.get(prereq);
-                if (prereqAugment) {
-                    purchaseAug(ns, prereqAugment.faction, prereq, prereqAugment.prereqs, purchasableAugments, analytics);
-                }
-            }
-        }
-
         const augmentPrice = ns.singularity.getAugmentationPrice(augmentName);
         const amountOfMoneyWeHave = ns.getServerMoneyAvailable("home")
 
         if (augmentPrice < amountOfMoneyWeHave) {
             analytics.moneySpent.augments += augmentPrice;
-            if(!analytics.augsBought) {
+            if (!analytics.augsBought) {
                 analytics.augsBought = [];
             }
             analytics.augsBought.push(augmentName)
 
-            ns.singularity.purchaseAugmentation(faction, augmentName);
-            purchasableAugments.delete(augmentName);
+            ns.singularity.purchaseAugmentation(augment.faction, augmentName);
         }
     }
 }
@@ -462,7 +485,6 @@ class EndOfRoundAnalytics {
 class MoneyTrigger {
     estimatedIncomeTriggered;
     moneyIsGreaterThanTriggered;
-    triggedWithSuperLargeAmountOfMoney
 
     estimatedIncomeForTheNextFourHours;
     moneyRightNow;
