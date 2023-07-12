@@ -196,39 +196,44 @@ export async function main(ns) {
 
         function addPrereqs(prereqName) {
             const augment = purchasableAugments.get(prereqName);
-
-            if (augment && !ownedAugmentations.includes(prereqName) && !orderedAugments.includes(x => x.augmentName === prereqName)) {
-
+    
+            if (augment && !ownedAugmentations.find(x => x.augmentName === prereqName)) {
+    
                 if (augment.prereqs.length > 0) {//it has prereqs, pass it into this. 
                     for (const prereq of augment.prereqs) {
                         addPrereqs(prereq)
                     }
                 }
-
-                orderedAugments.push({ faction: augment.faction, augmentName: prereqName, basePrice: augment.price });
+    
+                if (!orderedAugments.find(x => x.augmentName === prereqName)) {
+                    orderedAugments.push({ faction: augment.faction, augmentName: prereqName, basePrice: augment.price });
+                }
             }
         }
-
+    
         for (const augmentData of augmentsLeft) {
             const augmentName = augmentData[0];
             const augment = augmentData[1];
-
+    
             if (augment.prereqs.length > 0) {
                 for (const prereqName of augment.prereqs) {
                     addPrereqs(prereqName);
                 }
             }
-
-            orderedAugments.push( {faction: augment.faction, augmentName: augmentName, basePrice: augment.price, multipledPrice: 0})
+            
+            if (!orderedAugments.find(x => x.augmentName === augmentName)) {
+                orderedAugments.push({ faction: augment.faction, augmentName: augmentName, basePrice: augment.price, multipledPrice: 0 })
+            }
+    
         }
-
+    
         let priceMultipler = 1;
-
+    
         for (const augment of orderedAugments) {
             augment.multipledPrice = augment.basePrice * priceMultipler;
             priceMultipler *= 1.9;
         }
-
+        
         const moneyNeededForAugments = orderedAugments.reduce((acc, x) => acc + x.multipledPrice, 0);
 
         // make a pass for multiplied price

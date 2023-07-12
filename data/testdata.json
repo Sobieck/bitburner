@@ -1,40 +1,116 @@
 [
     {
-        "buyTrend": false,
-        "sellTrend": false,
-        "sellShortTrend": false,
-        "coverShortTrend": false,
-        "symbol": "APHE",
-        "bid": 193707.3519437241,
-        "ask": 197225.7498599572,
-        "price": 195466.55090184064,
-        "maxShares": 9000000,
-        "investedShares": 0,
-        "averagePrice": 0,
-        "sharesShort": 31298,
-        "averageShortPrice": 342098.60853718355,
-        "dateObserved": "7/12/2023, 11:40:25 AM",
-        "volatility": 0.0179,
-        "forecast": 0.28094697922868606,
-        "bias": 0.21905302077131394
+        "faction": "NiteSec",
+        "augmentName": "Cranial Signal Processors - Gen I",
+        "basePrice": 70000000,
+        "multipledPrice": 70000000
     },
     {
-        "buyTrend": false,
-        "sellTrend": false,
-        "sellShortTrend": false,
-        "coverShortTrend": false,
-        "symbol": "JGN",
-        "bid": 242.87526431531194,
-        "ask": 246.29948757856906,
-        "price": 244.5873759469405,
-        "maxShares": 9200000,
-        "investedShares": 0,
-        "averagePrice": 0,
-        "sharesShort": 9200000,
-        "averageShortPrice": 503.3556730558438,
-        "dateObserved": "7/12/2023, 11:40:25 AM",
-        "volatility": 0.0277,
-        "forecast": 0.4162469116625093,
-        "bias": 0.08375308833749068
+        "faction": "NiteSec",
+        "augmentName": "Cranial Signal Processors - Gen II",
+        "basePrice": 125000000,
+        "multipledPrice": 237500000
+    },
+    {
+        "faction": "NiteSec",
+        "augmentName": "Cranial Signal Processors - Gen III",
+        "basePrice": 550000000,
+        "multipledPrice": 1985500000
+    },
+    {
+        "faction": "NiteSec",
+        "augmentName": "DataJack",
+        "basePrice": 450000000,
+        "multipledPrice": 3086549999.9999995
+    },
+    {
+        "faction": "The Black Hand",
+        "augmentName": "Embedded Netburner Module",
+        "basePrice": 250000000,
+        "multipledPrice": 3258024999.9999995
+    },
+    {
+        "faction": "NiteSec",
+        "augmentName": "Neural-Retention Enhancement",
+        "basePrice": 250000000,
+        "multipledPrice": 6190247499.999999
+    },
+    {
+        "faction": "NiteSec",
+        "augmentName": "CRTX42-AA Gene Modification",
+        "basePrice": 225000000,
+        "multipledPrice": 10585323224.999996
+    },
+    {
+        "faction": "The Black Hand",
+        "augmentName": "Artificial Synaptic Potentiation",
+        "basePrice": 80000000,
+        "multipledPrice": 7150973911.999997
+    },
+    {
+        "faction": "Tian Di Hui",
+        "augmentName": "Speech Processor Implant",
+        "basePrice": 50000000,
+        "multipledPrice": 8491781520.499997
+    },
+    {
+        "faction": "NiteSec",
+        "augmentName": "Neurotrainer II",
+        "basePrice": 45000000,
+        "multipledPrice": 14520946400.054993
+    },
+    {
+        "faction": "Tian Di Hui",
+        "augmentName": "Social Negotiation Assistant (S.N.A)",
+        "basePrice": 30000000,
+        "multipledPrice": 18393198773.40299
+    },
+    {
+        "faction": "Tian Di Hui",
+        "augmentName": "Nuoptimal Nootropic Injector Implant",
+        "basePrice": 20000000,
+        "multipledPrice": 23298051779.643784
+    },
+    {
+        "faction": "Tian Di Hui",
+        "augmentName": "ADR-V1 Pheromone Gene",
+        "basePrice": 17500000,
+        "multipledPrice": 38733011083.65779
+    },
+    {
+        "faction": "Sector-12",
+        "augmentName": "Augmented Targeting I",
+        "basePrice": 15000000,
+        "multipledPrice": 63079475193.38554
+    },
+    {
+        "faction": "Tian Di Hui",
+        "augmentName": "Speech Enhancement",
+        "basePrice": 12500000,
+        "multipledPrice": 99875835722.86043
+    },
+    {
+        "faction": "NiteSec",
+        "augmentName": "BitWire",
+        "basePrice": 10000000,
+        "multipledPrice": 151811270298.74783
+    },
+    {
+        "faction": "CyberSec",
+        "augmentName": "Synaptic Enhancement Implant",
+        "basePrice": 7500000,
+        "multipledPrice": 216331060175.71567
+    },
+    {
+        "faction": "CyberSec",
+        "augmentName": "Neurotrainer I",
+        "basePrice": 4000000,
+        "multipledPrice": 219215474311.39185
+    },
+    {
+        "faction": "Sector-12",
+        "augmentName": "Wired Reflexes",
+        "basePrice": 2500000,
+        "multipledPrice": 260318375744.7778
     }
 ]
