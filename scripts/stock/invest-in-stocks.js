@@ -1,6 +1,5 @@
+let lastRecordedToConsole = new Date();
 
-/** @param {NS} ns */
-//run scripts/invest-in-stocks.js
 export async function main(ns) {
 
     let historicalData = new Map();
@@ -16,27 +15,18 @@ export async function main(ns) {
         stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
     }
 
-    const stockRecords = ns.stock
-        .getSymbols()
-        .map(x => new Stock(
-            x,
-            ns.stock.getBidPrice(x),
-            ns.stock.getAskPrice(x),
-            ns.stock.getPrice(x),
-            ns.stock.getMaxShares(x),
-            ns.stock.getPosition(x),
-        ));
-
-    if (ns.stock.has4SDataTIXAPI()) {
-        for (const stockRecord of stockRecords) {
-            stockRecord.volatility = ns.stock.getVolatility(stockRecord.symbol);
-            stockRecord.forecast = ns.stock.getForecast(stockRecord.symbol);
-            stockRecord.bias = Math.abs(stockRecord.forecast - .5);
-        }
-    }
+    const latestStockQuotesFile = "data/latestQuotes.txt";
+    const stockRecords = JSON.parse(ns.read(latestStockQuotesFile));
 
     SaveHistoricData(stockRecords, historicalData, ns, nameOfStockHistoricalData);
-    stockMarketReserveMoney.setMoneyInvested(stockRecords.reduce((sum, record) => sum += record.price * record.investedShares, 0), ns);
+
+    let moneyInvested = 0;
+    moneyInvested += stockRecords.reduce((sum, record) => sum += record.price * record.investedShares, 0);
+    moneyInvested += stockRecords.reduce((sum, record) => sum += (record.averageShortPrice * record.sharesShort) + ((record.averageShortPrice - record.price) * record.sharesShort), 0);
+
+    stockMarketReserveMoney.setMoneyInvested(moneyInvested, ns);
+
+    // ns.tprint(stockRecords.filter(x => (x.sharesShort > 0) || x.investedShares > 0))
 
     const nameOfLedger = "../../data/salesLedger.txt"
     let ledger = [];
@@ -133,19 +123,35 @@ export async function main(ns) {
         }
     });
 
+    const moneyWeHaveNow = ns.getServerMoneyAvailable("home") + stockMarketReserveMoney.moneyInvested;
+
+    const now = new Date();
+    if (now.getMinutes() !== lastRecordedToConsole.getMinutes()) {
+        const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+
+        const moneyFormatted = formatter.format(moneyWeHaveNow);
+
+        let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted}`;
+
+        ns.tprint(consoleUpdate);
+
+        lastRecordedToConsole = now;
+    }
+
+
     ns.rm(nameOfLedger);
     ns.write(nameOfLedger, JSON.stringify(ledger), "W");
 
 
     let moneyAvailable = ns.getServerMoneyAvailable("home") - commission - moneyRequested;
 
-    if (moneyAvailable > 26_500_000_000 && !ns.stock.has4SDataTIXAPI()) {
-        ns.stock.purchase4SMarketData();
-        ns.stock.purchase4SMarketDataTixApi();
-    }
-
-    if (moneyAvailable > 1_000_000_000 && !ns.stock.has4SDataTIXAPI()) {
-        moneyAvailable = 1_000_000_000;
+    if (moneyAvailable > 5_000_000_000 && !ns.stock.has4SDataTIXAPI()) {
+        moneyAvailable = 5_000_000_000;
     }
 
     let onlyInvestIfWeHaveMoreThan = 30_000_000;

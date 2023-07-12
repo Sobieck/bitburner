@@ -42,11 +42,11 @@ export async function main(ns) {
         { final: true, faction: "Chongqing", augmentToStopAt: "Neuregen Gene Modification" }
     ]
 
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
-    if (moneyAvailable > 150_000_000) {
-        toJoinInOrderInWhichIWantToComplete.push("Sector-12");
-        doNoWorkFor.push("Sector-12");
-    }
+    // const moneyAvailable = ns.getServerMoneyAvailable("home");
+    // if (moneyAvailable > 150_000_000) {
+    //     toJoinInOrderInWhichIWantToComplete.push("Sector-12");
+    //     doNoWorkFor.push("Sector-12");
+    // }
 
     const factionInvitations = ns.singularity.checkFactionInvitations();
 

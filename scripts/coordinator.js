@@ -39,7 +39,7 @@ export async function main(ns) {
 
 
         if(ns.stock.hasTIXAPIAccess()){
-            ns.run('scripts/investments/invest-in-stocks.js');
+            ns.run('scripts/stock/get-stock-quotes.js');
         }
         await ns.sleep(individualSleepAmount);
 

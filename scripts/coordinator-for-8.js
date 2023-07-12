@@ -39,7 +39,7 @@ export async function main(ns) {
 
 
         if(ns.stock.hasTIXAPIAccess()){
-            ns.run('scripts/investments/invest-in-stocks.js');
+            ns.run('scripts/stock/get-stock-quotes.js');
         }
         await ns.sleep(individualSleepAmount);
 
@@ -52,7 +52,7 @@ export async function main(ns) {
         await doSingularityWork(ns, 'join-organziations');
         await doSingularityWork(ns, 'do-work');
         // await doSingularityWork(ns, 'finish-round');
-        // await doSingularityWork(ns, 'finish-bitnode');
+        await doSingularityWork(ns, 'finish-bitnode');
         await doSingularityWork(ns, 'study-computer-science');
         await doSingularityWork(ns, 'create-early-programs');
         await doSingularityWork(ns, 'do-job');
