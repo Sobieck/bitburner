@@ -26,8 +26,8 @@ export async function main(ns) {
             dispatchScript = 'scripts/hacking/batch-dispatch.js'
         }
 
-        ns.run("scripts/scan.js", 1, dispatchScript); 
-        await ns.sleep(individualSleepAmount); 
+        ns.run("scripts/scan.js", 1, dispatchScript);
+        await ns.sleep(individualSleepAmount);
 
 
         ns.run('scripts/hacking/hack-all-machines.js');
@@ -38,16 +38,14 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-        if(ns.stock.hasTIXAPIAccess()){
-            ns.run('scripts/stock/get-stock-quotes.js');
-        }
+        ns.run('scripts/stock/get-stock-quotes.js');
         await ns.sleep(individualSleepAmount);
 
         await singularityStuff(ns);
     }
 
 
-    async function singularityStuff(ns) { 
+    async function singularityStuff(ns) {
         await doSingularityWork(ns, 'backdoor-all-machines')
         await doSingularityWork(ns, 'join-organziations');
         await doSingularityWork(ns, 'do-work');
@@ -61,10 +59,10 @@ export async function main(ns) {
         // await doSingularityWork(ns, 'upgade-home-machine');
         await doSingularityWork(ns, 'travel-to-get-augs');
     }
-    
-    async function doSingularityWork(ns, script){
+
+    async function doSingularityWork(ns, script) {
         ns.run(`scripts/singularity/${script}.js`);
-    
+
         await ns.sleep(individualSleepAmount / 12);
     }
 }

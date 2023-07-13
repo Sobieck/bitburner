@@ -3,6 +3,11 @@ export async function main(ns) {
     const player = ns.getPlayer();
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
 
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
 
     const mostRepExpensiveForEachFaction = [];
     for (const faction of player.factions) {
@@ -111,11 +116,6 @@ export async function main(ns) {
     }
 
     const moneyNeededForAugments = orderedAugments.reduce((acc, x) => acc + x.multipledPrice, 0);
-
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
 
     const moneyFormatted = formatter.format(moneyNeededForAugments);
 
