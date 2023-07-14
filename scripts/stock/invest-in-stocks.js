@@ -26,6 +26,26 @@ export async function main(ns) {
 
     stockMarketReserveMoney.setMoneyInvested(moneyInvested, ns);
 
+    const moneyWeHaveNow = ns.getServerMoneyAvailable("home") + stockMarketReserveMoney.moneyInvested;
+
+    const now = new Date();
+    if (now.getMinutes() !== lastRecordedToConsole.getMinutes()) { // && batches not running
+        const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+
+        const formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
+
+        const moneyFormatted = formatter.format(moneyWeHaveNow);
+
+        let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted}`;
+
+        ns.tprint(consoleUpdate);
+
+        lastRecordedToConsole = now;
+    }
+
     const nameOfLedger = "../../data/salesLedger.txt"
     let ledger = [];
 
@@ -121,27 +141,6 @@ export async function main(ns) {
         }
     });
 
-    const moneyWeHaveNow = ns.getServerMoneyAvailable("home") + stockMarketReserveMoney.moneyInvested;
-
-    const now = new Date();
-    if (now.getMinutes() !== lastRecordedToConsole.getMinutes()) { // && batches not running
-        const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
-
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        });
-
-        const moneyFormatted = formatter.format(moneyWeHaveNow);
-
-        let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted}`;
-
-        ns.tprint(consoleUpdate);
-
-        lastRecordedToConsole = now;
-    }
-
-
     ns.rm(nameOfLedger);
     ns.write(nameOfLedger, JSON.stringify(ledger), "W");
 
@@ -160,15 +159,15 @@ export async function main(ns) {
     if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
         let stocksToTrade = stockRecords
             .filter(stock =>
-                (stock.buyTrend && stock.investedShares !== stock.maxShares) ||
-                (stock.sellShortTrend && stock.maxShares !== stock.sharesShort))
+                (stock.sellShortTrend && stock.maxShares !== stock.sharesShort) ||
+                (stock.buyTrend && stock.investedShares !== stock.maxShares))
             .sort((a, b) => b.volatility - a.volatility);
 
         if (!ns.stock.has4SDataTIXAPI()) {
             stocksToTrade = stockRecords
                 .filter(stock =>
-                    (stock.buyTrend && stock.investedShares === 0) ||
-                    (stock.sellShortTrend && stock.sharesShort === 0))
+                    (stock.sellShortTrend && stock.sharesShort === 0) ||
+                    (stock.buyTrend && stock.investedShares === 0))
                 .sort((a, b) => b.magnitudeOfSignal - a.magnitudeOfSignal);
         }
 
@@ -211,10 +210,11 @@ export async function main(ns) {
 
 class ReserveForTrading {
     stockMarketReserveMoneyLimit = 1_000_000_000_000;
-    capitalToReserveForTrading = 0;
+    capitalToReserveForTrading = 500_000_000;
     moneyInvested = 0;
     moneyRequested = new Map();
     countOfVisitedWithoutFillingRequest = 0;
+    
 
     constructor(obj) {
         obj && Object.assign(this, obj);

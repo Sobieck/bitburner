@@ -3,10 +3,10 @@ export async function main(ns) {
     const ownedAugmentations = ns.singularity.getOwnedAugmentations(false);
     const includesRedPill = ownedAugmentations.includes("The Red Pill");
     const currentHackingLevel = ns.getHackingLevel();
-    const orgServerName = "w0r1d_d43m0n";
+    const endgameServer = "w0r1d_d43m0n";
 
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
-    const serverWithLineage = enviroment.find(x => x.name === orgServerName);
+    const serverWithLineage = enviroment.find(x => x.name === endgameServer);
 
     if (includesRedPill && currentHackingLevel > serverWithLineage.server.requiredHackingSkill) {
         if (serverWithLineage && serverWithLineage.server.hasAdminRights) {
@@ -14,11 +14,11 @@ export async function main(ns) {
                 await ns.singularity.connect(server);
             }
 
-            await ns.singularity.connect(orgServerName);
+            await ns.singularity.connect(endgameServer);
             await ns.singularity.installBackdoor();
         }
 
 
-        ns.singularity.destroyW0r1dD43m0n(8, 'scripts/coordinator-for-8.js'); // 3 (corps) - 5.1 (formula.exe + int passive) - 10 (new mechanic) 
+        ns.singularity.destroyW0r1dD43m0n(3, 'scripts/coordinator.js'); // 3 (corps) - 8 passive - 5.1 (formula.exe + int passive) - 10 (new mechanic) 
     }
 }

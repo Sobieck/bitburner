@@ -14,6 +14,4 @@ export async function main(ns) {
 
     ns.rm(latestStockQuotesFile);
     ns.write(latestStockQuotesFile, JSON.stringify(stockRecords), "W")
-
-    ns.run("scripts/stock/buy-4s.js")
 }

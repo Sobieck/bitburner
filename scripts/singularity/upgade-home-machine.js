@@ -73,7 +73,7 @@ async function upgradeHomeRamOrCpu(ns, moneyLimit) {
 
 class ReserveForTrading {
     stockMarketReserveMoneyLimit = 1_000_000_000_000;
-    capitalToReserveForTrading = 0;
+    capitalToReserveForTrading = 500_000_000;
     moneyInvested = 0;
     moneyRequested = new Map();
     countOfVisitedWithoutFillingRequest = 0;

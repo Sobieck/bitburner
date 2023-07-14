@@ -1,7 +1,7 @@
 export async function main(ns) {
     const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 6;
+    const numberOfDifferentSleeps = 7;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/hacking/memory-starved-dispatch.js';
 
@@ -37,14 +37,16 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-        ns.run('scripts/stock/get-stock-quotes.js');
+        ns.run('scripts/stock/stock-coordinator.js');
         await ns.sleep(individualSleepAmount);
-
 
 
         ns.run('scripts/investments/investments-coordinator.js');
         await ns.sleep(individualSleepAmount);
 
+
+        ns.run('scripts/corporation/start-company.js')
+        await ns.sleep(individualSleepAmount);
 
 
         await singularityStuff(ns);

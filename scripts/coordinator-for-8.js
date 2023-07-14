@@ -42,7 +42,7 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-        ns.run('scripts/stock/get-stock-quotes.js');
+        ns.run('scripts/stock/stock-coordinator.js');
         await ns.sleep(individualSleepAmount);
 
         await singularityStuff(ns);
@@ -53,7 +53,7 @@ export async function main(ns) {
         await doSingularityWork(ns, 'backdoor-all-machines')
         await doSingularityWork(ns, 'join-organziations');
         await doSingularityWork(ns, 'do-work');
-        // await doSingularityWork(ns, 'finish-round');
+        await doSingularityWork(ns, 'finish-round');
         await doSingularityWork(ns, 'finish-bitnode');
         await doSingularityWork(ns, 'study-computer-science');
         await doSingularityWork(ns, 'create-early-programs');

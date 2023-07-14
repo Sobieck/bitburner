@@ -14,8 +14,6 @@ export async function main(ns) {
     const latestStockQuotesFile = "data/latestQuotes.txt";
     ns.rm(latestStockQuotesFile);
     ns.write(latestStockQuotesFile, JSON.stringify(stockRecords), "W")
-
-    ns.run("scripts/stock/populate-forecast.js")
 }
 
 

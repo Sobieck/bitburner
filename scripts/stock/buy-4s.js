@@ -5,6 +5,4 @@ export async function main(ns) {
         ns.stock.purchase4SMarketData();
         ns.stock.purchase4SMarketDataTixApi();
     }
-
-    ns.run("scripts/stock/invest-in-stocks.js")
 }

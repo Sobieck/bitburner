@@ -6,7 +6,7 @@ export async function main(ns) {
     if(backdooring){
         return;
     }
-    
+
     const machinesToBackdoorFirst = ["CSEC", "avmnite-02h", "I.I.I.I.", "run4theh111z"]
 
     for(const machineName of machinesToBackdoorFirst){
