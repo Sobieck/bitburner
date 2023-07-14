@@ -61,6 +61,8 @@ export async function main(ns) {
     for (const target of hackQueue) {
         let numberOfThreads = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable));
 
+        numberOfThreads = 500
+
         await executeScriptAcrossFleet(ns, hackScript, enviroment, homeMemoryLimitations, numberOfThreads, target, memoryStarvedQueue);
     }
 
@@ -78,10 +80,6 @@ export async function main(ns) {
             } else {
                 threadsNeeded = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable)) * 5;
             }
-
-            // if (machineToRunOn && machineToRunOn.cpuCores > 1 && ns.fileExists('Formulas.exe')) {
-            //     threadsNeeded = Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, machineToRunOn.cpuCores));
-            // }
         }
 
         if (target.needsWeakening()) {
@@ -89,13 +87,9 @@ export async function main(ns) {
             const amountToWeaken = target.hackDifficulty - target.minDifficulty;
 
             threadsNeeded = getNumberOfThreadsToWeaken(ns, 1, amountToWeaken);
-
-
-
-            // if (machineToRunOn && machineToRunOn.cpuCores > 1) {
-            //     threadsNeeded = getNumberOfThreadsToWeaken(ns, machineToRunOn.cpuCores, amountToWeaken);
-            // }
         }
+
+        threadsNeeded = 500
 
         await executeScriptAcrossFleet(ns, script, enviroment, homeMemoryLimitations, threadsNeeded, target, memoryStarvedQueue);
     }

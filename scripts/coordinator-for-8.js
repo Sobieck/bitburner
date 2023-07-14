@@ -1,4 +1,8 @@
 //run scripts/coordinator.js 1000 564 5.629 BitRunners
+
+
+/// delete "numberOfThreads = 500"
+
 export async function main(ns) {
     const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;

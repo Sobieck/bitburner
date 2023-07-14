@@ -26,8 +26,6 @@ export async function main(ns) {
 
     stockMarketReserveMoney.setMoneyInvested(moneyInvested, ns);
 
-    // ns.tprint(stockRecords.filter(x => (x.sharesShort > 0) || x.investedShares > 0))
-
     const nameOfLedger = "../../data/salesLedger.txt"
     let ledger = [];
 
@@ -126,7 +124,7 @@ export async function main(ns) {
     const moneyWeHaveNow = ns.getServerMoneyAvailable("home") + stockMarketReserveMoney.moneyInvested;
 
     const now = new Date();
-    if (now.getMinutes() !== lastRecordedToConsole.getMinutes()) {
+    if (now.getMinutes() !== lastRecordedToConsole.getMinutes()) { // && batches not running
         const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
 
         const formatter = new Intl.NumberFormat('en-US', {
@@ -161,16 +159,17 @@ export async function main(ns) {
 
     if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
         let stocksToTrade = stockRecords
-            .filter(stock => 
-                (stock.buyTrend && stock.investedShares !== stock.maxShares) || 
+            .filter(stock =>
+                (stock.buyTrend && stock.investedShares !== stock.maxShares) ||
                 (stock.sellShortTrend && stock.maxShares !== stock.sharesShort))
             .sort((a, b) => b.volatility - a.volatility);
 
         if (!ns.stock.has4SDataTIXAPI()) {
             stocksToTrade = stockRecords
-                .filter(stock => 
-                    (stock.buyTrend && stock.investedShares === 0) || 
+                .filter(stock =>
+                    (stock.buyTrend && stock.investedShares === 0) ||
                     (stock.sellShortTrend && stock.sharesShort === 0))
+                .sort((a, b) => b.magnitudeOfSignal - a.magnitudeOfSignal);
         }
 
         if (stocksToTrade.length > 0) {
@@ -179,7 +178,7 @@ export async function main(ns) {
             let sharesToBuy = 0;
             const ticker = stockToLookAt.symbol;
 
-            if (stockToLookAt.buyTrend){
+            if (stockToLookAt.buyTrend) {
                 sharesToBuy = Math.round(moneyAvailable / stockToLookAt.ask);
 
                 const totalSharesAfterBuy = sharesToBuy + stockToLookAt.investedShares;
@@ -189,9 +188,9 @@ export async function main(ns) {
                 }
 
                 ns.stock.buyStock(ticker, sharesToBuy);
-            }             
+            }
 
-            if (stockToLookAt.sellShortTrend){
+            if (stockToLookAt.sellShortTrend) {
                 sharesToBuy = Math.round(moneyAvailable / stockToLookAt.bid);
 
                 const totalSharesAfterBuy = sharesToBuy + stockToLookAt.sharesShort;
@@ -201,7 +200,7 @@ export async function main(ns) {
                 }
 
                 ns.stock.buyShort(ticker, sharesToBuy);
-            }         
+            }
         }
     }
 
@@ -211,7 +210,7 @@ export async function main(ns) {
 
 
 class ReserveForTrading {
-    stockMarketReserveMoneyLimit = 2_000_000_000_000;
+    stockMarketReserveMoneyLimit = 1_000_000_000_000;
     capitalToReserveForTrading = 0;
     moneyInvested = 0;
     moneyRequested = new Map();
@@ -304,7 +303,7 @@ class LedgerItem {
 
         let numberProfit = (price - averagePurchasePrice) * shares;
 
-        if(type === "Short-Term Cover Short"){
+        if (type === "Short-Term Cover Short") {
             numberProfit = (averagePurchasePrice - price) * shares;
         }
 
@@ -338,6 +337,7 @@ class StockHistoricData {
         if (this.recentTicksOfPrices.length === 21) {
             record.countOfNegative = 0;
             record.countOfPositive = 0;
+            record.magnitudeOfSignal = 0;
 
             let lastPrice;
             for (const price of this.recentTicksOfPrices) {
@@ -363,6 +363,7 @@ class StockHistoricData {
         if (!hasOracle) {
             if (record.countOfPositive >= 16) {
                 record.buyTrend = true;
+                record.magnitudeOfSignal = record.countOfPositive;
             }
 
             if (record.countOfPositive <= 12 && record.investedShares > 0) {
@@ -371,6 +372,7 @@ class StockHistoricData {
 
             if (record.countOfNegative >= 16) {
                 record.sellShortTrend = true;
+                record.magnitudeOfSignal = record.countOfNegative;
             }
 
             if (record.countOfNegative <= 12 && record.sharesShort > 0) {

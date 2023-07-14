@@ -8,6 +8,62 @@ export async function main(ns) {
         currency: 'USD',
     });
 
+    let totalToSpend = 0;
+
+    if (ns.fileExists("Formulas.exe")) {
+        const factionsThatNeedDonating = [];
+
+        for (const faction of player.factions) {
+            const maximumAugRep = Math.max(...ns
+                .singularity
+                .getAugmentationsFromFaction(faction)
+                .filter(x => x !== "NeuroFlux Governor")
+                .filter(x => !ownedAugmentations.includes(x))
+                .filter(x => {
+                    const prereqs = ns.singularity.getAugmentationPrereq(x);
+                    return prereqs.every(y => ownedAugmentations.includes(y));
+                })
+                .map(x => ns.singularity.getAugmentationRepReq(x)));
+
+            const favor = ns.singularity.getFactionFavor(faction);
+
+            if (maximumAugRep > 0 && favor >= 0) {
+                factionsThatNeedDonating.push({ faction, maximumAugRep });
+            }
+        }
+
+        if (factionsThatNeedDonating.length > 0) {
+            for (const factionWithRep of factionsThatNeedDonating) {
+                let dollarsDonated = 0;
+
+                const currentFactionRep = ns.singularity.getFactionRep(factionWithRep.faction);
+                const repNeeded = factionWithRep.maximumAugRep - currentFactionRep;
+
+                if (repNeeded < 0) {
+                    continue;
+                }
+
+                let purchasedRep = 0;
+
+                while (repNeeded > purchasedRep) {
+                    dollarsDonated += 10_000_000;
+                    purchasedRep = ns.formulas.reputation.repFromDonation(dollarsDonated, player);
+                }
+
+                ns.toast(`${factionWithRep.faction}`, 'success', null)
+                ns.toast(`Money needed for donations: ${formatter.format(dollarsDonated)}`, "success", null)
+
+                totalToSpend += dollarsDonated;
+
+                if (ns.args[0] === "donate") {
+                    ns.singularity.donateToFaction(factionWithRep.faction, dollarsDonated);
+                }
+            }
+        }
+
+
+    }
+
 
     const mostRepExpensiveForEachFaction = [];
     for (const faction of player.factions) {
@@ -42,7 +98,7 @@ export async function main(ns) {
                                 prereqs: ns.singularity.getAugmentationPrereq(y)
                             }
                         })
-                        .filter(y => y.augmentationRepCost < factionRep)
+                        // .filter(y => y.augmentationRepCost < factionRep)
                         .sort((a, b) => b.price - a.price);
 
                     return {
@@ -101,7 +157,7 @@ export async function main(ns) {
                 addPrereqs(prereqName);
             }
         }
-        
+
         if (!orderedAugments.find(x => x.augmentName === augmentName)) {
             orderedAugments.push({ faction: augment.faction, augmentName: augmentName, basePrice: augment.price, multipledPrice: 0 })
         }
@@ -117,15 +173,19 @@ export async function main(ns) {
 
     const moneyNeededForAugments = orderedAugments.reduce((acc, x) => acc + x.multipledPrice, 0);
 
+    totalToSpend += moneyNeededForAugments;
+
     const moneyFormatted = formatter.format(moneyNeededForAugments);
 
-    if(ns.args[0] === "finish"){
+    if (ns.args[0] === "finish") {
         for (const augment of orderedAugments) {
             purchaseAug(ns, augment);
         }
     }
 
-    ns.toast(`Money needed for augs: ${moneyFormatted}`)
+    ns.toast(`Money needed for augs: ${moneyFormatted}`,'success', null)
+
+    ns.toast(`Total Needed: ${formatter.format(totalToSpend)}`, 'success', null)
 
     ns.rm('orderedAugments.txt')
     ns.write("orderedAugments.txt", JSON.stringify(orderedAugments), "W")

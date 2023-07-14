@@ -1,116 +1,98 @@
 [
     {
-        "faction": "NiteSec",
-        "augmentName": "Cranial Signal Processors - Gen I",
-        "basePrice": 70000000,
-        "multipledPrice": 70000000
+        "faction": "Daedalus",
+        "augmentName": "Embedded Netburner Module Core V3 Upgrade",
+        "basePrice": 7500000000,
+        "multipledPrice": 7500000000
     },
     {
-        "faction": "NiteSec",
-        "augmentName": "Cranial Signal Processors - Gen II",
-        "basePrice": 125000000,
-        "multipledPrice": 237500000
+        "faction": "Daedalus",
+        "augmentName": "Embedded Netburner Module Direct Memory Access Upgrade",
+        "basePrice": 7000000000,
+        "multipledPrice": 13300000000
     },
     {
-        "faction": "NiteSec",
-        "augmentName": "Cranial Signal Processors - Gen III",
+        "faction": "Daedalus",
+        "augmentName": "Embedded Netburner Module Analyze Engine",
+        "basePrice": 6000000000,
+        "multipledPrice": 21660000000
+    },
+    {
+        "faction": "Daedalus",
+        "augmentName": "NEMEAN Subdermal Weave",
+        "basePrice": 3250000000,
+        "multipledPrice": 22291749999.999996
+    },
+    {
+        "faction": "Daedalus",
+        "augmentName": "Synthetic Heart",
+        "basePrice": 2875000000,
+        "multipledPrice": 37467287499.99999
+    },
+    {
+        "faction": "Bachman & Associates",
+        "augmentName": "SmartJaw",
+        "basePrice": 2750000000,
+        "multipledPrice": 68092722499.99999
+    },
+    {
+        "faction": "Bachman & Associates",
+        "augmentName": "Enhanced Social Interaction Implant",
+        "basePrice": 1375000000,
+        "multipledPrice": 64688086374.999985
+    },
+    {
+        "faction": "Daedalus",
+        "augmentName": "Synfibril Muscle",
+        "basePrice": 1125000000,
+        "multipledPrice": 100560570637.49995
+    },
+    {
+        "faction": "Bachman & Associates",
+        "augmentName": "FocusWire",
+        "basePrice": 900000000,
+        "multipledPrice": 152852067368.99994
+    },
+    {
+        "faction": "Bachman & Associates",
+        "augmentName": "ADR-V2 Pheromone Gene",
         "basePrice": 550000000,
-        "multipledPrice": 1985500000
-    },
-    {
-        "faction": "NiteSec",
-        "augmentName": "DataJack",
-        "basePrice": 450000000,
-        "multipledPrice": 3086549999.9999995
-    },
-    {
-        "faction": "The Black Hand",
-        "augmentName": "Embedded Netburner Module",
-        "basePrice": 250000000,
-        "multipledPrice": 3258024999.9999995
-    },
-    {
-        "faction": "NiteSec",
-        "augmentName": "Neural-Retention Enhancement",
-        "basePrice": 250000000,
-        "multipledPrice": 6190247499.999999
-    },
-    {
-        "faction": "NiteSec",
-        "augmentName": "CRTX42-AA Gene Modification",
-        "basePrice": 225000000,
-        "multipledPrice": 10585323224.999996
-    },
-    {
-        "faction": "The Black Hand",
-        "augmentName": "Artificial Synaptic Potentiation",
-        "basePrice": 80000000,
-        "multipledPrice": 7150973911.999997
+        "multipledPrice": 177478233778.44992
     },
     {
         "faction": "Tian Di Hui",
-        "augmentName": "Speech Processor Implant",
+        "augmentName": "Neuroreceptor Management Implant",
+        "basePrice": 550000000,
+        "multipledPrice": 337208644179.0548
+    },
+    {
+        "faction": "Tian Di Hui",
+        "augmentName": "Nanofiber Weave",
+        "basePrice": 125000000,
+        "multipledPrice": 145612823622.77365
+    },
+    {
+        "faction": "Volhaven",
+        "augmentName": "Combat Rib I",
+        "basePrice": 23750000,
+        "multipledPrice": 52566229327.82128
+    },
+    {
+        "faction": "Volhaven",
+        "augmentName": "Combat Rib II",
+        "basePrice": 65000000,
+        "multipledPrice": 273344392504.67065
+    },
+    {
+        "faction": "Volhaven",
+        "augmentName": "DermaForce Particle Barrier",
         "basePrice": 50000000,
-        "multipledPrice": 8491781520.499997
+        "multipledPrice": 399503342891.4417
     },
     {
-        "faction": "NiteSec",
-        "augmentName": "Neurotrainer II",
-        "basePrice": 45000000,
-        "multipledPrice": 14520946400.054993
-    },
-    {
-        "faction": "Tian Di Hui",
-        "augmentName": "Social Negotiation Assistant (S.N.A)",
-        "basePrice": 30000000,
-        "multipledPrice": 18393198773.40299
-    },
-    {
-        "faction": "Tian Di Hui",
-        "augmentName": "Nuoptimal Nootropic Injector Implant",
-        "basePrice": 20000000,
-        "multipledPrice": 23298051779.643784
-    },
-    {
-        "faction": "Tian Di Hui",
-        "augmentName": "ADR-V1 Pheromone Gene",
-        "basePrice": 17500000,
-        "multipledPrice": 38733011083.65779
-    },
-    {
-        "faction": "Sector-12",
-        "augmentName": "Augmented Targeting I",
-        "basePrice": 15000000,
-        "multipledPrice": 63079475193.38554
-    },
-    {
-        "faction": "Tian Di Hui",
-        "augmentName": "Speech Enhancement",
-        "basePrice": 12500000,
-        "multipledPrice": 99875835722.86043
-    },
-    {
-        "faction": "NiteSec",
-        "augmentName": "BitWire",
-        "basePrice": 10000000,
-        "multipledPrice": 151811270298.74783
-    },
-    {
-        "faction": "CyberSec",
-        "augmentName": "Synaptic Enhancement Implant",
-        "basePrice": 7500000,
-        "multipledPrice": 216331060175.71567
-    },
-    {
-        "faction": "CyberSec",
-        "augmentName": "Neurotrainer I",
-        "basePrice": 4000000,
-        "multipledPrice": 219215474311.39185
-    },
-    {
-        "faction": "Sector-12",
-        "augmentName": "Wired Reflexes",
-        "basePrice": 2500000,
-        "multipledPrice": 260318375744.7778
+        "faction": "Daedalus",
+        "augmentName": "The Red Pill",
+        "basePrice": 0,
+        "multipledPrice": 0
     }
 ]
