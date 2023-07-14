@@ -61,6 +61,8 @@ export async function main(ns) {
     for (const target of hackQueue) {
         let numberOfThreads = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable));
 
+        numberOfThreads = 500
+
         await executeScriptAcrossFleet(ns, hackScript, enviroment, homeMemoryLimitations, numberOfThreads, target, memoryStarvedQueue);
     }
 
@@ -86,6 +88,8 @@ export async function main(ns) {
 
             threadsNeeded = getNumberOfThreadsToWeaken(ns, 1, amountToWeaken);
         }
+
+        threadsNeeded = 500
 
         await executeScriptAcrossFleet(ns, script, enviroment, homeMemoryLimitations, threadsNeeded, target, memoryStarvedQueue);
     }

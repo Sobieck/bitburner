@@ -8,7 +8,7 @@ export async function main(ns) {
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
     const numberOfDifferentSleeps = 5;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
-    let dispatchScript = 'scripts/hacking/memory-starved-dispatch.js';
+    let dispatchScript = 'scripts/hacking/memory-starved-dispatch-for-8.js';
 
     let runClean = true;
     if (ns.args[0] === 'old') {
