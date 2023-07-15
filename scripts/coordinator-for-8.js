@@ -6,7 +6,7 @@
 export async function main(ns) {
     const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 5;
+    const numberOfDifferentSleeps = 6;
     const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/hacking/memory-starved-dispatch-for-8.js';
 
@@ -42,29 +42,44 @@ export async function main(ns) {
         await ns.sleep(individualSleepAmount);
 
 
-        ns.run('scripts/stock/stock-coordinator.js');
+        await stockStuff();
+
+        ns.run('scripts/investments/investments-coordinator-for-8.js');
         await ns.sleep(individualSleepAmount);
 
-        await singularityStuff(ns);
+
+        await singularityStuff();
     }
 
-
-    async function singularityStuff(ns) {
-        await doSingularityWork(ns, 'backdoor-all-machines')
-        await doSingularityWork(ns, 'join-organziations');
-        await doSingularityWork(ns, 'do-work');
-        await doSingularityWork(ns, 'finish-round');
-        await doSingularityWork(ns, 'finish-bitnode');
-        await doSingularityWork(ns, 'study-computer-science');
-        await doSingularityWork(ns, 'create-early-programs');
-        await doSingularityWork(ns, 'do-job');
-        await doSingularityWork(ns, 'buy-rep');
-        await doSingularityWork(ns, 'workout');
-        // await doSingularityWork(ns, 'upgade-home-machine');
-        await doSingularityWork(ns, 'travel-to-get-augs');
+    async function stockStuff () {
+        await doStockWork('get-stock-quotes');
+        await doStockWork('populate-forecast');
+        await doStockWork('invest-in-stocks');
+        await doStockWork('buy-4s');
     }
 
-    async function doSingularityWork(ns, script) {
+    async function doStockWork (script){
+        ns.run(`scripts/stock/${script}.js`);
+
+        await ns.sleep(individualSleepAmount / 4);
+    }
+
+    async function singularityStuff() {
+        await doSingularityWork('backdoor-all-machines')
+        await doSingularityWork('join-organziations');
+        await doSingularityWork('do-work');
+        await doSingularityWork('finish-round');
+        await doSingularityWork('finish-bitnode');
+        await doSingularityWork('study-computer-science');
+        await doSingularityWork('create-early-programs');
+        await doSingularityWork('do-job');
+        await doSingularityWork('buy-rep');
+        await doSingularityWork('workout');
+        await doSingularityWork('upgade-home-machine');
+        await doSingularityWork('travel-to-get-augs');
+    }
+
+    async function doSingularityWork(script) {
         ns.run(`scripts/singularity/${script}.js`);
 
         await ns.sleep(individualSleepAmount / 12);

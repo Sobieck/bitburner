@@ -1,8 +1,6 @@
 export async function main(ns) {
     const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    const numberOfDifferentSleeps = 7;
-    const individualSleepAmount = sleepTotalOfXMS / numberOfDifferentSleeps;
     let dispatchScript = 'scripts/hacking/memory-starved-dispatch.js';
 
     let runClean = true;
@@ -19,7 +17,19 @@ export async function main(ns) {
 
     await ns.sleep(200);
 
+    ns.run('scripts/script-registry.js')
+
+    await ns.sleep(200);
+
+    const scriptsFile = 'data/scriptsToRun.txt';
+
     while (true) {
+
+        let scriptsToRun = JSON.parse(ns.read(scriptsFile));
+
+        let numberOfScripts = scriptsToRun.length + 1;
+
+        let individualSleepAmount = sleepTotalOfXMS / numberOfScripts;
 
         if (ns.fileExists('Formulas.exe')) {
             dispatchScript = 'scripts/hacking/batch-dispatch.js'
@@ -28,50 +38,10 @@ export async function main(ns) {
         ns.run("scripts/scan.js", 1, dispatchScript);
         await ns.sleep(individualSleepAmount);
 
-
-        ns.run('scripts/hacking/hack-all-machines.js');
-        await ns.sleep(individualSleepAmount);
-
-
-        ns.run('scripts/contracts/contract-coordinator.js');
-        await ns.sleep(individualSleepAmount);
-
-
-        ns.run('scripts/stock/stock-coordinator.js');
-        await ns.sleep(individualSleepAmount);
-
-
-        ns.run('scripts/investments/investments-coordinator.js');
-        await ns.sleep(individualSleepAmount);
-
-
-        ns.run('scripts/corporation/start-company.js')
-        await ns.sleep(individualSleepAmount);
-
-
-        await singularityStuff(ns);
-    }
-
-
-    async function singularityStuff(ns) {
-        await doSingularityWork(ns, 'backdoor-all-machines')
-        await doSingularityWork(ns, 'join-organziations');
-        await doSingularityWork(ns, 'do-work');
-        await doSingularityWork(ns, 'finish-round');
-        await doSingularityWork(ns, 'finish-bitnode');
-        await doSingularityWork(ns, 'study-computer-science');
-        await doSingularityWork(ns, 'create-early-programs');
-        await doSingularityWork(ns, 'do-job');
-        await doSingularityWork(ns, 'buy-rep');
-        await doSingularityWork(ns, 'workout');
-        await doSingularityWork(ns, 'upgade-home-machine');
-        await doSingularityWork(ns, 'travel-to-get-augs');
-    }
-
-    async function doSingularityWork(ns, script) {
-        ns.run(`scripts/singularity/${script}.js`);
-
-        await ns.sleep(individualSleepAmount / 12);
+        for (const script of scriptsToRun) {
+            ns.run(script);
+            await ns.sleep(individualSleepAmount);
+        }
     }
 }
 

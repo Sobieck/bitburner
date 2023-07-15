@@ -20,8 +20,7 @@ export async function main(ns) {
   const mostExpensiveScript = orderedScriptsByRamUsage[0];
   const coordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/coordinator.js")
   const contractCoordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/contracts/contract-coordinator.js")
-  const stockCoordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/stock/stock-coordinator.js")
-  const ramToReserve = coordinator.ram + mostExpensiveScript.ram + contractCoordinator.ram + stockCoordinator.ram;
+  const ramToReserve = coordinator.ram + mostExpensiveScript.ram + contractCoordinator.ram;
 
   const earlyGameScriptsUsage = orderedScriptsByRamUsage
     .filter(x => !notImportantScriptsForEarlyGame.includes(x.name))
