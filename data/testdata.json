@@ -1,24 +1,7 @@
-[
-    "scripts/hacking/hack-all-machines.js",
-    "scripts/precalculate-important-data.js",
-    "scripts/script-registry.js",
-    "scripts/stock/get-stock-quotes.js",
-    "scripts/stock/populate-forecast.js",
-    "scripts/stock/invest-in-stocks.js",
-    "scripts/stock/buy-4s.js",
-    "scripts/contracts/contract-coordinator.js",
-    "scripts/singularity/backdoor-all-machines.js",
-    "scripts/singularity/join-organziations.js",
-    "scripts/singularity/do-work.js",
-    "scripts/singularity/finish-round.js",
-    "scripts/singularity/finish-bitnode.js",
-    "scripts/singularity/study-computer-science.js",
-    "scripts/singularity/create-early-programs.js",
-    "scripts/singularity/do-job.js",
-    "scripts/singularity/buy-rep.js",
-    "scripts/singularity/workout.js",
-    "scripts/singularity/upgade-home-machine.js",
-    "scripts/singularity/travel-to-get-augs.js",
-    "scripts/investments/investments-coordinator.js",
-    "scripts/corporation/start-company.js"
-]
+{
+    "stockMarketReserveMoneyLimit": 1000000000000,
+    "capitalToReserveForTrading": 1515610533.4183292,
+    "moneyInvested": 2978033044.352037,
+    "moneyRequested": {},
+    "countOfVisitedWithoutFillingRequest": 0
+}

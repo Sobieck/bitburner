@@ -16,7 +16,7 @@ export async function main(ns) {
         stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
     }
     
-    if (stockMarketReserveMoney.moneyInvested > 7_000_000_000) {
+    if (stockMarketReserveMoney.capitalToReserveForTrading > 4_000_000_000) {
         if (!ns.fileExists("Formulas.exe")) {
             checkTor(ns);
             const formulasCost = ns.singularity.getDarkwebProgramCost("Formulas.exe")
@@ -28,21 +28,11 @@ export async function main(ns) {
         }
     }
 
-    ns.run('scripts/investments/purchase-server.js');
-    
     purchaseProgram(ns, 50, "BruteSSH.exe", stockMarketReserveMoney);
     purchaseProgram(ns, 100, "FTPCrack.exe", stockMarketReserveMoney);
     purchaseProgram(ns, 250, "relaySMTP.exe", stockMarketReserveMoney);
     purchaseProgram(ns, 500, "HTTPWorm.exe", stockMarketReserveMoney);
     purchaseProgram(ns, 750, "SQLInject.exe", stockMarketReserveMoney);
-
-
-    if (moneyAvailable > 1_000_000_000_000) {
-        const endDate = new Date();
-        endDate.setHours(endDate.getHours() + 6);
-        ns.run('scripts/investments/invest-in-nodes.js', 1, endDate.toISOString())
-    }
-  
 }
 
 function purchaseProgram(ns, atWhatHackingLevelToBuy, programToBuy, stockMarketReserveMoney) {

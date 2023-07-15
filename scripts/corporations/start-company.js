@@ -6,12 +6,10 @@ export async function main(ns) {
         stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
     }
 
-    if(ns.corporation.hasCorporation() && stockMarketReserveMoney.canSpend(ns, 160_000_000_000)){
-        ns.corporation.createCorporation("Gidget's Keiretsu", true)
-    }
-
-    if(ns.corporation.hasCorporation()){
-        ns.run('scripts/corporation/expand.js')
+    if(stockMarketReserveMoney.capitalToReserveForTrading > 100_000_000_000){
+        if(!ns.corporation.hasCorporation() && stockMarketReserveMoney.canSpend(ns, 160_000_000_000)){
+            ns.corporation.createCorporation("Gidget's Keiretsu", true)
+        }
     }
 }
 

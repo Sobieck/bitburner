@@ -9,7 +9,7 @@ export async function main(ns) {
     "scripts/tools/manually-end-round.js",
   ];
 
-  const notImportantFolder = "scripts/corporation/"
+  const notImportantFolder = "scripts/corporations/"
 
   const orderedScriptsByRamUsage = ns
     .ls("home")
@@ -18,9 +18,8 @@ export async function main(ns) {
     .sort((a, b) => b.ram - a.ram);
 
   const mostExpensiveScript = orderedScriptsByRamUsage[0];
-  const coordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/coordinator.js")
-  const contractCoordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/contracts/contract-coordinator.js")
-  const ramToReserve = coordinator.ram + mostExpensiveScript.ram + contractCoordinator.ram;
+  const coordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/coordinator.js");
+  const ramToReserve = coordinator.ram + mostExpensiveScript.ram;
 
   const earlyGameScriptsUsage = orderedScriptsByRamUsage
     .filter(x => !notImportantScriptsForEarlyGame.includes(x.name))

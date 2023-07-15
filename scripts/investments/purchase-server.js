@@ -6,6 +6,14 @@ export async function main(ns) {
     const buyOrUpgradeServerFlag = "../../buyOrUpgradeServerFlag.txt";
     const ramObservationsTextFile = '../../data/ramObservations.txt';
     const typeRecord = "../../data/typeOfServerPurchase.txt";
+    
+    const stopInvestingFileName = "stopInvesting.txt";
+    if (ns.fileExists(stopInvestingFileName)) {
+        if (ns.fileExists(ramObservationsTextFile)) {
+            ns.rm(ramObservationsTextFile);
+        }
+        return;
+    }
 
     let additionalRamNeeded = 0;
     let ramObservations = [];

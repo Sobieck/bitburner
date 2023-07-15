@@ -5,7 +5,7 @@ export async function main(ns) {
     const basicScripts = [
         'scripts/hacking/hack-all-machines.js',
         'scripts/precalculate-important-data.js',
-        'scripts/script-registry.js',
+        'scripts/script-registry-for-8.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(basicScripts);
@@ -48,7 +48,7 @@ export async function main(ns) {
 
     const investmentScripts = [
         'scripts/investments/invest-in-nodes.js',
-        'scripts/investments/purchase-server.js',
+        // 'scripts/investments/purchase-server.js',
         'scripts/investments/invest-in-programs.js',
     ];
 

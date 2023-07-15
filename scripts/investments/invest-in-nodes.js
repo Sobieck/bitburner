@@ -1,14 +1,15 @@
-//take an hours until payoff numberz
-
-//hacknet
-
-/** @param {NS} ns */
-//run scripts/invest-in-nodes.js endDate
 export async function main(ns) {
-    const endDate = ns.args[0];
+    const moneyToInvest = ns.getServerMoneyAvailable("home");
+
+    if (moneyToInvest < 1_000_000_000_000) {
+        return;
+    }
+    
+    let endDate = ns.args[0];
 
     if (endDate === undefined){
-        ns.tprint("need inputs");
+        endDate = new Date();
+        endDate.setHours(endDate.getHours() + 6);
     } else {
         const timeLeftInSeconds = (new Date(endDate) - new Date()) / 1000;
         const conservativeTimeLeft = timeLeftInSeconds / 2;
