@@ -39,7 +39,7 @@ function purchaseProgram(ns, atWhatHackingLevelToBuy, programToBuy, stockMarketR
     const playerHackingLevel = ns.getHackingLevel();
     if (!ns.fileExists(programToBuy) && playerHackingLevel > atWhatHackingLevelToBuy) {
 
-        const cost = ns.singularity.getDarkwebProgramCost(programToBuy)
+        const cost = ns.singularity.getDarkwebProgramCost(programToBuy);
         
         if(stockMarketReserveMoney.canSpend(ns, cost)){
             checkTor(ns);
@@ -99,7 +99,7 @@ class ReserveForTrading {
         } else {
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
-            const nameOfRequest = "investments-coordinator";
+            const nameOfRequest = "invest-in-programs";
             this.moneyRequested.delete(nameOfRequest);
             const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
             ns.rm(stockMarketReserveMoneyFile);
@@ -110,7 +110,7 @@ class ReserveForTrading {
     }
 
     requestMoney(ns, amount){
-        const nameOfRequest = "investments-coordinator";
+        const nameOfRequest = "invest-in-programs";
         this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
         const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);

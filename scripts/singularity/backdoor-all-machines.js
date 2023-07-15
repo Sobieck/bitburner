@@ -1,9 +1,9 @@
-
-let backdooring = false;
-
+const backdooringFile = "data/backdooring.txt";
+// run on n00dles continuously? that way we can maybe avoid the annoyingness on home of it going to other machiens. 
 export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
-    if(backdooring){
+
+    if(ns.fileExists(backdooringFile)){
         return;
     }
 
@@ -26,7 +26,9 @@ async function backdoorMachine (machineName, enviroment, ns){
     const serverWithLineage = enviroment.find(x => x.name === machineName)
 
     if (serverWithLineage && !serverWithLineage.server.backdoorInstalled && serverWithLineage.server.hasAdminRights && !serverWithLineage.server.purchasedByPlayer) {
-        backdooring = true;
+        
+        ns.write(backdooringFile, JSON.stringify(new Date()), "W");
+        
         for (const server of serverWithLineage.lineage) {
             await ns.singularity.connect(server);
         }
@@ -35,7 +37,7 @@ async function backdoorMachine (machineName, enviroment, ns){
         await ns.singularity.installBackdoor();
         await ns.singularity.connect("home");
 
-        backdooring = false;
+        ns.rm(backdooringFile);
         return true;
     } 
 

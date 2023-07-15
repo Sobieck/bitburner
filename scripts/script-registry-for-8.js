@@ -55,7 +55,7 @@ export async function main(ns) {
     scriptsToRun = scriptsToRun.concat(investmentScripts);
 
     const corporateScripts = [
-        'scripts/corporations/start-company.js',
+        // 'scripts/corporations/start-company.js',
         'scripts/corporations/expand.js',
 
     ];

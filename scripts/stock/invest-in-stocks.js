@@ -258,7 +258,7 @@ class ReserveForTrading {
         } else {
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
-            const nameOfRequest = "purchase-server";
+            const nameOfRequest = "invest-in-stocks";
             this.moneyRequested.delete(nameOfRequest);
             const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
             ns.rm(stockMarketReserveMoneyFile);
@@ -269,7 +269,7 @@ class ReserveForTrading {
     }
 
     requestMoney(ns, amount) {
-        const nameOfRequest = "purchase-server";
+        const nameOfRequest = "invest-in-stocks";
         this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
         const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
