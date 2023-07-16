@@ -1,7 +1,26 @@
-{
-    "stockMarketReserveMoneyLimit": 1000000000000,
-    "capitalToReserveForTrading": 786491935.2483177,
-    "moneyInvested": 1024636133.2858641,
-    "moneyRequested": [],
-    "countOfVisitedWithoutFillingRequest": 0
-}
+[
+    "scripts/hacking/hack-all-machines.js",
+    "scripts/precalculate-important-data.js",
+    "scripts/script-registry-for-8.js",
+    "scripts/stock/get-stock-quotes.js",
+    "scripts/stock/populate-forecast.js",
+    "scripts/stock/invest-in-stocks.js",
+    "scripts/stock/buy-4s.js",
+    "scripts/contracts/get.js",
+    "scripts/contracts/populate-input.js",
+    "scripts/contracts/populate-description.js",
+    "scripts/contracts/do.js",
+    "scripts/contracts/save-contracts-for-thomas.js",
+    "scripts/singularity/backdoor-all-machines.js",
+    "scripts/singularity/join-organziations.js",
+    "scripts/singularity/do-work.js",
+    "scripts/singularity/finish-bitnode.js",
+    "scripts/singularity/study-computer-science.js",
+    "scripts/singularity/create-early-programs.js",
+    "scripts/singularity/do-job.js",
+    "scripts/singularity/buy-rep.js",
+    "scripts/singularity/workout.js",
+    "scripts/singularity/upgade-home-machine.js",
+    "scripts/singularity/travel-to-get-augs.js",
+    "scripts/investments/invest-in-nodes.js"
+]

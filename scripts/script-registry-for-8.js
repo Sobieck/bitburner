@@ -49,7 +49,7 @@ export async function main(ns) {
     const investmentScripts = [
         'scripts/investments/invest-in-nodes.js',
         // 'scripts/investments/purchase-server.js',
-        'scripts/investments/invest-in-programs.js',
+        // 'scripts/investments/invest-in-programs.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(investmentScripts);

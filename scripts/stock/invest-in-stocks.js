@@ -29,14 +29,13 @@ export async function main(ns) {
     const moneyWeHaveNow = ns.getServerMoneyAvailable("home") + stockMarketReserveMoney.moneyInvested;
 
     const now = new Date();
+    const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
     if (now.getMinutes() !== lastRecordedToConsole.getMinutes()) { // && batches not running
-        const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
-
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        });
-
         const moneyFormatted = formatter.format(moneyWeHaveNow);
 
         let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted}`;
@@ -98,13 +97,9 @@ export async function main(ns) {
             coverShort = true;
         }
 
-        if(stock.symbol === "NTLK"){
-            // ns.tprint(stock)
-        }
-
         if (sellSharesToSatisfyMoneyDemands && sharesToSell > 0) {
             if (stockMarketReserveMoney.canSellAmountAndStillHaveReserve(moneyRequested)) {
-                sharesToSell = Math.ceil(moneyRequested / stock.bid)
+                sharesToSell = Math.ceil(moneyRequested / stock.bid) + 5
 
                 if (sharesToSell > stock.investedShares && stock.investedShares !== 0) {
                     sharesToSell = stock.investedShares;
@@ -139,7 +134,7 @@ export async function main(ns) {
 
                 if (sellSharesToSatisfyMoneyDemands) {
                     sellSharesToSatisfyMoneyDemands = false;
-                    ns.toast(`Sold $${moneyRequested} for money request.`, "success", null)
+                    ns.toast(`${timeStamp} Sold ${formatter.format(moneyRequested)} for money request.`, "success", null)
                 }
 
                 if (stopTradingExists) {
@@ -155,14 +150,15 @@ export async function main(ns) {
 
     let moneyAvailable = ns.getServerMoneyAvailable("home") - commission - moneyRequested;
 
+    if (stockMarketReserveMoney.capitalToReserveForTrading > stockMarketReserveMoney.moneyInvested) {
+        moneyAvailable = ns.getServerMoneyAvailable("home") - commission;
+    }
+
     if (moneyAvailable > 5_000_000_000 && !ns.stock.has4SDataTIXAPI()) {
         moneyAvailable = 5_000_000_000;
     }
 
-    let onlyInvestIfWeHaveMoreThan = 30_000_000;
-    if (ns.fileExists('../../stopInvesting.txt')) {
-        onlyInvestIfWeHaveMoreThan = 30_000_000;
-    }
+    const onlyInvestIfWeHaveMoreThan = 30_000_000;
 
     if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
         let stocksToTrade = stockRecords
@@ -222,7 +218,7 @@ class ReserveForTrading {
     moneyInvested = 0;
     moneyRequested = new Map();
     countOfVisitedWithoutFillingRequest = 0;
-    
+
 
     constructor(obj) {
         obj && Object.assign(this, obj);
@@ -392,7 +388,7 @@ class StockHistoricData {
             if (record.forecast > 0.6) {
                 record.buyTrend = true;
             }
-            
+
             if (record.forecast < 0.5 && record.investedShares > 0) {
                 record.sellTrend = true;
             }
