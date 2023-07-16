@@ -39,14 +39,16 @@ export async function main(ns) {
     ];
 
     const stopAtAugments = [
-        { final: true, faction: "Chongqing", augmentToStopAt: "Neuregen Gene Modification" }
+        { final: true, faction: "Chongqing", augmentToStopAt: "Neuregen Gene Modification" },
+        { final: true, faction: "NiteSec", augmentToStopAt: "Cranial Signal Processors - Gen III" },
+        { final: true, faction: "The Black Hand", augmentToStopAt: "Cranial Signal Processors - Gen IV" },
     ]
 
-    // const moneyAvailable = ns.getServerMoneyAvailable("home");
-    // if (moneyAvailable > 150_000_000) {
-    //     toJoinInOrderInWhichIWantToComplete.push("Sector-12");
-    //     doNoWorkFor.push("Sector-12");
-    // }
+    const moneyAvailable = ns.getServerMoneyAvailable("home");
+    if (moneyAvailable > 150_000_000) {
+        toJoinInOrderInWhichIWantToComplete.push("Sector-12");
+        doNoWorkFor.push("Sector-12");
+    }
 
     const factionInvitations = ns.singularity.checkFactionInvitations();
 

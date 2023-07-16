@@ -1,6 +1,5 @@
 export async function main(ns) {
     const ramObservationsTextFile = '../../data/ramObservations.txt';
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
     
     const stopInvestingFileName = "stopInvesting.txt";
     if (ns.fileExists(stopInvestingFileName)) {
@@ -15,7 +14,9 @@ export async function main(ns) {
     if (ns.fileExists(stockMarketReserveMoneyFile)) {
         stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
     }
-    
+
+    checkTor(ns, stockMarketReserveMoney);
+
     if (stockMarketReserveMoney.capitalToReserveForTrading > 4_000_000_000) {
         if (!ns.fileExists("Formulas.exe")) {
             checkTor(ns);
@@ -37,19 +38,18 @@ export async function main(ns) {
 
 function purchaseProgram(ns, atWhatHackingLevelToBuy, programToBuy, stockMarketReserveMoney) {
     const playerHackingLevel = ns.getHackingLevel();
-    if (!ns.fileExists(programToBuy) && playerHackingLevel > atWhatHackingLevelToBuy) {
+    if (!ns.fileExists(programToBuy) && playerHackingLevel > atWhatHackingLevelToBuy && ns.hasTorRouter()) {
 
         const cost = ns.singularity.getDarkwebProgramCost(programToBuy);
-        
+
         if(stockMarketReserveMoney.canSpend(ns, cost)){
-            checkTor(ns);
             ns.singularity.purchaseProgram(programToBuy);
         }
     }
 }
 
-function checkTor(ns) {
-    if (!ns.hasTorRouter()) {
+function checkTor(ns, stockMarketReserveMoney) {
+    if (!ns.hasTorRouter() && stockMarketReserveMoney.canSpend(ns, 200_000)) {
         ns.singularity.purchaseTor()
     }
 }
@@ -110,10 +110,12 @@ class ReserveForTrading {
     }
 
     requestMoney(ns, amount){
+
         const nameOfRequest = "invest-in-programs";
         this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
         const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
+
         if(moneyRequestedPreviously){
             if(moneyRequestedPreviously < amount){
                 this.moneyRequested.set(nameOfRequest, amount);

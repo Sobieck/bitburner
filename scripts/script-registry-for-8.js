@@ -33,7 +33,7 @@ export async function main(ns) {
         'scripts/singularity/backdoor-all-machines.js',
         'scripts/singularity/join-organziations.js',
         'scripts/singularity/do-work.js',
-        'scripts/singularity/finish-round.js',
+        // 'scripts/singularity/finish-round.js',
         'scripts/singularity/finish-bitnode.js',
         'scripts/singularity/study-computer-science.js',
         'scripts/singularity/create-early-programs.js',
@@ -56,7 +56,7 @@ export async function main(ns) {
 
     const corporateScripts = [
         // 'scripts/corporations/start-company.js',
-        'scripts/corporations/expand.js',
+        // 'scripts/corporations/expand.js',
 
     ];
 

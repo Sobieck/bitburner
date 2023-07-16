@@ -19,14 +19,14 @@ export async function main(ns) {
 
   const mostExpensiveScript = orderedScriptsByRamUsage[0];
   const coordinator = orderedScriptsByRamUsage.find(x => x.name === "scripts/coordinator.js");
-  const ramToReserve = coordinator.ram + mostExpensiveScript.ram;
+  const ramToReserve = coordinator.ram + mostExpensiveScript.ram + 1;
 
   const earlyGameScriptsUsage = orderedScriptsByRamUsage
     .filter(x => !notImportantScriptsForEarlyGame.includes(x.name))
     .filter(x => !x.name.startsWith(notImportantFolder));
 
   const mostExpensiveEarlyGame = earlyGameScriptsUsage[0];
-  const ramToReserveInLimitedEnvironment = coordinator.ram + mostExpensiveEarlyGame.ram;
+  const ramToReserveInLimitedEnvironment = coordinator.ram + mostExpensiveEarlyGame.ram + 1;
   const earlyGameLimiter = mostExpensiveEarlyGame.name;
 
   const ramReserveFile = 'data/ramToReserveOnHome.txt';

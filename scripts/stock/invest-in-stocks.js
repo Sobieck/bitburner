@@ -57,9 +57,14 @@ export async function main(ns) {
     const reserveMoneyKeys = stockMarketReserveMoney.moneyRequested.keys();
     let moneyRequested = 0;
 
+
     for (const requestKey of reserveMoneyKeys) {
-        moneyRequested += stockMarketReserveMoney.moneyRequested.get(requestKey);
+        const moneyRequestedFromService = stockMarketReserveMoney.moneyRequested.get(requestKey);
+        stockMarketReserveMoney.moneyRequested.set(requestKey, moneyRequestedFromService);
+        moneyRequested += moneyRequestedFromService;
     }
+
+    stockMarketReserveMoney.moneyRequested = Array.from(stockMarketReserveMoney.moneyRequested);
 
     if (moneyRequested === 0) {
         stockMarketReserveMoney.countOfVisitedWithoutFillingRequest = 0;
@@ -93,15 +98,19 @@ export async function main(ns) {
             coverShort = true;
         }
 
-        if (sellSharesToSatisfyMoneyDemands) {
+        if(stock.symbol === "NTLK"){
+            // ns.tprint(stock)
+        }
+
+        if (sellSharesToSatisfyMoneyDemands && sharesToSell > 0) {
             if (stockMarketReserveMoney.canSellAmountAndStillHaveReserve(moneyRequested)) {
                 sharesToSell = Math.ceil(moneyRequested / stock.bid)
 
-                if (sharesToSell > stock.investedShares) {
+                if (sharesToSell > stock.investedShares && stock.investedShares !== 0) {
                     sharesToSell = stock.investedShares;
                 }
 
-                if (sharesToSell > stock.sharesShort) {
+                if (sharesToSell > stock.sharesShort && stock.sharesShort !== 0) {
                     sharesToSell = stock.sharesShort;
                 }
             } else {
@@ -109,7 +118,6 @@ export async function main(ns) {
                 stockMarketReserveMoney.countOfVisitedWithoutFillingRequest = 0;
             }
         }
-
 
         if (sharesToSell > 0) {
             if ((stock.sellTrend && coverShort === false) || stopTradingExists || sellSharesToSatisfyMoneyDemands || (stock.coverShortTrend && coverShort)) {
@@ -384,8 +392,8 @@ class StockHistoricData {
             if (record.forecast > 0.6) {
                 record.buyTrend = true;
             }
-
-            if (record.forecast < .5 && record.investedShares > 0) {
+            
+            if (record.forecast < 0.5 && record.investedShares > 0) {
                 record.sellTrend = true;
             }
 

@@ -98,7 +98,7 @@ export async function main(ns) {
                                 prereqs: ns.singularity.getAugmentationPrereq(y)
                             }
                         })
-                        // .filter(y => y.augmentationRepCost < factionRep)
+                        .filter(y => y.augmentationRepCost < factionRep)
                         .sort((a, b) => b.price - a.price);
 
                     return {
@@ -183,7 +183,7 @@ export async function main(ns) {
         }
     }
 
-    ns.toast(`Money needed for augs: ${moneyFormatted}`,'success', null)
+    ns.toast(`Money needed for augs: ${moneyFormatted}`, 'success', null)
 
     ns.toast(`Total Needed: ${formatter.format(totalToSpend)}`, 'success', null)
 
