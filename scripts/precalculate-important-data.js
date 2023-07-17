@@ -11,9 +11,11 @@ export async function main(ns) {
 
   const notImportantFolder = "scripts/corporations/"
 
-  const orderedScriptsByRamUsage = ns
-    .ls("home")
-    .filter(x => x.endsWith(".js"))
+  const scriptsThatWeRun = JSON.parse(ns.read('data/scriptsToRun.txt'));
+
+  scriptsThatWeRun.push("scripts/coordinator.js");
+
+  const orderedScriptsByRamUsage = scriptsThatWeRun
     .map(x => new ScriptRam(ns.getScriptRam(x), x))
     .sort((a, b) => b.ram - a.ram);
 

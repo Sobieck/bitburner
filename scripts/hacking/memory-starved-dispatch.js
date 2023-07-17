@@ -2,14 +2,10 @@ const hackScript = 'scripts/hacking/hack.js';
 const growScript = 'scripts/hacking/grow.js';
 const weakenScript = 'scripts/hacking/weaken.js';
 
-let ranOnHomeThisTime = false;
-
 export async function main(ns) {
 
     const memoryStarvedQueueFileName = 'data/memoryStarvedQueue.txt';
     const batchQueuesFileName = "data/batchQueue.txt";
-    ranOnHomeThisTime = false;
-
 
     const homeMemoryLimitations = JSON.parse(ns.read("data/ramToReserveOnHome.txt"));
 
@@ -42,6 +38,11 @@ export async function main(ns) {
             x.server.hackDifficulty,
             x.server.moneyAvailable,
         ))
+
+    if (ns.getHackingLevel() < 160) {
+        allMachinesByOrderOfValue = allMachinesByOrderOfValue
+            .sort((a, b) => a.hackDifficulty - b.hackDifficulty)
+    }
 
     seeIfWeNeedToDoNextStep(ns, memoryStarvedQueue);
 
@@ -113,9 +114,6 @@ async function executeScriptAcrossFleet(ns, script, enviroment, homeMemoryLimita
             const pid = ns.exec(script, machineToRunOn, threads, target.name);
 
             if (pid !== 0) {
-                if (machineToRunOn === "home") {
-                    ranOnHomeThisTime = true;
-                }
                 target.pids.push(pid);
                 target.runningOn.push({ machineToRunOn, threads })
             }
@@ -174,6 +172,7 @@ function getMachineWithEnoughRam(ns, ramNeeded, enviroment, homeMemoryLimitation
 
     for (const potentialServerToRun of serversWithEnoughRam) {
         const server = getServer(ns, potentialServerToRun.name, homeMemoryLimitations);
+
         const freeRam = server.maxRam - server.ramUsed;
         if (freeRam > ramNeeded) {
             machineToRunOn = server;

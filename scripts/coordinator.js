@@ -13,11 +13,11 @@ export async function main(ns) {
         await ns.sleep(1000);
     }
 
-    ns.run('scripts/precalculate-important-data.js')
+    ns.run('scripts/script-registry.js')
 
     await ns.sleep(200);
 
-    ns.run('scripts/script-registry.js')
+    ns.run('scripts/precalculate-important-data.js')
 
     await ns.sleep(200);
 
