@@ -1,31 +1,67 @@
+let lastRecorded = new Date();
+
 export async function main(ns) {
-    if(!ns.corporation.hasCorporation()){
+    if (!ns.corporation.hasCorporation()) {
         return;
     }
 
     const corporationFileName = 'data/corporation.txt';
-
-    const hasDoneAction = false;
     const constants = ns.corporation.getConstants();
-    const corporation = ns.corporation.getCorporation();
+    let corporation = ns.corporation.getCorporation();
     const divisions = [];
-    const offices = [];
-    const warehouses = [];
+
 
     for (const divisionName of corporation.divisions) {
-        const division = ns.corporation.getDivision(divisionName)
-        divisions.push(division);
+        let division = ns.corporation.getDivision(divisionName)
+        division.offices = [];
 
-        for(const city of division.cities){
-            offices.push(ns.corporation.getOffice(division.name, city));
-            if(ns.corporation.hasWarehouse(division.name, city)){
-                warehouses.push(ns.corporation.getWarehouse(division.name, city));
+        for (const city of division.cities) {
+            let office = ns.corporation.getOffice(division.name, city)
+
+            if (ns.corporation.hasWarehouse(division.name, city)) {
+                office.warehouse = ns.corporation.getWarehouse(division.name, city);
             }
+
+
+            division.offices.push(office);
         }
+
+        divisions.push(division);
     }
 
-    const corporationData = { constants, hasDoneAction, corporation, divisions, offices, warehouses };
-    
+    const corporationData = { constants, corporation, divisions };
+
     ns.rm(corporationFileName);
     ns.write(corporationFileName, JSON.stringify(corporationData), "W");
+
+
+    const now = new Date();
+    const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+    });
+
+    if (now.getHours() !== lastRecorded.getHours()) { // && batches not running
+        let snapshots = [];
+
+        const snapshotsFileName = "data/corporateSnapshots.txt";
+        if(ns.fileExists(snapshotsFileName)){
+            snapshots = JSON.parse(ns.read(snapshotsFileName));
+        }
+
+        corporation.profit = formatter.format(corporation.revenue - corporation.expenses);
+        corporation.funds = formatter.format(corporation.funds);
+        corporation.revenue = formatter.format(corporation.revenue);
+        corporation.expenses = formatter.format(corporation.expenses);
+        corporation.sharePrice = formatter.format(corporation.sharePrice);
+        corporation.snapshotTime = now;
+
+
+        snapshots.push(corporation);
+        
+        ns.rm(snapshotsFileName);
+        ns.write(snapshotsFileName, JSON.stringify(snapshots), "W");
+
+        lastRecorded = now;
+    }
 }

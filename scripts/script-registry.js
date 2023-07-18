@@ -58,6 +58,10 @@ export async function main(ns) {
         'scripts/corporations/start-company.js',
         'scripts/corporations/get-corporate-info.js',
         'scripts/corporations/initial-expand.js',
+        'scripts/corporations/add-supporting-material.js',
+        'scripts/corporations/upgrade-offices.js',
+        'scripts/corporations/level-upgrades.js',
+        'scripts/corporations/upgrade-warehouse.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);

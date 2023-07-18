@@ -1,0 +1,30 @@
+[
+    {
+        "name": "Hardware",
+        "factor": 0.2,
+        "size": 0.06,
+        "countToBuy": 3333,
+        "spaceToFill": 200
+    },
+    {
+        "name": "Robots",
+        "factor": 0.3,
+        "size": 0.5,
+        "countToBuy": 600,
+        "spaceToFill": 300
+    },
+    {
+        "name": "AI Cores",
+        "factor": 0.3,
+        "size": 0.1,
+        "countToBuy": 3000,
+        "spaceToFill": 300
+    },
+    {
+        "name": "Real Estate",
+        "factor": 0.72,
+        "size": 0.005,
+        "countToBuy": 144000,
+        "spaceToFill": 720
+    }
+]

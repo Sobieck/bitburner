@@ -6,9 +6,12 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
 
     const gidgetsFarm = "Gidget's Farm";
+    const industry = "Agriculture";
+
+    const industryInformation = ns.corporation.getIndustryData(industry);
 
     if (corporation.divisions.length === 0) {
-        ns.corporation.expandIndustry("Agriculture", gidgetsFarm);
+        ns.corporation.expandIndustry(industry, gidgetsFarm);
     }
 
     const smartSupplyName = "Smart Supply";
@@ -54,12 +57,38 @@ export async function main(ns) {
         }
     }
 
+    const materialsToSell = [
+        { name: "Plants", amtPerSecond: "MAX", price: "MP" },
+        { name: "Food", amtPerSecond: "MAX", price: "MP" },
+    ];
+
     for (let city of division.cities) {
-        ns.corporation.sellMaterial(gidgetsFarm, city, "Plants", "MAX", "MP");
-        ns.corporation.sellMaterial(gidgetsFarm, city, "Food", "MAX", "MP");
+        for (const material of materialsToSell) {
+            ns.corporation.sellMaterial(gidgetsFarm, city, material.name, material.amtPerSecond, material.price);
+        }
     }
 
     if (division.numAdVerts === 0) {
         ns.corporation.hireAdVert(gidgetsFarm);
+    }
+
+    const initialUpgrades = [
+        "FocusWires",
+        "Neural Accelerators",
+        "Speech Processor Implants",
+        "Nuoptimal Nootropic Injector Implants",
+        "Smart Factories",
+    ];
+
+    for (const upgrade of initialUpgrades) {
+        const upgradeLevel = ns.corporation.getUpgradeLevel(upgrade);
+        const upgradeCost = ns.corporation.getUpgradeLevelCost(upgrade);
+
+        const reserve = 10_000_000_000;
+        const fundsLessReserve = ns.corporation.getCorporation().funds - reserve;
+
+        if (upgradeLevel < 2 && upgradeCost < fundsLessReserve) {
+            ns.corporation.levelUpgrade(upgrade);
+        }
     }
 }

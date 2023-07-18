@@ -156,19 +156,19 @@
     "hasDoneAction": false,
     "corporation": {
         "name": "Gidget's Keiretsu",
-        "funds": 36622352919.14986,
-        "revenue": 198954.35126704987,
-        "expenses": 78641.97767453431,
+        "funds": 38447106222.37616,
+        "revenue": 199959.04231600347,
+        "expenses": 84107.08258417968,
         "public": false,
         "totalShares": 1500000000,
         "numShares": 1000000000,
         "shareSaleCooldown": 0,
         "issuedShares": 0,
-        "sharePrice": 65.93860385423112,
+        "sharePrice": 65.43993423063259,
         "dividendRate": 0,
         "dividendTax": 0.15,
         "dividendEarnings": 0,
-        "state": "PRODUCTION",
+        "state": "PURCHASE",
         "divisions": [
             "Gidget's Farm"
         ]
@@ -178,13 +178,13 @@
             "name": "Gidget's Farm",
             "type": "Agriculture",
             "awareness": 3.0149999999999997,
-            "popularity": 0.9718000000000042,
+            "popularity": 0.8183000000000211,
             "productionMult": 6,
             "researchPoints": 0,
-            "lastCycleRevenue": 198954.35126704987,
-            "lastCycleExpenses": 78641.97767453431,
+            "lastCycleRevenue": 199959.04231600347,
+            "lastCycleExpenses": 84107.08258417968,
             "thisCycleRevenue": 0,
-            "thisCycleExpenses": 723976.6051885223,
+            "thisCycleExpenses": 20859.102000000297,
             "numAdVerts": 1,
             "cities": [
                 "Sector-12",
@@ -196,227 +196,225 @@
             ],
             "products": [],
             "makesProducts": false,
-            "maxProducts": 0
-        }
-    ],
-    "offices": [
-        {
-            "city": "Sector-12",
-            "size": 3,
-            "maxEnergy": 100,
-            "maxMorale": 100,
-            "numEmployees": 3,
-            "avgEnergy": 100,
-            "avgMorale": 100,
-            "totalExperience": 240.18150000000514,
-            "employeeProductionByJob": {
-                "total": 697.6315000000052,
-                "Operations": 256.7355000000017,
-                "Engineer": 290.8157500000026,
-                "Business": 150.08025000000086,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            },
-            "employeeJobs": {
-                "Operations": 1,
-                "Engineer": 1,
-                "Business": 1,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            }
-        },
-        {
-            "city": "Aevum",
-            "size": 3,
-            "maxEnergy": 100,
-            "maxMorale": 100,
-            "numEmployees": 3,
-            "avgEnergy": 100,
-            "avgMorale": 100,
-            "totalExperience": 235.18150000000514,
-            "employeeProductionByJob": {
-                "total": 670.6815000000051,
-                "Operations": 241.31883333333505,
-                "Engineer": 274.2157500000026,
-                "Business": 155.14691666666752,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            },
-            "employeeJobs": {
-                "Operations": 1,
-                "Engineer": 1,
-                "Business": 1,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            }
-        },
-        {
-            "city": "Chongqing",
-            "size": 3,
-            "maxEnergy": 100,
-            "maxMorale": 100,
-            "numEmployees": 3,
-            "avgEnergy": 100,
-            "avgMorale": 100,
-            "totalExperience": 190.18150000000514,
-            "employeeProductionByJob": {
-                "total": 610.3815000000051,
-                "Operations": 226.66883333333504,
-                "Engineer": 248.56575000000257,
-                "Business": 135.14691666666752,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            },
-            "employeeJobs": {
-                "Operations": 1,
-                "Engineer": 1,
-                "Business": 1,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            }
-        },
-        {
-            "city": "New Tokyo",
-            "size": 3,
-            "maxEnergy": 100,
-            "maxMorale": 100,
-            "numEmployees": 3,
-            "avgEnergy": 100,
-            "avgMorale": 100,
-            "totalExperience": 260.18150000000514,
-            "employeeProductionByJob": {
-                "total": 701.2065000000051,
-                "Operations": 253.32716666666838,
-                "Engineer": 291.16575000000256,
-                "Business": 156.71358333333418,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            },
-            "employeeJobs": {
-                "Operations": 1,
-                "Engineer": 1,
-                "Business": 1,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            }
-        },
-        {
-            "city": "Ishima",
-            "size": 3,
-            "maxEnergy": 100,
-            "maxMorale": 100,
-            "numEmployees": 3,
-            "avgEnergy": 100,
-            "avgMorale": 100,
-            "totalExperience": 228.18150000000514,
-            "employeeProductionByJob": {
-                "total": 655.7065000000051,
-                "Operations": 240.5105000000017,
-                "Engineer": 267.91575000000256,
-                "Business": 147.28025000000085,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            },
-            "employeeJobs": {
-                "Operations": 1,
-                "Engineer": 1,
-                "Business": 1,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            }
-        },
-        {
-            "city": "Volhaven",
-            "size": 3,
-            "maxEnergy": 100,
-            "maxMorale": 100,
-            "numEmployees": 3,
-            "avgEnergy": 100,
-            "avgMorale": 100,
-            "totalExperience": 269.18150000000514,
-            "employeeProductionByJob": {
-                "total": 669.3815000000051,
-                "Operations": 247.05216666666837,
-                "Engineer": 276.3157500000026,
-                "Business": 146.0135833333342,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            },
-            "employeeJobs": {
-                "Operations": 1,
-                "Engineer": 1,
-                "Business": 1,
-                "Management": 0,
-                "Research & Development": 0,
-                "Intern": 0,
-                "Unassigned": 0
-            }
-        }
-    ],
-    "warehouses": [
-        {
-            "level": 2,
-            "city": "Sector-12",
-            "size": 220.00000000000003,
-            "sizeUsed": 1.5418149566695691,
-            "smartSupplyEnabled": true
-        },
-        {
-            "level": 1,
-            "city": "Aevum",
-            "size": 110.00000000000001,
-            "sizeUsed": 1.508115839712013,
-            "smartSupplyEnabled": true
-        },
-        {
-            "level": 1,
-            "city": "Chongqing",
-            "size": 110.00000000000001,
-            "sizeUsed": 1.4683759290119922,
-            "smartSupplyEnabled": true
-        },
-        {
-            "level": 1,
-            "city": "New Tokyo",
-            "size": 110.00000000000001,
-            "sizeUsed": 1.5368723792459593,
-            "smartSupplyEnabled": true
-        },
-        {
-            "level": 1,
-            "city": "Ishima",
-            "size": 110.00000000000001,
-            "sizeUsed": 1.502920817696917,
-            "smartSupplyEnabled": true
-        },
-        {
-            "level": 1,
-            "city": "Volhaven",
-            "size": 110.00000000000001,
-            "sizeUsed": 1.518304887238862,
-            "smartSupplyEnabled": true
+            "maxProducts": 0,
+            "offices": [
+                {
+                    "city": "Sector-12",
+                    "size": 3,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 3,
+                    "avgEnergy": 100,
+                    "avgMorale": 100,
+                    "totalExperience": 247.0890000000163,
+                    "employeeProductionByJob": {
+                        "total": 704.5390000000164,
+                        "Operations": 259.03800000000547,
+                        "Engineer": 294.2695000000082,
+                        "Business": 151.23150000000274,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 1,
+                        "Engineer": 1,
+                        "Business": 1,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 2,
+                        "city": "Sector-12",
+                        "size": 220.00000000000003,
+                        "sizeUsed": 0,
+                        "smartSupplyEnabled": true
+                    }
+                },
+                {
+                    "city": "Aevum",
+                    "size": 3,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 3,
+                    "avgEnergy": 100,
+                    "avgMorale": 100,
+                    "totalExperience": 242.0890000000163,
+                    "employeeProductionByJob": {
+                        "total": 677.5890000000163,
+                        "Operations": 243.62133333333878,
+                        "Engineer": 277.66950000000816,
+                        "Business": 156.29816666666937,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 1,
+                        "Engineer": 1,
+                        "Business": 1,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 1,
+                        "city": "Aevum",
+                        "size": 110.00000000000001,
+                        "sizeUsed": 0,
+                        "smartSupplyEnabled": true
+                    }
+                },
+                {
+                    "city": "Chongqing",
+                    "size": 3,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 3,
+                    "avgEnergy": 100,
+                    "avgMorale": 100,
+                    "totalExperience": 197.0890000000163,
+                    "employeeProductionByJob": {
+                        "total": 617.2890000000164,
+                        "Operations": 228.97133333333878,
+                        "Engineer": 252.01950000000815,
+                        "Business": 136.29816666666937,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 1,
+                        "Engineer": 1,
+                        "Business": 1,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 1,
+                        "city": "Chongqing",
+                        "size": 110.00000000000001,
+                        "sizeUsed": 0,
+                        "smartSupplyEnabled": true
+                    }
+                },
+                {
+                    "city": "New Tokyo",
+                    "size": 3,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 3,
+                    "avgEnergy": 100,
+                    "avgMorale": 100,
+                    "totalExperience": 267.0890000000163,
+                    "employeeProductionByJob": {
+                        "total": 708.1140000000163,
+                        "Operations": 255.6296666666721,
+                        "Engineer": 294.61950000000814,
+                        "Business": 157.86483333333604,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 1,
+                        "Engineer": 1,
+                        "Business": 1,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 1,
+                        "city": "New Tokyo",
+                        "size": 110.00000000000001,
+                        "sizeUsed": 0,
+                        "smartSupplyEnabled": true
+                    }
+                },
+                {
+                    "city": "Ishima",
+                    "size": 3,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 3,
+                    "avgEnergy": 100,
+                    "avgMorale": 100,
+                    "totalExperience": 235.0890000000163,
+                    "employeeProductionByJob": {
+                        "total": 662.6140000000163,
+                        "Operations": 242.81300000000545,
+                        "Engineer": 271.36950000000814,
+                        "Business": 148.43150000000273,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 1,
+                        "Engineer": 1,
+                        "Business": 1,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 1,
+                        "city": "Ishima",
+                        "size": 110.00000000000001,
+                        "sizeUsed": 0,
+                        "smartSupplyEnabled": true
+                    }
+                },
+                {
+                    "city": "Volhaven",
+                    "size": 3,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 3,
+                    "avgEnergy": 100,
+                    "avgMorale": 100,
+                    "totalExperience": 276.0890000000163,
+                    "employeeProductionByJob": {
+                        "total": 676.2890000000164,
+                        "Operations": 249.3546666666721,
+                        "Engineer": 279.7695000000082,
+                        "Business": 147.16483333333605,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 1,
+                        "Engineer": 1,
+                        "Business": 1,
+                        "Management": 0,
+                        "Research & Development": 0,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 1,
+                        "city": "Volhaven",
+                        "size": 110.00000000000001,
+                        "sizeUsed": 0,
+                        "smartSupplyEnabled": true
+                    }
+                }
+            ]
         }
     ]
 }
