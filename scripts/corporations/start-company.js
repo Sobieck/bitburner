@@ -1,4 +1,7 @@
 export async function main(ns) {
+    if(ns.corporation.hasCorporation()){
+        return;
+    }
 
     const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
     let stockMarketReserveMoney = new ReserveForTrading();
@@ -6,11 +9,13 @@ export async function main(ns) {
         stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
     }
 
-    if(stockMarketReserveMoney.capitalToReserveForTrading > 100_000_000_000){
-        if(!ns.corporation.hasCorporation() && stockMarketReserveMoney.canSpend(ns, 160_000_000_000)){
-            ns.corporation.createCorporation("Gidget's Keiretsu", true)
-        }
-    }
+    // if(stockMarketReserveMoney.capitalToReserveForTrading > 100_000_000_000){
+    //     if(!ns.corporation.hasCorporation() && stockMarketReserveMoney.canSpend(ns, 160_000_000_000)){
+    //         ns.corporation.createCorporation("Gidget's Keiretsu", true)
+    //     }
+    // }
+
+    ns.corporation.createCorporation("Gidget's Keiretsu", false)
 }
 
 
@@ -25,36 +30,36 @@ class ReserveForTrading {
         obj && Object.assign(this, obj);
     }
 
-    setMoneyInvested(moneyInvested, ns){
+    setMoneyInvested(moneyInvested, ns) {
         this.moneyInvested = moneyInvested;
 
         const potentialCapitalReserve = moneyInvested / 2;
-        
+
         this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
 
-        if(this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit){
+        if (this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit) {
             this.capitalToReserveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         this.countOfVisitedWithoutFillingRequest++;
     }
 
-    canSpend(ns, moneyNeeded){
+    canSpend(ns, moneyNeeded) {
         const moneyOnHome = ns.getServerMoneyAvailable("home");
 
         let moneyToSaveForTrading = this.capitalToReserveForTrading - this.moneyInvested;
 
-        if(moneyToSaveForTrading < 0){
+        if (moneyToSaveForTrading < 0) {
             moneyToSaveForTrading = 0;
         }
 
-        if(moneyToSaveForTrading > this.stockMarketReserveMoneyLimit){
+        if (moneyToSaveForTrading > this.stockMarketReserveMoneyLimit) {
             moneyToSaveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
 
-        if(canSpend === false){
+        if (canSpend === false) {
             this.requestMoney(ns, moneyNeeded);
         } else {
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
@@ -69,13 +74,13 @@ class ReserveForTrading {
         return canSpend;
     }
 
-    requestMoney(ns, amount){
+    requestMoney(ns, amount) {
         const nameOfRequest = "start-corporation";
         this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
         const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
-        if(moneyRequestedPreviously){
-            if(moneyRequestedPreviously < amount){
+        if (moneyRequestedPreviously) {
+            if (moneyRequestedPreviously < amount) {
                 this.moneyRequested.set(nameOfRequest, amount);
                 this.moneyRequested = Array.from(this.moneyRequested);
 

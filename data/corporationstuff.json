@@ -1,0 +1,422 @@
+{
+    "constants": {
+        "PurchaseMultipliers": {
+            "x1": 1,
+            "x5": 5,
+            "x10": 10,
+            "x50": 50,
+            "x100": 100,
+            "MAX": "MAX"
+        },
+        "baseProductProfitMult": 5,
+        "bribeAmountPerReputation": 1000000000,
+        "bribeThreshold": 100000000000000,
+        "dividendMaxRate": 1,
+        "employeePositions": [
+            "Operations",
+            "Engineer",
+            "Business",
+            "Management",
+            "Research & Development",
+            "Intern",
+            "Unassigned"
+        ],
+        "employeeRaiseAmount": 50,
+        "employeeSalaryMultiplier": 3,
+        "gameCyclesPerCorpStateCycle": 10,
+        "gameCyclesPerMarketCycle": 50,
+        "industryNames": [
+            "Water Utilities",
+            "Spring Water",
+            "Agriculture",
+            "Fishing",
+            "Mining",
+            "Refinery",
+            "Restaurant",
+            "Tobacco",
+            "Chemical",
+            "Pharmaceutical",
+            "Computer Hardware",
+            "Robotics",
+            "Software",
+            "Healthcare",
+            "Real Estate"
+        ],
+        "initialShares": 1000000000,
+        "issueNewSharesCooldown": 216000,
+        "marketCyclesPerEmployeeRaise": 400,
+        "materialNames": [
+            "Water",
+            "Ore",
+            "Minerals",
+            "Food",
+            "Plants",
+            "Metal",
+            "Hardware",
+            "Chemicals",
+            "Drugs",
+            "Robots",
+            "AI Cores",
+            "Real Estate"
+        ],
+        "maxProductsBase": 3,
+        "minEmployeeDecay": 10,
+        "officeInitialCost": 4000000000,
+        "officeInitialSize": 3,
+        "officeSizeUpgradeCostBase": 1000000000,
+        "researchNames": [
+            "Hi-Tech R&D Laboratory",
+            "AutoBrew",
+            "AutoPartyManager",
+            "Automatic Drug Administration",
+            "CPH4 Injections",
+            "Drones",
+            "Drones - Assembly",
+            "Drones - Transport",
+            "Go-Juice",
+            "HRBuddy-Recruitment",
+            "HRBuddy-Training",
+            "Market-TA.I",
+            "Market-TA.II",
+            "Overclock",
+            "Self-Correcting Assemblers",
+            "Sti.mu",
+            "uPgrade: Capacity.I",
+            "uPgrade: Capacity.II",
+            "uPgrade: Dashboard",
+            "uPgrade: Fulcrum"
+        ],
+        "researchNamesBase": [
+            "Hi-Tech R&D Laboratory",
+            "AutoBrew",
+            "AutoPartyManager",
+            "Automatic Drug Administration",
+            "CPH4 Injections",
+            "Drones",
+            "Drones - Assembly",
+            "Drones - Transport",
+            "Go-Juice",
+            "HRBuddy-Recruitment",
+            "HRBuddy-Training",
+            "Market-TA.I",
+            "Market-TA.II",
+            "Overclock",
+            "Self-Correcting Assemblers",
+            "Sti.mu"
+        ],
+        "researchNamesProductOnly": [
+            "uPgrade: Capacity.I",
+            "uPgrade: Capacity.II",
+            "uPgrade: Dashboard",
+            "uPgrade: Fulcrum"
+        ],
+        "secondsPerMarketCycle": 10,
+        "sellSharesCooldown": 18000,
+        "sharesPerPriceUpdate": 1000000,
+        "smartSupplyUseOptions": [
+            "leftovers",
+            "imports",
+            "none"
+        ],
+        "stateNames": [
+            "START",
+            "PURCHASE",
+            "PRODUCTION",
+            "EXPORT",
+            "SALE"
+        ],
+        "teaCostPerEmployee": 500000,
+        "unlockNames": [
+            "Export",
+            "Smart Supply",
+            "Market Research - Demand",
+            "Market Data - Competition",
+            "VeChain",
+            "Shady Accounting",
+            "Government Partnership",
+            "Warehouse API",
+            "Office API"
+        ],
+        "upgradeNames": [
+            "Smart Factories",
+            "Smart Storage",
+            "DreamSense",
+            "Wilson Analytics",
+            "Nuoptimal Nootropic Injector Implants",
+            "Speech Processor Implants",
+            "Neural Accelerators",
+            "FocusWires",
+            "ABC SalesBots",
+            "Project Insight"
+        ],
+        "warehouseInitialCost": 5000000000,
+        "warehouseInitialSize": 100,
+        "warehouseSizeUpgradeCostBase": 1000000000
+    },
+    "hasDoneAction": false,
+    "corporation": {
+        "name": "Gidget's Keiretsu",
+        "funds": 36622352919.14986,
+        "revenue": 198954.35126704987,
+        "expenses": 78641.97767453431,
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 1000000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": 65.93860385423112,
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ]
+    },
+    "divisions": [
+        {
+            "name": "Gidget's Farm",
+            "type": "Agriculture",
+            "awareness": 3.0149999999999997,
+            "popularity": 0.9718000000000042,
+            "productionMult": 6,
+            "researchPoints": 0,
+            "lastCycleRevenue": 198954.35126704987,
+            "lastCycleExpenses": 78641.97767453431,
+            "thisCycleRevenue": 0,
+            "thisCycleExpenses": 723976.6051885223,
+            "numAdVerts": 1,
+            "cities": [
+                "Sector-12",
+                "Aevum",
+                "Chongqing",
+                "New Tokyo",
+                "Ishima",
+                "Volhaven"
+            ],
+            "products": [],
+            "makesProducts": false,
+            "maxProducts": 0
+        }
+    ],
+    "offices": [
+        {
+            "city": "Sector-12",
+            "size": 3,
+            "maxEnergy": 100,
+            "maxMorale": 100,
+            "numEmployees": 3,
+            "avgEnergy": 100,
+            "avgMorale": 100,
+            "totalExperience": 240.18150000000514,
+            "employeeProductionByJob": {
+                "total": 697.6315000000052,
+                "Operations": 256.7355000000017,
+                "Engineer": 290.8157500000026,
+                "Business": 150.08025000000086,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            },
+            "employeeJobs": {
+                "Operations": 1,
+                "Engineer": 1,
+                "Business": 1,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            }
+        },
+        {
+            "city": "Aevum",
+            "size": 3,
+            "maxEnergy": 100,
+            "maxMorale": 100,
+            "numEmployees": 3,
+            "avgEnergy": 100,
+            "avgMorale": 100,
+            "totalExperience": 235.18150000000514,
+            "employeeProductionByJob": {
+                "total": 670.6815000000051,
+                "Operations": 241.31883333333505,
+                "Engineer": 274.2157500000026,
+                "Business": 155.14691666666752,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            },
+            "employeeJobs": {
+                "Operations": 1,
+                "Engineer": 1,
+                "Business": 1,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            }
+        },
+        {
+            "city": "Chongqing",
+            "size": 3,
+            "maxEnergy": 100,
+            "maxMorale": 100,
+            "numEmployees": 3,
+            "avgEnergy": 100,
+            "avgMorale": 100,
+            "totalExperience": 190.18150000000514,
+            "employeeProductionByJob": {
+                "total": 610.3815000000051,
+                "Operations": 226.66883333333504,
+                "Engineer": 248.56575000000257,
+                "Business": 135.14691666666752,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            },
+            "employeeJobs": {
+                "Operations": 1,
+                "Engineer": 1,
+                "Business": 1,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            }
+        },
+        {
+            "city": "New Tokyo",
+            "size": 3,
+            "maxEnergy": 100,
+            "maxMorale": 100,
+            "numEmployees": 3,
+            "avgEnergy": 100,
+            "avgMorale": 100,
+            "totalExperience": 260.18150000000514,
+            "employeeProductionByJob": {
+                "total": 701.2065000000051,
+                "Operations": 253.32716666666838,
+                "Engineer": 291.16575000000256,
+                "Business": 156.71358333333418,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            },
+            "employeeJobs": {
+                "Operations": 1,
+                "Engineer": 1,
+                "Business": 1,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            }
+        },
+        {
+            "city": "Ishima",
+            "size": 3,
+            "maxEnergy": 100,
+            "maxMorale": 100,
+            "numEmployees": 3,
+            "avgEnergy": 100,
+            "avgMorale": 100,
+            "totalExperience": 228.18150000000514,
+            "employeeProductionByJob": {
+                "total": 655.7065000000051,
+                "Operations": 240.5105000000017,
+                "Engineer": 267.91575000000256,
+                "Business": 147.28025000000085,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            },
+            "employeeJobs": {
+                "Operations": 1,
+                "Engineer": 1,
+                "Business": 1,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            }
+        },
+        {
+            "city": "Volhaven",
+            "size": 3,
+            "maxEnergy": 100,
+            "maxMorale": 100,
+            "numEmployees": 3,
+            "avgEnergy": 100,
+            "avgMorale": 100,
+            "totalExperience": 269.18150000000514,
+            "employeeProductionByJob": {
+                "total": 669.3815000000051,
+                "Operations": 247.05216666666837,
+                "Engineer": 276.3157500000026,
+                "Business": 146.0135833333342,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            },
+            "employeeJobs": {
+                "Operations": 1,
+                "Engineer": 1,
+                "Business": 1,
+                "Management": 0,
+                "Research & Development": 0,
+                "Intern": 0,
+                "Unassigned": 0
+            }
+        }
+    ],
+    "warehouses": [
+        {
+            "level": 2,
+            "city": "Sector-12",
+            "size": 220.00000000000003,
+            "sizeUsed": 1.5418149566695691,
+            "smartSupplyEnabled": true
+        },
+        {
+            "level": 1,
+            "city": "Aevum",
+            "size": 110.00000000000001,
+            "sizeUsed": 1.508115839712013,
+            "smartSupplyEnabled": true
+        },
+        {
+            "level": 1,
+            "city": "Chongqing",
+            "size": 110.00000000000001,
+            "sizeUsed": 1.4683759290119922,
+            "smartSupplyEnabled": true
+        },
+        {
+            "level": 1,
+            "city": "New Tokyo",
+            "size": 110.00000000000001,
+            "sizeUsed": 1.5368723792459593,
+            "smartSupplyEnabled": true
+        },
+        {
+            "level": 1,
+            "city": "Ishima",
+            "size": 110.00000000000001,
+            "sizeUsed": 1.502920817696917,
+            "smartSupplyEnabled": true
+        },
+        {
+            "level": 1,
+            "city": "Volhaven",
+            "size": 110.00000000000001,
+            "sizeUsed": 1.518304887238862,
+            "smartSupplyEnabled": true
+        }
+    ]
+}

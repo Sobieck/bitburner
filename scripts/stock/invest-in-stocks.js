@@ -54,7 +54,7 @@ export async function main(ns) {
 
     stockMarketReserveMoney.moneyRequested = new Map(Array.from(stockMarketReserveMoney.moneyRequested));
     const reserveMoneyKeys = stockMarketReserveMoney.moneyRequested.keys();
-    let moneyRequested = 0;
+    let moneyRequested = 200_000;
 
 
     for (const requestKey of reserveMoneyKeys) {
@@ -77,7 +77,8 @@ export async function main(ns) {
     const commission = 100_001;
 
     const stopTradingExists = ns.fileExists("../../stopTrading.txt");
-    stockRecords.map(stock => {
+
+    for (const stock of stockRecords) {
         let sharesToSell = 0;
         let type = "Short-Term Long Sale";
         let averagePrice = 0;
@@ -123,6 +124,12 @@ export async function main(ns) {
                     salePrice = ns.stock.sellStock(stock.symbol, sharesToSell);
                 }
 
+                stockMarketReserveMoney.moneyInvested -= salePrice * sharesToSell;
+
+                if(stockMarketReserveMoney.moneyInvested < 0){
+                    stockMarketReserveMoney.moneyInvested = 0;
+                }
+
                 ledger.push(new LedgerItem(
                     stock.symbol,
                     salePrice,
@@ -142,23 +149,24 @@ export async function main(ns) {
                 }
             }
         }
-    });
+    }
 
     ns.rm(nameOfLedger);
     ns.write(nameOfLedger, JSON.stringify(ledger), "W");
 
+    const liquidCash = ns.getServerMoneyAvailable("home")
 
-    let moneyAvailable = ns.getServerMoneyAvailable("home") - commission - moneyRequested;
+    let moneyAvailable = liquidCash - commission - moneyRequested;
 
     if (stockMarketReserveMoney.capitalToReserveForTrading > stockMarketReserveMoney.moneyInvested) {
-        moneyAvailable = ns.getServerMoneyAvailable("home") - commission;
+        moneyAvailable = liquidCash - commission;
     }
 
     if (moneyAvailable > 5_000_000_000 && !ns.stock.has4SDataTIXAPI()) {
         moneyAvailable = 5_000_000_000;
     }
 
-    const onlyInvestIfWeHaveMoreThan = 30_000_000;
+    const onlyInvestIfWeHaveMoreThan = 25_000_000;
 
     if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
         let stocksToTrade = stockRecords

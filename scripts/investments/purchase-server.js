@@ -157,13 +157,11 @@ function purchaseServer(ns, maxRam, additionalRamNeeded, stockMarketReserveMoney
             if (ramToBuy > maxRam) {
                 ramToBuy = maxRam;
             }
-
-            const canBuy = canSpendThatMoney(ns, stockMarketReserveMoney, purchaseCost);
+            const canBuy = stockMarketReserveMoney.canSpend(ns, purchaseCost);
 
             if (canBuy && ramToBuy > additionalRamNeeded) {
                 const hostname = "CLOUD-" + String(currentNumberOfPurchasedServers).padStart(3, '0')
                 ns.purchaseServer(hostname, ramToBuy);
-                updateMoneySpent(ns, purchaseCost);
 
                 return true;
             }
@@ -192,11 +190,11 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, addition
     }
 
     const costOfRamToBuy = ns.getPurchasedServerUpgradeCost(smallestPlayerPurchasedServer.name, ramToBuy);
-    const canSpendMoney = canSpendThatMoney(ns, stockMarketReserveMoney, costOfRamToBuy);
+    const canSpendMoney = stockMarketReserveMoney.canSpend(ns, costOfRamToBuy);
 
     if (canSpendMoney) {
         ns.upgradePurchasedServer(smallestPlayerPurchasedServer.name, ramToBuy);
-        updateMoneySpent(ns, costOfRamToBuy);
+
         return true;
     } else {
         if (countOfTriesToBuyServers > 100) {
@@ -210,42 +208,6 @@ function upgradeSmallMachine(ns, smallestPlayerPurchasedServer, maxRam, addition
     }
 }
 
-function updateMoneySpent(ns, moneySpent) {
-    if (!ns.fileExists("Formulas.exe")) {
-        let moneyLeftToSpendOnServers = 2_000_000_000;
-
-        if (ns.fileExists(beforeFormulasServerSpendFile)) {
-            moneyLeftToSpendOnServers = ns.read(beforeFormulasServerSpendFile);
-        }
-
-        moneyLeftToSpendOnServers -= moneySpent;
-
-        ns.rm(beforeFormulasServerSpendFile);
-        ns.write(beforeFormulasServerSpendFile, JSON.stringify(moneyLeftToSpendOnServers), "W");
-    }
-}
-
-function canSpendThatMoney(ns, stockMarketReserveMoney, costOfRamToBuy) {
-    let moneyToSpend = costOfRamToBuy;
-
-    if (!ns.fileExists("Formulas.exe")) {
-        let moneyLeftToSpendOnServers = 2_000_000_000;
-
-        if (ns.fileExists(beforeFormulasServerSpendFile)) {
-            moneyLeftToSpendOnServers = JSON.parse(ns.read(beforeFormulasServerSpendFile));
-        }
-
-        if (moneyToSpend > moneyLeftToSpendOnServers) {
-            moneyToSpend = moneyLeftToSpendOnServers;
-        }
-    }
-
-    if (moneyToSpend !== costOfRamToBuy) {
-        return false;
-    }
-
-    return stockMarketReserveMoney.canSpend(ns, costOfRamToBuy);
-}
 
 
 class TypeOfPurchase {

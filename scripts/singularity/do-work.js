@@ -85,7 +85,8 @@ export async function main(ns) {
 
         if (currentWork &&
             currentWork.type === "CLASS" &&
-            currentWork.classType === "Leadership") {
+            currentWork.classType === "Leadership" &&
+            factionToMax !== "Chongqing") {
 
             break;
         }

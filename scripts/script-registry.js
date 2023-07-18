@@ -56,8 +56,8 @@ export async function main(ns) {
 
     const corporateScripts = [
         'scripts/corporations/start-company.js',
-        'scripts/corporations/expand.js',
-
+        'scripts/corporations/get-corporate-info.js',
+        'scripts/corporations/initial-expand.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);
