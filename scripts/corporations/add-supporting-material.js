@@ -49,7 +49,7 @@ export async function main(ns) {
         }
     }
 
-    const fillXPercentOfWarehouseWithMultiplerMaterial = 0.40;
+    const fillXPercentOfWarehouseWithMultiplerMaterial = 0.4; // 0.5 was 789k profit
 
     for (const city of division.cities) {
         const warehouse = ns.corporation.getWarehouse(gidgetsFarm, city);  //{"level":3,"city":"Aevum","size":330,"sizeUsed":3.849301959694781,"smartSupplyEnabled":true}

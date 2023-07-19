@@ -3,7 +3,6 @@ const growScript = 'scripts/hacking/grow.js';
 const weakenScript = 'scripts/hacking/weaken.js';
 
 export async function main(ns) {
-
     const memoryStarvedQueueFileName = 'data/memoryStarvedQueue.txt';
     const batchQueuesFileName = "data/batchQueue.txt";
 
@@ -70,6 +69,7 @@ export async function main(ns) {
         let script;
 
         if (target.needsGrowing()) {
+
             script = growScript;
             const serverToHack = getServer(ns, target.name, homeMemoryLimitations);
             const player = ns.getPlayer();
@@ -78,6 +78,10 @@ export async function main(ns) {
                 threadsNeeded = Math.ceil(ns.formulas.hacking.growThreads(serverToHack, player, serverToHack.moneyMax, 1));
             } else {
                 threadsNeeded = Math.ceil(ns.hackAnalyzeThreads(target.name, target.moneyAvailable)) * 5;
+
+                if (threadsNeeded === 0) {
+                    threadsNeeded = 500;
+                }
             }
         }
 

@@ -1,0 +1,191 @@
+[
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$26,806,217,888.17",
+        "revenue": "$220,629.65",
+        "expenses": "$91,180.81",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 1000000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$65.57",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$129,448.84",
+        "snapshotTime": "2023-07-18T14:00:00.824Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "-$9,863,097,319.44",
+        "revenue": "$20,083,888.33",
+        "expenses": "$656,228.16",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 1000000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$67.95",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$19,427,660.16",
+        "snapshotTime": "2023-07-18T15:00:01.231Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$1,875,498,682,893.88",
+        "revenue": "$13,215,782.14",
+        "expenses": "$641,126.05",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 900000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$401.93",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$12,574,656.08",
+        "snapshotTime": "2023-07-18T16:00:00.353Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$1,890,199,419,887.74",
+        "revenue": "$220,744.63",
+        "expenses": "$90,724.98",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 900000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$770.45",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$130,019.65",
+        "snapshotTime": "2023-07-18T17:00:01.107Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$1,890,667,314,583.69",
+        "revenue": "$221,589.12",
+        "expenses": "$90,221.15",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 900000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$626.96",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$131,367.97",
+        "snapshotTime": "2023-07-18T18:00:00.768Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$1,883,017,395,755.16",
+        "revenue": "$1,672,962.98",
+        "expenses": "$640,969.90",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 900000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$741.38",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$1,031,993.08",
+        "snapshotTime": "2023-07-18T19:00:00.833Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$1,832,595,517,966.91",
+        "revenue": "$2,301,309.75",
+        "expenses": "$828,766.38",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 900000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$995.79",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$1,472,543.37",
+        "snapshotTime": "2023-07-18T20:00:00.836Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$1,491,179,447,256.60",
+        "revenue": "$3,309,986.48",
+        "expenses": "$1,237,010.18",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 900000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$1,068.21",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$2,072,976.29",
+        "snapshotTime": "2023-07-18T21:00:00.908Z"
+    },
+    {
+        "name": "Gidget's Keiretsu",
+        "funds": "$1,512,089,505,473.37",
+        "revenue": "$5,675,848.64",
+        "expenses": "$1,247,620.48",
+        "public": false,
+        "totalShares": 1500000000,
+        "numShares": 900000000,
+        "shareSaleCooldown": 0,
+        "issuedShares": 0,
+        "sharePrice": "$1,869.68",
+        "dividendRate": 0,
+        "dividendTax": 0.15,
+        "dividendEarnings": 0,
+        "state": "PRODUCTION",
+        "divisions": [
+            "Gidget's Farm"
+        ],
+        "profit": "$4,428,228.16",
+        "snapshotTime": "2023-07-18T22:00:00.851Z"
+    }
+]
