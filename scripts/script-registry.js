@@ -65,6 +65,7 @@ export async function main(ns) {
         'scripts/corporations/expand-to-tobacco.js',
         'scripts/corporations/product-management.js',
         'scripts/corporations/invest.js',
+        'scripts/corporations/research.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);

@@ -14,6 +14,7 @@ export async function main(ns) {
     for (const divisionName of corporation.divisions) {
         let division = ns.corporation.getDivision(divisionName)
         division.offices = [];
+        division.productObjects = [];
 
         for (const city of division.cities) {
             let office = ns.corporation.getOffice(division.name, city)
@@ -22,8 +23,11 @@ export async function main(ns) {
                 office.warehouse = ns.corporation.getWarehouse(division.name, city);
             }
 
-
             division.offices.push(office);
+        }
+
+        for (const productName of division.products) {
+            division.productObjects.push(ns.corporation.getProduct(divisionName, "Aevum", productName));
         }
 
         divisions.push(division);

@@ -21,7 +21,6 @@ export async function main(ns) {
         for (const productName of division.products) {
             for (const city of division.cities) {
                 ns.corporation.sellProduct(divisionName, city, productName, "MAX", "MP", false)
-
             }
 
             const product = ns.corporation.getProduct(divisionName, "Aevum", productName);
