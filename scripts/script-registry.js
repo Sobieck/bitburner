@@ -62,6 +62,9 @@ export async function main(ns) {
         'scripts/corporations/upgrade-offices.js',
         'scripts/corporations/level-upgrades.js',
         'scripts/corporations/upgrade-warehouse.js',
+        'scripts/corporations/expand-to-tobacco.js',
+        'scripts/corporations/product-management.js',
+        'scripts/corporations/invest.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);

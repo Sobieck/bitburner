@@ -289,10 +289,12 @@ class ReserveForTrading {
         }
 
         const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
-
+// ns.tprint(`${canSpend} = ${moneyNeeded} < ${moneyOnHome} - ${moneyToSaveForTrading}`)
         if (canSpend === false) {
             this.requestMoney(ns, moneyNeeded);
         } else {
+            const debugInfor = {moneyOnHome, moneyNeeded, moneyToSaveForTrading, canSpend}
+            ns.write(`data/canpuchase${new Date().toJSON().replaceAll(".", "")}.txt`, debugInfor, "W")
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
             const nameOfRequest = "purchase-server";

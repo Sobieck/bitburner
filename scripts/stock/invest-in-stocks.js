@@ -166,7 +166,7 @@ export async function main(ns) {
         moneyAvailable = 5_000_000_000;
     }
 
-    const onlyInvestIfWeHaveMoreThan = 25_000_000;
+    const onlyInvestIfWeHaveMoreThan = 20_000_000;
 
     if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
         let stocksToTrade = stockRecords
@@ -239,7 +239,7 @@ class ReserveForTrading {
     setMoneyInvested(moneyInvested, ns) {
         this.moneyInvested = moneyInvested;
 
-        const potentialCapitalReserve = moneyInvested / 2;
+        const potentialCapitalReserve = (moneyInvested + ns.getServerMoneyAvailable("home")) * .75;
 
         this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
 
