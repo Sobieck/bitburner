@@ -61,7 +61,7 @@ export async function main(ns) {
         corporation.snapshotTime = now;
 
 
-        snapshots.push(corporation);
+        snapshots.push({ corporation, divisions });
         
         ns.rm(snapshotsFileName);
         ns.write(snapshotsFileName, JSON.stringify(snapshots), "W");

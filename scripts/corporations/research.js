@@ -4,9 +4,8 @@ export async function main(ns) {
     }
 
     const researchGoals = [
-        "Hi-Tech R&D Laboratory",
-        "Market-TA.I",
-        "Market-TA.II",
+        { name: "Hi-Tech R&D Laboratory", prereqs: [] },
+        { name: "Market-TA.II", prereqs: ["Market-TA.I"] },
     ];
 
     const corporation = ns.corporation.getCorporation();
@@ -15,15 +14,24 @@ export async function main(ns) {
         const division = ns.corporation.getDivision(divisionName);
 
         for (const research of researchGoals) {
-            if(ns.corporation.hasResearched(divisionName, research)){
+            if (ns.corporation.hasResearched(divisionName, research.name)) {
                 continue;
-            }   
-            
-            const cost = ns.corporation.getResearchCost(divisionName, research);
+            }
+
+            let cost = ns.corporation.getResearchCost(divisionName, research.name);
+
+            for (const prereqName of research.prereqs) {
+                cost += ns.corporation.getResearchCost(divisionName, prereqName);
+            }
+
             const researchPointsToSpend = division.researchPoints;
 
             if (cost * 2 < researchPointsToSpend) {
-                ns.corporation.research(divisionName, research);
+                for (const prereqName of research.prereqs) {
+                    ns.corporation.research(divisionName, prereqName)
+                }
+
+                ns.corporation.research(divisionName, research.name);
             }
         }
     }

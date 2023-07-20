@@ -294,7 +294,7 @@ class ReserveForTrading {
             this.requestMoney(ns, moneyNeeded);
         } else {
             const debugInfor = {moneyOnHome, moneyNeeded, moneyToSaveForTrading, canSpend}
-            ns.write(`data/canpuchase${new Date().toJSON().replaceAll(".", "")}.txt`, debugInfor, "W")
+            // ns.write(`data/canpuchase${new Date().toJSON().replaceAll(".", "")}.txt`, JSON.stringify(debugInfor), "W")
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
             const nameOfRequest = "purchase-server";

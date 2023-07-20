@@ -41,6 +41,10 @@ export async function main(ns) {
             ns.corporation.makeProduct(divisionName, "Aevum", productName + 1, 1_000_000_000, 1_000_000_000);
         }
 
+        // ns.tprint(products
+        //         .filter(x => x.rating !== 0)
+        //         .sort((a, b) => b.rating - a.rating));
+
         if (division.products.length === 3 && !oneDeveloping) {
 
             const lowestRatedProduct = products

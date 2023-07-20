@@ -1,62 +1,27 @@
 [
     [
+        "Gidget's Farm",
         {
-            "name": "Hardware",
-            "factor": 0.2,
-            "size": 0.06,
-            "countToBuy": 4600,
-            "spaceToFill": 276
-        },
-        {
-            "name": "AI Cores",
-            "factor": 0.3,
-            "size": 0.1,
-            "countToBuy": 4140,
-            "spaceToFill": 414
-        },
-        {
-            "name": "Robots",
-            "factor": 0.3,
-            "size": 0.5,
-            "countToBuy": 828,
-            "spaceToFill": 414
-        },
-        {
-            "name": "Real Estate",
-            "factor": 0.72,
-            "size": 0.005,
-            "countToBuy": 198800,
-            "spaceToFill": 994
+            "sumOfProfitsInThisAccountingPeriod": 11338199.216790112,
+            "count": 1,
+            "lastProfit": 11338199.216790112,
+            "teaPartyCost": 27000000,
+            "partyEffect": [
+                [
+                    8,
+                    1.05
+                ]
+            ]
         }
     ],
     [
+        "Gidget's Smokes",
         {
-            "name": "Hardware",
-            "factor": 0.15,
-            "size": 0.06,
-            "countToBuy": 383,
-            "spaceToFill": 23
-        },
-        {
-            "name": "AI Cores",
-            "factor": 0.15,
-            "size": 0.1,
-            "countToBuy": 230,
-            "spaceToFill": 23
-        },
-        {
-            "name": "Robots",
-            "factor": 0.2,
-            "size": 0.5,
-            "countToBuy": 60,
-            "spaceToFill": 30
-        },
-        {
-            "name": "Real Estate",
-            "factor": 0.15,
-            "size": 0.005,
-            "countToBuy": 4600,
-            "spaceToFill": 23
+            "sumOfProfitsInThisAccountingPeriod": 55726855.65854071,
+            "count": 30,
+            "lastProfit": 1819273.3271609282,
+            "teaPartyCost": 75000000,
+            "partyEffect": []
         }
     ]
 ]
