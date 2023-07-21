@@ -35,7 +35,7 @@ export async function main(ns) {
         currency: 'USD',
     });
 
-    if (now.getMinutes() !== lastRecordedToConsole.getMinutes()) { // && batches not running
+    if (now.getMinutes() !== lastRecordedToConsole.getMinutes() && !ns.fileExists("data/batchQueue.txt")) { // && batches not running
         const moneyFormatted = formatter.format(moneyWeHaveNow);
 
         let consoleUpdate = `${timeStamp} Money we have now: ${moneyFormatted}`;
@@ -54,13 +54,13 @@ export async function main(ns) {
 
     stockMarketReserveMoney.moneyRequested = new Map(Array.from(stockMarketReserveMoney.moneyRequested));
     const reserveMoneyKeys = stockMarketReserveMoney.moneyRequested.keys();
-    let moneyRequested = 200_000;
+    let moneyRequested = 0;
 
 
     for (const requestKey of reserveMoneyKeys) {
         const moneyRequestedFromService = stockMarketReserveMoney.moneyRequested.get(requestKey);
         stockMarketReserveMoney.moneyRequested.set(requestKey, moneyRequestedFromService);
-        moneyRequested += moneyRequestedFromService;
+        moneyRequested += moneyRequestedFromService + 100_000;
     }
 
     stockMarketReserveMoney.moneyRequested = Array.from(stockMarketReserveMoney.moneyRequested);

@@ -5,66 +5,92 @@ export async function main(ns) {
 
     const excludedDivisions = [
         "Gidget's Farm",
-        "Gidget's Import/Export"
     ]
 
     const corporation = ns.corporation.getCorporation();
     const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
 
-    const employeeGoals = [
-        { type: "Operations", number: 4 },
-        { type: "Engineer", number: 4 },
-        { type: "Business", number: 2 },
-        { type: "Management", number: 4 },
-        { type: "Research & Development", number: 4 }
+    const capitalReserve = 500_000_000_000;
+    const liquidFunds = corporation.funds;
+    const investableAmount = liquidFunds - capitalReserve;
+
+    const employeeRatio = [
+        { type: "Operations", number: 2 },
+        { type: "Engineer", number: 2 },
+        { type: "Business", number: 1 },
+        { type: "Management", number: 2 },
+        { type: "Research & Development", number: 2 }
     ];
 
-    const aevumEmployeeGoal = [
-        { type: "Operations", number: 12 },
-        { type: "Engineer", number: 12 },
-        { type: "Business", number: 12 },
-        { type: "Management", number: 12 },
-        { type: "Research & Development", number: 12 }
+    const aevumEmployeeRatio = [
+        { type: "Operations", number: 1 },
+        { type: "Engineer", number: 1 },
+        { type: "Business", number: 1 },
+        { type: "Management", number: 1 },
+        { type: "Research & Development", number: 1 }
     ];
-
-    const aevumEmployeeCountGoal = 60;
-    const otherEmployeeCountGoal = 18;
 
     for (const divisionName of divisionsToOperateOn) {
         const aevum = "Aevum";
         const aevumOffice = ns.corporation.getOffice(divisionName, aevum);
+        const aevumHeadCount = aevumOffice.numEmployees;
 
-        upgradeOffice(aevumOffice, aevumEmployeeCountGoal, ns, divisionName, aevum);
-        
-        hireEmployees(aevumOffice, aevumEmployeeGoal, ns, divisionName, aevum);
+        const ishima = "Ishima";
+        const ishimaHeadCount = ns.corporation.getOffice(divisionName, ishima);
 
-        const division = ns.corporation.getDivision(divisionName);
+        const expandOtherOffices = aevumHeadCount - ishimaHeadCount > 69;
+        const expandAevum = !expandOtherOffices;
 
-        const officesWhoArentAevum = division.cities.filter(city => city !== aevum);
+        if (expandAevum) {
+            const costToExpand = ns.corporation.getOfficeSizeUpgradeCost(divisionName, aevum, 5);
 
-        for (const city of officesWhoArentAevum) {
-            const office = ns.corporation.getOffice(divisionName, city);
-
-            upgradeOffice(office, otherEmployeeCountGoal, ns, divisionName, city);
-            hireEmployees(office, employeeGoals, ns, divisionName, city);
-        }
-    }
-}
-
-function hireEmployees(office, employeeJobsGoal, ns, division, city) {
-    for (let [type, numberOfEmployees] of Object.entries(office.employeeJobs)) {
-        const goal = employeeJobsGoal.find(x => x.type === type);
-
-        if (goal) {
-            if (numberOfEmployees < goal.number) {
-                ns.corporation.hireEmployee(division, city, type);
+            if (costToExpand < investableAmount) {
+                ns.corporation.upgradeOfficeSize(divisionName, aevum, 5);
             }
         }
+
+        hireEmployees(aevumOffice, aevumEmployeeRatio, ns, divisionName);
+
+        const division = ns.corporation.getDivision(divisionName);
+        const citiesWithOfficesWhoArentAevum = division.cities.filter(city => city !== aevum);
+
+        if (expandOtherOffices) {
+            const costToExpand = ns.corporation.getOfficeSizeUpgradeCost(divisionName, ishima, 9) * 5;
+
+            if (costToExpand < investableAmount) {
+                for (const city of citiesWithOfficesWhoArentAevum) {
+                    ns.corporation.upgradeOfficeSize(divisionName, city, 9);
+                }
+            }
+        }
+
+        for (const city of citiesWithOfficesWhoArentAevum) {
+            const office = ns.corporation.getOffice(divisionName, city);
+            hireEmployees(office, employeeRatio, ns, divisionName);
+        }
     }
 }
 
-function upgradeOffice(office, countGoal, ns, division, city) {
-    if (office.size < countGoal) {
-        ns.corporation.upgradeOfficeSize(division, city, 3);
+function hireEmployees(office, employeeJobsGoals, ns, divisionName) {
+    if (office.size === office.numEmployees) {
+        return;
+    }
+
+    let employeesInRatio = 0;
+    for (const goal of employeeJobsGoals) {
+        employeesInRatio += goal.number;
+    }
+
+    for (let [type, numberOfEmployees] of Object.entries(office.employeeJobs)) {
+        const goal = employeeJobsGoals.find(x => x.type === type);
+
+        if (goal) {
+            const percent = goal.number / employeesInRatio;
+            const requiredEmployeeNumber = percent * office.size;
+
+            if (numberOfEmployees < requiredEmployeeNumber) {
+                ns.corporation.hireEmployee(divisionName, office.city, type);
+            }
+        }
     }
 }

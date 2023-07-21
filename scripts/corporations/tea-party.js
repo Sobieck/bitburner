@@ -4,7 +4,6 @@ export async function main(ns) {
     }
 
     const excludedDivisions = [
-        "Gidget's Import/Export"
     ]
 
     const corporation = ns.corporation.getCorporation();

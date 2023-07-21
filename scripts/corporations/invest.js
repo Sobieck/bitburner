@@ -5,7 +5,6 @@ export async function main(ns) {
 
     const excludedDivisions = [
         "Gidget's Farm",
-        "Gidget's Import/Export"
     ]
 
     const corporation = ns.corporation.getCorporation();
@@ -18,7 +17,6 @@ export async function main(ns) {
     if(investableAmount < 0){
         return;
     }
-
 
     const upgradeGoals = [
         { name: "FocusWires", goalLvl: 20 },
@@ -47,7 +45,6 @@ export async function main(ns) {
     const adVertsGoals = [
         { division: "Gidget's Smokes", awareness: 36_000, popularity: 27_000 }
     ]
-
 
     for (const divisionName of divisionsToOperateOn) {
         const adGoal = adVertsGoals.find(x => x.division === divisionName);

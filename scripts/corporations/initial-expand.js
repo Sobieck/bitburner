@@ -55,17 +55,6 @@ export async function main(ns) {
         }
     }
 
-    const materialsToSell = [
-        { name: "Plants", amtPerSecond: "MAX", price: "MP" },
-        { name: "Food", amtPerSecond: "MAX", price: "MP" },
-    ];
-
-    for (let city of division.cities) {
-        for (const material of materialsToSell) {
-            ns.corporation.sellMaterial(gidgetsFarm, city, material.name, material.amtPerSecond, material.price);
-        }
-    }
-
     if (division.numAdVerts === 0) {
         ns.corporation.hireAdVert(gidgetsFarm);
     }
