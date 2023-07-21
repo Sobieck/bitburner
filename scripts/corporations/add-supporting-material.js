@@ -3,10 +3,17 @@ export async function main(ns) {
         return;
     }
 
-const materialGoalsGoals = [];
+    const materialGoalsGoals = [];
+
+
+    const excludedDivisions = [
+        "Gidget's Import/Export"
+    ]
 
     const corporation = ns.corporation.getCorporation();
-    for (const divisionName of corporation.divisions) {
+    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
+
+    for (const divisionName of divisionsToOperateOn) {
         const materialGoals = [];
 
         const division = ns.corporation.getDivision(divisionName);
@@ -24,23 +31,23 @@ const materialGoalsGoals = [];
             // { name: "Chemicals", factorName: "" },
             // { name: "Drugs", factorName: "" },
         ];
-        
+
         const materialsToBuy = [];
-        
+
         const industryInformation = ns.corporation.getIndustryData(division.type);
         const itemsInIndustry = Object.entries(industryInformation);
-    
+
         let sumOfAllMaterialsFactors = 0;
-    
+
         for (const material of allMaterials) {
             const materialImprovesProduction = itemsInIndustry.find(x => x[0] === material.factorName);
-    
+
             if (materialImprovesProduction) {
                 const materialData = ns.corporation.getMaterialData(material.name);
-    
+
                 const factor = materialImprovesProduction[1];
                 sumOfAllMaterialsFactors += factor;
-    
+
                 const size = materialData.size;
                 const name = material.name;
                 materialsToBuy.push({ name, factor, size });
@@ -48,46 +55,46 @@ const materialGoalsGoals = [];
         }
 
         const fillXPercentOfWarehouseWithMultiplerMaterial = 0.5; // 0.5 was 789k profit 0.4 500k .6 was 402k
-    
+
         for (const city of division.cities) {
-            const warehouse = ns.corporation.getWarehouse(divisionName, city);  
+            const warehouse = ns.corporation.getWarehouse(divisionName, city);
             const amountToFillWithMultipliers = warehouse.size * fillXPercentOfWarehouseWithMultiplerMaterial;
-    
+
             for (let material of materialsToBuy) {
                 const percentOf = material.factor / sumOfAllMaterialsFactors;
                 const spaceToFill = Math.floor(amountToFillWithMultipliers * percentOf);
                 const countToBuy = Math.floor(spaceToFill / material.size);
-    
-                const materialInWarehouse = ns.corporation.getMaterial(divisionName, city, material.name); 
-                
+
+                const materialInWarehouse = ns.corporation.getMaterial(divisionName, city, material.name);
+
                 let amountToBuy = 0;
                 if (materialInWarehouse.stored < (countToBuy * .95)) {
-                    if(countToBuy < 200){
+                    if (countToBuy < 200) {
                         ns.corporation.bulkPurchase(divisionName, city, material.name, countToBuy);
                     } else {
                         amountToBuy = Math.floor(countToBuy / 20);
                     }
                 }
-    
+
                 ns.corporation.buyMaterial(divisionName, city, material.name, amountToBuy)
-    
+
                 let amountToSell = 0;
                 const freeSpacePercent = (warehouse.size - warehouse.sizeUsed) / warehouse.size
-                if (freeSpacePercent < 0.1 && materialInWarehouse.stored > countToBuy){
+                if (freeSpacePercent < 0.1 && materialInWarehouse.stored > countToBuy) {
                     amountToSell = materialInWarehouse.stored - countToBuy;
-                    if (amountToSell > 30){
+                    if (amountToSell > 30) {
                         amountToSell = 30;
                     }
-                } 
-    
+                }
+
                 ns.corporation.sellMaterial(divisionName, city, material.name, amountToSell, "MP");
-    
+
                 material.countToBuy = countToBuy;
                 material.spaceToFill = spaceToFill;
 
-                const materialInGoals = materialGoals.find(x =>x .name === material.name);
+                const materialInGoals = materialGoals.find(x => x.name === material.name);
 
-                if(!materialInGoals){
+                if (!materialInGoals) {
                     materialGoals.push(material);
                 }
             }

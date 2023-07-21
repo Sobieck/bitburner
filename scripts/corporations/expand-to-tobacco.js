@@ -7,7 +7,7 @@ export async function main(ns) {
     const industry = "Tobacco";
     const corporation = ns.corporation.getCorporation();
 
-    if (corporation.divisions.length === 1 && corporation.funds > 750_000_000_000) {
+    if (corporation.divisions.length > 0 && corporation.funds > 750_000_000_000 && !corporation.divisions.includes(gidgetsSmokes)) {
         ns.corporation.expandIndustry(industry, gidgetsSmokes);
         const division = ns.corporation.getDivision(gidgetsSmokes);
 

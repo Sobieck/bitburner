@@ -3,7 +3,13 @@ export async function main(ns) {
         return;
     }
 
+    const excludedDivisions = [
+        "Gidget's Farm",
+        "Gidget's Import/Export"
+    ]
+
     const corporation = ns.corporation.getCorporation();
+    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
 
     const capitalReserve = 500_000_000_000;
     const liquidFunds = corporation.funds;
@@ -37,8 +43,6 @@ export async function main(ns) {
             }
         }
     }
-    
-    const divisionsToOperateOn = corporation.divisions.filter(divisionName => divisionName !== "Gidget's Farm");
 
     const adVertsGoals = [
         { division: "Gidget's Smokes", awareness: 36_000, popularity: 27_000 }

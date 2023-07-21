@@ -3,8 +3,13 @@ export async function main(ns) {
         return;
     }
 
+    const excludedDivisions = [
+        "Gidget's Farm",
+        "Gidget's Import/Export"
+    ]
+
     const corporation = ns.corporation.getCorporation();
-    const divisionsToOperateOn = corporation.divisions.filter(divisionName => divisionName !== "Gidget's Farm");
+    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
 
     const employeeGoals = [
         { type: "Operations", number: 4 },

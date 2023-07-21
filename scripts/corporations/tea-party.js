@@ -3,7 +3,13 @@ export async function main(ns) {
         return;
     }
 
+    const excludedDivisions = [
+        "Gidget's Import/Export"
+    ]
+
     const corporation = ns.corporation.getCorporation();
+    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
+
     const corporateProfits = corporation.revenue - corporation.expenses;
 
     const divisionalCorporateProfitsFile = "data/divisionalCorporateProfits.txt";
@@ -12,7 +18,7 @@ export async function main(ns) {
         divisionalCorporateProfits = new Map(JSON.parse(ns.read(divisionalCorporateProfitsFile)));
     }
 
-    for (const divisionName of corporation.divisions) {
+    for (const divisionName of divisionsToOperateOn) {
         const division = ns.corporation.getDivision(divisionName);
 
         const divisionalProfitsLastCycle = division.lastCycleRevenue - division.lastCycleExpenses;
@@ -57,7 +63,7 @@ export async function main(ns) {
             const teaCostPerHead = 500_000;
             divisionProfitsRecord.teaPartyCost = employeeCount * teaCostPerHead;
 
-            const minimumMoraleAndEnergy = 60;
+            const minimumMoraleAndEnergy = 70;
             const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (averageMorale < minimumMoraleAndEnergy || averageEnergy < minimumMoraleAndEnergy) && corporateProfits > 5_000_000 && corporation.funds > 100_000_000_000;
 
 
@@ -69,7 +75,7 @@ export async function main(ns) {
             // }
 
             if (shouldTreatOurEmployees) {
-                const goal = 90;
+                const goal = 95;
 
                 let tea = false;
                 let party = false;

@@ -4,14 +4,16 @@ export async function main(ns) {
     }
 
     const corporation = ns.corporation.getCorporation();
-    const divisionsToOperateOn = corporation.divisions.filter(divisionName => divisionName !== "Gidget's Farm");
 
     const divisionsProductNames = new Map();
 
-    divisionsProductNames.set("Gidget's Smokes", { division: "Gidget's Smokes", productNames: ["These Smokes Probably Won't Kill U v.", "These Smokes WILL Kill You v.", "This Leaf is Highly Addictive v."] });
+    if (corporation.divisions.includes("Gidget's Smokes")){
+        divisionsProductNames.set("Gidget's Smokes", { division: "Gidget's Smokes", productNames: ["These Smokes Probably Won't Kill U v.", "These Smokes WILL Kill You v.", "This Leaf is Highly Addictive v."] });
+    }
 
+    const includedDivisions = Array.from(divisionsProductNames.keys());
 
-    for (const divisionName of divisionsToOperateOn) {
+    for (const divisionName of includedDivisions) {
         const division = ns.corporation.getDivision(divisionName);
         const divisionConstants = divisionsProductNames.get(divisionName);
 
@@ -19,10 +21,6 @@ export async function main(ns) {
         let oneDeveloping = false;
 
         for (const productName of division.products) {
-            for (const city of division.cities) {
-                ns.corporation.sellProduct(divisionName, city, productName, "MAX", "MP", false)
-            }
-
             const product = ns.corporation.getProduct(divisionName, "Aevum", productName);
 
             if (product.developmentProgress < 100) {

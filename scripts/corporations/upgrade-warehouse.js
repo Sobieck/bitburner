@@ -3,15 +3,19 @@ export async function main(ns) {
         return;
     }
 
-    const corporation = ns.corporation.getCorporation();
+    const excludedDivisions = [
+        "Gidget's Import/Export"
+    ]
 
-    for (const divisionName of corporation.divisions) {
+    const corporation = ns.corporation.getCorporation();
+    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
+
+    for (const divisionName of divisionsToOperateOn) {
         const division = ns.corporation.getDivision(divisionName);
         
 
 
-        const industryData = ns.corporation.getIndustryData(division.type); // {"startingCost":20000000000,"description":"Create and distribute tobacco and tobacco-related products.","product":{"name":"Product","verb":"Create","desc":"Create a new tobacco product!","ratingWeights":{"quality":0.7,"durability":0.1,"aesthetics":0.2}},"recommendStarting":true,"realEstateFactor":0.15,"scienceFactor":0.75,"hardwareFactor":0.15,"robotFactor":0.2,"aiCoreFactor":0.15,"advertisingFactor":0.2,"requiredMaterials":{"Plants":1}}
-        // ns.tprint(industryData);
+        const industryData = ns.corporation.getIndustryData(division.type); 
 
         for (let city of division.cities) {
             if (!ns.corporation.hasWarehouse(divisionName, city)) {

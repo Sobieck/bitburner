@@ -8,8 +8,6 @@ export async function main(ns) {
     const gidgetsFarm = "Gidget's Farm";
     const industry = "Agriculture";
 
-    const industryInformation = ns.corporation.getIndustryData(industry);
-
     if (corporation.divisions.length === 0) {
         ns.corporation.expandIndustry(industry, gidgetsFarm);
     }
