@@ -10,6 +10,7 @@ export async function main(ns) {
     ]
 
     const corporation = ns.corporation.getCorporation();
+
     const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
 
     for (const divisionName of divisionsToOperateOn) {

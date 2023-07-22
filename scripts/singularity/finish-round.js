@@ -119,7 +119,7 @@ export async function main(ns) {
     let targetRepForGettingToFavor = 700_000;
     if (ns.fileExists("Formulas.exe")) {
         const favorGain = ns.singularity.getFactionFavorGain(targetFaction.faction);
-        if (favorGain + currentFactionFavor > 150) {
+        if (favorGain + currentFactionFavor > 75) {
             targetRepForGettingToFavor = currentFactionFavor;
         }
     }
@@ -387,7 +387,7 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
     let factionRep = ns.singularity.getFactionRep(faction);
 
     if (moneyAvailable > price) {
-        if (factionRep < augmentRepPrice && ns.singularity.getFactionFavor(faction) > 150) {
+        if (factionRep < augmentRepPrice && ns.singularity.getFactionFavor(faction) > 75) {
             if (ns.fileExists("Formulas.exe")) {
                 const repNeeded = augmentRepPrice - factionRep;
                 let dollarsDonated = 0;

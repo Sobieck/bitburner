@@ -10,28 +10,34 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
     const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
 
-    const capitalReserve = 500_000_000_000;
+    const capitalReserve = 400_000_000_000;
     const liquidFunds = corporation.funds;
     const investableAmount = liquidFunds - capitalReserve;
 
-    if(investableAmount < 0){
+    if(investableAmount < 0 || divisionsToOperateOn.length === 0){
         return;
     }
 
     const upgradeGoals = [
-        { name: "FocusWires", goalLvl: 20 },
-        { name: "Neural Accelerators", goalLvl: 20 },
-        { name: "Speech Processor Implants", goalLvl: 20 },
-        { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 20 },
-        { name: "Wilson Analytics", goalLvl: 14 },
-        { name: "DreamSense", goalLvl: 14 },
-        { name: "ABC SalesBots", goalLvl: 14 },
-        { name: "Project Insight", goalLvl: 14 },
+        { name: "FocusWires", goalLvl: 20, topPriority: true },
+        { name: "Neural Accelerators", goalLvl: 20, topPriority: true },
+        { name: "Speech Processor Implants", goalLvl: 20, topPriority: true },
+        { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 20, topPriority: true },
+        { name: "Wilson Analytics", goalLvl: 14, topPriority: false }, // if this was top it would take forever to get to the less important ones.
+        { name: "DreamSense", goalLvl: 14, topPriority: false },
+        { name: "ABC SalesBots", goalLvl: 14, topPriority: false },
+        { name: "Project Insight", goalLvl: 14, topPriority: false },
+        { name: "Smart Storage", goalLvl: 20, topPriority: false },
+        { name: "Smart Factories", goalLvl: 20, topPriority: false },
     ]
 
     let cheapestUpgrade;
 
     for (const upgrade of upgradeGoals) {
+        if (cheapestUpgrade && cheapestUpgrade.topPriority && upgrade.topPriority === false) {
+            continue;
+        }
+
         upgrade.cost = ns.corporation.getUpgradeLevelCost(upgrade.name);
         upgrade.currentLvl = ns.corporation.getUpgradeLevel(upgrade.name);
         upgrade.atGoal = upgrade.currentLvl >= upgrade.goalLvl;

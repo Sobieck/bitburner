@@ -6,6 +6,8 @@ export async function main(ns) {
     const researchGoals = [
         { name: "Hi-Tech R&D Laboratory", prereqs: [] },
         { name: "Market-TA.II", prereqs: ["Market-TA.I"] },
+        { name: "uPgrade: Capacity.I", prereqs: ["uPgrade: Fulcrum"], productOnly: true},
+        { name: "uPgrade: Capacity.II", prereqs: [], productOnly: true},
         { name: "Drones - Assembly", prereqs: [ "Drones"] },
         { name: "Self-Correcting Assemblers", prereqs: []}
     ];
@@ -17,6 +19,10 @@ export async function main(ns) {
 
         let totalSpent = 0;
         for (const research of researchGoals) {
+            if(research.productOnly && division.makesProducts === false){
+                continue;
+            }
+
             let cost = ns.corporation.getResearchCost(divisionName, research.name);
 
             for (const prereqName of research.prereqs) {

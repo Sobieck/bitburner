@@ -44,7 +44,7 @@ export async function main(ns) {
 
             const favor = ns.singularity.getFactionFavor(faction);
 
-            if (maximumAugRep > 0 && favor < 150) {
+            if (maximumAugRep > 0 && favor < 75) {
                 factionsWithAugsToBuyAndNotEnoughtFavor.push({ faction, maximumAugRep });
             }
         }

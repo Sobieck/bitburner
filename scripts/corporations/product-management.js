@@ -8,7 +8,7 @@ export async function main(ns) {
     const divisionsProductNames = new Map();
 
     if (corporation.divisions.includes("Gidget's Smokes")){
-        divisionsProductNames.set("Gidget's Smokes", { division: "Gidget's Smokes", productNames: ["These Smokes Probably Won't Kill U v.", "These Smokes WILL Kill You v.", "This Leaf is Highly Addictive v."] });
+        divisionsProductNames.set("Gidget's Smokes", { division: "Gidget's Smokes", productNames: ["These Smokes Probably Won't Kill U v.", "These Smokes WILL Kill You v.", "This Leaf is Highly Addictive v.", "Behold, the bringer of Death v.", "You will live so fast and DIE young if you smoke these v."] });
     }
 
     const includedDivisions = Array.from(divisionsProductNames.keys());
@@ -30,20 +30,22 @@ export async function main(ns) {
             products.push(product);
         }
 
-        ///{"name":"These Smokes Won't Kill U v.1","rating":0,"effectiveRating":0,"stats":{"quality":0,"performance":0,"durability":0,"reliability":0,"aesthetics":0,"features":0},"productionCost":0,"desiredSellPrice":"MP","desiredSellAmount":"MAX","stored":0,"productionAmount":0,"actualSellAmount":0,"developmentProgress":0.5884684893132216}
+        let maximumProducts = 3;
 
-        ///{"name":"These Smokes Probably Won't Kill U v.1","rating":60.062971001653516,"effectiveRating":15.500060774287759,"stats":{"quality":61.39712772783787,"performance":57.1859948074073,"durability":59.6021252785258,"reliability":56.451080727629844,"aesthetics":55.623845321572134,"features":59.01132849214916},"productionCost":14455.726550399046,"desiredSellPrice":"MP","desiredSellAmount":"MAX","stored":0,"productionAmount":5.988354804376722,"actualSellAmount":5.988354804376722,"developmentProgress":100}
+        if(ns.corporation.hasResearched(divisionName, "uPgrade: Capacity.I")){
+            maximumProducts = 4;
+        }
 
-        if (division.products.length < 3 && !oneDeveloping) {
+        if(ns.corporation.hasResearched(divisionName, "uPgrade: Capacity.I")){
+            maximumProducts = 5;
+        }
+
+        if (division.products.length < maximumProducts && !oneDeveloping) {
             const productName = divisionConstants.productNames[division.products.length];
             ns.corporation.makeProduct(divisionName, "Aevum", productName + 1, 1_000_000_000, 1_000_000_000);
         }
 
-        // ns.tprint(products
-        //         .filter(x => x.rating !== 0)
-        //         .sort((a, b) => b.rating - a.rating));
-
-        if (division.products.length === 3 && !oneDeveloping) {
+        if (division.products.length === maximumProducts && !oneDeveloping) {
 
             const lowestRatedProduct = products
                 .sort((a, b) => b.rating - a.rating)
