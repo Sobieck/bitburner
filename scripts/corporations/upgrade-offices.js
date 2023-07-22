@@ -36,7 +36,7 @@ export async function main(ns) {
         const aevumHeadCount = aevumOffice.numEmployees;
 
         const ishima = "Ishima";
-        const ishimaHeadCount = ns.corporation.getOffice(divisionName, ishima);
+        const ishimaHeadCount = ns.corporation.getOffice(divisionName, ishima).numEmployees;
 
         const expandOtherOffices = aevumHeadCount - ishimaHeadCount > 69;
         const expandAevum = !expandOtherOffices;
@@ -44,7 +44,7 @@ export async function main(ns) {
         if (expandAevum) {
             const costToExpand = ns.corporation.getOfficeSizeUpgradeCost(divisionName, aevum, 5);
 
-            if (costToExpand < investableAmount) {
+            if (costToExpand < investableAmount && aevumHeadCount < 300) {
                 ns.corporation.upgradeOfficeSize(divisionName, aevum, 5);
             }
         }

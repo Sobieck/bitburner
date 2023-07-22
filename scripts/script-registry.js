@@ -67,6 +67,7 @@ export async function main(ns) {
         'scripts/corporations/research.js',
         'scripts/corporations/tea-party.js',
         'scripts/corporations/adjust-prices-export.js',
+        'scripts/corporations/go-public.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);

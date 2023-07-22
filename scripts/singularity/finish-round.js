@@ -3,6 +3,10 @@ let updatedMoneyEstimate = false;
 
 export async function main(ns) {
 
+    if(!ns.stock.has4SDataTIXAPI() && !ns.corporation.hasCorporation()){
+        return;
+    }
+
     const factionToMaxFile = "data/factionToMax.txt";
     const factionDonationFile = 'data/factionDonatation.txt'
     const incomeEveryMinuteObservationsFile = 'data/incomeEveryMinuteForTheLast30Minutes.txt'

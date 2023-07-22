@@ -25,6 +25,8 @@ export async function main(ns) {
         { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 20 },
         { name: "Wilson Analytics", goalLvl: 14 },
         { name: "DreamSense", goalLvl: 14 },
+        { name: "ABC SalesBots", goalLvl: 14 },
+        { name: "Project Insight", goalLvl: 14 },
     ]
 
     let cheapestUpgrade;

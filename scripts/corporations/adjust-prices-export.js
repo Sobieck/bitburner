@@ -53,6 +53,11 @@ export async function main(ns) {
             for (const productName of division.products) {
                 const product = ns.corporation.getProduct(divisionName, city, productName);
 
+                if(ns.corporation.hasResearched(divisionName, "Market-TA.II")){
+                    ns.corporation.setProductMarketTA2(divisionName, city, productName, true);
+                    continue;
+                }
+
                 if(product.developmentProgress !== 100){
                     continue;
                 }
@@ -95,6 +100,12 @@ export async function main(ns) {
         if (rawMaterialProducer) {
             for (const city of division.cities) {
                 for (const materialName of rawMaterialProducer.materials) {
+
+                    if(ns.corporation.hasResearched(divisionName, "Market-TA.II")){
+                        ns.corporation.setMaterialMarketTA2(divisionName, city, materialName, true);
+                        continue;
+                    }
+
                     const material = ns.corporation.getMaterial(divisionName, city, materialName);  //{"marketPrice":3245.007553378283,"desiredSellPrice":"MP","desiredSellAmount":"MAX","name":"Food","stored":64100.69340032647,"quality":14.512531257704307,"demand":82.58491635176067,"productionAmount":387.8,"actualSellAmount":375.5010978448139,"exports":[]}
 
                     if (material.desiredSellPrice === 0 || material.desiredSellPrice === "MP" || material.desiredSellPrice === "MP+5"){
