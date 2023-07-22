@@ -251,7 +251,7 @@ class TypeOfPurchase {
 
 
 class ReserveForTrading {
-    stockMarketReserveMoneyLimit = 1_000_000_000_000;
+    stockMarketReserveMoneyLimit = 1_500_000_000_000;
     capitalToReserveForTrading = 500_000_000;
     moneyInvested = 0;
     moneyRequested = new Map();
