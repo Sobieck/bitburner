@@ -10,6 +10,10 @@ export async function main(ns) {
     let corporation = ns.corporation.getCorporation();
     const divisions = [];
 
+    const rawMaterialProducers = [
+        { producer: "Gidget's Farm", materials: ["Food", "Plants"] },
+        { producer: "Chemist Gidget's Lab", materials: [ "Chemicals" ] }
+    ];
 
     for (const divisionName of corporation.divisions) {
         let division = ns.corporation.getDivision(divisionName)
@@ -28,6 +32,15 @@ export async function main(ns) {
 
         for (const productName of division.products) {
             division.productObjects.push(ns.corporation.getProduct(divisionName, "Aevum", productName));
+        }
+
+        division.materials = [];
+        const rawMaterialsProducer = rawMaterialProducers.find(x => x.producer === divisionName);
+        if(rawMaterialsProducer){
+        
+            for (const material of rawMaterialsProducer.materials) {
+                division.materials.push(ns.corporation.getMaterial(divisionName, "Aevum", material));
+            }            
         }
 
         divisions.push(division);

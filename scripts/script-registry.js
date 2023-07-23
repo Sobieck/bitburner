@@ -55,15 +55,14 @@ export async function main(ns) {
     scriptsToRun = scriptsToRun.concat(investmentScripts);
 
     const corporateScripts = [
+        'scripts/corporations/invest.js',
         'scripts/corporations/start-company.js',
         'scripts/corporations/get-corporate-info.js',
-        'scripts/corporations/initial-expand.js',
         'scripts/corporations/add-supporting-material.js',
         'scripts/corporations/upgrade-offices.js',
         'scripts/corporations/upgrade-warehouse.js',
-        'scripts/corporations/expand-to-tobacco.js',
+        'scripts/corporations/expand.js',
         'scripts/corporations/product-management.js',
-        'scripts/corporations/invest.js',
         'scripts/corporations/research.js',
         'scripts/corporations/tea-party.js',
         'scripts/corporations/adjust-prices-export.js',

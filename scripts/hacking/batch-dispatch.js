@@ -111,7 +111,7 @@ export async function main(ns) {
 
         const averageTimeBetweenVisits = secondsBetweenVisits.reduce((acc, b) => acc + b, 0) / secondsBetweenVisits.length;
 
-        if (averageTimeBetweenVisits > 2.5) {
+        if (averageTimeBetweenVisits > 3) {
             ns.toast(`${timeStamp} Average of ${averageTimeBetweenVisits.toFixed(2)} seconds between visits`, "warning", null)
         }
 

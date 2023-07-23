@@ -4,6 +4,7 @@ export async function main(ns) {
     }
 
     const corporation = ns.corporation.getCorporation();
+    const profitPerSecond = corporation.revenue - corporation.expenses;
 
     const divisionsProductNames = new Map();
 
@@ -30,22 +31,18 @@ export async function main(ns) {
             products.push(product);
         }
 
-        let maximumProducts = 3;
+        let mimimumSpend = 1_000_000_000;
 
-        if(ns.corporation.hasResearched(divisionName, "uPgrade: Capacity.I")){
-            maximumProducts = 4;
+        if(profitPerSecond > mimimumSpend){
+            mimimumSpend = profitPerSecond;
         }
 
-        if(ns.corporation.hasResearched(divisionName, "uPgrade: Capacity.I")){
-            maximumProducts = 5;
-        }
-
-        if (division.products.length < maximumProducts && !oneDeveloping) {
+        if (division.products.length < division.maxProducts && !oneDeveloping) {
             const productName = divisionConstants.productNames[division.products.length];
-            ns.corporation.makeProduct(divisionName, "Aevum", productName + 1, 1_000_000_000, 1_000_000_000);
+            ns.corporation.makeProduct(divisionName, "Aevum", productName + 1, mimimumSpend, mimimumSpend);
         }
 
-        if (division.products.length === maximumProducts && !oneDeveloping) {
+        if (division.products.length === division.maxProducts && !oneDeveloping) {
 
             const lowestRatedProduct = products
                 .sort((a, b) => b.rating - a.rating)
@@ -55,7 +52,7 @@ export async function main(ns) {
 
             const splitName = lowestRatedProduct.name.split("v.");
 
-            ns.corporation.makeProduct(divisionName, "Aevum", `${splitName[0]}v.${Number(splitName[1]) + 1}`, 1_000_000_000, 1_000_000_000);
+            ns.corporation.makeProduct(divisionName, "Aevum", `${splitName[0]}v.${Number(splitName[1]) + 1}`, mimimumSpend, mimimumSpend);
         }
     }
 }

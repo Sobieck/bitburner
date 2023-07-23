@@ -5,15 +5,9 @@ export async function main(ns) {
 
     const materialGoalsGoals = [];
 
-
-    const excludedDivisions = [
-    ]
-
     const corporation = ns.corporation.getCorporation();
 
-    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
-
-    for (const divisionName of divisionsToOperateOn) {
+    for (const divisionName of corporation.divisions) {
         const materialGoals = [];
 
         const division = ns.corporation.getDivision(divisionName);
@@ -54,7 +48,11 @@ export async function main(ns) {
             }
         }
 
-        const fillXPercentOfWarehouseWithMultiplerMaterial = 0.5; // 0.5 was 789k profit 0.4 500k .6 was 402k
+        let fillXPercentOfWarehouseWithMultiplerMaterial = 0.5; // 0.5 was 789k profit 0.4 500k .6 was 402k
+
+        if(division.type === "Chemical"){
+            fillXPercentOfWarehouseWithMultiplerMaterial = 0.8;
+        }
 
         for (const city of division.cities) {
             const warehouse = ns.corporation.getWarehouse(divisionName, city);

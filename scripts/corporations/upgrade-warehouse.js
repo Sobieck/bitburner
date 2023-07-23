@@ -3,15 +3,10 @@ export async function main(ns) {
         return;
     }
 
-    const excludedDivisions = [
-    ]
-
     const corporation = ns.corporation.getCorporation();
-    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
+    const capitalReserve = 40_000_000_000;
 
-    const capitalReserve = 400_000_000_000;
-
-    for (const divisionName of divisionsToOperateOn) {
+    for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
 
         const industryData = ns.corporation.getIndustryData(division.type); 
@@ -35,7 +30,15 @@ export async function main(ns) {
             const moneyLeft = corporation.funds - warehouseUpgradeCost;
             const profit = corporation.revenue - corporation.expenses;
 
-            if (warehouse.size < 4000 && percentUsedOfWarehouse > 0.5 && moneyLeft > capitalReserve && profit > 500_000) {
+            if (warehouse.size < 300 && percentUsedOfWarehouse > 0.5){
+                ns.corporation.upgradeWarehouse(divisionName, city);
+            }
+
+            if (warehouse.size < 6000 && percentUsedOfWarehouse > 0.5 && moneyLeft > capitalReserve && profit > 1_000_000) {
+                ns.corporation.upgradeWarehouse(divisionName, city);
+            }
+
+            if(division.type === "Chemical" && warehouse.size < 8000 && percentUsedOfWarehouse > 0.8 && moneyLeft > capitalReserve && profit > 1_000_000){
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
         }

@@ -62,7 +62,7 @@ export async function main(ns) {
             const teaCostPerHead = 500_000;
             divisionProfitsRecord.teaPartyCost = employeeCount * teaCostPerHead;
 
-            const minimumMoraleAndEnergy = 70;
+            const minimumMoraleAndEnergy = 85;
             const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (averageMorale < minimumMoraleAndEnergy || averageEnergy < minimumMoraleAndEnergy) && corporateProfits > 5_000_000 && corporation.funds > 100_000_000_000;
 
 
@@ -115,8 +115,6 @@ export async function main(ns) {
 
         divisionalCorporateProfits.set(divisionName, divisionProfitsRecord);
     }
-
-    
 
     ns.rm(divisionalCorporateProfitsFile);
     ns.write(divisionalCorporateProfitsFile, JSON.stringify(Array.from(divisionalCorporateProfits.entries()), "W"));

@@ -3,11 +3,9 @@ export async function main(ns) {
         return;
     }
 
-    const excludedDivisions = [
-    ]
-
     const gidgetsFarm = "Gidget's Farm"
     const gidgetsSmokes = "Gidget's Smokes"
+    const chemist = "Chemist Gidget's Lab"
 
     const corporation = ns.corporation.getCorporation();
 
@@ -17,6 +15,7 @@ export async function main(ns) {
 
     const gidgetsFarmExists = corporation.divisions.includes(gidgetsFarm);
     const gidgetsSmokesExists = corporation.divisions.includes(gidgetsSmokes);
+    const chemistExists = corporation.divisions.includes(chemist);
 
     const rawMaterialProducers = [];
     const importExportRelationships = [];
@@ -30,17 +29,32 @@ export async function main(ns) {
         }
     }
 
-    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
+    if (chemistExists) {
+        rawMaterialProducers.push({ producer: chemist, materials: [ "Chemicals" ] });
 
-    for (const divisionName of divisionsToOperateOn) {
+        if(gidgetsFarmExists){
+            importExportRelationships.push({ exporter: gidgetsFarm, importer: chemist, material: "Plants" });
+            importExportRelationships.push({ exporter: chemist, importer: gidgetsFarm, material: "Chemicals" });
+        }
+    }
+
+    for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
 
         const divisionHasExportRelationship = importExportRelationships.find(x => x.exporter === divisionName);
 
+        const exportRelationships = importExportRelationships.filter(x => x.exporter === divisionName);
+
+        for (const exportRelationship of exportRelationships) {
+            for (const city of division.cities) {
+                ns.corporation.cancelExportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material);
+                ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)"); 
+            }
+        }
+        
         if (divisionHasExportRelationship) {
             for (const city of division.cities) {
-                ns.corporation.cancelExportMaterial(divisionHasExportRelationship.exporter, city, divisionHasExportRelationship.importer, city, divisionHasExportRelationship.material);
-                ns.corporation.exportMaterial(divisionHasExportRelationship.exporter, city, divisionHasExportRelationship.importer, city, divisionHasExportRelationship.material, "-(IPROD)");
+
             }
         }
 
@@ -49,7 +63,7 @@ export async function main(ns) {
                 ns.corporation.setProductMarketTA2(divisionName, productName, true);
                 continue;
             }
-            
+
             for (const city of division.cities) {
                 const product = ns.corporation.getProduct(divisionName, city, productName);
 
@@ -66,23 +80,31 @@ export async function main(ns) {
                             continue;
                         }
 
-                        const price = Number(product.desiredSellPrice.split(')')[1])
+                        let price = product.desiredSellPrice;
+
+                        if (isNaN(price)) {
+                            price = Number(price.split(')')[1]);
+                        }
 
                         if (price > mostExpensivePrice) {
                             mostExpensivePrice = price;
                         }
                     }
 
-                    ns.corporation.sellProduct(divisionName, city, productName, "MAX", `(MP)+${mostExpensivePrice}`, false)
+                    if (mostExpensivePrice === 0) {
+                        mostExpensivePrice = product.productionCost * 2;
+                    }
+
+                    ns.corporation.sellProduct(divisionName, city, productName, "MAX", `${mostExpensivePrice}`, false)
                 } else {
                     if (product.stored === 0) {
-                        const priceToSet = adjustPriceUp(product.desiredSellPrice);
+                        const priceToSet = adjustPriceUp(product.desiredSellPrice, product.productionCost);
 
                         ns.corporation.sellProduct(divisionName, city, productName, "MAX", priceToSet, false)
                     }
 
                     if (product.stored > 20) {
-                        const priceToSet = adjustPriceDown(product.desiredSellPrice);
+                        const priceToSet = adjustPriceDown(product.desiredSellPrice, product.productionCost);
 
                         ns.corporation.sellProduct(divisionName, city, productName, "MAX", priceToSet, false);
                     }
@@ -96,23 +118,35 @@ export async function main(ns) {
             for (const city of division.cities) {
                 for (const materialName of rawMaterialProducer.materials) {
 
-                    if (ns.corporation.hasResearched(divisionName, "Market-TA.II")) {
+                    const material = ns.corporation.getMaterial(divisionName, city, materialName);
+
+                    const warehouse = ns.corporation.getWarehouse(divisionName, city);
+
+                    const percentUsed = warehouse.sizeUsed / warehouse.size;
+
+                    if (ns.corporation.hasResearched(divisionName, "Market-TA.II") && material.stored === 0) {
                         ns.corporation.setMaterialMarketTA2(divisionName, city, materialName, true);
                         continue;
+                    } else if (ns.corporation.hasResearched(divisionName, "Market-TA.II") && percentUsed < 0.8) {
+                        ns.corporation.setMaterialMarketTA2(divisionName, city, materialName, true);
+                        continue;
+                    } else if (ns.corporation.hasResearched(divisionName, "Market-TA.II")){
+                        ns.corporation.setMaterialMarketTA2(divisionName, city, materialName, false);
                     }
 
-                    const material = ns.corporation.getMaterial(divisionName, city, materialName);  //{"marketPrice":3245.007553378283,"desiredSellPrice":"MP","desiredSellAmount":"MAX","name":"Food","stored":64100.69340032647,"quality":14.512531257704307,"demand":82.58491635176067,"productionAmount":387.8,"actualSellAmount":375.5010978448139,"exports":[]}
-
+                    const marketPrice = material.marketPrice;
+    
                     if (material.desiredSellPrice === 0 || material.desiredSellPrice === "MP" || material.desiredSellPrice === "MP+5") {
-                        ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", "(MP)+0");
+                        ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", marketPrice);
                     } else {
-                        if (material.stored === 0) {
-                            const priceToSet = adjustPriceUp(material.desiredSellPrice);
+                          if (material.stored === 0) {
+                            const priceToSet = adjustPriceUp(material.desiredSellPrice, marketPrice);
                             ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", priceToSet);
                         }
 
                         if (material.stored > 20) {
-                            const priceToSet = adjustPriceDown(material.desiredSellPrice);
+                            const priceToSet = adjustPriceDown(material.desiredSellPrice, marketPrice);
+
                             ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", priceToSet);
                         }
                     }
@@ -122,52 +156,56 @@ export async function main(ns) {
     }
 }
 
-function adjustPriceUp(desiredSellPrice) {
-    const oldPriceAdjuster = Number(desiredSellPrice.split(')')[1]);
-    let adjustment = 0;
-    if (oldPriceAdjuster >= 0) {
-        if (oldPriceAdjuster > 100) {
-            adjustment = oldPriceAdjuster * 1.05;
+function adjustPriceUp(oldPrice, marketPrice) {
+
+    if (isNaN(oldPrice)) {
+        const adjuster = Number(oldPrice.split(')')[1]);
+        oldPrice = adjuster + marketPrice;
+    }
+
+    let newPrice = 0;
+    if (oldPrice >= 0) {
+        if (oldPrice > 100) {
+            newPrice = oldPrice * 1.05;
         } else {
-            adjustment = oldPriceAdjuster + 10;
+            newPrice = oldPrice + 10;
         }
     }
 
-    if (oldPriceAdjuster < 0) {
-        if (oldPriceAdjuster < -100) {
-            adjustment = oldPriceAdjuster * 0.95;
-        } else {
-            adjustment = oldPriceAdjuster + 10;
-        }
+    if (oldPrice < 0) {
+        newPrice = 10;
     }
 
-    const sign = adjustment >= 0 ? "+" : "";
-    const priceToSet = `(MP)${sign}${adjustment}`;
+    if (newPrice <= 0) {
+        return oldPrice;
+    }
 
-    return priceToSet;
+    return newPrice;
 }
 
-function adjustPriceDown(desiredSellPrice) {
-    const oldPriceAdjuster = Number(desiredSellPrice.split(')')[1]);
-    let adjustment = 0;
-    if (oldPriceAdjuster >= 0) {
-        if (oldPriceAdjuster > 100) {
-            adjustment = oldPriceAdjuster * 0.97;
+function adjustPriceDown(oldPrice, marketPrice) {
+
+    if (isNaN(oldPrice)) {
+        const adjuster = Number(oldPrice.split(')')[1]);
+        oldPrice = adjuster + marketPrice;
+    }
+
+    let newPrice = 0;
+    if (oldPrice >= 0) {
+        if (oldPrice > 100) {
+            newPrice = oldPrice * 0.97;
         } else {
-            adjustment = oldPriceAdjuster - 5;
+            newPrice = oldPrice - 5;
         }
     }
 
-    if (oldPriceAdjuster < 0) {
-        if (oldPriceAdjuster < -100) {
-            adjustment = oldPriceAdjuster * 1.03;
-        } else {
-            adjustment = oldPriceAdjuster - 5;
-        }
+    if (oldPrice < 0) {
+        newPrice = 10;
     }
 
-    const sign = adjustment >= 0 ? "+" : "";
-    const priceToSet = `(MP)${sign}${adjustment}`;
+    if (newPrice <= 0) {
+        return oldPrice;
+    }
 
-    return priceToSet;
+    return newPrice;
 }

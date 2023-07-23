@@ -1,100 +1,18 @@
-[
-    [
-        "lexo-corp",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "weakeningDoneAfter": "2023-07-21T15:33:35.640Z",
-            "successfulWeakening": true,
-            "growDoneAfter": "2023-07-21T15:03:18.828Z",
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-07-21T15:40:41.013Z",
-            "successfulHacking": false,
-            "securityWeNeedToReduceAfterFullHack": 3.636,
-            "originalNumberOfThreadsForFullMoney": 1818,
-            "successes": 5,
-            "failures": 1,
-            "successesInTheLastHour": 3,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
-            "executionWindowSizeInSeconds": 5,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": true,
-                            "ramCost": 3090.6,
-                            "machineRunningOn": "CLOUD-003",
-                            "pid": 511634,
-                            "executedAt": "2023-07-21T15:37:11.935Z",
-                            "expectedEndTime": "2023-07-21T15:39:01.013Z",
-                            "firstLookStartedNowEndAt": "2023-07-21T15:39:01.013Z",
-                            "endAfter": "2023-07-21T15:37:11.935Z",
-                            "endBefore": "2023-07-21T15:40:41.013Z",
-                            "type": "hack-dynamic"
-                        }
-                    ],
-                    "startTime": "2023-07-21T15:37:11.935Z",
-                    "poisonedBatch": false
-                }
-            ],
-            "lastFailure": {
-                "jobs": [
-                    {
-                        "executing": false,
-                        "ramCost": 0,
-                        "expectedEndTime": "2023-07-21T14:57:16.071Z",
-                        "firstLookStartedNowEndAt": "2023-07-21T14:57:07.487Z",
-                        "endAfter": "2023-07-21T14:51:17.749Z",
-                        "endBefore": "2023-07-21T14:57:17.487Z",
-                        "type": "grow-dynamic",
-                        "firstMissForAfterWindow": "2023-07-21T14:57:18.225Z"
-                    }
-                ],
-                "poisonedBatch": true
-            }
-        }
-    ],
-    [
-        "alpha-ent",
-        {
-            "targetMachineSaturatedWithAttacks": false,
-            "prepStage": true,
-            "weakeningDoneAfter": "2023-07-21T15:41:56.887Z",
-            "successfulWeakening": false,
-            "growDoneAfter": "2023-07-21T15:17:36.069Z",
-            "successfulGrowing": true,
-            "hackDoneAfter": "2023-07-21T15:08:14.013Z",
-            "successfulHacking": true,
-            "securityWeNeedToReduceAfterFullHack": 2.326,
-            "securityWeNeedToReduceAfterFullGrowth": 96.08,
-            "originalNumberOfThreadsForFullMoney": 1163,
-            "successes": 7,
-            "failures": 0,
-            "successesInTheLastHour": 4,
-            "failuresInTheLastHour": 0,
-            "lastResetHour": 10,
-            "executionWindowSizeInSeconds": 3,
-            "batchesQueue": [
-                {
-                    "jobs": [
-                        {
-                            "executing": true,
-                            "ramCost": 2871.75,
-                            "machineRunningOn": "CLOUD-000",
-                            "pid": 489498,
-                            "executedAt": "2023-07-21T15:17:39.020Z",
-                            "expectedEndTime": "2023-07-21T15:41:46.887Z",
-                            "firstLookStartedNowEndAt": "2023-07-21T15:41:46.887Z",
-                            "endAfter": "2023-07-21T15:17:39.019Z",
-                            "endBefore": "2023-07-21T15:41:56.887Z",
-                            "type": "weaken-dynamic"
-                        }
-                    ],
-                    "startTime": "2023-07-21T15:17:39.020Z",
-                    "poisonedBatch": false
-                }
-            ]
-        }
+{
+    "startingCost": 70000000000,
+    "description": "Produce industrial chemicals.",
+    "recommendStarting": false,
+    "realEstateFactor": 0.25,
+    "scienceFactor": 0.75,
+    "hardwareFactor": 0.2,
+    "robotFactor": 0.25,
+    "aiCoreFactor": 0.2,
+    "advertisingFactor": 0.07,
+    "requiredMaterials": {
+        "Plants": 1,
+        "Water": 0.5
+    },
+    "producedMaterials": [
+        "Chemicals"
     ]
-]
+}
