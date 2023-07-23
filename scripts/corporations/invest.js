@@ -30,6 +30,16 @@ export async function main(ns) {
 
     let cheapestUpgrade;
 
+    if(investableAmount > 5_000_000_000_000_000){
+        if (!ns.corporation.hasUnlock("Shady Accounting")) {
+            ns.corporation.purchaseUnlock("Shady Accounting");
+        }
+
+        if (!ns.corporation.hasUnlock("Government Partnership")) {
+            ns.corporation.purchaseUnlock("Government Partnership");
+        }
+    }
+
     for (const upgrade of upgradeGoals) {
         if (cheapestUpgrade && cheapestUpgrade.topPriority && upgrade.topPriority === false) {
             continue;
@@ -47,19 +57,15 @@ export async function main(ns) {
         }
     }
 
-    const adVertsGoals = [
-        { division: "Gidget's Smokes", awareness: 3_600_000, popularity: 2_700_000 }
-    ]
-
     for (const divisionName of corporation.divisions) {
-        const adGoal = adVertsGoals.find(x => x.division === divisionName);
         const division = ns.corporation.getDivision(divisionName);
 
         if (division.numAdVerts === 0) {
             ns.corporation.hireAdVert(divisionName);
         }
 
-        if (adGoal) {
+        if (division.makesProducts) {
+            const adGoal = { awareness: 3_600_000, popularity: 2_700_000 };
             if (division.awareness < adGoal.awareness || division.popularity < adGoal.popularity) {
                 const cost = ns.corporation.getHireAdVertCost(divisionName);
 

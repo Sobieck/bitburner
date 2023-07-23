@@ -12,6 +12,10 @@ export async function main(ns) {
         divisionsProductNames.set("Gidget's Smokes", { division: "Gidget's Smokes", productNames: ["These Smokes Probably Won't Kill U v.", "These Smokes WILL Kill You v.", "This Leaf is Highly Addictive v.", "Behold, the bringer of Death v.", "You will live so fast and DIE young if you smoke these v."] });
     }
 
+    if (corporation.divisions.includes("Gidget's Computers & Hardware")){
+        divisionsProductNames.set("Gidget's Computers & Hardware", { division: "Gidget's Computers & Hardware", productNames: ["Desktop Computer v.", "Router v.", "Laptop Computer v.", "Smart Phone v.", "Computer Monitor v."] });
+    }
+
     const includedDivisions = Array.from(divisionsProductNames.keys());
 
     for (const divisionName of includedDivisions) {

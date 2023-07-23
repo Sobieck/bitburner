@@ -3,38 +3,65 @@ export async function main(ns) {
         return;
     }
 
-    const gidgetsFarm = "Gidget's Farm"
-    const gidgetsSmokes = "Gidget's Smokes"
-    const chemist = "Chemist Gidget's Lab"
-
     const corporation = ns.corporation.getCorporation();
 
     if (corporation.state !== "START") {
         return;
     }
 
-    const gidgetsFarmExists = corporation.divisions.includes(gidgetsFarm);
-    const gidgetsSmokesExists = corporation.divisions.includes(gidgetsSmokes);
-    const chemistExists = corporation.divisions.includes(chemist);
+    const gidgetsFarm = "Gidget's Farm";
+    const gidgetsSmokes = "Gidget's Smokes";
+    const chemist = "Chemist Gidget's Lab";
+    const water = "Gidget's Municipal Water";
+    const hardware = "Gidget's Computers & Hardware";
+    const metal = "Gidget's Metallurgy";
+    const mining = "Gidget's Land Destroyer";
+
+    const divisionalTies = [
+        {
+            name: gidgetsFarm, materialsSold: ["Food", "Plants"], exports: [
+                { importer: gidgetsSmokes, material: "Plants" },
+                { importer: chemist, material: "Plants" }
+            ]
+        },
+        {
+            name: chemist, materialsSold: ["Chemicals"], exports: [
+                { importer: gidgetsFarm, material: "Chemicals" }
+            ]
+        },
+        {
+            name: water, materialsSold: ["Water"], exports: [
+                { importer: gidgetsFarm, material: "Water" },
+                { importer: chemist, material: "Water" },
+            ]
+        },
+        {
+            name: hardware, materialsSold: ["Hardware"], exports: [
+                { importer: water, material: "Hardware" },
+                { importer: mining, material: "Hardware" },
+            ]
+        },
+        {
+            name: metal, materialsSold: ["Metal"], exports: [
+                { importer: hardware, material: "Metal" },
+            ]
+        },
+        {
+            name: mining, materialsSold: ["Ore", "Minerals"], exports: [
+                    { importer: metal, material: "Ore" },
+                ]
+        },
+    ]
 
     const rawMaterialProducers = [];
     const importExportRelationships = [];
 
-    if (gidgetsFarmExists) {
-
-        rawMaterialProducers.push({ producer: gidgetsFarm, materials: ["Food", "Plants"] });
-
-        if (gidgetsSmokesExists) {
-            importExportRelationships.push({ exporter: gidgetsFarm, importer: gidgetsSmokes, material: "Plants" })
-        }
-    }
-
-    if (chemistExists) {
-        rawMaterialProducers.push({ producer: chemist, materials: [ "Chemicals" ] });
-
-        if(gidgetsFarmExists){
-            importExportRelationships.push({ exporter: gidgetsFarm, importer: chemist, material: "Plants" });
-            importExportRelationships.push({ exporter: chemist, importer: gidgetsFarm, material: "Chemicals" });
+    for (const division of divisionalTies) {
+        if (corporation.divisions.includes(division.name)) {
+            rawMaterialProducers.push({ producer: division.name, materials: division.materialsSold });
+            for (const EXPORT of division.exports) {
+                importExportRelationships.push({ exporter: division.name, importer: EXPORT.importer, material: EXPORT.material });
+            }
         }
     }
 
@@ -48,10 +75,10 @@ export async function main(ns) {
         for (const exportRelationship of exportRelationships) {
             for (const city of division.cities) {
                 ns.corporation.cancelExportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material);
-                ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)"); 
+                ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)");
             }
         }
-        
+
         if (divisionHasExportRelationship) {
             for (const city of division.cities) {
 
@@ -130,16 +157,16 @@ export async function main(ns) {
                     } else if (ns.corporation.hasResearched(divisionName, "Market-TA.II") && percentUsed < 0.8) {
                         ns.corporation.setMaterialMarketTA2(divisionName, city, materialName, true);
                         continue;
-                    } else if (ns.corporation.hasResearched(divisionName, "Market-TA.II")){
+                    } else if (ns.corporation.hasResearched(divisionName, "Market-TA.II")) {
                         ns.corporation.setMaterialMarketTA2(divisionName, city, materialName, false);
                     }
 
                     const marketPrice = material.marketPrice;
-    
+
                     if (material.desiredSellPrice === 0 || material.desiredSellPrice === "MP" || material.desiredSellPrice === "MP+5") {
                         ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", marketPrice);
                     } else {
-                          if (material.stored === 0) {
+                        if (material.stored === 0) {
                             const priceToSet = adjustPriceUp(material.desiredSellPrice, marketPrice);
                             ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", priceToSet);
                         }

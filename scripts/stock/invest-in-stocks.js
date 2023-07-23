@@ -140,6 +140,7 @@ export async function main(ns) {
                 ))
 
                 if (sellSharesToSatisfyMoneyDemands) {
+                    stockMarketReserveMoney.moneyRequested = [];
                     sellSharesToSatisfyMoneyDemands = false;
                     ns.toast(`${timeStamp} Sold ${formatter.format(moneyRequested)} for money request.`, "success", null)
                 }

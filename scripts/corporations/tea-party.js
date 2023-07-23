@@ -3,11 +3,7 @@ export async function main(ns) {
         return;
     }
 
-    const excludedDivisions = [
-    ]
-
     const corporation = ns.corporation.getCorporation();
-    const divisionsToOperateOn = corporation.divisions.filter(divisionName => !excludedDivisions.includes(divisionName));
 
     const corporateProfits = corporation.revenue - corporation.expenses;
 
@@ -17,16 +13,10 @@ export async function main(ns) {
         divisionalCorporateProfits = new Map(JSON.parse(ns.read(divisionalCorporateProfitsFile)));
     }
 
-    for (const divisionName of divisionsToOperateOn) {
+    for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
 
         const divisionalProfitsLastCycle = division.lastCycleRevenue - division.lastCycleExpenses;
-
-        const formatter = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        });
-        // ns.toast(formatter.format(divisionalProfitsLastCycle))
 
         let divisionProfitsRecord;
 
@@ -40,8 +30,6 @@ export async function main(ns) {
             divisionProfitsRecord.count++;
             divisionProfitsRecord.sumOfProfitsInThisAccountingPeriod += divisionalProfitsLastCycle;
             divisionProfitsRecord.lastProfit = divisionalProfitsLastCycle;
-
-
 
             let employeeCount = 0;
             let morales = [];
@@ -62,16 +50,16 @@ export async function main(ns) {
             const teaCostPerHead = 500_000;
             divisionProfitsRecord.teaPartyCost = employeeCount * teaCostPerHead;
 
-            const minimumMoraleAndEnergy = 85;
+            let minimumMoraleAndEnergy = 70;
+            if (corporateProfits > 1_000_000_000_000){
+                minimumMoraleAndEnergy = 95;
+            }
+
             const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (averageMorale < minimumMoraleAndEnergy || averageEnergy < minimumMoraleAndEnergy) && corporateProfits > 5_000_000 && corporation.funds > 100_000_000_000;
 
 
             const divisionalProfitsCanSustain = divisionProfitsRecord.sumOfProfitsInThisAccountingPeriod > divisionProfitsRecord.teaPartyCost;
             const shouldTreatOurEmployees = divisionalProfitsCanSustain || divisionIsStrugglingAndWeAreProfitableAndHaveMoney
-
-            // if(divisionName === "Gidget's Smokes"){
-            //     ns.tprint(`${divisionalProfitsCanSustain} ${shouldTreatOurEmployees} ${formatter.format(corporateProfits)} ${formatter.format(corporation.funds)}`)
-            // }
 
             if (shouldTreatOurEmployees) {
                 const goal = 95;
@@ -79,7 +67,7 @@ export async function main(ns) {
                 let tea = false;
                 let party = false;
 
-                if (averageEnergy < averageMorale) {
+                if (averageEnergy <= averageMorale) {
                     if (averageEnergy < goal) {
                         tea = true;
                     }

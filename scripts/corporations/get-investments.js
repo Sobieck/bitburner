@@ -18,7 +18,11 @@ export async function main(ns) {
         ns.corporation.goPublic(0);
     }
 
-    if (corporation.public && corporation.dividendRate !== .01) {
+    if (corporation.public && corporation.dividendRate !== .01 && !ns.corporation.hasUnlock("Government Partnership")) {
         ns.corporation.issueDividends(.01);
+    }
+
+    if (corporation.public && corporation.dividendRate !== .5 && ns.corporation.hasUnlock("Government Partnership")) {
+        ns.corporation.issueDividends(.5);
     }
 }

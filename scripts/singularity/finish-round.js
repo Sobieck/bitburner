@@ -379,6 +379,7 @@ function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
 }
 
 function purchaseNeuroFluxGovernors(ns, faction, analytics) {
+// redo as a while loop, stack overflows when we have a lot of money
     const augmentName = "NeuroFlux Governor"
     const price = ns.singularity.getAugmentationPrice(augmentName);
     const moneyAvailable = ns.getServerMoneyAvailable("home");
