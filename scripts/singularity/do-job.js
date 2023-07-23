@@ -3,10 +3,6 @@ export async function main(ns) {
     const companiesWeWantToBecomePartOf = organizations.companiesWeWantToBecomePartOf;
     const orderedFactions = organizations.toJoinInOrderInWhichIWantToComplete;
 
-    for (const companyName of companiesWeWantToBecomePartOf) {
-        ns.singularity.applyToCompany(companyName, "software");
-    }
-
     const currentWork = ns.singularity.getCurrentWork();
 
     if (currentWork && currentWork.type === "CREATE_PROGRAM") {

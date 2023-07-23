@@ -30,7 +30,7 @@ export async function main(ns) {
 
     let cheapestUpgrade;
 
-    if(investableAmount > 5_000_000_000_000_000){
+    if (investableAmount > 5_000_000_000_000_000) {
         if (!ns.corporation.hasUnlock("Shady Accounting")) {
             ns.corporation.purchaseUnlock("Shady Accounting");
         }
@@ -65,13 +65,10 @@ export async function main(ns) {
         }
 
         if (division.makesProducts) {
-            const adGoal = { awareness: 3_600_000, popularity: 2_700_000 };
-            if (division.awareness < adGoal.awareness || division.popularity < adGoal.popularity) {
-                const cost = ns.corporation.getHireAdVertCost(divisionName);
+            const cost = ns.corporation.getHireAdVertCost(divisionName);
 
-                if (!cheapestUpgrade || cheapestUpgrade.cost > cost) {
-                    cheapestUpgrade = { adVertType: true, division: divisionName, cost };
-                }
+            if (!cheapestUpgrade || cheapestUpgrade.cost > cost) {
+                cheapestUpgrade = { adVertType: true, division: divisionName, cost };
             }
         }
     }

@@ -12,6 +12,7 @@ export async function main(ns) {
 
     const stockScripts = [
         'scripts/stock/get-stock-quotes.js',
+        'scripts/stock/second-part-of-quotes.js',
         'scripts/stock/populate-forecast.js',
         'scripts/stock/invest-in-stocks.js',
         'scripts/stock/buy-4s.js',
@@ -30,6 +31,8 @@ export async function main(ns) {
     scriptsToRun = scriptsToRun.concat(contractScripts);
 
     const singularityScripts = [
+        'scripts/singularity/apply-to-jobs.js',
+        'scripts/singularity/do-work-get-augments.js',
         'scripts/singularity/backdoor-all-machines.js',
         'scripts/singularity/join-organziations.js',
         'scripts/singularity/do-work.js',

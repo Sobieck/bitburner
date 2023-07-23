@@ -9,8 +9,8 @@ export async function main(ns) {
     if (corporation.public === false && corporation.totalShares === corporation.numShares) {
         const investmentOffer = ns.corporation.getInvestmentOffer();
         
-        if(investmentOffer.funds > 300_000_000_000){
-            
+        if(investmentOffer.funds > 1_000_000_000_000){
+            ns.corporation.acceptInvestmentOffer()
         }
     }
 
