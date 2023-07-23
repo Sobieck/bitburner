@@ -3,7 +3,7 @@ let updatedMoneyEstimate = false;
 
 export async function main(ns) {
 
-    if(!ns.stock.has4SDataTIXAPI() && !ns.corporation.hasCorporation()){
+    if (!ns.stock.has4SDataTIXAPI() && !ns.corporation.hasCorporation()) {
         return;
     }
 
@@ -200,44 +200,44 @@ export async function main(ns) {
 
         function addPrereqs(prereqName) {
             const augment = purchasableAugments.get(prereqName);
-    
+
             if (augment && !ownedAugmentations.find(x => x.augmentName === prereqName)) {
-    
+
                 if (augment.prereqs.length > 0) {//it has prereqs, pass it into this. 
                     for (const prereq of augment.prereqs) {
                         addPrereqs(prereq)
                     }
                 }
-    
+
                 if (!orderedAugments.find(x => x.augmentName === prereqName)) {
                     orderedAugments.push({ faction: augment.faction, augmentName: prereqName, basePrice: augment.price });
                 }
             }
         }
-    
+
         for (const augmentData of augmentsLeft) {
             const augmentName = augmentData[0];
             const augment = augmentData[1];
-    
+
             if (augment.prereqs.length > 0) {
                 for (const prereqName of augment.prereqs) {
                     addPrereqs(prereqName);
                 }
             }
-            
+
             if (!orderedAugments.find(x => x.augmentName === augmentName)) {
                 orderedAugments.push({ faction: augment.faction, augmentName: augmentName, basePrice: augment.price, multipledPrice: 0 })
             }
-    
+
         }
-    
+
         let priceMultipler = 1;
-    
+
         for (const augment of orderedAugments) {
             augment.multipledPrice = augment.basePrice * priceMultipler;
             priceMultipler *= 1.9;
         }
-        
+
         const moneyNeededForAugments = orderedAugments.reduce((acc, x) => acc + x.multipledPrice, 0);
 
         // make a pass for multiplied price
@@ -257,7 +257,7 @@ export async function main(ns) {
 
         /// ------
 
-        
+
         let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments;
 
         const estimatedIncomeForTheNextFourHours = incomePerHourEstimate * 4;
@@ -323,7 +323,7 @@ export async function main(ns) {
             }
         }
     }
-    
+
     saveAnalytics(ns, analytics);
 }
 
@@ -379,17 +379,17 @@ function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
 }
 
 function purchaseNeuroFluxGovernors(ns, faction, analytics) {
-// redo as a while loop, stack overflows when we have a lot of money
-    const augmentName = "NeuroFlux Governor"
-    const price = ns.singularity.getAugmentationPrice(augmentName);
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
 
-    const augmentRepPrice = ns.singularity.getAugmentationRepReq(augmentName);
+    const augmentName = "NeuroFlux Governor"
+
+    let price = ns.singularity.getAugmentationPrice(augmentName);
+    let moneyAvailable = ns.getServerMoneyAvailable("home");
+    let augmentRepPrice = ns.singularity.getAugmentationRepReq(augmentName);
     let factionRep = ns.singularity.getFactionRep(faction);
 
-    if (moneyAvailable > price) {
-        if (factionRep < augmentRepPrice && ns.singularity.getFactionFavor(faction) > 75) {
-            if (ns.fileExists("Formulas.exe")) {
+    while (price < moneyAvailable) {
+        if (factionRep < augmentRepPrice) {
+            if (ns.singularity.getFactionFavor(faction) > 75 && ns.fileExists("Formulas.exe")) {
                 const repNeeded = augmentRepPrice - factionRep;
                 let dollarsDonated = 0;
                 let purchasedRep = 0;
@@ -401,6 +401,8 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
 
                 analytics.moneySpent.repPurchased += dollarsDonated;
                 ns.singularity.donateToFaction(faction, dollarsDonated);
+            } else {
+                break;
             }
         }
 
@@ -410,11 +412,11 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
             analytics.moneySpent.fluxGovernors += price;
             ns.singularity.purchaseAugmentation(faction, augmentName);
         }
-    } else {
-        return;
-    }
 
-    purchaseNeuroFluxGovernors(ns, faction, analytics);
+        price = ns.singularity.getAugmentationPrice(augmentName);
+        moneyAvailable = ns.getServerMoneyAvailable("home");
+        augmentRepPrice = ns.singularity.getAugmentationRepReq(augmentName);
+    }
 }
 
 function upgradeHomeMachine(ns, analytics) {
