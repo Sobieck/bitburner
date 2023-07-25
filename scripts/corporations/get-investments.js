@@ -15,35 +15,24 @@ export async function main(ns) {
     // { round: 3, investment: 3_000_000_000 },
 
     const investmentWeWillTake = [
-        { round: 1, investment: 95_000_000_000, stayPrivate: true },
-        { round: 2, investment: 900_000_000_000, stayPrivate: false },
+        { round: 1, investment: 95_000_000_000, goPublic: false },
+        { round: 2, investment: 900_000_000_000, goPublic: true },
     ]
 
-    //https://steamcommunity.com/app/1812820/discussions/0/3843305519473742719/
-    let value = 10e9 + Math.max(corporation.funds, 0) / 3 //Base valuation
-    if (profit > 0) { value += profit * 315e3 }
-    value *= Math.pow(1.1, corporation.divisions.length)
-    value -= value % 1e6 //Round down to nearest millionth
-    value *= 2 //ns.getBitNodeMultipliers().CorporationValuation
-    const pricePerShare = value / corporation.totalShares // Per share, don't divide if you want full valuatio
+    const investmentOffer = ns.corporation.getInvestmentOffer();
 
-    if (corporation.public === false) {
-        for (const minimumInvestment of investmentWeWillTake) {
-            if (stayPrivate) {
-                const investmentOffer = ns.corporation.getInvestmentOffer();
-                if (investmentOffer.round === minimumInvestment.round && investmentOffer.funds > minimumInvestment.investment) {
-                    ns.corporation.acceptInvestmentOffer();
-                }
+    for (const minimumInvestment of investmentWeWillTake) {
+        if (investmentOffer.round === minimumInvestment.round && investmentOffer.funds > minimumInvestment.investment) {
+            if (goPublic === false) {
+                ns.corporation.acceptInvestmentOffer();
             } else {
                 const sharesToSell = corporation.totalShares * .25;
-                const raiseAmount = pricePerShare * sharesToSell;
-
-                if (raiseAmount > minimumInvestment.investment) {
-                    ns.corporation.goPublic(sharesToSell);
-                }
+                ns.corporation.goPublic(sharesToSell);
             }
         }
     }
+
+
 
     if (profit > 200_000_000 && corporation.public === false) {
         ns.corporation.goPublic(0);
@@ -57,4 +46,41 @@ export async function main(ns) {
         ns.corporation.issueDividends(.5);
     }
 }
+//https://github.com/danielyxie/bitburner/blob/be42689697164bf99071c0bcf34baeef3d9b3ee8/src/Corporation/Corporation.tsx#L172
+// function getValuation(corporation, ns) {
+//     let val,
+//         profit = corporation.revenue - corporation.expenses;
+//     if (corporation.public) {
+//         // Account for dividends
+//         if (corporation.dividendRate > 0) {
+//             profit *= 1 - corporation.dividendRate;
+//         }
+
+//         val = corporation.funds + profit * 85e3;
+//         val *= Math.pow(1.1, corporation.divisions.length);
+//         val = Math.max(val, 0);
+//     } else {
+//         val = 10e9 + Math.max(corporation.funds, 0) / 3; //Base valuation
+//         if (profit > 0) {
+//             val += profit * 315e3;
+//         }
+//         val *= Math.pow(1.1, corporation.divisions.length);
+//         val -= val % 1e6; //Round down to nearest millionth
+//     }
+// // default https://github.com/danielyxie/bitburner/blob/be42689697164bf99071c0bcf34baeef3d9b3ee8/src/BitNode/BitNode.tsx#L500C2-L500C27
+// // CorporationValuation: 1,
+
+//     return val * 1;// BitNodeMultipliers.CorporationValuation; ns.getBitNodeMultipliers().CorporationValuation
+// }
+
+// const valuationsList = [];
+
+// function determineValuation(corporation, ns) {
+//     const valuationsLength = 10;
+//     valuationsList.push(getValuation(corporation, ns)); //Add current valuation to the list
+//     if (valuationsList.length > valuationsLength) valuationsList.shift();
+//     let val = valuationsList.reduce((a, b) => a + b); //Calculate valuations sum
+//     val /= valuationsLength; //Calculate the average  // corpConstants.valuationLength;
+//     return val;
+//   }
 
