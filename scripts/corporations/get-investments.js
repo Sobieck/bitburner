@@ -16,22 +16,49 @@ export async function main(ns) {
 
     const investmentWeWillTake = [
         { round: 1, investment: 95_000_000_000, goPublic: false },
-        { round: 2, investment: 900_000_000_000, goPublic: true },
+        { round: 2, investment: 800_000_000_000, goPublic: true },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();
 
     for (const minimumInvestment of investmentWeWillTake) {
         if (investmentOffer.round === minimumInvestment.round && investmentOffer.funds > minimumInvestment.investment) {
-            if (goPublic === false) {
+            if (minimumInvestment.goPublic === false) {
                 ns.corporation.acceptInvestmentOffer();
             } else {
-                const sharesToSell = corporation.totalShares * .25;
+                const sharesToSell = corporation.totalShares * .40;
                 ns.corporation.goPublic(sharesToSell);
             }
         }
     }
 
+    const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+    let stockMarketReserveMoney = new ReserveForTrading();
+    if (ns.fileExists(stockMarketReserveMoneyFile)) {
+        stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
+    }
+
+
+    if (corporation.public && corporation.state === 'START' & corporation.issuedShares > 0 && corporation.divisions.length > 1) {
+        let moneyOnHome = ns.getServerMoneyAvailable("home");
+        const moneyReserved = stockMarketReserveMoney.capitalToReserveForTrading - stockMarketReserveMoney.investment;
+
+        if(moneyReserved > 0){
+            moneyOnHome -= moneyReserved;
+        }
+
+        if(moneyOnHome > 0){
+            const cashToUseForBuybacks = moneyOnHome * 0.001;
+            let sharesToBuy = Math.floor(cashToUseForBuybacks / corporation.sharePrice)
+            if (sharesToBuy > corporation.issuedShares) {
+                sharesToBuy = corporation.issuedShares;
+            }
+    
+            if (sharesToBuy > 0) {
+                ns.corporation.buyBackShares(sharesToBuy);
+            }
+        }    
+    }
 
 
     if (profit > 200_000_000 && corporation.public === false) {
@@ -46,41 +73,88 @@ export async function main(ns) {
         ns.corporation.issueDividends(.5);
     }
 }
-//https://github.com/danielyxie/bitburner/blob/be42689697164bf99071c0bcf34baeef3d9b3ee8/src/Corporation/Corporation.tsx#L172
-// function getValuation(corporation, ns) {
-//     let val,
-//         profit = corporation.revenue - corporation.expenses;
-//     if (corporation.public) {
-//         // Account for dividends
-//         if (corporation.dividendRate > 0) {
-//             profit *= 1 - corporation.dividendRate;
-//         }
 
-//         val = corporation.funds + profit * 85e3;
-//         val *= Math.pow(1.1, corporation.divisions.length);
-//         val = Math.max(val, 0);
-//     } else {
-//         val = 10e9 + Math.max(corporation.funds, 0) / 3; //Base valuation
-//         if (profit > 0) {
-//             val += profit * 315e3;
-//         }
-//         val *= Math.pow(1.1, corporation.divisions.length);
-//         val -= val % 1e6; //Round down to nearest millionth
-//     }
-// // default https://github.com/danielyxie/bitburner/blob/be42689697164bf99071c0bcf34baeef3d9b3ee8/src/BitNode/BitNode.tsx#L500C2-L500C27
-// // CorporationValuation: 1,
+class ReserveForTrading {
+    stockMarketReserveMoneyLimit = 1_500_000_000_000;
+    capitalToReserveForTrading = 500_000_000;
+    moneyInvested = 0;
+    moneyRequested = new Map();
+    countOfVisitedWithoutFillingRequest = 0;
 
-//     return val * 1;// BitNodeMultipliers.CorporationValuation; ns.getBitNodeMultipliers().CorporationValuation
-// }
 
-// const valuationsList = [];
+    constructor(obj) {
+        obj && Object.assign(this, obj);
+    }
 
-// function determineValuation(corporation, ns) {
-//     const valuationsLength = 10;
-//     valuationsList.push(getValuation(corporation, ns)); //Add current valuation to the list
-//     if (valuationsList.length > valuationsLength) valuationsList.shift();
-//     let val = valuationsList.reduce((a, b) => a + b); //Calculate valuations sum
-//     val /= valuationsLength; //Calculate the average  // corpConstants.valuationLength;
-//     return val;
-//   }
+    canSellAmountAndStillHaveReserve(amountToSell) {
+        return (this.moneyInvested - amountToSell) > this.capitalToReserveForTrading;
+    }
 
+    setMoneyInvested(moneyInvested, ns) {
+        this.moneyInvested = moneyInvested;
+
+        const potentialCapitalReserve = (moneyInvested + ns.getServerMoneyAvailable("home")) * .75;
+
+        this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
+
+        if (this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit) {
+            this.capitalToReserveForTrading = this.stockMarketReserveMoneyLimit;
+        }
+
+        this.countOfVisitedWithoutFillingRequest++;
+    }
+
+    canSpend(ns, moneyNeeded) {
+        const moneyOnHome = ns.getServerMoneyAvailable("home");
+
+        let moneyToSaveForTrading = this.capitalToReserveForTrading - this.moneyInvested;
+
+        if (moneyToSaveForTrading < 0) {
+            moneyToSaveForTrading = 0;
+        }
+
+        if (moneyToSaveForTrading > this.stockMarketReserveMoneyLimit) {
+            moneyToSaveForTrading = this.stockMarketReserveMoneyLimit;
+        }
+
+        const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
+
+        if (canSpend === false) {
+            this.requestMoney(ns, moneyNeeded);
+        } else {
+            this.moneyRequested = new Map(Array.from(this.moneyRequested));
+
+            const nameOfRequest = "invest-in-stocks";
+            this.moneyRequested.delete(nameOfRequest);
+            const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+            ns.rm(stockMarketReserveMoneyFile);
+            ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+        }
+
+        return canSpend;
+    }
+
+    requestMoney(ns, amount) {
+        const nameOfRequest = "invest-in-stocks";
+        this.moneyRequested = new Map(Array.from(this.moneyRequested));
+
+        const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
+        if (moneyRequestedPreviously) {
+            if (moneyRequestedPreviously < amount) {
+                this.moneyRequested.set(nameOfRequest, amount);
+                this.moneyRequested = Array.from(this.moneyRequested);
+
+                const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+                ns.rm(stockMarketReserveMoneyFile);
+                ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+            }
+        } else {
+            this.moneyRequested.set(nameOfRequest, amount);
+            this.moneyRequested = Array.from(this.moneyRequested);
+
+            const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+            ns.rm(stockMarketReserveMoneyFile);
+            ns.write(stockMarketReserveMoneyFile, JSON.stringify(this), "W");
+        }
+    }
+}

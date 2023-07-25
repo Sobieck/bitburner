@@ -75,9 +75,6 @@ export async function main(ns) {
 
     for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
         const division = ns.corporation.getDivision(divisionName);
-
-        const divisionHasExportRelationship = importExportRelationships.find(x => x.exporter === divisionName);
-
         const exportRelationships = importExportRelationships.filter(x => x.exporter === divisionName);
 
         for (const exportRelationship of exportRelationships) {
@@ -231,7 +228,7 @@ function adjustPriceUp(oldPrice, marketPrice) {
     return newPrice;
 }
 
-function adjustPriceDown(oldPrice, marketPrice, fastDrop) {
+function adjustPriceDown(oldPrice, marketPrice, fastDrop = false) {
 
     if (isNaN(oldPrice)) {
         const adjuster = Number(oldPrice.split(')')[1]);

@@ -315,6 +315,20 @@ export async function main(ns) {
 
                 purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics);
 
+                const corporation = ns.corporation.getCorporation();
+                const moneyOnHome = ns.getServerMoneyAvailable("home");
+
+                let sharesToBuy = Math.floor(moneyOnHome / corporation.sharePrice)
+                if (sharesToBuy > corporation.issuedShares) {
+                    sharesToBuy = corporation.issuedShares;
+                }
+        
+                if (sharesToBuy > 0) {
+                    ns.corporation.buyBackShares(sharesToBuy);
+                }
+
+                analytics.shareBoughtBack = sharesToBuy;
+
                 analytics.moneyLeft = ns.getServerMoneyAvailable("home");
 
                 saveAnalytics(ns, analytics, true);
