@@ -168,8 +168,17 @@ export async function main(ns) {
                     if (material.desiredSellPrice === 0 || material.desiredSellPrice === "MP" || material.desiredSellPrice === "MP+5") {
                         ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", marketPrice);
                     } else {
+
+                        const materialData = ns.corporation.getMaterialData(material.name);
+                        const costOfGoodsSold = material.marketPrice / materialData.baseMarkup;
+
                         if (material.stored === 0) {
-                            const priceToSet = adjustPriceUp(material.desiredSellPrice, marketPrice);
+                            let priceToSet = adjustPriceUp(material.desiredSellPrice, marketPrice);
+
+                            if (priceToSet < costOfGoodsSold){
+                                priceToSet = costOfGoodsSold * 1.04;
+                            }
+
                             ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", priceToSet);
                         }
 
@@ -180,12 +189,8 @@ export async function main(ns) {
                                 priceToSet = adjustPriceDown(priceToSet, marketPrice, true);
                             }
 
-                            const materialData = ns.corporation.getMaterialData(material.name);
-
-                            const costOfGoodsSold = material.marketPrice / materialData.baseMarkup;
-
                             if (priceToSet < costOfGoodsSold){
-                                priceToSet = costOfGoodsSold * 0.1;
+                                priceToSet = costOfGoodsSold * 1.04;
                             }
 
                             ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", priceToSet);
