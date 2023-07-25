@@ -41,7 +41,7 @@ export async function main(ns) {
 
     if (corporation.public && corporation.state === 'START' & corporation.issuedShares > 0 && corporation.divisions.length > 1) {
         let moneyOnHome = ns.getServerMoneyAvailable("home");
-        const moneyReserved = stockMarketReserveMoney.capitalToReserveForTrading - stockMarketReserveMoney.investment;
+        const moneyReserved = stockMarketReserveMoney.capitalToReserveForTrading - stockMarketReserveMoney.moneyInvested;
 
         if(moneyReserved > 0){
             moneyOnHome -= moneyReserved;

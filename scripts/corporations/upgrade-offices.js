@@ -4,7 +4,7 @@ export async function main(ns) {
     }
     const corporation = ns.corporation.getCorporation();
 
-    const capitalReserve = 400_000_000_000;
+    const capitalReserve = 40_000_000_000;
     const liquidFunds = corporation.funds;
     const investableAmount = liquidFunds - capitalReserve;
 
@@ -38,11 +38,12 @@ export async function main(ns) {
             const aevumOffice = ns.corporation.getOffice(divisionName, aevum);
             const aevumHeadCount = aevumOffice.numEmployees;
 
-            const ishima = "Ishima";
-            const ishimaHeadCount = ns.corporation.getOffice(divisionName, ishima).numEmployees;
+            const volhaven = "Volhaven";
+            const volhavenHeadCount = ns.corporation.getOffice(divisionName, volhaven).numEmployees;
 
-            const expandOtherOffices = aevumHeadCount - ishimaHeadCount > 69;
+            const expandOtherOffices = aevumHeadCount - volhavenHeadCount > 69;
             const expandAevum = !expandOtherOffices;
+
 
             if  (aevumHeadCount < 5){
                 const countNeeded = 5 - aevumOffice.size;
@@ -68,8 +69,15 @@ export async function main(ns) {
 
             const citiesWithOfficesWhoArentAevum = division.cities.filter(city => city !== aevum);
 
+            if(volhavenHeadCount < 9 && division.products.length > 1){
+                for (const city of citiesWithOfficesWhoArentAevum) {
+                    const amountToAdd = 9 - volhavenHeadCount;
+                    ns.corporation.upgradeOfficeSize(divisionName, city, amountToAdd);
+                }
+            }
+
             if (expandOtherOffices) {
-                const costToExpand = ns.corporation.getOfficeSizeUpgradeCost(divisionName, ishima, 9) * 5;
+                const costToExpand = ns.corporation.getOfficeSizeUpgradeCost(divisionName, volhaven, 9) * 5;
 
                 if (costToExpand < investableAmount) {
                     for (const city of citiesWithOfficesWhoArentAevum) {

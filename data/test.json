@@ -1,11 +1,68 @@
-{
-    "marketPrice": 4632.3926944579225,
-    "desiredSellPrice": "MP",
-    "desiredSellAmount": "MAX",
-    "name": "Food",
-    "stored": 124217.39241871986,
-    "quality": 7.057012641137981,
-    "productionAmount": 97.1,
-    "actualSellAmount": 103.03476226695811,
-    "exports": []
-}
+[
+    {
+        "marketPrice": 5135.962819475409,
+        "desiredSellPrice": 2567.8036573733307,
+        "desiredSellAmount": "MAX",
+        "name": "Food",
+        "stored": 5346.92045679129,
+        "quality": 6.212724291346871,
+        "productionAmount": 508.8196874623001,
+        "actualSellAmount": 508.8478765287385,
+        "exports": []
+    },
+    {
+        "marketPrice": 4556.569762541201,
+        "desiredSellPrice": 1571.9980649916931,
+        "desiredSellAmount": "MAX",
+        "name": "Food",
+        "stored": 53298.2709952804,
+        "quality": 6.19855761048196,
+        "productionAmount": 433.4,
+        "actualSellAmount": 429.150342422903,
+        "exports": []
+    },
+    {
+        "marketPrice": 5065.135107831602,
+        "desiredSellPrice": 2067.3574023528913,
+        "desiredSellAmount": "MAX",
+        "name": "Food",
+        "stored": 4765.643353381815,
+        "quality": 6.1692129581244295,
+        "productionAmount": 476.56433533818154,
+        "actualSellAmount": 486.0393668346349,
+        "exports": []
+    },
+    {
+        "marketPrice": 5562.548865080234,
+        "desiredSellPrice": 3136.0443006322716,
+        "desiredSellAmount": "MAX",
+        "name": "Food",
+        "stored": 4949.658406481178,
+        "quality": 6.1966853674346964,
+        "productionAmount": 490.3723114347325,
+        "actualSellAmount": 486.5026905503422,
+        "exports": []
+    },
+    {
+        "marketPrice": 4818.168182110387,
+        "desiredSellPrice": 2538.859953291658,
+        "desiredSellAmount": "MAX",
+        "name": "Food",
+        "stored": 5346.100327600109,
+        "quality": 6.237626846925291,
+        "productionAmount": 514.3188818306458,
+        "actualSellAmount": 494.78038351006796,
+        "exports": []
+    },
+    {
+        "marketPrice": 4874.794348612634,
+        "desiredSellPrice": 2059.5674406928692,
+        "desiredSellAmount": "MAX",
+        "name": "Food",
+        "stored": 5212.515048766432,
+        "quality": 6.1738193446098775,
+        "productionAmount": 489.10907588657966,
+        "actualSellAmount": 484.72098709775656,
+        "exports": []
+    }
+]

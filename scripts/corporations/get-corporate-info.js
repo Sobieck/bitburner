@@ -39,7 +39,7 @@ export async function main(ns) {
         if(rawMaterialsProducer){
         
             for (const material of rawMaterialsProducer.materials) {
-                division.materials.push(ns.corporation.getMaterial(divisionName, "Aevum", material));
+                division.materials.push(ns.corporation.getMaterial(divisionName, "Sector-12", material));
             }            
         }
 

@@ -14,6 +14,10 @@ export async function main(ns) {
     }
 
     for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
+        if (ns.corporation.hasResearched(divisionName, "AutoBrew") && ns.corporation.hasResearched(divisionName, "AutoPartyManager")) {
+            continue;
+        }
+
         const division = ns.corporation.getDivision(divisionName);
 
         const divisionalProfitsLastCycle = division.lastCycleRevenue - division.lastCycleExpenses;
@@ -38,24 +42,24 @@ export async function main(ns) {
             for (const city of division.cities) {
                 const office = ns.corporation.getOffice(divisionName, city);
 
-                morales.push(office.avgMorale);
-                energies.push(office.avgEnergy);
+                morales.push(office.avgMorale * office.numEmployees);
+                energies.push(office.avgEnergy * office.numEmployees);
 
                 employeeCount += office.numEmployees;
             }
 
-            const averageMorale = averageArray(morales);
-            const averageEnergy = averageArray(energies);
+            const averageMorale = morales.reduce((acc, x) => acc + x, 0) / employeeCount;
+            const averageEnergy = energies.reduce((acc, x) => acc + x, 0) / employeeCount;;
 
             const teaCostPerHead = 500_000;
             divisionProfitsRecord.teaPartyCost = employeeCount * teaCostPerHead;
 
             let minimumMoraleAndEnergy = 70;
-            if (corporateProfits > 1_000_000_000_000){
+            if (corporateProfits > 1_000_000_000_000) {
                 minimumMoraleAndEnergy = 95;
             }
 
-            const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (averageMorale < minimumMoraleAndEnergy || averageEnergy < minimumMoraleAndEnergy) && corporateProfits > 5_000_000 && corporation.funds > 100_000_000_000;
+            const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (averageMorale < minimumMoraleAndEnergy || averageEnergy < minimumMoraleAndEnergy) && corporateProfits > 5_000_000 && corporation.funds > 20_000_000_000;
 
 
             const divisionalProfitsCanSustain = divisionProfitsRecord.sumOfProfitsInThisAccountingPeriod > divisionProfitsRecord.teaPartyCost;
@@ -82,12 +86,14 @@ export async function main(ns) {
                 let effects = [];
 
                 for (const city of division.cities) {
-                    if (party) {
+                    const office = ns.corporation.getOffice(divisionName, city);
+
+                    if (party && office.avgMorale < averageMorale + 10) {
                         const effect = ns.corporation.throwParty(divisionName, city, teaCostPerHead);
                         effects.push(effect);
                     }
 
-                    if (tea) {
+                    if (tea && office.avgEnergy < averageEnergy + 10) {
                         const effect = ns.corporation.buyTea(divisionName, city);
                         effects.push(effect);
                     }
@@ -125,7 +131,7 @@ function recordEffectiveness(average, effects, array) {
 
     mapToWorkOn.set(averageBracket, newAverageOverTime);
 
-   return Array.from(mapToWorkOn);
+    return Array.from(mapToWorkOn);
 }
 
 function averageArray(array) {

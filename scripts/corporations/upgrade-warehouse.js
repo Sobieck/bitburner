@@ -47,11 +47,11 @@ export async function main(ns) {
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
-            if (warehouse.size < 2000 && percentUsedOfWarehouse > 0.5 && moneyLeft > capitalReserve && profit > 100) { 
+            if (warehouse.size < 2000 && percentUsedOfWarehouse > 0.7 && moneyLeft > capitalReserve && profit > 100) { 
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
-            if (warehouse.size < 5000 && percentUsedOfWarehouse > 0.5 && moneyLeft > capitalReserve && profit > 1_000_000) { 
+            if (warehouse.size < 5000 && percentUsedOfWarehouse > 0.7 && moneyLeft > capitalReserve && profit > 1_000_000) { 
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
         }

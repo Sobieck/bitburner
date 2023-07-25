@@ -318,7 +318,7 @@ export async function main(ns) {
                 const corporation = ns.corporation.getCorporation();
                 const moneyOnHome = ns.getServerMoneyAvailable("home");
 
-                let sharesToBuy = Math.floor(moneyOnHome / corporation.sharePrice)
+                let sharesToBuy = Math.floor(moneyOnHome / corporation.sharePrice) - 10;
                 if (sharesToBuy > corporation.issuedShares) {
                     sharesToBuy = corporation.issuedShares;
                 }

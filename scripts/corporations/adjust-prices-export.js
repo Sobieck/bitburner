@@ -3,18 +3,6 @@ export async function main(ns) {
         return;
     }
 
-    const corporation = ns.corporation.getCorporation();
-
-    if (corporation.state !== "START") {
-        return;
-    }
-
-    if(corporation.divisions.length > 1){
-        if (!ns.corporation.hasUnlock("Export")) {
-            ns.corporation.purchaseUnlock("Export");
-        }
-    }
-
     const gidgetsFarm = "Gidget's Farm";
     const gidgetsSmokes = "Gidget's Smokes";
     const chemist = "Chemist Gidget's Lab";
@@ -54,10 +42,81 @@ export async function main(ns) {
         },
         {
             name: mining, materialsSold: ["Ore", "Minerals"], exports: [
-                    { importer: metal, material: "Ore" },
-                ]
+                { importer: metal, material: "Ore" },
+            ]
         },
     ]
+
+    const corporation = ns.corporation.getCorporation();
+
+    if (corporation.state !== "PRODUCTION") {
+        for (const divisionName of corporation.divisions) {
+            const division = ns.corporation.getDivision(divisionName);
+
+            if (division.makesProducts) {
+                continue;
+            }
+
+            const divisionalTie = divisionalTies.find(x => x.name === divisionName);
+
+            if (divisionalTie.materialsSold.length < 2) {
+                continue;
+            }
+
+            const citiesToShip = [];
+            let problemProduct;
+
+            for (const city of division.cities) {
+                if (ns.corporation.hasWarehouse(divisionName, city)) {
+                    for (const materialWeCareAbout of divisionalTie.materialsSold) {
+                        const material = ns.corporation.getMaterial(divisionName, city, materialWeCareAbout);
+
+                        for (const EXPORT of material.exports) {
+                            if (EXPORT.division === divisionName) {
+                                ns.corporation.cancelExportMaterial(divisionName, city, divisionName, EXPORT.city, material.name);
+                            }
+                        }
+
+                        if (material.stored > material.actualSellAmount * 3) {
+                            const warehouse = ns.corporation.getWarehouse(divisionName, city);
+                            const freeSpace = warehouse.size - warehouse.sizeUsed;
+
+                            if (freeSpace < 500) {
+                                if (!problemProduct || problemProduct.freeSpace > freeSpace) {
+                                    problemProduct = { material: material.name, city, freeSpace, amountToShip: material.stored / 20 };
+                                }
+                            }
+
+                            if (freeSpace > 1_000) {
+                                if (!citiesToShip.includes(city)) {
+                                    citiesToShip.push(city);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (problemProduct) {
+                for (const city of citiesToShip) {
+                    ns.corporation.exportMaterial(divisionName, problemProduct.city, divisionName, city, problemProduct.material, problemProduct.amountToShip);
+                }
+            }
+        }
+    }
+
+
+    if (corporation.state !== "START") {
+        return;
+    }
+
+    if (corporation.divisions.length > 1) {
+        if (!ns.corporation.hasUnlock("Export")) {
+            ns.corporation.purchaseUnlock("Export");
+        }
+    }
+
+
 
     const rawMaterialProducers = [];
     const importExportRelationships = [];
@@ -66,9 +125,9 @@ export async function main(ns) {
         if (corporation.divisions.includes(division.name)) {
             rawMaterialProducers.push({ producer: division.name, materials: division.materialsSold });
             for (const EXPORT of division.exports) {
-                if(corporation.divisions.includes(EXPORT.importer)){
+                if (corporation.divisions.includes(EXPORT.importer)) {
                     importExportRelationships.push({ exporter: division.name, importer: EXPORT.importer, material: EXPORT.material });
-                }                
+                }
             }
         }
     }
@@ -80,7 +139,7 @@ export async function main(ns) {
         for (const exportRelationship of exportRelationships) {
             for (const city of division.cities) {
                 ns.corporation.cancelExportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material);
-                if(ns.corporation.hasWarehouse(exportRelationship.importer, city)){
+                if (ns.corporation.hasWarehouse(exportRelationship.importer, city)) {
                     ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)");
                 }
             }
@@ -131,7 +190,7 @@ export async function main(ns) {
                         ns.corporation.sellProduct(divisionName, city, productName, "MAX", priceToSet, false)
                     }
 
-                    if (product.stored > 20) {
+                    if (product.stored > 30) {
                         const priceToSet = adjustPriceDown(product.desiredSellPrice, product.productionCost);
 
                         ns.corporation.sellProduct(divisionName, city, productName, "MAX", priceToSet, false);
@@ -174,21 +233,21 @@ export async function main(ns) {
                         if (material.stored === 0) {
                             let priceToSet = adjustPriceUp(material.desiredSellPrice, marketPrice);
 
-                            if (priceToSet < costOfGoodsSold){
+                            if (priceToSet < costOfGoodsSold) {
                                 priceToSet = costOfGoodsSold * 1.04;
                             }
 
                             ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", priceToSet);
                         }
 
-                        if (material.stored > 20) {
+                        if (material.stored > 30) {
                             let priceToSet = adjustPriceDown(material.desiredSellPrice, marketPrice);
 
-                            if  (material.stored > material.productionAmount * 2){
+                            if (material.stored > material.productionAmount * 4) {
                                 priceToSet = adjustPriceDown(priceToSet, marketPrice, true);
                             }
 
-                            if (priceToSet < costOfGoodsSold){
+                            if (priceToSet < costOfGoodsSold) {
                                 priceToSet = costOfGoodsSold * 1.04;
                             }
 
@@ -244,7 +303,7 @@ function adjustPriceDown(oldPrice, marketPrice, fastDrop = false) {
         }
     }
 
-    if (fastDrop){
+    if (fastDrop) {
         newPrice = oldPrice * 0.9;
     }
 

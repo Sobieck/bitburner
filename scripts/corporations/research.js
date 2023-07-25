@@ -9,7 +9,14 @@ export async function main(ns) {
         { name: "uPgrade: Capacity.I", prereqs: ["uPgrade: Fulcrum"], productOnly: true},
         { name: "uPgrade: Capacity.II", prereqs: [], productOnly: true},
         { name: "Drones - Assembly", prereqs: [ "Drones"] },
-        { name: "Self-Correcting Assemblers", prereqs: []}
+        { name: "Self-Correcting Assemblers", prereqs: []},
+        { name: "AutoBrew", prereqs: []},
+        { name: "AutoPartyManager", prereqs: []},
+        { name: "Go-Juice", prereqs: ["Automatic Drug Administration"]},
+        { name: "CPH4 Injections", prereqs: []},
+        { name: "Overclock", prereqs: []},
+        { name: "Sti.mu", prereqs: []},
+        { name: "Drones - Transport", prereqs: []},
     ];
 
     const corporation = ns.corporation.getCorporation();
