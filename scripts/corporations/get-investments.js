@@ -15,8 +15,8 @@ export async function main(ns) {
     // { round: 3, investment: 3_000_000_000 },
     
     const investmentWeWillTake = [
-        { round: 1, investment: 300_000_000 },   
-        { round: 2, investment: 1_000_000_000 },
+        { round: 1, investment: 300_000_000_000 },   
+        { round: 2, investment: 1_000_000_000_000 },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();
