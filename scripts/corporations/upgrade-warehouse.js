@@ -10,6 +10,18 @@ export async function main(ns) {
     for (const divisionName of corporation.divisions.filter(x => x !== "Gidget's Import/Export")) {
         const division = ns.corporation.getDivision(divisionName);
 
+        if(division.makesProducts && division.products.length < 2){
+            if(division.products.length === 0){
+                return;
+            }
+
+            const product = ns.corporation.getProduct(divisionName, "Aevum", division.products[0]);
+
+            if(product.developmentProgress !== 100){
+                return;
+            }
+        }
+
         const industryData = ns.corporation.getIndustryData(division.type); 
 
         for (let city of division.cities) {
@@ -31,7 +43,7 @@ export async function main(ns) {
             const moneyLeft = corporation.funds - warehouseUpgradeCost;
             const profit = corporation.revenue - corporation.expenses;
 
-            if (warehouse.size < 300 && percentUsedOfWarehouse > 0.5){
+            if (warehouse.size < 400 && percentUsedOfWarehouse > 0.5){
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
