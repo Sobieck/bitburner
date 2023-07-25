@@ -55,7 +55,12 @@ export async function main(ns) {
         }
 
         for (const city of division.cities) {
+            if(!ns.corporation.hasWarehouse(divisionName, city)){
+                continue;
+            }
+
             const warehouse = ns.corporation.getWarehouse(divisionName, city);
+
             const amountToFillWithMultipliers = warehouse.size * fillXPercentOfWarehouseWithMultiplerMaterial;
 
             for (let material of materialsToBuy) {

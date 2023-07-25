@@ -155,19 +155,19 @@
     },
     "corporation": {
         "name": "Gidget's Keiretsu",
-        "funds": -11075030516.380043,
-        "revenue": 13667745.856902916,
-        "expenses": 8706174.305428144,
+        "funds": 38210572338.22221,
+        "revenue": 24870464.485314585,
+        "expenses": 9718981.118344482,
         "public": false,
         "totalShares": 1000000000,
         "numShares": 550000000,
         "shareSaleCooldown": 0,
         "issuedShares": 0,
-        "sharePrice": 0.02237193987475499,
+        "sharePrice": 0.014574237204742917,
         "dividendRate": 0,
         "dividendTax": 0.15,
         "dividendEarnings": 0,
-        "state": "PURCHASE",
+        "state": "PRODUCTION",
         "divisions": [
             "Gidget's Farm",
             "Gidget's Smokes"
@@ -177,14 +177,14 @@
         {
             "name": "Gidget's Farm",
             "type": "Agriculture",
-            "awareness": 3.9510000000000005,
-            "popularity": 1.2330000000000019,
-            "productionMult": 421.24308828194233,
-            "researchPoints": 210.7392295598733,
-            "lastCycleRevenue": 13667745.856902916,
-            "lastCycleExpenses": 8661893.285428144,
+            "awareness": 3.407,
+            "popularity": 1.1064000000000007,
+            "productionMult": 414.54043438211284,
+            "researchPoints": 105.07052384098527,
+            "lastCycleRevenue": 24870464.485314585,
+            "lastCycleExpenses": 9667744.570712904,
             "thisCycleRevenue": 0,
-            "thisCycleExpenses": 59896.014000000054,
+            "thisCycleExpenses": 129648781.11437915,
             "numAdVerts": 1,
             "cities": [
                 "Sector-12",
@@ -204,88 +204,16 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 9,
-                    "avgEnergy": 63.258054034170584,
-                    "avgMorale": 59.645018684771806,
-                    "totalExperience": 679.7730000000029,
+                    "avgEnergy": 73.24277005585547,
+                    "avgMorale": 67.78763081731485,
+                    "totalExperience": 653.7380000000012,
                     "employeeProductionByJob": {
-                        "total": 1500.909722710735,
-                        "Operations": 312.00248602139607,
-                        "Engineer": 327.4705166186688,
-                        "Business": 91.1273625759255,
-                        "Management": 381.10322663332613,
-                        "Research & Development": 389.2061308614184,
-                        "Intern": 0,
-                        "Unassigned": 0
-                    },
-                    "employeeJobs": {
-                        "Operations": 2,
-                        "Engineer": 2,
-                        "Business": 1,
-                        "Management": 2,
-                        "Research & Development": 2,
-                        "Intern": 0,
-                        "Unassigned": 0
-                    },
-                    "warehouse": {
-                        "level": 20,
-                        "city": "Sector-12",
-                        "size": 4000.000000000002,
-                        "sizeUsed": 3104.9913106636322,
-                        "smartSupplyEnabled": true
-                    }
-                },
-                {
-                    "city": "Aevum",
-                    "size": 9,
-                    "maxEnergy": 100,
-                    "maxMorale": 100,
-                    "numEmployees": 9,
-                    "avgEnergy": 59.028069214332454,
-                    "avgMorale": 61.584019789183785,
-                    "totalExperience": 684.7730000000029,
-                    "employeeProductionByJob": {
-                        "total": 1496.3724583279045,
-                        "Operations": 312.0675319865821,
-                        "Engineer": 333.96585075008835,
-                        "Business": 89.76907511325432,
-                        "Management": 370.3119326699168,
-                        "Research & Development": 390.258067808063,
-                        "Intern": 0,
-                        "Unassigned": 0
-                    },
-                    "employeeJobs": {
-                        "Operations": 2,
-                        "Engineer": 2,
-                        "Business": 1,
-                        "Management": 2,
-                        "Research & Development": 2,
-                        "Intern": 0,
-                        "Unassigned": 0
-                    },
-                    "warehouse": {
-                        "level": 18,
-                        "city": "Aevum",
-                        "size": 3600.000000000002,
-                        "sizeUsed": 2787.151947900202,
-                        "smartSupplyEnabled": true
-                    }
-                },
-                {
-                    "city": "Chongqing",
-                    "size": 9,
-                    "maxEnergy": 100,
-                    "maxMorale": 100,
-                    "numEmployees": 9,
-                    "avgEnergy": 69.64347215033703,
-                    "avgMorale": 59.35101980743042,
-                    "totalExperience": 752.7730000000029,
-                    "employeeProductionByJob": {
-                        "total": 1738.3544566391306,
-                        "Operations": 351.8503734229445,
-                        "Engineer": 380.25990492751237,
-                        "Business": 111.81320205641029,
-                        "Management": 454.68302801010816,
-                        "Research & Development": 439.7479482221553,
+                        "total": 2199.503233833461,
+                        "Operations": 458.560710883307,
+                        "Engineer": 474.11569065136837,
+                        "Business": 133.50501639430263,
+                        "Management": 573.0515538253587,
+                        "Research & Development": 560.270262079124,
                         "Intern": 0,
                         "Unassigned": 0
                     },
@@ -300,9 +228,81 @@
                     },
                     "warehouse": {
                         "level": 21,
-                        "city": "Chongqing",
+                        "city": "Sector-12",
                         "size": 4200.000000000002,
-                        "sizeUsed": 3832.0694682316916,
+                        "sizeUsed": 3843.2072218328385,
+                        "smartSupplyEnabled": true
+                    }
+                },
+                {
+                    "city": "Aevum",
+                    "size": 9,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 9,
+                    "avgEnergy": 61.519444823097814,
+                    "avgMorale": 77.19304824760871,
+                    "totalExperience": 667.7380000000012,
+                    "employeeProductionByJob": {
+                        "total": 2095.6461936585974,
+                        "Operations": 427.1270824834952,
+                        "Engineer": 440.7122375912378,
+                        "Business": 132.56411703352978,
+                        "Management": 544.9580306299612,
+                        "Research & Development": 550.2847259203734,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 2,
+                        "Engineer": 2,
+                        "Business": 1,
+                        "Management": 2,
+                        "Research & Development": 2,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 21,
+                        "city": "Aevum",
+                        "size": 4200.000000000002,
+                        "sizeUsed": 3784.8352831166712,
+                        "smartSupplyEnabled": true
+                    }
+                },
+                {
+                    "city": "Chongqing",
+                    "size": 9,
+                    "maxEnergy": 100,
+                    "maxMorale": 100,
+                    "numEmployees": 9,
+                    "avgEnergy": 70.81624038469126,
+                    "avgMorale": 69.81356850055113,
+                    "totalExperience": 642.7380000000012,
+                    "employeeProductionByJob": {
+                        "total": 2208.0488962611525,
+                        "Operations": 458.026192693246,
+                        "Engineer": 481.82596353533376,
+                        "Business": 134.02495418143113,
+                        "Management": 553.0199379841468,
+                        "Research & Development": 581.1518478669946,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "employeeJobs": {
+                        "Operations": 2,
+                        "Engineer": 2,
+                        "Business": 1,
+                        "Management": 2,
+                        "Research & Development": 2,
+                        "Intern": 0,
+                        "Unassigned": 0
+                    },
+                    "warehouse": {
+                        "level": 22,
+                        "city": "Chongqing",
+                        "size": 4400.000000000002,
+                        "sizeUsed": 3895.172093297164,
                         "smartSupplyEnabled": true
                     }
                 },
@@ -312,16 +312,16 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 9,
-                    "avgEnergy": 60.20327125518813,
-                    "avgMorale": 65.82157940410023,
-                    "totalExperience": 689.7730000000029,
+                    "avgEnergy": 62.87814180610133,
+                    "avgMorale": 69.40677210619286,
+                    "totalExperience": 722.7380000000012,
                     "employeeProductionByJob": {
-                        "total": 1711.603162009298,
-                        "Operations": 351.55535185154594,
-                        "Engineer": 367.70540748479596,
-                        "Business": 106.47813983748941,
-                        "Management": 438.8086869150719,
-                        "Research & Development": 447.05557592039486,
+                        "total": 2041.911874087686,
+                        "Operations": 408.7403937740375,
+                        "Engineer": 439.55065006490236,
+                        "Business": 134.60149010132432,
+                        "Management": 548.1424211292733,
+                        "Research & Development": 510.87691901814844,
                         "Intern": 0,
                         "Unassigned": 0
                     },
@@ -335,10 +335,10 @@
                         "Unassigned": 0
                     },
                     "warehouse": {
-                        "level": 19,
+                        "level": 22,
                         "city": "New Tokyo",
-                        "size": 3800.000000000002,
-                        "sizeUsed": 2956.142866869257,
+                        "size": 4400.000000000002,
+                        "sizeUsed": 4058.2573989699777,
                         "smartSupplyEnabled": true
                     }
                 },
@@ -348,16 +348,16 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 9,
-                    "avgEnergy": 62.85119203783114,
-                    "avgMorale": 56.16088479147326,
-                    "totalExperience": 600.7730000000029,
+                    "avgEnergy": 70.8753543892443,
+                    "avgMorale": 72.53253914089774,
+                    "totalExperience": 715.7380000000012,
                     "employeeProductionByJob": {
-                        "total": 1478.5749100133617,
-                        "Operations": 301.93341406176364,
-                        "Engineer": 317.61994605918517,
-                        "Business": 93.82867159956795,
-                        "Management": 393.5269318308737,
-                        "Research & Development": 371.6659464619711,
+                        "total": 2282.51737446739,
+                        "Operations": 467.90609215744644,
+                        "Engineer": 481.2630677336812,
+                        "Business": 144.4254042995603,
+                        "Management": 617.926081573514,
+                        "Research & Development": 570.9967287031877,
                         "Intern": 0,
                         "Unassigned": 0
                     },
@@ -371,10 +371,10 @@
                         "Unassigned": 0
                     },
                     "warehouse": {
-                        "level": 17,
+                        "level": 22,
                         "city": "Ishima",
-                        "size": 3400.0000000000014,
-                        "sizeUsed": 2463.503607125782,
+                        "size": 4400.000000000002,
+                        "sizeUsed": 4082.296086643236,
                         "smartSupplyEnabled": true
                     }
                 },
@@ -384,16 +384,16 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 9,
-                    "avgEnergy": 54.05658341808602,
-                    "avgMorale": 58.10941032275925,
-                    "totalExperience": 660.7730000000029,
+                    "avgEnergy": 74.77337391188577,
+                    "avgMorale": 64.4197468840189,
+                    "totalExperience": 668.7380000000012,
                     "employeeProductionByJob": {
-                        "total": 1285.394731658401,
-                        "Operations": 266.08521441298456,
-                        "Engineer": 277.94926809409105,
-                        "Business": 78.59260642830098,
-                        "Management": 325.94007950727666,
-                        "Research & Development": 336.8275632157477,
+                        "total": 2167.31379020888,
+                        "Operations": 439.71023449617365,
+                        "Engineer": 460.94411998162303,
+                        "Business": 137.96807276902533,
+                        "Management": 558.1429078307673,
+                        "Research & Development": 570.5484551312909,
                         "Intern": 0,
                         "Unassigned": 0
                     },
@@ -410,7 +410,7 @@
                         "level": 21,
                         "city": "Volhaven",
                         "size": 4200.000000000002,
-                        "sizeUsed": 2993.1386516234343,
+                        "sizeUsed": 3804.5850564525695,
                         "smartSupplyEnabled": true
                     }
                 }
@@ -418,47 +418,41 @@
             "productObjects": [],
             "materials": [
                 {
-                    "marketPrice": 4979.2592858003645,
-                    "desiredSellPrice": 1721.1746665436808,
+                    "marketPrice": 5066.634545988072,
+                    "desiredSellPrice": 1756.433309275865,
                     "desiredSellAmount": "MAX",
                     "name": "Food",
-                    "stored": 24700.18413979462,
-                    "quality": 4.241738778540953,
-                    "productionAmount": 559.9195647797862,
-                    "actualSellAmount": 512.6440268885626,
+                    "stored": 25134.440994019384,
+                    "quality": 3.8074247208838186,
+                    "productionAmount": 627.0677462120275,
+                    "actualSellAmount": 548.8514144689508,
                     "exports": []
                 },
                 {
-                    "marketPrice": 2926.1932488482234,
-                    "desiredSellPrice": 974.9487147962441,
+                    "marketPrice": 3014.886893410009,
+                    "desiredSellPrice": 833.6161612034435,
                     "desiredSellAmount": "MAX",
                     "name": "Plants",
-                    "stored": 110.07442244998583,
-                    "quality": 4.2661245867029685,
-                    "productionAmount": 559.9195647797862,
-                    "actualSellAmount": 548.9121225347876,
-                    "exports": [
-                        {
-                            "division": "Gidget's Smokes",
-                            "city": "Aevum",
-                            "amount": "-(IPROD)"
-                        }
-                    ]
+                    "stored": 14107.016325139099,
+                    "quality": 3.8298587850073678,
+                    "productionAmount": 627.0677462120275,
+                    "actualSellAmount": 734.4525757725962,
+                    "exports": []
                 }
             ]
         },
         {
             "name": "Gidget's Smokes",
             "type": "Tobacco",
-            "awareness": 34.33651132996506,
-            "popularity": 11.850400246448729,
-            "productionMult": 18.130799845869003,
-            "researchPoints": 37.677656799673976,
+            "awareness": 40.69944385604795,
+            "popularity": 14.0416735792107,
+            "productionMult": 1.525319199884518,
+            "researchPoints": 39.1384619594428,
             "lastCycleRevenue": 0,
-            "lastCycleExpenses": 44281.020000000004,
+            "lastCycleExpenses": 51236.54763157897,
             "thisCycleRevenue": 0,
-            "thisCycleExpenses": 88562.39999999997,
-            "numAdVerts": 11,
+            "thisCycleExpenses": 204947.0005263159,
+            "numAdVerts": 13,
             "cities": [
                 "Sector-12",
                 "Aevum",
@@ -479,14 +473,14 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 3,
-                    "avgEnergy": 74.57611382305392,
-                    "avgMorale": 75.94100914409808,
-                    "totalExperience": 186.1845000000003,
+                    "avgEnergy": 83.03173071607924,
+                    "avgMorale": 86.26278348853067,
+                    "totalExperience": 206.17100000000028,
                     "employeeProductionByJob": {
-                        "total": 681.4394788472711,
-                        "Operations": 253.24620429662744,
-                        "Engineer": 268.98942445430725,
-                        "Business": 159.2038500963364,
+                        "total": 856.2940985155831,
+                        "Operations": 325.8609664190576,
+                        "Engineer": 334.24604223204454,
+                        "Business": 196.1870898644809,
                         "Management": 0,
                         "Research & Development": 0,
                         "Intern": 0,
@@ -502,47 +496,40 @@
                         "Unassigned": 0
                     },
                     "warehouse": {
-                        "level": 11,
+                        "level": 1,
                         "city": "Sector-12",
-                        "size": 2200.000000000001,
-                        "sizeUsed": 1198.1,
+                        "size": 200.00000000000009,
+                        "sizeUsed": 124.3,
                         "smartSupplyEnabled": true
                     }
                 },
                 {
                     "city": "Aevum",
-                    "size": 65,
+                    "size": 75,
                     "maxEnergy": 100,
                     "maxMorale": 100,
-                    "numEmployees": 65,
-                    "avgEnergy": 69.9772373141085,
-                    "avgMorale": 67.95275177389958,
-                    "totalExperience": 4891.877499999995,
+                    "numEmployees": 75,
+                    "avgEnergy": 69.64809938074674,
+                    "avgMorale": 73.17401527423335,
+                    "totalExperience": 5933.110000000007,
                     "employeeProductionByJob": {
-                        "total": 13555.146019729536,
-                        "Operations": 2638.7644552370316,
-                        "Engineer": 2786.517942540955,
-                        "Business": 1565.3975506926026,
-                        "Management": 3212.874826440788,
-                        "Research & Development": 3351.5912448181584,
+                        "total": 18262.984059313447,
+                        "Operations": 3534.260772584569,
+                        "Engineer": 3687.1153881070272,
+                        "Business": 2137.037736940627,
+                        "Management": 4415.847457418251,
+                        "Research & Development": 4488.722704262974,
                         "Intern": 0,
                         "Unassigned": 0
                     },
                     "employeeJobs": {
-                        "Operations": 13,
-                        "Engineer": 13,
-                        "Business": 13,
-                        "Management": 13,
-                        "Research & Development": 13,
+                        "Operations": 15,
+                        "Engineer": 15,
+                        "Business": 15,
+                        "Management": 15,
+                        "Research & Development": 15,
                         "Intern": 0,
                         "Unassigned": 0
-                    },
-                    "warehouse": {
-                        "level": 11,
-                        "city": "Aevum",
-                        "size": 2200.000000000001,
-                        "sizeUsed": 1206.1,
-                        "smartSupplyEnabled": true
                     }
                 },
                 {
@@ -551,14 +538,14 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 3,
-                    "avgEnergy": 76.47134862224121,
-                    "avgMorale": 92.75585865219404,
-                    "totalExperience": 231.1845000000003,
+                    "avgEnergy": 84.38481850865575,
+                    "avgMorale": 78.71627278998606,
+                    "totalExperience": 204.17100000000028,
                     "employeeProductionByJob": {
-                        "total": 769.3633991349686,
-                        "Operations": 287.0827554553036,
-                        "Engineer": 301.63846326161325,
-                        "Business": 180.64218041805182,
+                        "total": 831.8606380278193,
+                        "Operations": 320.58629791597275,
+                        "Engineer": 331.99870568109054,
+                        "Business": 179.27563443075593,
                         "Management": 0,
                         "Research & Development": 0,
                         "Intern": 0,
@@ -572,13 +559,6 @@
                         "Research & Development": 0,
                         "Intern": 0,
                         "Unassigned": 0
-                    },
-                    "warehouse": {
-                        "level": 11,
-                        "city": "Chongqing",
-                        "size": 2200.000000000001,
-                        "sizeUsed": 1206.1,
-                        "smartSupplyEnabled": true
                     }
                 },
                 {
@@ -587,14 +567,14 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 3,
-                    "avgEnergy": 79.72736665646251,
-                    "avgMorale": 88.96219153011911,
-                    "totalExperience": 199.1845000000003,
+                    "avgEnergy": 89.77305397381392,
+                    "avgMorale": 81.41403500047402,
+                    "totalExperience": 181.17100000000028,
                     "employeeProductionByJob": {
-                        "total": 812.1286422034938,
-                        "Operations": 306.58453154782154,
-                        "Engineer": 313.62399829502516,
-                        "Business": 191.92011236064704,
+                        "total": 896.9843516253886,
+                        "Operations": 334.53436758052425,
+                        "Engineer": 359.9233867006099,
+                        "Business": 202.5265973442544,
                         "Management": 0,
                         "Research & Development": 0,
                         "Intern": 0,
@@ -608,13 +588,6 @@
                         "Research & Development": 0,
                         "Intern": 0,
                         "Unassigned": 0
-                    },
-                    "warehouse": {
-                        "level": 11,
-                        "city": "New Tokyo",
-                        "size": 2200.000000000001,
-                        "sizeUsed": 1206.1,
-                        "smartSupplyEnabled": true
                     }
                 },
                 {
@@ -623,14 +596,14 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 3,
-                    "avgEnergy": 71.86573166944883,
-                    "avgMorale": 88.96538990153775,
-                    "totalExperience": 244.1845000000003,
+                    "avgEnergy": 82.49898396791903,
+                    "avgMorale": 78.98780089208,
+                    "totalExperience": 232.17100000000028,
                     "employeeProductionByJob": {
-                        "total": 731.9267621234313,
-                        "Operations": 270.4683805897401,
-                        "Engineer": 292.36947681344054,
-                        "Business": 169.08890472025078,
+                        "total": 741.5098396756512,
+                        "Operations": 279.0688758261785,
+                        "Engineer": 290.19576017603976,
+                        "Business": 172.24520367343294,
                         "Management": 0,
                         "Research & Development": 0,
                         "Intern": 0,
@@ -644,13 +617,6 @@
                         "Research & Development": 0,
                         "Intern": 0,
                         "Unassigned": 0
-                    },
-                    "warehouse": {
-                        "level": 11,
-                        "city": "Ishima",
-                        "size": 2200.000000000001,
-                        "sizeUsed": 1206.1,
-                        "smartSupplyEnabled": true
                     }
                 },
                 {
@@ -659,14 +625,14 @@
                     "maxEnergy": 100,
                     "maxMorale": 100,
                     "numEmployees": 3,
-                    "avgEnergy": 82.98753647165451,
-                    "avgMorale": 74.03418372378802,
-                    "totalExperience": 234.1845000000003,
+                    "avgEnergy": 86.26598365592982,
+                    "avgMorale": 78.18091629795241,
+                    "totalExperience": 265.1710000000003,
                     "employeeProductionByJob": {
-                        "total": 678.8530961610356,
-                        "Operations": 254.46189336319972,
-                        "Engineer": 275.8831121374875,
-                        "Business": 148.50809066034842,
+                        "total": 822.8219359687398,
+                        "Operations": 297.6066321294676,
+                        "Engineer": 321.4412903258557,
+                        "Business": 203.77401351341652,
                         "Management": 0,
                         "Research & Development": 0,
                         "Intern": 0,
@@ -680,13 +646,6 @@
                         "Research & Development": 0,
                         "Intern": 0,
                         "Unassigned": 0
-                    },
-                    "warehouse": {
-                        "level": 11,
-                        "city": "Volhaven",
-                        "size": 2200.000000000001,
-                        "sizeUsed": 1206.1,
-                        "smartSupplyEnabled": true
                     }
                 }
             ],
@@ -709,7 +668,7 @@
                     "stored": 0,
                     "productionAmount": 0,
                     "actualSellAmount": 0,
-                    "developmentProgress": 10.418743518304748
+                    "developmentProgress": 10.316661330101244
                 }
             ],
             "materials": []

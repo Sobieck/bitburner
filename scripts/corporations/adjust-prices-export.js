@@ -83,7 +83,9 @@ export async function main(ns) {
         for (const exportRelationship of exportRelationships) {
             for (const city of division.cities) {
                 ns.corporation.cancelExportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material);
-                ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)");
+                if(ns.corporation.hasWarehouse(exportRelationship.importer, city)){
+                    ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)");
+                }
             }
         }
 
