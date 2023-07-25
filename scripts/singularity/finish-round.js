@@ -3,7 +3,7 @@ let updatedMoneyEstimate = false;
 
 export async function main(ns) {
 
-    if (!ns.stock.has4SDataTIXAPI() && !ns.corporation.hasCorporation()) {
+    if (!ns.stock.has4SDataTIXAPI() || !ns.corporation.hasCorporation()) {
         return;
     }
 

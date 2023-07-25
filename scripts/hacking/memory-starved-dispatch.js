@@ -38,7 +38,7 @@ export async function main(ns) {
             x.server.moneyAvailable,
         ))
 
-    if (ns.getHackingLevel() < 160) {
+    if (ns.getHackingLevel() < 250) {
         allMachinesByOrderOfValue = allMachinesByOrderOfValue
             .sort((a, b) => a.hackDifficulty - b.hackDifficulty)
     }

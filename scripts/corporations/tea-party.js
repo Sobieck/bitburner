@@ -13,7 +13,7 @@ export async function main(ns) {
         divisionalCorporateProfits = new Map(JSON.parse(ns.read(divisionalCorporateProfitsFile)));
     }
 
-    for (const divisionName of corporation.divisions) {
+    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
         const division = ns.corporation.getDivision(divisionName);
 
         const divisionalProfitsLastCycle = division.lastCycleRevenue - division.lastCycleExpenses;

@@ -24,7 +24,7 @@ export async function main(ns) {
         { type: "Research & Development", number: 1 }
     ];
 
-    for (const divisionName of corporation.divisions) {
+    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
         const division = ns.corporation.getDivision(divisionName);
 
         for (let [key, city] of Object.entries(ns.enums.CityName)) {
@@ -43,6 +43,11 @@ export async function main(ns) {
 
             const expandOtherOffices = aevumHeadCount - ishimaHeadCount > 69;
             const expandAevum = !expandOtherOffices;
+
+            if  (aevumHeadCount < 5){
+                const countNeeded = 5 - aevumOffice.size;
+                ns.corporation.upgradeOfficeSize(divisionName, aevum, countNeeded)
+            }
 
             if (expandAevum) {
                 const costToExpand = ns.corporation.getOfficeSizeUpgradeCost(divisionName, aevum, 5);
@@ -83,9 +88,8 @@ export async function main(ns) {
             const profit = division.lastCycleRevenue - division.lastCycleExpenses;
 
             const constants = [
-                { minProfit: 1_000_000, officeSizeGoal: 9, minLiquidFunds: 200_000_000_000 },
+                { minProfit: 0, officeSizeGoal: 9, minLiquidFunds: 20_000_000_000 },
                 { minProfit: 10_000_000, officeSizeGoal: 18, minLiquidFunds: 400_000_000_000 },
-                { minLoss: -500_000, officeSizeGoal: 32, minLiquidFunds: 10_000_000_000_000 },
                 { minLoss: -900_000, officeSizeGoal: 64, minLiquidFunds: 10_000_000_000_000 },
             ]
 

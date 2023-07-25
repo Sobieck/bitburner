@@ -7,7 +7,7 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
-    for (const divisionName of corporation.divisions) {
+    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
         const materialGoals = [];
 
         const division = ns.corporation.getDivision(divisionName);

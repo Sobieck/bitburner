@@ -167,7 +167,7 @@ export async function main(ns) {
         moneyAvailable = 5_000_000_000;
     }
 
-    const onlyInvestIfWeHaveMoreThan = 20_000_000;
+    const onlyInvestIfWeHaveMoreThan = 12_000_000;
 
     if (moneyAvailable > onlyInvestIfWeHaveMoreThan && !stopTradingExists) {
         let stocksToTrade = stockRecords

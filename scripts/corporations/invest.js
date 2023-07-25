@@ -5,7 +5,7 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
-    const capitalReserve = 400_000_000_000;
+    const capitalReserve = 40_000_000_000;
     const liquidFunds = corporation.funds;
     const investableAmount = liquidFunds - capitalReserve;
 
@@ -57,7 +57,7 @@ export async function main(ns) {
         }
     }
 
-    for (const divisionName of corporation.divisions) {
+    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
         const division = ns.corporation.getDivision(divisionName);
 
         if (division.numAdVerts === 0) {
@@ -94,6 +94,7 @@ export async function main(ns) {
 
 function initialUpgrades(corporation, ns) {
     const initialUpgrades = [
+        "DreamSense",
         "FocusWires",
         "Neural Accelerators",
         "Speech Processor Implants",
@@ -106,19 +107,29 @@ function initialUpgrades(corporation, ns) {
         ns.corporation.purchaseUnlock(smartSupplyName);
     }
 
-    for (const upgrade of initialUpgrades) {
-        const upgradeLevel = ns.corporation.getUpgradeLevel(upgrade);
-        const upgradeCost = ns.corporation.getUpgradeLevelCost(upgrade);
+    for (const divisionName of corporation.divisions) {
+        const division = ns.corporation.getDivision(divisionName);
 
-        const reserve = 10_000_000_000;
-        const fundsLessReserve = ns.corporation.getCorporation().funds - reserve;
-
-        if (upgradeLevel < 2 && upgradeCost < fundsLessReserve) {
-            ns.corporation.levelUpgrade(upgrade);
+        if (division.numAdVerts === 0) {
+            ns.corporation.hireAdVert(divisionName);
         }
     }
 
     const profit = corporation.revenue - corporation.expenses;
+
+    if(profit > 100_000){
+        for (const upgrade of initialUpgrades) {
+            const upgradeLevel = ns.corporation.getUpgradeLevel(upgrade);
+            const upgradeCost = ns.corporation.getUpgradeLevelCost(upgrade);
+    
+            const reserve = 10_000_000_000;
+            const fundsLessReserve = ns.corporation.getCorporation().funds - reserve;
+    
+            if (upgradeLevel < 2 && upgradeCost < fundsLessReserve) {
+                ns.corporation.levelUpgrade(upgrade);
+            }
+        }
+    }
 
     const thingsToUpgrade = [
         "Smart Factories",

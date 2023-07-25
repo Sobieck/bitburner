@@ -70,7 +70,8 @@ export async function main(ns) {
         'scripts/corporations/tea-party.js',
         'scripts/corporations/adjust-prices-export.js',
         'scripts/corporations/get-investments.js',
-        'scripts/corporations/bribe-factions.js',
+        'scripts/corporations/bribe-factions.js', 
+        'scripts/corporations/import-export.js', 
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);

@@ -9,6 +9,12 @@ export async function main(ns) {
         return;
     }
 
+    if(corporation.divisions.length > 1){
+        if (!ns.corporation.hasUnlock("Export")) {
+            ns.corporation.purchaseUnlock("Export");
+        }
+    }
+
     const gidgetsFarm = "Gidget's Farm";
     const gidgetsSmokes = "Gidget's Smokes";
     const chemist = "Chemist Gidget's Lab";
@@ -60,12 +66,14 @@ export async function main(ns) {
         if (corporation.divisions.includes(division.name)) {
             rawMaterialProducers.push({ producer: division.name, materials: division.materialsSold });
             for (const EXPORT of division.exports) {
-                importExportRelationships.push({ exporter: division.name, importer: EXPORT.importer, material: EXPORT.material });
+                if(corporation.divisions.includes(EXPORT.importer)){
+                    importExportRelationships.push({ exporter: division.name, importer: EXPORT.importer, material: EXPORT.material });
+                }                
             }
         }
     }
 
-    for (const divisionName of corporation.divisions) {
+    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
         const division = ns.corporation.getDivision(divisionName);
 
         const divisionHasExportRelationship = importExportRelationships.find(x => x.exporter === divisionName);
@@ -76,12 +84,6 @@ export async function main(ns) {
             for (const city of division.cities) {
                 ns.corporation.cancelExportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material);
                 ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)");
-            }
-        }
-
-        if (divisionHasExportRelationship) {
-            for (const city of division.cities) {
-
             }
         }
 
@@ -140,7 +142,7 @@ export async function main(ns) {
         }
 
         const rawMaterialProducer = rawMaterialProducers.find(x => x.producer === divisionName);
-        //not working
+
         if (rawMaterialProducer) {
             for (const city of division.cities) {
                 for (const materialName of rawMaterialProducer.materials) {
@@ -172,7 +174,19 @@ export async function main(ns) {
                         }
 
                         if (material.stored > 20) {
-                            const priceToSet = adjustPriceDown(material.desiredSellPrice, marketPrice);
+                            let priceToSet = adjustPriceDown(material.desiredSellPrice, marketPrice);
+
+                            if  (material.stored > material.productionAmount * 2){
+                                priceToSet = adjustPriceDown(priceToSet, marketPrice, true);
+                            }
+
+                            const materialData = ns.corporation.getMaterialData(material.name);
+
+                            const costOfGoodsSold = material.marketPrice / materialData.baseMarkup;
+
+                            if (priceToSet < costOfGoodsSold){
+                                priceToSet = costOfGoodsSold * 0.1;
+                            }
 
                             ns.corporation.sellMaterial(divisionName, city, material.name, "MAX", priceToSet);
                         }
@@ -210,7 +224,7 @@ function adjustPriceUp(oldPrice, marketPrice) {
     return newPrice;
 }
 
-function adjustPriceDown(oldPrice, marketPrice) {
+function adjustPriceDown(oldPrice, marketPrice, fastDrop) {
 
     if (isNaN(oldPrice)) {
         const adjuster = Number(oldPrice.split(')')[1]);
@@ -224,6 +238,10 @@ function adjustPriceDown(oldPrice, marketPrice) {
         } else {
             newPrice = oldPrice - 5;
         }
+    }
+
+    if (fastDrop){
+        newPrice = oldPrice * 0.9;
     }
 
     if (oldPrice < 0) {

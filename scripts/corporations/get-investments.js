@@ -6,11 +6,26 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
     const profit = corporation.revenue - corporation.expenses;
 
-    if (corporation.public === false && corporation.totalShares === corporation.numShares) {
-        const investmentOffer = ns.corporation.getInvestmentOffer();
-        
-        if(investmentOffer.funds > 1_000_000_000_000){
-            ns.corporation.acceptInvestmentOffer()
+    // ns.tprint(ns.corporation.getInvestmentOffer())
+
+    ///{"funds":96283140000,"shares":100000000,"round":1}
+
+    // { round: 1, investment: 100_000_000 },
+    // { round: 2, investment: 300_000_000 }, // worked, but I bet we can do better
+    // { round: 3, investment: 3_000_000_000 },
+    
+    const investmentWeWillTake = [
+        { round: 1, investment: 300_000_000 },   
+        { round: 2, investment: 1_000_000_000 },
+    ]
+
+    const investmentOffer = ns.corporation.getInvestmentOffer();
+
+    if (corporation.public === false) {
+        for (const minimumInvestment of investmentWeWillTake) {
+            if(investmentOffer.round === minimumInvestment.round && investmentOffer.funds > minimumInvestment.investment) {
+                ns.corporation.acceptInvestmentOffer();
+            }
         }
     }
 

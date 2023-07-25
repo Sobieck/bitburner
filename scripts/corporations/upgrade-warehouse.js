@@ -6,7 +6,8 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
     const capitalReserve = 40_000_000_000;
 
-    for (const divisionName of corporation.divisions) {
+
+    for (const divisionName of corporation.divisions.filter(x => x !== "Gidget's Import/Export")) {
         const division = ns.corporation.getDivision(divisionName);
 
         const industryData = ns.corporation.getIndustryData(division.type); 
@@ -34,11 +35,11 @@ export async function main(ns) {
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
-            if (warehouse.size < 6000 && percentUsedOfWarehouse > 0.5 && moneyLeft > capitalReserve && profit > 1_000_000) {
+            if (warehouse.size < 2000 && percentUsedOfWarehouse > 0.5 && moneyLeft > capitalReserve && profit > 100) { 
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
-            if(division.type === "Chemical" && warehouse.size < 8000 && percentUsedOfWarehouse > 0.8 && moneyLeft > capitalReserve && profit > 1_000_000){
+            if (warehouse.size < 5000 && percentUsedOfWarehouse > 0.5 && moneyLeft > capitalReserve && profit > 1_000_000) { 
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
         }
