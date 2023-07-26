@@ -13,7 +13,7 @@ export async function main(ns) {
         divisionalCorporateProfits = new Map(JSON.parse(ns.read(divisionalCorporateProfitsFile)));
     }
 
-    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
+    for (const divisionName of corporation.divisions){
         if (ns.corporation.hasResearched(divisionName, "AutoBrew") && ns.corporation.hasResearched(divisionName, "AutoPartyManager")) {
             continue;
         }
@@ -42,43 +42,42 @@ export async function main(ns) {
             for (const city of division.cities) {
                 const office = ns.corporation.getOffice(divisionName, city);
 
-                morales.push(office.avgMorale * office.numEmployees);
-                energies.push(office.avgEnergy * office.numEmployees);
+                morales.push(office.avgMorale);
+                energies.push(office.avgEnergy);
 
                 employeeCount += office.numEmployees;
             }
 
-            const averageMorale = morales.reduce((acc, x) => acc + x, 0) / employeeCount;
-            const averageEnergy = energies.reduce((acc, x) => acc + x, 0) / employeeCount;;
+            const minMorale = Math.min(...morales);
+            const minEnergy = Math.min(...energies);
+
 
             const teaCostPerHead = 500_000;
             divisionProfitsRecord.teaPartyCost = employeeCount * teaCostPerHead;
 
-            let minimumMoraleAndEnergy = 70;
-            if (corporateProfits > 1_000_000_000_000) {
-                minimumMoraleAndEnergy = 95;
+            let goal = 70;
+
+            const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (minMorale < goal || minEnergy < goal) && corporateProfits > 5_000_000 && corporation.funds > 20_000_000_000;
+            const divisionalProfitsCanSustain = divisionProfitsRecord.sumOfProfitsInThisAccountingPeriod > divisionProfitsRecord.teaPartyCost;
+
+            if (divisionalProfitsCanSustain || corporateProfits > 1_000_000_000_000) {
+                goal = 95;
             }
 
-            const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (averageMorale < minimumMoraleAndEnergy || averageEnergy < minimumMoraleAndEnergy) && corporateProfits > 5_000_000 && corporation.funds > 20_000_000_000;
-
-
-            const divisionalProfitsCanSustain = divisionProfitsRecord.sumOfProfitsInThisAccountingPeriod > divisionProfitsRecord.teaPartyCost;
             const shouldTreatOurEmployees = divisionalProfitsCanSustain || divisionIsStrugglingAndWeAreProfitableAndHaveMoney
 
             if (shouldTreatOurEmployees) {
-                const goal = 95;
-
                 let tea = false;
                 let party = false;
 
-                if (averageEnergy <= averageMorale) {
-                    if (averageEnergy < goal) {
+                if (minEnergy <= minMorale) {
+                    if (minEnergy < goal) {
                         tea = true;
                     }
                 }
 
-                if (averageMorale < averageEnergy) {
-                    if (averageMorale < goal) {
+                if (minMorale < minEnergy) {
+                    if (minMorale < goal) {
                         party = true;
                     }
                 }
@@ -88,19 +87,19 @@ export async function main(ns) {
                 for (const city of division.cities) {
                     const office = ns.corporation.getOffice(divisionName, city);
 
-                    if (party && office.avgMorale < averageMorale + 10) {
+                    if (party && office.avgMorale < goal) {
                         const effect = ns.corporation.throwParty(divisionName, city, teaCostPerHead);
                         effects.push(effect);
                     }
 
-                    if (tea && office.avgEnergy < averageEnergy + 10) {
+                    if (tea && office.avgEnergy < goal) {
                         const effect = ns.corporation.buyTea(divisionName, city);
                         effects.push(effect);
                     }
                 }
 
                 if (party) {
-                    divisionProfitsRecord.partyEffect = recordEffectiveness(averageMorale, effects, divisionProfitsRecord.partyEffect);
+                    divisionProfitsRecord.partyEffect = recordEffectiveness(minMorale, effects, divisionProfitsRecord.partyEffect);
                 }
 
                 resetProfitRecord(divisionProfitsRecord);

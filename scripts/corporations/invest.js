@@ -57,7 +57,7 @@ export async function main(ns) {
         }
     }
 
-    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
+    for (const divisionName of corporation.divisions){
         const division = ns.corporation.getDivision(divisionName);
 
         if (division.numAdVerts === 0) {

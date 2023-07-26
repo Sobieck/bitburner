@@ -21,7 +21,7 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
-    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
+    for (const divisionName of corporation.divisions){
         const division = ns.corporation.getDivision(divisionName);
 
         let totalSpent = 0;

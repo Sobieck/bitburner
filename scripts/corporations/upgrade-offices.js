@@ -24,7 +24,7 @@ export async function main(ns) {
         { type: "Research & Development", number: 1 }
     ];
 
-    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
+    for (const divisionName of corporation.divisions){
         const division = ns.corporation.getDivision(divisionName);
 
         for (let [key, city] of Object.entries(ns.enums.CityName)) {

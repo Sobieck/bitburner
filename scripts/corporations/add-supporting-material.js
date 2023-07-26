@@ -7,7 +7,7 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
-    for (const divisionName of corporation.divisions.filter(x => x.name !== "Gidget's Import/Export")) {
+    for (const divisionName of corporation.divisions){
         const materialGoals = [];
 
         const division = ns.corporation.getDivision(divisionName);
@@ -105,7 +105,4 @@ export async function main(ns) {
 
         materialGoalsGoals.push(materialGoals);
     }
-
-    // ns.rm("stuff.txt");
-    // ns.write("stuff.txt", JSON.stringify(materialGoalsGoals), "W");
 }
