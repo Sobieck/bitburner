@@ -31,10 +31,10 @@ export async function main(ns) {
     scriptsToRun = scriptsToRun.concat(contractScripts);
 
     const singularityScripts = [
+        'scripts/singularity/join-organziations.js',
         'scripts/singularity/apply-to-jobs.js',
         'scripts/singularity/do-work-get-augments.js',
         'scripts/singularity/backdoor-all-machines.js',
-        'scripts/singularity/join-organziations.js',
         'scripts/singularity/do-work.js',
         'scripts/singularity/finish-round.js',
         'scripts/singularity/finish-bitnode.js',

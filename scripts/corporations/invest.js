@@ -16,16 +16,17 @@ export async function main(ns) {
     }
 
     const upgradeGoals = [
-        { name: "FocusWires", goalLvl: 20, topPriority: true },
-        { name: "Neural Accelerators", goalLvl: 20, topPriority: true },
-        { name: "Speech Processor Implants", goalLvl: 20, topPriority: true },
-        { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 20, topPriority: true },
-        { name: "Wilson Analytics", goalLvl: 20, topPriority: false }, // if this was top it would take forever to get to the less important ones.
-        { name: "DreamSense", goalLvl: 14, topPriority: false },
-        { name: "ABC SalesBots", goalLvl: 20, topPriority: false },
-        { name: "Project Insight", goalLvl: 14, topPriority: false },
-        { name: "Smart Storage", goalLvl: 20, topPriority: false },
-        { name: "Smart Factories", goalLvl: 20, topPriority: false },
+        { name: "FocusWires", goalLvl: 20, priority: 1 },
+        { name: "Neural Accelerators", goalLvl: 20, priority: 1 },
+        { name: "Speech Processor Implants", goalLvl: 20, priority: 1 },
+        { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 20, priority: 1 },
+        { name: "Wilson Analytics", goalLvl: 14, priority: 2 }, // if this was top it would take forever to get to the less important ones.
+        { name: "DreamSense", goalLvl: 14, priority: 2 },
+        { name: "ABC SalesBots", goalLvl: 20, priority: 2 },
+        { name: "Project Insight", goalLvl: 14, priority: 2 },
+        { name: "Wilson Analytics", goalLvl: 20000, priority: 3 }, 
+        { name: "Smart Storage", goalLvl: 20, priority: 3 },
+        { name: "Smart Factories", goalLvl: 20, priority: 3 },
     ]
 
     let cheapestUpgrade;
@@ -41,7 +42,7 @@ export async function main(ns) {
     }
 
     for (const upgrade of upgradeGoals) {
-        if (cheapestUpgrade && cheapestUpgrade.topPriority && upgrade.topPriority === false) {
+        if (cheapestUpgrade && cheapestUpgrade.priority < upgrade.priority  ) {
             continue;
         }
 

@@ -6,7 +6,6 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
 
     const divisionsGoal = [
-        // { order: 0, fundsNeeded: 100_000_000_000, name: "Gidget's Import/Export", industry: "Agriculture", profitNeeded: 0 },
         { order: 0, fundsNeeded: 0, name: "Gidget's Farm", industry: "Agriculture", profitNeeded: 0 },
         { order: 1, fundsNeeded: 500_000_000_000, name: "Gidget's Smokes",  industry: "Tobacco", profitNeeded: 1_000_000 },
         { order: 2, fundsNeeded: 2_000_000_000_000, name: "Chemist Gidget's Lab", industry: "Chemical", profitNeeded: 2_000_000_000 },

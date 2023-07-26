@@ -240,7 +240,7 @@ class ReserveForTrading {
     setMoneyInvested(moneyInvested, ns) {
         this.moneyInvested = moneyInvested;
 
-        const potentialCapitalReserve = (moneyInvested + ns.getServerMoneyAvailable("home")) * .75;
+        const potentialCapitalReserve = (moneyInvested + ns.getServerMoneyAvailable("home")) * .85;
 
         this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
 

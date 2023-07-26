@@ -26,51 +26,85 @@ export async function main(ns) {
             if (minimumInvestment.goPublic === false) {
                 ns.corporation.acceptInvestmentOffer();
             } else {
-                const sharesToSell = corporation.totalShares * .40;
+                const sharesToSell = corporation.totalShares * .50;
                 ns.corporation.goPublic(sharesToSell);
             }
         }
     }
 
-    const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
-    let stockMarketReserveMoney = new ReserveForTrading();
-    if (ns.fileExists(stockMarketReserveMoneyFile)) {
-        stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
-    }
 
 
-    if (corporation.public && corporation.state === 'START' & corporation.issuedShares > 0 && corporation.divisions.length > 1) {
-        let moneyOnHome = ns.getServerMoneyAvailable("home");
-        const moneyReserved = stockMarketReserveMoney.capitalToReserveForTrading - stockMarketReserveMoney.moneyInvested;
 
-        if(moneyReserved > 0){
-            moneyOnHome -= moneyReserved;
+    if (corporation.public) {
+        const newSharesConditions = [
+            { sharesOutstanding: 1_000_000_000, sharePriceMin: 8_000, multipleOfFunds: 40 },
+            { sharesOutstanding: 1_200_000_000, sharePriceMin: 40_000, multipleOfFunds: 100 },
+        ]
+
+        if (corporation.funds < 1_000_000_000_000 &&
+            corporation.numShares / corporation.totalShares > .7 &&
+            profit < 10_000_000_000 &&
+            corporation.issueNewSharesCooldown === 0)
+
+            for (const condition of newSharesConditions.filter(x => x.sharesOutstanding === corporation.totalShares)) {
+                if (corporation.sharePrice > condition.sharePriceMin) {
+                    const shareToIssue = 200_000_000;
+                    const fundsGenerated = shareToIssue * corporation.sharePrice * .9;
+                    const minimumNeeded = corporation.funds * condition.multipleOfFunds;
+
+                    if (fundsGenerated > minimumNeeded) {
+                        ns.corporation.issueNewShares(shareToIssue);
+                    }
+                }
+            }
+
+
+        const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+        let stockMarketReserveMoney = new ReserveForTrading();
+        if (ns.fileExists(stockMarketReserveMoneyFile)) {
+            stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
         }
 
-        if(moneyOnHome > 0){
-            const cashToUseForBuybacks = moneyOnHome * 0.001;
-            let sharesToBuy = Math.floor(cashToUseForBuybacks / corporation.sharePrice)
-            if (sharesToBuy > corporation.issuedShares) {
-                sharesToBuy = corporation.issuedShares;
+        if (corporation.state === 'START' & corporation.issuedShares > 0 && corporation.divisions.length > 1) {
+            let moneyOnHome = ns.getServerMoneyAvailable("home");
+            const moneyReserved = stockMarketReserveMoney.capitalToReserveForTrading - stockMarketReserveMoney.moneyInvested;
+
+            if (moneyReserved > 0) {
+                moneyOnHome -= moneyReserved;
             }
-    
-            if (sharesToBuy > 0) {
-                ns.corporation.buyBackShares(sharesToBuy);
+
+            if (moneyOnHome > 0) {
+                const cashToUseForBuybacks = moneyOnHome * 0.001;
+                let sharesToBuy = Math.floor(cashToUseForBuybacks / corporation.sharePrice)
+                if (sharesToBuy > corporation.issuedShares) {
+                    sharesToBuy = corporation.issuedShares;
+                }
+
+                if (sharesToBuy > 0) {
+                    ns.corporation.buyBackShares(sharesToBuy);
+                }
             }
-        }    
-    }
+        }
 
+        if (corporation.dividendRate !== .01 && !ns.corporation.hasUnlock("Government Partnership") && profit > 200_000_000) {
+            ns.corporation.issueDividends(.01);
+        }
 
-    if (profit > 200_000_000 && corporation.public === false) {
-        ns.corporation.goPublic(0);
-    }
+        if (corporation.dividendRate !== .5 && ns.corporation.hasUnlock("Government Partnership") && profit > 200_000_000) {
+            ns.corporation.issueDividends(.5);
+        }
 
-    if (corporation.public && corporation.dividendRate !== .01 && !ns.corporation.hasUnlock("Government Partnership") && profit > 200_000_000) {
-        ns.corporation.issueDividends(.01);
-    }
+        //early round capital infusion to kick off the stock market.
+        const pushALotOfMoneyTowardsPlayerDividendRate = 0.77;
+        const targetMoneyInPlayersHands = 5_000_000_000;
 
-    if (corporation.public && corporation.dividendRate !== .5 && ns.corporation.hasUnlock("Government Partnership") && profit > 200_000_000) {
-        ns.corporation.issueDividends(.5);
+        if (stockMarketReserveMoney.capitalToReserveForTrading <= targetMoneyInPlayersHands && corporation.dividendRate !== pushALotOfMoneyTowardsPlayerDividendRate && profit > 40_000_000) {
+            ns.corporation.issueDividends(pushALotOfMoneyTowardsPlayerDividendRate);
+        }
+
+        if (stockMarketReserveMoney.capitalToReserveForTrading > targetMoneyInPlayersHands && corporation.dividendRate === pushALotOfMoneyTowardsPlayerDividendRate) {
+            ns.corporation.issueDividends(0);
+        }
     }
 }
 
@@ -93,7 +127,7 @@ class ReserveForTrading {
     setMoneyInvested(moneyInvested, ns) {
         this.moneyInvested = moneyInvested;
 
-        const potentialCapitalReserve = (moneyInvested + ns.getServerMoneyAvailable("home")) * .75;
+        const potentialCapitalReserve = (moneyInvested + ns.getServerMoneyAvailable("home")) * .85;
 
         this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
 
