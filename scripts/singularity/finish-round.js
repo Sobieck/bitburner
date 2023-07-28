@@ -316,9 +316,9 @@ export async function main(ns) {
                 purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics);
 
                 const corporation = ns.corporation.getCorporation();
-                const moneyOnHome = ns.getServerMoneyAvailable("home");
+                const moneyOnHome = ns.getServerMoneyAvailable("home") * 0.9;
 
-                let sharesToBuy = Math.floor(moneyOnHome / corporation.sharePrice) - 10;
+                let sharesToBuy = Math.floor(moneyOnHome / corporation.sharePrice);
                 if (sharesToBuy > corporation.issuedShares) {
                     sharesToBuy = corporation.issuedShares;
                 }

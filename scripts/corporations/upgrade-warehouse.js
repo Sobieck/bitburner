@@ -51,7 +51,7 @@ export async function main(ns) {
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
-            if (warehouse.size < 5000 && percentUsedOfWarehouse > 0.7 && moneyLeft > capitalReserve && profit > 1_000_000) { 
+            if (warehouse.size < 5000 && moneyLeft > capitalReserve && ((percentUsedOfWarehouse > 0.7 && profit > 1_000_000) || profit > 100_000_000_000)) { 
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
         }

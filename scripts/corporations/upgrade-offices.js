@@ -33,7 +33,7 @@ export async function main(ns) {
             }
         }
 
-        if (division.makesProducts) {
+        if (division.makesProducts && division.cities.includes("Aevum")) {
             const aevum = "Aevum";
             const aevumOffice = ns.corporation.getOffice(divisionName, aevum);
             const aevumHeadCount = aevumOffice.numEmployees;
@@ -92,13 +92,15 @@ export async function main(ns) {
             }
         }
 
-        if (!division.makesProducts) {
+        if (!division.makesProducts && division.cities.includes("Aevum")) {
             const profit = division.lastCycleRevenue - division.lastCycleExpenses;
 
             const constants = [
                 { minProfit: 0, officeSizeGoal: 9, minLiquidFunds: 20_000_000_000 },
                 { minProfit: 10_000_000, officeSizeGoal: 18, minLiquidFunds: 400_000_000_000 },
-                { minLoss: -900_000, officeSizeGoal: 64, minLiquidFunds: 10_000_000_000_000 },
+                { minLoss: -250_000, officeSizeGoal: 32, minLiquidFunds: 5_000_000_000_000 },
+                { minLoss: -700_000, officeSizeGoal: 189, minLiquidFunds: 10_000_000_000_000 },
+                { minProfit: 700_000, officeSizeGoal: 189, minLiquidFunds: 10_000_000_000_000 },
             ]
 
             for (const constant of constants) {

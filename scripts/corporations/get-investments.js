@@ -37,18 +37,18 @@ export async function main(ns) {
 
     if (corporation.public) {
         const newSharesConditions = [
-            { sharesOutstanding: 1_000_000_000, sharePriceMin: 8_000, multipleOfFunds: 40 },
-            { sharesOutstanding: 1_200_000_000, sharePriceMin: 40_000, multipleOfFunds: 100 },
+            { sharesOutstanding: 1_000_000_000, sharePriceMin: 8_000, multipleOfFunds: 40, sharesToIssue: 200_000_000 },
+            { sharesOutstanding: 1_200_000_000, sharePriceMin: 40_000, multipleOfFunds: 100, sharesToIssue: 240_000_000 },
         ]
 
-        if (corporation.funds < 1_000_000_000_000 &&
+        if (corporation.funds < 10_000_000_000_000 &&
             corporation.numShares / corporation.totalShares > .7 &&
             profit < 10_000_000_000 &&
-            corporation.issueNewSharesCooldown === 0)
+            corporation.shareSaleCooldown === 0)
 
             for (const condition of newSharesConditions.filter(x => x.sharesOutstanding === corporation.totalShares)) {
                 if (corporation.sharePrice > condition.sharePriceMin) {
-                    const shareToIssue = 200_000_000;
+                    const shareToIssue = condition.sharesToIssue;
                     const fundsGenerated = shareToIssue * corporation.sharePrice * .9;
                     const minimumNeeded = corporation.funds * condition.multipleOfFunds;
 
@@ -86,24 +86,26 @@ export async function main(ns) {
             }
         }
 
-        if (corporation.dividendRate !== .01 && !ns.corporation.hasUnlock("Government Partnership") && profit > 200_000_000) {
-            ns.corporation.issueDividends(.01);
-        }
+        const dividendConditions = [
+            { dividendRate: .01, partnership: false, floodPlayerWithMoney: false, minProfit: 200_000_000 },
+            { dividendRate: .5, partnership: true, floodPlayerWithMoney: false, minProfit: 200_000_000 },
+            { dividendRate: .77, partnership: false, floodPlayerWithMoney: true, minProfit: 40_000_000 },
+            { dividendRate: .77, partnership: true, floodPlayerWithMoney: true, minProfit: 40_000_000 },
+        ]
 
-        if (corporation.dividendRate !== .5 && ns.corporation.hasUnlock("Government Partnership") && profit > 200_000_000) {
-            ns.corporation.issueDividends(.5);
-        }
+        const hasGovPartnership = ns.corporation.hasUnlock("Government Partnership");
+        const floodPlayerWithMoneyBecauseTheyJustStarted = stockMarketReserveMoney.capitalToReserveForTrading <= 5_000_000_000;
 
-        //early round capital infusion to kick off the stock market.
-        const pushALotOfMoneyTowardsPlayerDividendRate = 0.77;
-        const targetMoneyInPlayersHands = 5_000_000_000;
+        const conditionToUse = dividendConditions.find(x => x.partnership === hasGovPartnership && x.floodPlayerWithMoney === floodPlayerWithMoneyBecauseTheyJustStarted);
 
-        if (stockMarketReserveMoney.capitalToReserveForTrading <= targetMoneyInPlayersHands && corporation.dividendRate !== pushALotOfMoneyTowardsPlayerDividendRate && profit > 40_000_000) {
-            ns.corporation.issueDividends(pushALotOfMoneyTowardsPlayerDividendRate);
-        }
-
-        if (stockMarketReserveMoney.capitalToReserveForTrading > targetMoneyInPlayersHands && corporation.dividendRate === pushALotOfMoneyTowardsPlayerDividendRate) {
-            ns.corporation.issueDividends(0);
+        if (conditionToUse.minProfit < profit) {
+            if (corporation.dividendRate !== conditionToUse.dividendRate) {
+                ns.corporation.issueDividends(conditionToUse.dividendRate);
+            } 
+        } else {
+            if (corporation.dividendRate !== 0) {
+                ns.corporation.issueDividends(0);
+            }
         }
     }
 }

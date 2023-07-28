@@ -132,7 +132,7 @@ export async function main(ns) {
         }
     }
 
-    for (const divisionName of corporation.divisions){
+    for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
         const exportRelationships = importExportRelationships.filter(x => x.exporter === divisionName);
 
@@ -243,7 +243,7 @@ export async function main(ns) {
                         if (material.stored > 30) {
                             let priceToSet = adjustPriceDown(material.desiredSellPrice, marketPrice);
 
-                            if (material.stored > material.productionAmount * 4) {
+                            if (material.stored > material.productionAmount * 3) {
                                 priceToSet = adjustPriceDown(priceToSet, marketPrice, true);
                             }
 
