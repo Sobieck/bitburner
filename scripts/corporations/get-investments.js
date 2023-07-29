@@ -33,8 +33,6 @@ export async function main(ns) {
     }
 
 
-
-
     if (corporation.public) {
         const newSharesConditions = [
             { sharesOutstanding: 1_000_000_000, sharePriceMin: 8_000, multipleOfFunds: 40, sharesToIssue: 200_000_000 },
