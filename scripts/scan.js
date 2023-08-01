@@ -1,19 +1,10 @@
 /** @param {NS} ns */
 /// run scripts/scan.js dispatchScript
 export async function main(ns) {
-    const dispatchScript = ns.args[0];
-
-    if (dispatchScript === undefined){
-        ns.tprint("Must define dispatch script for scan.")
-        return;
-    }
-
     const result = new dataMonger(ns).scanEnvironment();
 
     ns.rm('data/enviroment.txt')
     ns.write('data/enviroment.txt', JSON.stringify(result), "W")
-
-    ns.run(dispatchScript)
 }
 
 export class dataMonger {

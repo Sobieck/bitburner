@@ -3,6 +3,9 @@ export async function main(ns) {
     let scriptsToRun = [];
 
     const basicScripts = [
+        'scripts/scan.js',
+        'scripts/hacking/batch-dispatch.js',
+        'scripts/hacking/memory-starved-dispatch.js',
         'scripts/hacking/hack-all-machines.js',
         'scripts/precalculate-important-data.js',
         'scripts/script-registry.js',

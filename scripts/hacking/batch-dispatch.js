@@ -51,7 +51,6 @@ export async function main(ns) {
             ns.toast(`Ram Needed to Start Batches: ${ramNeededToStartBatches}`, "warning", 180000)
         }
 
-        ns.run('scripts/hacking/memory-starved-dispatch.js');
         return;
     } else {
         ns.rm(ramNeededForBatchesFile);

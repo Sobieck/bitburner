@@ -1,7 +1,6 @@
 export async function main(ns) {
     const loopEveryXSeconds = 2;
     const sleepTotalOfXMS = loopEveryXSeconds * 1000;
-    let dispatchScript = 'scripts/hacking/memory-starved-dispatch.js';
 
     let runClean = true;
     if (ns.args[0] === 'old') {
@@ -27,16 +26,7 @@ export async function main(ns) {
 
         let scriptsToRun = JSON.parse(ns.read(scriptsFile));
 
-        let numberOfScripts = scriptsToRun.length + 1;
-
-        let individualSleepAmount = sleepTotalOfXMS / numberOfScripts;
-
-        if (ns.fileExists('Formulas.exe')) {
-            dispatchScript = 'scripts/hacking/batch-dispatch.js'
-        }
-
-        ns.run("scripts/scan.js", 1, dispatchScript);
-        await ns.sleep(individualSleepAmount);
+        let individualSleepAmount = sleepTotalOfXMS / scriptsToRun.length;
 
         for (const script of scriptsToRun) {
             ns.run(script);

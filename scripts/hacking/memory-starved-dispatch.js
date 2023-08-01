@@ -3,6 +3,12 @@ const growScript = 'scripts/hacking/grow.js';
 const weakenScript = 'scripts/hacking/weaken.js';
 
 export async function main(ns) {
+
+    const ramNeededForBatchesFile = "data/ramNeededToStartBatches.txt";
+    if(!ns.fileExists(ramNeededForBatchesFile)){
+       return; 
+    }
+
     const memoryStarvedQueueFileName = 'data/memoryStarvedQueue.txt';
     const batchQueuesFileName = "data/batchQueue.txt";
 
