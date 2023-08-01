@@ -43,6 +43,7 @@ export async function main(ns) {
 
         if (division.products.length < division.maxProducts && !oneDeveloping) {
             const productName = divisionConstants.productNames[division.products.length];
+
             ns.corporation.makeProduct(divisionName, "Aevum", productName + 1, mimimumSpend, mimimumSpend);
         }
 

@@ -138,8 +138,8 @@ export async function main(ns) {
 
         for (const exportRelationship of exportRelationships) {
             for (const city of division.cities) {
-                ns.corporation.cancelExportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material);
-                if (ns.corporation.hasWarehouse(exportRelationship.importer, city)) {
+                if (ns.corporation.hasWarehouse(exportRelationship.exporter, city) && ns.corporation.hasWarehouse(exportRelationship.importer, city)) {
+                    ns.corporation.cancelExportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material);
                     ns.corporation.exportMaterial(exportRelationship.exporter, city, exportRelationship.importer, city, exportRelationship.material, "-(IPROD)");
                 }
             }
@@ -204,6 +204,10 @@ export async function main(ns) {
         if (rawMaterialProducer) {
             for (const city of division.cities) {
                 for (const materialName of rawMaterialProducer.materials) {
+
+                    if(!ns.corporation.hasWarehouse(divisionName, city)){
+                        continue;
+                    }
 
                     const material = ns.corporation.getMaterial(divisionName, city, materialName);
 
