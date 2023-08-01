@@ -5,9 +5,9 @@ export async function main(ns) {
 
     const researchGoals = [
         { name: "Hi-Tech R&D Laboratory", prereqs: [] },
-        { name: "Market-TA.II", prereqs: ["Market-TA.I"] },
         { name: "uPgrade: Capacity.I", prereqs: ["uPgrade: Fulcrum"], productOnly: true},
         { name: "uPgrade: Capacity.II", prereqs: [], productOnly: true},
+        { name: "Market-TA.II", prereqs: ["Market-TA.I"] },
         { name: "Drones - Assembly", prereqs: [ "Drones"] },
         { name: "Self-Correcting Assemblers", prereqs: []},
         { name: "AutoBrew", prereqs: []},

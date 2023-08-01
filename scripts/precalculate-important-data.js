@@ -42,6 +42,11 @@ export async function main(ns) {
   const ownedAugsTextFileName = "data/ownedAugs.txt";
   ns.rm(ownedAugsTextFileName);
   ns.write(ownedAugsTextFileName, JSON.stringify(ownedAugmentations), "W");
+
+  const multipliersFileName = "data/multipliers.txt";
+  const constants = ns.getBitNodeMultipliers();
+  ns.rm(multipliersFileName);
+  ns.write(multipliersFileName, JSON.stringify(constants), "W");
   
 }
 

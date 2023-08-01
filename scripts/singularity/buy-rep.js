@@ -3,6 +3,11 @@ export async function main(ns) {
     const moneyAvailable = ns.getServerMoneyAvailable("home");
 
     if (moneyAvailable > 10_000_000_000_000){
+
+        const multipliersFileName = "data/multipliers.txt";
+        const constants = JSON.parse(ns.read(multipliersFileName));
+        const minRepToDonateToFaction = constants.RepToDonateToFaction * 150;
+
         const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
         const player = ns.getPlayer();
 
@@ -22,7 +27,7 @@ export async function main(ns) {
     
             const favor = ns.singularity.getFactionFavor(faction);
     
-            if (maximumAugRep > 0 && favor > 75) {
+            if (maximumAugRep > 0 && favor > minRepToDonateToFaction) {
                 mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
             }
         }

@@ -116,10 +116,14 @@ export async function main(ns) {
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction);
     const currentFactionFavor = ns.singularity.getFactionFavor(targetFaction.faction);
 
+    const multipliersFileName = "data/multipliers.txt";
+    const constants = JSON.parse(ns.read(multipliersFileName));
+    const minRepToDonateToFaction = constants.RepToDonateToFaction * 150;    
+
     let targetRepForGettingToFavor = 700_000;
     if (ns.fileExists("Formulas.exe")) {
         const favorGain = ns.singularity.getFactionFavorGain(targetFaction.faction);
-        if (favorGain + currentFactionFavor > 75) {
+        if (favorGain + currentFactionFavor > minRepToDonateToFaction) {
             targetRepForGettingToFavor = currentFactionFavor;
         }
     }
@@ -313,7 +317,7 @@ export async function main(ns) {
 
                 const factionsByRating = factionsWithAugmentsToBuy.sort((a, b) => b.factionRep - a.factionRep);
 
-                purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics);
+                purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics, minRepToDonateToFaction);
 
                 const corporation = ns.corporation.getCorporation();
                 const moneyOnHome = ns.getServerMoneyAvailable("home") * 0.9;
@@ -392,7 +396,7 @@ function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
     }
 }
 
-function purchaseNeuroFluxGovernors(ns, faction, analytics) {
+function purchaseNeuroFluxGovernors(ns, faction, analytics, minRepToDonateToFaction) {
 
     const augmentName = "NeuroFlux Governor"
 
@@ -403,7 +407,7 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics) {
 
     while (price < moneyAvailable) {
         if (factionRep < augmentRepPrice) {
-            if (ns.singularity.getFactionFavor(faction) > 75 && ns.fileExists("Formulas.exe")) {
+            if (ns.singularity.getFactionFavor(faction) > minRepToDonateToFaction && ns.fileExists("Formulas.exe")) {
                 const repNeeded = augmentRepPrice - factionRep;
                 let dollarsDonated = 0;
                 let purchasedRep = 0;
