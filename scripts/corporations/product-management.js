@@ -4,6 +4,11 @@ export async function main(ns) {
     }
 
     const corporation = ns.corporation.getCorporation();
+
+    if (corporation.public && corporation.divisions.length === 1){
+        return;
+    }
+    
     const profitPerSecond = corporation.revenue - corporation.expenses;
 
     const divisionsProductNames = new Map();

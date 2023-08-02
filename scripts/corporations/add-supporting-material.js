@@ -7,6 +7,10 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
+    if (corporation.public && corporation.divisions.length === 1){
+        return;
+    }
+
     for (const divisionName of corporation.divisions){
         const materialGoals = [];
 

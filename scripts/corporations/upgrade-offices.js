@@ -2,7 +2,12 @@ export async function main(ns) {
     if (!ns.corporation.hasCorporation()) {
         return;
     }
+    
     const corporation = ns.corporation.getCorporation();
+
+    if (corporation.public && corporation.divisions.length === 1){
+        return;
+    }
 
     const capitalReserve = 40_000_000_000;
     const liquidFunds = corporation.funds;

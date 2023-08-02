@@ -3,6 +3,12 @@ export async function main(ns) {
         return;
     }
 
+    const corporation = ns.corporation.getCorporation();
+
+    if (corporation.public && corporation.divisions.length === 1){
+        return;
+    }
+
     const gidgetsFarm = "Gidget's Farm";
     const gidgetsSmokes = "Gidget's Smokes";
     const chemist = "Chemist Gidget's Lab";
@@ -46,8 +52,6 @@ export async function main(ns) {
             ]
         },
     ]
-
-    const corporation = ns.corporation.getCorporation();
 
     if (corporation.state !== "PRODUCTION") {
         for (const divisionName of corporation.divisions) {
