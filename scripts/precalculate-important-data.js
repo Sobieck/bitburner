@@ -47,7 +47,6 @@ export async function main(ns) {
   const constants = ns.getBitNodeMultipliers();
   ns.rm(multipliersFileName);
   ns.write(multipliersFileName, JSON.stringify(constants), "W");
-  
 }
 
 class ScriptRam {

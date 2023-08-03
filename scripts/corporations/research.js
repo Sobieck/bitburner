@@ -7,7 +7,6 @@ export async function main(ns) {
         { name: "Hi-Tech R&D Laboratory", prereqs: [] },
         { name: "uPgrade: Capacity.I", prereqs: ["uPgrade: Fulcrum"], productOnly: true},
         { name: "uPgrade: Capacity.II", prereqs: [], productOnly: true},
-        { name: "Market-TA.II", prereqs: ["Market-TA.I"] },
         { name: "Drones - Assembly", prereqs: [ "Drones"] },
         { name: "Self-Correcting Assemblers", prereqs: []},
         { name: "AutoBrew", prereqs: []},
@@ -17,6 +16,7 @@ export async function main(ns) {
         { name: "Overclock", prereqs: []},
         { name: "Sti.mu", prereqs: []},
         { name: "Drones - Transport", prereqs: []},
+        { name: "Market-TA.II", prereqs: ["Market-TA.I"] },
     ];
 
     const corporation = ns.corporation.getCorporation();
@@ -41,9 +41,7 @@ export async function main(ns) {
                 continue;
             }           
 
-            const researchPointsToSpend = division.researchPoints;
-
-            if ((cost * 2) + totalSpent < researchPointsToSpend) {
+            if ((cost * 2) + totalSpent < division.researchPoints) {
                 for (const prereqName of research.prereqs) {
                     ns.corporation.research(divisionName, prereqName)
                 }

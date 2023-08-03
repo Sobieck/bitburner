@@ -1,3 +1,5 @@
+let cantIssueCount = 0;
+
 export async function main(ns) {
     if (!ns.corporation.hasCorporation()) {
         return;
@@ -32,6 +34,9 @@ export async function main(ns) {
             { sharesOutstanding: 1_440_000_000, sharePriceMin: 1_000_000, multipleOfFunds: 100, sharesToIssue: 288_000_000 },
         ]
 
+        // {"name":"Gidget's Keiretsu","funds":29633287822.845848,"revenue":149925700.34409666,"expenses":18003807.839152098,"public":true,"totalShares":1200000000,"numShares":1090000000,"shareSaleCooldown":0,"issuedShares":0,"sharePrice":41329.14237963411,"dividendRate":0,"dividendTax":0.15,"dividendEarnings":0,"state":"START","divisions":["Gidget's Farm","Gidget's Smokes","Chemist Gidget's Lab"]}
+        // ns.tprint(corporation);
+
         if (corporation.funds < 10_000_000_000_000 &&
             corporation.numShares / corporation.totalShares > .7 &&
             profit < 10_000_000_000 &&
@@ -44,7 +49,16 @@ export async function main(ns) {
                     const minimumNeeded = corporation.funds * condition.multipleOfFunds;
 
                     if (fundsGenerated > minimumNeeded) {
-                        ns.corporation.issueNewShares(shareToIssue);
+                        try {
+                            ns.corporation.issueNewShares(shareToIssue);
+                        } catch (error) {
+                            if(cantIssueCount > 1000){
+                                ns.toast("Can't issue new shares", "warning");
+                                cantIssueCount = 0;
+                            } else {
+                                cantIssueCount++;
+                            }                            
+                        }                        
                     }
                 }
             }
