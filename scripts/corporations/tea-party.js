@@ -61,13 +61,14 @@ export async function main(ns) {
 
             let goal = 70;
 
-            const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (minMorale < goal || minEnergy < goal) && corporateProfits > 5_000_000 && corporation.funds > 20_000_000_000;
             const divisionalProfitsCanSustain = divisionProfitsRecord.sumOfProfitsInThisAccountingPeriod > divisionProfitsRecord.teaPartyCost;
-
-            if (divisionalProfitsCanSustain || corporateProfits > 1_000_000_000_000) {
+            
+            if (divisionalProfitsCanSustain || corporateProfits > 1_000_000_000) {
                 goal = 95;
             }
-
+            
+            const divisionIsStrugglingAndWeAreProfitableAndHaveMoney = (minMorale < goal || minEnergy < goal) && corporateProfits > 5_000_000 && corporation.funds > 20_000_000_000;
+            
             const shouldTreatOurEmployees = divisionalProfitsCanSustain || divisionIsStrugglingAndWeAreProfitableAndHaveMoney
 
             if (shouldTreatOurEmployees) {
