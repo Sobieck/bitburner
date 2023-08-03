@@ -18,7 +18,7 @@ export async function main(ns) {
             if (minimumInvestment.goPublic === false) {
                 ns.corporation.acceptInvestmentOffer();
             } else {
-                const sharesToSell = corporation.totalShares * .50;
+                const sharesToSell = corporation.totalShares * .65;
                 ns.corporation.goPublic(sharesToSell);
             }
         }
@@ -29,6 +29,7 @@ export async function main(ns) {
         const newSharesConditions = [
             { sharesOutstanding: 1_000_000_000, sharePriceMin: 8_000, multipleOfFunds: 40, sharesToIssue: 200_000_000 },
             { sharesOutstanding: 1_200_000_000, sharePriceMin: 40_000, multipleOfFunds: 100, sharesToIssue: 240_000_000 },
+            { sharesOutstanding: 1_440_000_000, sharePriceMin: 1_000_000, multipleOfFunds: 100, sharesToIssue: 288_000_000 },
         ]
 
         if (corporation.funds < 10_000_000_000_000 &&

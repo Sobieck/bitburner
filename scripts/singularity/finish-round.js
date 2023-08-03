@@ -118,7 +118,7 @@ export async function main(ns) {
 
     const multipliersFileName = "data/multipliers.txt";
     const constants = JSON.parse(ns.read(multipliersFileName));
-    const minRepToDonateToFaction = constants.RepToDonateToFaction * 150;    
+    const minRepToDonateToFaction = constants.RepToDonateToFaction * 150;
 
     let targetRepForGettingToFavor = 700_000;
     if (ns.fileExists("Formulas.exe")) {
@@ -153,6 +153,21 @@ export async function main(ns) {
                             .getAugmentationsFromFaction(faction)
                             .filter(y => y !== "NeuroFlux Governor")
                             .filter(y => !ownedAugmentations.includes(y))
+                            .filter(y => {
+                                if (ownedAugmentations.length > 0) {
+                                    return true;
+                                } else { // on first install, we only want to install hacking and skill related. because it takes a long time to get the stock predictor and a company going. So it becomes prohibatively expensive to buy all the augments. 
+                                    const stats = ns.singularity.getAugmentationStats(y);
+
+                                    return stats.hacking_chance > 1 ||
+                                        stats.hacking_speed > 1 ||
+                                        stats.hacking_money > 1 ||
+                                        stats.hacking_grow > 1 ||
+                                        stats.hacking > 1 ||
+                                        stats.hacking_exp > 1 ||
+                                        stats.faction_rep > 1
+                                }
+                            })
                             .map(y => {
                                 return {
                                     augmentName: y,
@@ -197,14 +212,14 @@ export async function main(ns) {
 
         const augmentsLeft = Array.from(purchasableAugments.entries()).sort((a, b) => b[1].price - a[1].price);
 
-        const orderedAugments = []; 
-        
+        const orderedAugments = [];
+
         function addPrereqs(prereqName) {
             const augment = purchasableAugments.get(prereqName);
 
             if (augment && !ownedAugmentations.find(x => x.augmentName === prereqName)) {
 
-                if (augment.prereqs.length > 0) {//it has prereqs, pass it into this. 
+                if (augment.prereqs.length > 0) {
                     for (const prereq of augment.prereqs) {
                         addPrereqs(prereq)
                     }
@@ -241,29 +256,17 @@ export async function main(ns) {
 
         const moneyNeededForAugments = orderedAugments.reduce((acc, x) => acc + x.multipledPrice, 0);
 
-        // make a pass for multiplied price
-
-        // (faction, augmentName)
-        // arrange with prereqs in mind
-        // then 1.9X the cost every purchase
-        // then figure out how many NeuroFlux governors we can buy with the rep, and then figure out how much that would cost. 
-
-        // new order ->
-        // augments
-        // neuroflux
-        // computer
-        // if we have extra money, then we buy more neuroflux with purchased rep
-
-
-
-        /// ------
-
-
         let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments;
 
         const estimatedIncomeForTheNextFourHours = incomePerHourEstimate * 4;
 
         const moneyAvailable = ns.getServerMoneyAvailable("home");
+
+        const buyRepFile = 'data/buyRep.txt';
+        if (moneyAvailable - moneyNeededForAugments > 30_000_000_000_000 && !ns.fileExists(buyRepFile)) {
+            ns.write(buyRepFile, "", "W");
+            return;
+        }
 
         const moneyFormatted = formatter.format(incomePerHourEstimate);
 
@@ -323,7 +326,7 @@ export async function main(ns) {
                 if (sharesToBuy > corporation.issuedShares) {
                     sharesToBuy = corporation.issuedShares;
                 }
-        
+
                 if (sharesToBuy > 0) {
                     ns.corporation.buyBackShares(sharesToBuy);
                 }

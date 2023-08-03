@@ -1,11 +1,12 @@
 export async function main(ns) {
 
-    const moneyAvailable = ns.getServerMoneyAvailable("home");
+    const buyRepFile = 'data/buyRep.txt';
 
-    if (moneyAvailable > 10_000_000_000_000){
+    if (ns.fileExists(buyRepFile)){
 
         const multipliersFileName = "data/multipliers.txt";
         const constants = JSON.parse(ns.read(multipliersFileName));
+        
         const minRepToDonateToFaction = constants.RepToDonateToFaction * 150;
 
         const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
