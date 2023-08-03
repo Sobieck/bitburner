@@ -8,6 +8,13 @@ export async function main(ns) {
         currency: 'USD',
     });
 
+    let onlyHackingRelated = false;
+
+    if (ns.args.includes("hack")) {
+        onlyHackingRelated = true;
+    }
+
+
     let totalToSpend = 0;
 
     if (ns.fileExists("Formulas.exe")) {
@@ -22,6 +29,20 @@ export async function main(ns) {
                 .filter(x => {
                     const prereqs = ns.singularity.getAugmentationPrereq(x);
                     return prereqs.every(y => ownedAugmentations.includes(y));
+                })
+                .filter(x => {
+                    const stats = ns.singularity.getAugmentationStats(x);
+
+                    if (!onlyHackingRelated) {
+                        return true;
+                    }
+
+                    return stats.hacking_chance > 1 ||
+                        stats.hacking_speed > 1 ||
+                        stats.hacking_money > 1 ||
+                        stats.hacking_grow > 1 ||
+                        stats.hacking > 1 ||
+                        stats.hacking_exp > 1
                 })
                 .map(x => ns.singularity.getAugmentationRepReq(x)));
 
@@ -97,6 +118,20 @@ export async function main(ns) {
                                 price: ns.singularity.getAugmentationPrice(y),
                                 prereqs: ns.singularity.getAugmentationPrereq(y)
                             }
+                        })
+                        .filter(x => {
+                            const stats = ns.singularity.getAugmentationStats(x);
+        
+                            if (!onlyHackingRelated) {
+                                return true;
+                            }
+        
+                            return stats.hacking_chance > 1 ||
+                                stats.hacking_speed > 1 ||
+                                stats.hacking_money > 1 ||
+                                stats.hacking_grow > 1 ||
+                                stats.hacking > 1 ||
+                                stats.hacking_exp > 1
                         })
                         .filter(y => y.augmentationRepCost < factionRep)
                         .sort((a, b) => b.price - a.price);

@@ -179,9 +179,6 @@ export async function main(ns) {
             return;
         }
 
-        // --------
-        // My augment script ranks every augment that hasn't been purchased by price, and then calculates how many of them I can buy (taking into account the 1.9x price increase per augment, and the additional 1.14x increase per NeuroFlux Governor level). 
-
         const purchasableAugments = new Map();
 
         for (const factionWithAugments of factionsWithAugmentsToBuy) {
@@ -200,8 +197,8 @@ export async function main(ns) {
 
         const augmentsLeft = Array.from(purchasableAugments.entries()).sort((a, b) => b[1].price - a[1].price);
 
-        const orderedAugments = []; // { factionName, augmentName, basePrice, multipledPrice}
-
+        const orderedAugments = []; 
+        
         function addPrereqs(prereqName) {
             const augment = purchasableAugments.get(prereqName);
 
@@ -276,7 +273,7 @@ export async function main(ns) {
                 const now = new Date();
                 const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
 
-                ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall}`, "success", 60000)
+                ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall} Money Needed: ${formatter.format(moneyNeededForAugments)}`, "success", 60000)
             }
         }
 

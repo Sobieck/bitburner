@@ -6,17 +6,9 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
     const profit = corporation.revenue - corporation.expenses;
 
-    // ns.tprint(ns.corporation.getInvestmentOffer())
-
-    ///{"funds":96283140000,"shares":100000000,"round":1}
-
-    // { round: 1, investment: 100_000_000 },
-    // { round: 2, investment: 300_000_000 }, // worked, but I bet we can do better
-    // { round: 3, investment: 3_000_000_000 },
-
     const investmentWeWillTake = [
         { round: 1, investment: 95_000_000_000, goPublic: false },
-        { round: 2, investment: 800_000_000_000, goPublic: true },
+        { round: 2, investment: 750_000_000_000, goPublic: true },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();

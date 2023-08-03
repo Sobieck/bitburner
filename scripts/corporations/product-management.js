@@ -5,19 +5,19 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
-    if (corporation.public && corporation.divisions.length === 1){
+    if (corporation.public && corporation.divisions.length === 1) {
         return;
     }
-    
+
     const profitPerSecond = corporation.revenue - corporation.expenses;
 
     const divisionsProductNames = new Map();
 
-    if (corporation.divisions.includes("Gidget's Smokes")){
+    if (corporation.divisions.includes("Gidget's Smokes")) {
         divisionsProductNames.set("Gidget's Smokes", { division: "Gidget's Smokes", productNames: ["These Smokes Probably Won't Kill U v.", "These Smokes WILL Kill You v.", "This Leaf is Highly Addictive v.", "Behold, the bringer of Death v.", "You will live so fast and DIE young if you smoke these v."] });
     }
 
-    if (corporation.divisions.includes("Gidget's Computers & Hardware")){
+    if (corporation.divisions.includes("Gidget's Computers & Hardware")) {
         divisionsProductNames.set("Gidget's Computers & Hardware", { division: "Gidget's Computers & Hardware", productNames: ["Desktop Computer v.", "Router v.", "Laptop Computer v.", "Smart Phone v.", "Computer Monitor v."] });
     }
 
@@ -26,6 +26,10 @@ export async function main(ns) {
     for (const divisionName of includedDivisions) {
         const division = ns.corporation.getDivision(divisionName);
         const divisionConstants = divisionsProductNames.get(divisionName);
+
+        if (!division.cities.find(x => x === "Aevum")) {
+            continue;
+        }
 
         const products = [];
         let oneDeveloping = false;
@@ -42,7 +46,7 @@ export async function main(ns) {
 
         let mimimumSpend = 1_000_000_000;
 
-        if(profitPerSecond > mimimumSpend){
+        if (profitPerSecond > mimimumSpend) {
             mimimumSpend = profitPerSecond;
         }
 
