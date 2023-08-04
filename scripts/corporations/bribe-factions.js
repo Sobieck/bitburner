@@ -3,7 +3,7 @@ export async function main(ns) {
         return;
     }
 
-    const corporation = ns.corporation.getCorporation();
+    let corporation = ns.corporation.getCorporation();
 
     if (corporation.public && corporation.divisions.length === 1) {
         return;
@@ -41,7 +41,7 @@ export async function main(ns) {
                 const repNeeded = factionWithRep.maximumAugRep - currentFactionRep;
 
                 corporation = ns.corporation.getCorporation();
-                const capitalReserve = 400_000_000_000;
+                const capitalReserve = profit * 2;
                 const liquidFunds = corporation.funds;
                 const investableAmount = liquidFunds - capitalReserve;
 

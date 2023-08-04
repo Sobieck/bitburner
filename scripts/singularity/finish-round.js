@@ -263,7 +263,7 @@ export async function main(ns) {
         const moneyAvailable = ns.getServerMoneyAvailable("home");
 
         const buyRepFile = 'data/buyRep.txt';
-        if (moneyAvailable - moneyNeededForAugments > 30_000_000_000_000 && !ns.fileExists(buyRepFile)) {
+        if (moneyAvailable - moneyNeededForAugments > 3_000_000_000_000 && !ns.fileExists(buyRepFile)) {
             ns.write(buyRepFile, "", "W");
             return;
         }

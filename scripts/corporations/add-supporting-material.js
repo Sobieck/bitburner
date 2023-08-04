@@ -7,11 +7,11 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
-    if (corporation.public && corporation.divisions.length === 1){
+    if (corporation.public && corporation.divisions.length === 1) {
         return;
     }
 
-    for (const divisionName of corporation.divisions){
+    for (const divisionName of corporation.divisions) {
         const materialGoals = [];
 
         const division = ns.corporation.getDivision(divisionName);
@@ -52,18 +52,22 @@ export async function main(ns) {
             }
         }
 
-        let fillXPercentOfWarehouseWithMultiplerMaterial = 0.5; // 0.5 was 789k profit 0.4 500k .6 was 402k
+        let fillXPercentOfWarehouseWithMultiplerMaterial = 0.5; 
 
-        if(division.type === "Chemical"){
+        if (division.type === "Chemical") {
             fillXPercentOfWarehouseWithMultiplerMaterial = 0.8;
         }
 
         for (const city of division.cities) {
-            if(!ns.corporation.hasWarehouse(divisionName, city)){
+            if (!ns.corporation.hasWarehouse(divisionName, city)) {
                 continue;
             }
 
             const warehouse = ns.corporation.getWarehouse(divisionName, city);
+
+            if (division.type === "Agriculture" && warehouse.size <= 7000) {
+                fillXPercentOfWarehouseWithMultiplerMaterial = 0.2;
+            }
 
             const amountToFillWithMultipliers = warehouse.size * fillXPercentOfWarehouseWithMultiplerMaterial;
 
