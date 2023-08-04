@@ -19,9 +19,14 @@ export async function main(ns) {
     for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
         
-        if (division.numAdVerts < 10) {
+        if (division.numAdVerts < 14) {
             ns.corporation.hireAdVert(divisionName);
         }
+
+        const upgrade = "ABC SalesBots";
+        if(ns.corporation.getUpgradeLevel(upgrade) < 5){
+            ns.corporation.levelUpgrade(upgrade);
+        }        
 
         for (let [key, city] of Object.entries(ns.enums.CityName)) {
             if (!division.cities.includes(city)) {
@@ -50,7 +55,7 @@ export async function main(ns) {
 
             const office = ns.corporation.getOffice(divisionName, city);
 
-            const businessNeeded = 4;
+            const businessNeeded = 6;
             const sizeNeeded = businessNeeded - office.size;
 
             if (sizeNeeded > 0){
