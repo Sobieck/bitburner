@@ -19,7 +19,7 @@ export async function main(ns) {
     for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
         
-        if (division.numAdVerts < 3) {
+        if (division.numAdVerts < 10) {
             ns.corporation.hireAdVert(divisionName);
         }
 
@@ -66,7 +66,7 @@ export async function main(ns) {
 
         const averageWarehouseUtilization = warehouseUtilizations.reduce((acc, x) => acc + x, 0) / warehouseUtilizations.length;
         
-        if(averageWarehouseUtilization > .9 && buyPhase){
+        if(averageWarehouseUtilization > 0.45 && buyPhase){
             ns.rm(juiceFile);
             ns.write(juiceFile, "sell", "W");
         }
