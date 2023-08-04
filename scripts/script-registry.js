@@ -74,6 +74,7 @@ export async function main(ns) {
         'scripts/corporations/get-investments.js',
         'scripts/corporations/bribe-factions.js', 
         'scripts/corporations/expand.js',
+        'scripts/corporations/juice-investments.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);
