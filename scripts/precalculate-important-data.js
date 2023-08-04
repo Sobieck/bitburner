@@ -47,6 +47,11 @@ export async function main(ns) {
   const constants = ns.getBitNodeMultipliers();
   ns.rm(multipliersFileName);
   ns.write(multipliersFileName, JSON.stringify(constants), "W");
+
+  const playerFile = 'data/player.txt';
+  const player = ns.getPlayer();
+  ns.rm(playerFile);
+  ns.write(playerFile, JSON.stringify(player), "W");
 }
 
 class ScriptRam {

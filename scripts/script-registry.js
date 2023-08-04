@@ -77,6 +77,17 @@ export async function main(ns) {
     ];
 
     scriptsToRun = scriptsToRun.concat(corporateScripts);
+
+    const sleevesScripts = [
+        'scripts/sleeves/countAndPriority.js',
+        'scripts/sleeves/getSleeves.js',
+        'scripts/sleeves/getTask.js',
+        'scripts/sleeves/synchronize.js', 
+        'scripts/sleeves/shockRecovery.js',
+        'scripts/sleeves/matchPlayerFactionWork.js',
+    ];
+
+    scriptsToRun = scriptsToRun.concat(sleevesScripts);
     
     const scriptsFile = 'data/scriptsToRun.txt';
     ns.rm(scriptsFile);

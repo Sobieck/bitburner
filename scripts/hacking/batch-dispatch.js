@@ -39,7 +39,7 @@ export async function main(ns) {
     const totalBoughtMemory = playerServers.reduce((acc, x) => acc + x.server.maxRam, 0);
 
     const ramNeededForBatchesFile = "data/ramNeededToStartBatches.txt";
-    const memoryNeededForBatches = 105_000;
+    const memoryNeededForBatches = 155_000;
 
     if (totalBoughtMemory < memoryNeededForBatches) {
         const ramNeededToStartBatches = Math.round(memoryNeededForBatches - totalBoughtMemory);

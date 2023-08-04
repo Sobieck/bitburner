@@ -8,9 +8,11 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
     const profit = corporation.revenue - corporation.expenses;
 
+    const multipliers = ns.getBitNodeMultipliers();
+
     const investmentWeWillTake = [
-        { round: 1, investment: 95_000_000_000, goPublic: false },
-        { round: 2, investment: 750_000_000_000, goPublic: true },
+        { round: 1, investment: 95_000_000_000 * multipliers.CorporationValuation, goPublic: false },
+        { round: 2, investment: 750_000_000_000 * multipliers.CorporationValuation, goPublic: true },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();

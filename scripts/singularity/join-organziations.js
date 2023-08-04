@@ -11,7 +11,7 @@ export async function main(ns) {
         "OmniTek Incorporated",
         "Blade Industries",
         "ECorp",
-    // "The Covenant",
+        "The Covenant",
         "Illuminati",
         "Aevum",
         "Volhaven",
