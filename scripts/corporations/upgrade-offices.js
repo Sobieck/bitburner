@@ -38,10 +38,6 @@ export async function main(ns) {
             }
         }
 
-        if(ns.fileExists("data/juice.txt")){
-            continue;
-        }
-
         if (division.makesProducts && division.cities.includes("Aevum")) {
             const aevum = "Aevum";
             const aevumOffice = ns.corporation.getOffice(divisionName, aevum);

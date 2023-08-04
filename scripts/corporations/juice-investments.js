@@ -26,7 +26,7 @@ export async function main(ns) {
             warehouseUtilizations.push(percentUsedOfWarehouse);
 
             if (buyPhase) {
-                if (percentUsedOfWarehouse > .9) {
+                if (percentUsedOfWarehouse < .9) {
                     const countToBuy = Math.floor(warehouse.size / materialData.size);
                     ns.corporation.bulkPurchase(divisionName, city, productToUseToJuice, countToBuy);
                 }
@@ -35,7 +35,7 @@ export async function main(ns) {
             if(!buyPhase) {
                 const material = ns.corporation.getMaterial(divisionName, city, productToUseToJuice);
 
-                ns.corporation.sellMaterial(divisionName, city, productToUseToJuice, "MAX", material.marketPrice * .75);
+                ns.corporation.sellMaterial(divisionName, city, productToUseToJuice, "MAX", material.marketPrice * .5);
             }
         }
 
