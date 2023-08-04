@@ -18,6 +18,10 @@ export async function main(ns) {
     const materialData = ns.corporation.getMaterialData(productToUseToJuice);
     for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
+        
+        if (division.numAdVerts < 2) {
+            ns.corporation.hireAdVert(divisionName);
+        }
 
         for (const city of division.cities) {
             const warehouse = ns.corporation.getWarehouse(divisionName, city);
@@ -35,7 +39,7 @@ export async function main(ns) {
             if(!buyPhase) {
                 const material = ns.corporation.getMaterial(divisionName, city, productToUseToJuice);
 
-                ns.corporation.sellMaterial(divisionName, city, productToUseToJuice, "MAX", material.marketPrice * .5);
+                ns.corporation.sellMaterial(divisionName, city, productToUseToJuice, "MAX", material.marketPrice * .9);
             }
         }
 

@@ -9,8 +9,7 @@ export async function main(ns) {
     const profit = corporation.revenue - corporation.expenses;
 
     const investmentWeWillTake = [
-        { round: 1, investment: 1_000_000_000_000, goPublic: false },
-        { round: 2, investment: 750_000_000_000, goPublic: true },
+        { round: 1, investment: 3_000_000_000_000, goPublic: true },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();
