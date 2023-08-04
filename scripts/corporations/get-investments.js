@@ -8,14 +8,16 @@ export async function main(ns) {
     const corporation = ns.corporation.getCorporation();
     const profit = corporation.revenue - corporation.expenses;
 
-    const multipliers = ns.getBitNodeMultipliers();
-
     const investmentWeWillTake = [
-        { round: 1, investment: 95_000_000_000 * multipliers.CorporationValuation, goPublic: false },
-        { round: 2, investment: 750_000_000_000 * multipliers.CorporationValuation, goPublic: true },
+        { round: 1, investment: 1_000_000_000_000, goPublic: false },
+        { round: 2, investment: 750_000_000_000, goPublic: true },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();
+ 
+    if (investmentOffer.round !== 1) {
+        ns.rm("data/juice.txt")
+    }
 
     for (const minimumInvestment of investmentWeWillTake) {
         if (investmentOffer.round === minimumInvestment.round && investmentOffer.funds > minimumInvestment.investment) {
@@ -54,13 +56,13 @@ export async function main(ns) {
                         try {
                             ns.corporation.issueNewShares(shareToIssue);
                         } catch (error) {
-                            if(cantIssueCount > 1000){
+                            if (cantIssueCount > 1000) {
                                 ns.toast("Can't issue new shares", "warning");
                                 cantIssueCount = 0;
                             } else {
                                 cantIssueCount++;
-                            }                            
-                        }                        
+                            }
+                        }
                     }
                 }
             }
@@ -108,7 +110,7 @@ export async function main(ns) {
         if (conditionToUse.minProfit < profit) {
             if (corporation.dividendRate !== conditionToUse.dividendRate) {
                 ns.corporation.issueDividends(conditionToUse.dividendRate);
-            } 
+            }
         } else {
             if (corporation.dividendRate !== 0) {
                 ns.corporation.issueDividends(0);

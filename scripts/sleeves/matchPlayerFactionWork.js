@@ -27,18 +27,18 @@ export async function main(ns) {
 
 
 
-        if (!currentActionsPriority.tasks.find(x => x === sleeve.task.type)) {
-            const mainPlayerWork = ns.singularity.getCurrentWork(); // {"type":"FACTION","cyclesWorked":126473,"factionWorkType":"hacking","factionName":"Chongqing"}
+        // if (!currentActionsPriority.tasks.find(x => x === sleeve.task.type)) {
+        //     const mainPlayerWork = ns.singularity.getCurrentWork(); // {"type":"FACTION","cyclesWorked":126473,"factionWorkType":"hacking","factionName":"Chongqing"}
 
 
-            if (mainPlayerWork.type === typeOfWork && sleeve.task.type !== typeOfWork) {
-                ns.sleeve.setToFactionWork(sleeve.name, mainPlayerWork.factionName, mainPlayerWork.factionWorkType);
-            }
+        //     if (mainPlayerWork.type === typeOfWork && sleeve.task.type !== typeOfWork) {
+        //         ns.sleeve.setToFactionWork(sleeve.name, mainPlayerWork.factionName, mainPlayerWork.factionWorkType);
+        //     }
 
-            ns.sleeve.setToSynchronize(sleeve.name)
-        }
+        //     ns.sleeve.setToSynchronize(sleeve.name)
+        // }
 
-        sleeve.actionTaken = currentActionsPriority.actionName;
+        // sleeve.actionTaken = currentActionsPriority.actionName;
     }
 
     ns.rm(sleevesFile);

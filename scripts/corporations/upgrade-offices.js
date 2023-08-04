@@ -1,5 +1,5 @@
 export async function main(ns) {
-    if (!ns.corporation.hasCorporation()) {
+    if (!ns.corporation.hasCorporation() || ns.fileExists('data/juice.txt')) {
         return;
     }
     
