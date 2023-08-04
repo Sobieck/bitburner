@@ -38,6 +38,10 @@ export async function main(ns) {
                 continue;
             }
 
+            if(!ns.corporation.hasUnlock("Smart Supply")){
+                continue;
+            }
+
             const warehouse = ns.corporation.getWarehouse(division.name, city);
 
             ns.corporation.setSmartSupply(divisionName, city, true);
