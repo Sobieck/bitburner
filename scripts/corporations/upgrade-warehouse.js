@@ -12,7 +12,7 @@ export async function main(ns) {
     const capitalReserve = 40_000_000_000;
 
 
-    for (const divisionName of corporation.divisions.filter(x => x !== "Gidget's Import/Export")) {
+    for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
 
         if (division.makesProducts && division.products.length < 2) {
