@@ -23,7 +23,11 @@ export async function main(ns) {
             ns.corporation.hireAdVert(divisionName);
         }
 
-
+        for (let [key, city] of Object.entries(ns.enums.CityName)) {
+            if (!division.cities.includes(city)) {
+                ns.corporation.expandCity(divisionName, city);
+            }
+        }
 
         for (const city of division.cities) {
             const warehouse = ns.corporation.getWarehouse(divisionName, city);
@@ -32,11 +36,9 @@ export async function main(ns) {
             warehouseUtilizations.push(percentUsedOfWarehouse);
 
             if (buyPhase) {
-                if (percentUsedOfWarehouse < .9) {
-                    const countToBuy = Math.floor(warehouse.size / materialData.size);
+                if (percentUsedOfWarehouse < 0.45) {
+                    const countToBuy = Math.floor((warehouse.size * 0.5) / materialData.size);
                     ns.corporation.bulkPurchase(divisionName, city, productToUseToJuice, countToBuy);
-                    
-                    ns.corporation.setAutoJobAssignment(divisionName, city, "Business", 4);
                 }
             }
 
@@ -45,6 +47,21 @@ export async function main(ns) {
 
                 ns.corporation.sellMaterial(divisionName, city, productToUseToJuice, "MAX", material.marketPrice * .9);
             }
+
+            const office = ns.corporation.getOffice(divisionName, city);
+
+            const businessNeeded = 4;
+            const sizeNeeded = businessNeeded - office.size;
+
+            if (sizeNeeded > 0){
+                ns.corporation.upgradeOfficeSize(divisionName, city, sizeNeeded);
+            }
+
+            if (office.size === office.numEmployees) {
+                continue;
+            }
+
+            ns.corporation.hireEmployee(divisionName, city, "Business");
         }
 
         const averageWarehouseUtilization = warehouseUtilizations.reduce((acc, x) => acc + x, 0) / warehouseUtilizations.length;
