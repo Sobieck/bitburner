@@ -65,7 +65,7 @@ export async function main(ns) {
 
             const warehouse = ns.corporation.getWarehouse(divisionName, city);
 
-            if (division.type === "Agriculture" && warehouse.size <= 7000) {
+            if (division.type === "Agriculture" && warehouse.size >= 7000) {
                 fillXPercentOfWarehouseWithMultiplerMaterial = 0.2;
             }
 

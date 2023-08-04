@@ -105,7 +105,7 @@ export async function main(ns) {
                 { minLoss: -10, officeSizeGoal: 9, minLiquidFunds: 20_000_000_000 },
                 { minProfit: 10_000_000, officeSizeGoal: 18, minLiquidFunds: 400_000_000_000 },
                 { minLoss: -250_000, officeSizeGoal: 18, minLiquidFunds: 220_000_000_000 },
-                { minLoss: -250_000, officeSizeGoal: 32, minLiquidFunds: 500_000_000_000 },
+                { minLoss: -250_000, officeSizeGoal: 36, minLiquidFunds: 500_000_000_000 },
                 { minLoss: -700_000, officeSizeGoal: 189, minLiquidFunds: 10_000_000_000_000 },
                 { minProfit: 700_000, officeSizeGoal: 189, minLiquidFunds: 10_000_000_000_000 },
             ]

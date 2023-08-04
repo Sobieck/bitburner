@@ -9,13 +9,14 @@ export async function main(ns) {
     const profit = corporation.revenue - corporation.expenses;
 
     const investmentWeWillTake = [
-        { round: 1, investment: 3_000_000_000_000, goPublic: true },
+        { round: 1, investment: 1_300_000_000_000, goPublic: true },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();
  
+    const juiceFile = "data/juice.txt"
     if (investmentOffer.round !== 1) {
-        ns.rm("data/juice.txt")
+        ns.rm(juiceFile);
     }
 
     for (const minimumInvestment of investmentWeWillTake) {
@@ -25,6 +26,10 @@ export async function main(ns) {
             } else {
                 const sharesToSell = corporation.totalShares * .65;
                 ns.corporation.goPublic(sharesToSell);
+
+                if(ns.fileExists(juiceFile)){
+                    ns.rm(juiceFile);
+                }
             }
         }
     }

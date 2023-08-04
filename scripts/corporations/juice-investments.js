@@ -19,9 +19,11 @@ export async function main(ns) {
     for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
         
-        if (division.numAdVerts < 2) {
+        if (division.numAdVerts < 3) {
             ns.corporation.hireAdVert(divisionName);
         }
+
+
 
         for (const city of division.cities) {
             const warehouse = ns.corporation.getWarehouse(divisionName, city);
@@ -33,6 +35,8 @@ export async function main(ns) {
                 if (percentUsedOfWarehouse < .9) {
                     const countToBuy = Math.floor(warehouse.size / materialData.size);
                     ns.corporation.bulkPurchase(divisionName, city, productToUseToJuice, countToBuy);
+                    
+                    ns.corporation.setAutoJobAssignment(divisionName, city, "Business", 4);
                 }
             }
 

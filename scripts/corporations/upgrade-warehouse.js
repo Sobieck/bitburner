@@ -64,7 +64,7 @@ export async function main(ns) {
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
-            if (warehouse.size < 2000 && percentUsedOfWarehouse > 0.7 && moneyLeft > capitalReserve && profit > 100) {
+            if (warehouse.size < 2000 && percentUsedOfWarehouse > 0.7 && moneyLeft > capitalReserve && !ns.fileExists('data/juice.txt')) {
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
