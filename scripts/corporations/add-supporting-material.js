@@ -21,13 +21,6 @@ export async function main(ns) {
             { name: "AI Cores", factorName: "aiCoreFactor" },
             { name: "Robots", factorName: "robotFactor" },
             { name: "Real Estate", factorName: "realEstateFactor" },
-            // { name: "Ore", factorName: "" },
-            // { name: "Minerals", factorName: "" },
-            // { name: "Food", factorName: "" },
-            // { name: "Plants", factorName: "" },
-            // { name: "Metal", factorName: "" },
-            // { name: "Chemicals", factorName: "" },
-            // { name: "Drugs", factorName: "" },
         ];
 
         const materialsToBuy = [];

@@ -1,7 +1,7 @@
 export async function main(ns) {
     const sleevesFile = 'data/sleeves.txt';
     let sleevesData = JSON.parse(ns.read(sleevesFile));
-    const actionName = "MatchPlayer";
+    const actionName = "MirrorPlayer";
     const typeOfWork = "FACTION";
 
     const currentActionsPriority = sleevesData.priorities.find(x => x.actionName === actionName);

@@ -119,6 +119,8 @@ function initialUpgrades(corporation, ns) {
         ns.corporation.purchaseUnlock(smartSupplyName);
     }
 
+    const wilsonAnalyticsLevel = ns.corporation.getUpgradeLevel("Wilson Analytics")
+
     for (const divisionName of corporation.divisions) {
         const division = ns.corporation.getDivision(divisionName);
 
@@ -126,7 +128,7 @@ function initialUpgrades(corporation, ns) {
             ns.corporation.hireAdVert(divisionName);
         }
 
-        if(division.numAdVerts < ns.corporation.getUpgradeLevel("Wilson Analytics")){
+        if(division.numAdVerts < wilsonAnalyticsLevel){
             ns.corporation.hireAdVert(divisionName);
         }
     }
@@ -158,6 +160,10 @@ function initialUpgrades(corporation, ns) {
             if (level < 10) {
                 ns.corporation.levelUpgrade(upgrade);
             }
+        }
+
+        if (wilsonAnalyticsLevel < 5){
+            ns.corporation.levelUpgrade("Wilson Analytics");
         }
     }
 }

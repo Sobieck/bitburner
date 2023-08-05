@@ -9,7 +9,7 @@ export async function main(ns) {
     const profit = corporation.revenue - corporation.expenses;
 
     const investmentWeWillTake = [
-        { round: 1, investment: 2_000_000_000_000, goPublic: true },
+        { round: 1, investment: 3_400_000_000_000 * ns.getBitNodeMultipliers().CorporationValuation, goPublic: true },
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();
@@ -87,7 +87,13 @@ export async function main(ns) {
             }
 
             if (moneyOnHome > 0) {
-                const cashToUseForBuybacks = moneyOnHome * 0.001;
+                let percentOfFreeCashToUse = 0.001;
+
+                if(moneyOnHome > 1_000_000_000_000){
+                    percentOfFreeCashToUse = .03;
+                }
+
+                const cashToUseForBuybacks = moneyOnHome * percentOfFreeCashToUse;
                 let sharesToBuy = Math.floor(cashToUseForBuybacks / corporation.sharePrice)
                 if (sharesToBuy > corporation.issuedShares) {
                     sharesToBuy = corporation.issuedShares;
@@ -102,8 +108,8 @@ export async function main(ns) {
         const dividendConditions = [
             { dividendRate: .01, partnership: false, floodPlayerWithMoney: false, minProfit: 200_000_000 },
             { dividendRate: .5, partnership: true, floodPlayerWithMoney: false, minProfit: 200_000_000 },
-            { dividendRate: .77, partnership: false, floodPlayerWithMoney: true, minProfit: 40_000_000 },
-            { dividendRate: .77, partnership: true, floodPlayerWithMoney: true, minProfit: 40_000_000 },
+            { dividendRate: .77, partnership: false, floodPlayerWithMoney: true, minProfit: 50_000_000 },
+            { dividendRate: .77, partnership: true, floodPlayerWithMoney: true, minProfit: 50_000_000 },
         ]
 
         const hasGovPartnership = ns.corporation.hasUnlock("Government Partnership");

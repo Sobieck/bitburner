@@ -85,7 +85,7 @@ export async function main(ns) {
         'scripts/sleeves/getTask.js',
         'scripts/sleeves/synchronize.js', 
         'scripts/sleeves/shockRecovery.js',
-        'scripts/sleeves/matchPlayerFactionWork.js',
+        'scripts/sleeves/mirrorPlayerFactionWork.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(sleevesScripts);
