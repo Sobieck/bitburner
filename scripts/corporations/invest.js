@@ -24,11 +24,11 @@ export async function main(ns) {
         { name: "Neural Accelerators", goalLvl: 20, priority: 1 },
         { name: "Speech Processor Implants", goalLvl: 20, priority: 1 },
         { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 20, priority: 1 },
-        { name: "Wilson Analytics", goalLvl: 14, priority: 2 }, // if this was top it would take forever to get to the less important ones.
+        { name: "Wilson Analytics", goalLvl: 14, priority: 2 }, 
         { name: "DreamSense", goalLvl: 14, priority: 2 },
         { name: "ABC SalesBots", goalLvl: 20, priority: 2 },
         { name: "Project Insight", goalLvl: 14, priority: 2 },
-        { name: "Wilson Analytics", goalLvl: 20000, priority: 3 }, 
+        { name: "Wilson Analytics", goalLvl: 40, priority: 3 }, 
         { name: "Smart Storage", goalLvl: 40, priority: 3 },
         { name: "Smart Factories", goalLvl: 40, priority: 3 },
         { name: "Project Insight", goalLvl: 40, priority: 3 },
@@ -38,6 +38,16 @@ export async function main(ns) {
         { name: "Speech Processor Implants", goalLvl: 40, priority: 3 },
         { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 40, priority: 3 },
         { name: "DreamSense", goalLvl: 40, priority: 3 },
+        { name: "Wilson Analytics", goalLvl: 60000, priority: 4 }, 
+        { name: "Smart Storage", goalLvl: 60, priority: 4 },
+        { name: "Smart Factories", goalLvl: 60, priority: 4 },
+        { name: "Project Insight", goalLvl: 60, priority: 4 },
+        { name: "ABC SalesBots", goalLvl: 60, priority: 4 },
+        { name: "FocusWires", goalLvl: 60, priority: 4 },
+        { name: "Neural Accelerators", goalLvl: 60, priority: 4 },
+        { name: "Speech Processor Implants", goalLvl: 60, priority: 4 },
+        { name: "Nuoptimal Nootropic Injector Implants", goalLvl: 60, priority: 4 },
+        { name: "DreamSense", goalLvl: 60, priority: 4 },
     ]
 
     let cheapestUpgrade;

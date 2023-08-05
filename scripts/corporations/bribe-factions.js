@@ -33,12 +33,11 @@ export async function main(ns) {
                 mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
             }
         }
-
+        
         if (mostRepExpensiveForEachFaction.length > 0) {
             for (const factionWithRep of mostRepExpensiveForEachFaction) {
 
                 let currentFactionRep = ns.singularity.getFactionRep(factionWithRep.faction);
-                const repNeeded = factionWithRep.maximumAugRep - currentFactionRep;
 
                 corporation = ns.corporation.getCorporation();
                 const capitalReserve = profit * 2;
@@ -48,7 +47,7 @@ export async function main(ns) {
                 const amountToDonate = 1_000_000_000_000;
 
                 let amountSpent = amountToDonate;
-                while (currentFactionRep < repNeeded && investableAmount > amountSpent) {
+                while (currentFactionRep < factionWithRep.maximumAugRep && investableAmount > amountSpent) {
 
                     ns.corporation.bribe(factionWithRep.faction, amountToDonate)
 

@@ -71,6 +71,10 @@ export async function main(ns) {
             }
 
             break;
-        }
+        } else {
+            if(currentWork && currentWork.factionName === faction) {
+                await ns.singularity.stopAction()
+            }
+        }   
     }
 }

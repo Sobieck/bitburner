@@ -50,6 +50,10 @@ export async function main(ns) {
             mimimumSpend = profitPerSecond;
         }
 
+        if(mimimumSpend * 3 > corporation.funds){
+            continue;
+        }
+
         if (division.products.length < division.maxProducts && !oneDeveloping) {
             const productName = divisionConstants.productNames[division.products.length];
 

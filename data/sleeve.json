@@ -1,0 +1,115 @@
+{
+    "numberOfSleeves": 1,
+    "priorities": [
+        {
+            "actionName": "Syncronize",
+            "tasks": [
+                "SYNCHRO"
+            ],
+            "who": [
+                0
+            ],
+            "priority": 0
+        },
+        {
+            "actionName": "Recovery",
+            "tasks": [
+                "RECOVERY"
+            ],
+            "who": [
+                0
+            ],
+            "priority": 1
+        },
+        {
+            "actionName": "MirrorPlayer",
+            "tasks": [
+                "FACTION",
+                "CLASS",
+                "COMPANY"
+            ],
+            "who": [
+                0
+            ],
+            "priority": 2
+        },
+        {
+            "actionName": "DoCrime",
+            "tasks": "CRIME",
+            "who": [
+                0
+            ],
+            "priority": 3
+        }
+    ],
+    "updated": "2023-08-05T17:53:36.161Z",
+    "sleeves": [
+        {
+            "hp": {
+                "current": 10,
+                "max": 10
+            },
+            "skills": {
+                "hacking": 53,
+                "strength": 1,
+                "defense": 1,
+                "dexterity": 1,
+                "agility": 1,
+                "charisma": 9,
+                "intelligence": 1
+            },
+            "exp": {
+                "hacking": 12052.309875952666,
+                "strength": 0,
+                "defense": 0,
+                "dexterity": 0,
+                "agility": 0,
+                "charisma": 545.2934299999944,
+                "intelligence": 1.1602827250030583
+            },
+            "mults": {
+                "hacking_chance": 1.2127500000000002,
+                "hacking_speed": 1.0932564816,
+                "hacking_money": 1.15,
+                "hacking_grow": 1,
+                "hacking": 1.4998104828000005,
+                "hacking_exp": 2.9938754999999997,
+                "strength": 1,
+                "strength_exp": 1.265,
+                "defense": 1,
+                "defense_exp": 1.265,
+                "dexterity": 1,
+                "dexterity_exp": 1.265,
+                "agility": 1,
+                "agility_exp": 1.265,
+                "charisma": 1,
+                "charisma_exp": 1.265,
+                "hacknet_node_money": 1,
+                "hacknet_node_purchase_cost": 1,
+                "hacknet_node_ram_cost": 1,
+                "hacknet_node_core_cost": 1,
+                "hacknet_node_level_cost": 1,
+                "company_rep": 1.265,
+                "faction_rep": 1.265,
+                "work_money": 1.1,
+                "crime_success": 1,
+                "crime_money": 1,
+                "bladeburner_max_stamina": 1,
+                "bladeburner_stamina_gain": 1,
+                "bladeburner_analysis": 1,
+                "bladeburner_success_chance": 1
+            },
+            "city": "Sector-12",
+            "shock": 0,
+            "sync": 100,
+            "memory": 1,
+            "storedCycles": 2,
+            "name": 0,
+            "task": {
+                "type": "COMPANY",
+                "companyName": "Bachman & Associates"
+            },
+            "actionTaken": "MirrorPlayer"
+        }
+    ]
+}

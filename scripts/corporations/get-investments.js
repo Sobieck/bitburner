@@ -126,6 +126,10 @@ export async function main(ns) {
                 ns.corporation.issueDividends(0);
             }
         }
+
+        if(ns.fileExists("data/needMoney.txt")){
+            ns.corporation.issueDividends(.80);
+        }
     }
 }
 

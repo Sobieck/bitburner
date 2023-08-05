@@ -19,6 +19,6 @@ export async function main(ns) {
         }
 
 
-        ns.singularity.destroyW0r1dD43m0n(10, 'scripts/coordinator.js'); // 2 (gangs) 
+        // ns.singularity.destroyW0r1dD43m0n(10, 'scripts/coordinator.js'); // 2 (gangs) 
     }
 }

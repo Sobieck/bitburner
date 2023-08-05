@@ -278,6 +278,8 @@ export async function main(ns) {
 
                 ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall} Money Needed: ${formatter.format(moneyNeededForAugments)}`, "success", 60000)
             }
+
+            ns.write("data/needMoney.txt", "", "W");
         }
 
         if (!analytics.firstEncoundedMoneyTrigger) {
