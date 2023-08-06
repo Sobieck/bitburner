@@ -93,7 +93,7 @@ export async function main(ns) {
                     percentOfFreeCashToUse = .03;
                 }
 
-                if (moneyOnHome > 160_000_000_000_000) {
+                if (moneyOnHome > 160_000_000_000_000 && !ns.fileExists('stopTrading.txt')) {
                     percentOfFreeCashToUse = .3;
                 }
 
@@ -110,7 +110,7 @@ export async function main(ns) {
         }
 
         let moneyOnHome = ns.getServerMoneyAvailable("home");
-        if (moneyOnHome > 1_000_000_000_000_000 && corporation.issuedShares === 0) {
+        if ((moneyOnHome > 1_000_000_000_000_000 && corporation.issuedShares === 0) || ns.fileExists("stopTrading.txt")) {
             ns.corporation.issueDividends(0);
         } else {
             const dividendConditions = [

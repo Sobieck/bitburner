@@ -3,6 +3,10 @@ export async function main(ns) {
     let sleevesData = JSON.parse(ns.read(sleevesFile));
 
     for (const sleeve of sleevesData.sleeves) {
+        if(sleeve.shock > 0){
+            continue;
+        }
+
         let hackingFilter = false;
         if (sleeve.task && sleeve.task.factionWorkType === "hacking") {
             hackingFilter = true;

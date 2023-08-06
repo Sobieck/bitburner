@@ -114,6 +114,9 @@ export async function main(ns) {
 
     setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns);
 
+    if (ns.singularity.getOwnedAugmentations(true) !== ns.singularity.getOwnedAugmentations(false)) {
+        ns.singularity.installAugmentations('scripts/coordinator.js')
+    }
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction);
     const currentFactionFavor = ns.singularity.getFactionFavor(targetFaction.faction);
 
@@ -126,6 +129,10 @@ export async function main(ns) {
         const favorGain = ns.singularity.getFactionFavorGain(targetFaction.faction);
         if (favorGain + currentFactionFavor > minRepToDonateToFaction) {
             targetRepForGettingToFavor = currentFactionFavor;
+        }
+
+        if (ns.fileExists("data/bribedFaction.txt")) {
+            targetRepForGettingToFavor = targetFaction.maximumAugRep;
         }
     }
 
@@ -313,8 +320,8 @@ export async function main(ns) {
                 }
 
                 delayBeforeBuyCount++;
-// this is to give us enough time to buy augments and whatnot on our sleeves
-                if(delayBeforeBuyCount < 100){
+                // this is to give us enough time to buy augments and whatnot on our sleeves
+                if (delayBeforeBuyCount < 100) {
                     return;
                 }
 

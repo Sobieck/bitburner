@@ -88,6 +88,7 @@ export async function main(ns) {
         'scripts/sleeves/mirror/faction.js',
         'scripts/sleeves/mirror/company.js',
         'scripts/sleeves/mirror/university.js',
+        'scripts/sleeves/mirror/gym.js',
         'scripts/sleeves/installAugments.js',
     ];
 

@@ -44,10 +44,11 @@ export async function main(ns) {
                 const liquidFunds = corporation.funds;
                 const investableAmount = liquidFunds - capitalReserve;
 
-                const amountToDonate = 10_000_000_000_000;
+                const amountToDonate = 20_000_000_000_000;
 
                 if (currentFactionRep < factionWithRep.maximumAugRep && investableAmount > amountToDonate) {
                     ns.corporation.bribe(factionWithRep.faction, amountToDonate)
+                    ns.write("data/bribedFaction.txt");
                 }
             }
         }
