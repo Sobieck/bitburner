@@ -24,7 +24,7 @@ export async function main(ns) {
             if (minimumInvestment.goPublic === false) {
                 ns.corporation.acceptInvestmentOffer();
             } else {
-                const sharesToSell = corporation.totalShares * .65;
+                const sharesToSell = corporation.totalShares * 0.6;
                 ns.corporation.goPublic(sharesToSell);
 
                 if (ns.fileExists(juiceFile)) {

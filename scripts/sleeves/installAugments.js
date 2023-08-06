@@ -3,38 +3,47 @@ export async function main(ns) {
     let sleevesData = JSON.parse(ns.read(sleevesFile));
 
     for (const sleeve of sleevesData.sleeves) {
-        if(sleeve.shock > 0){
+        if (sleeve.shock > 0 || (sleeve.task && (sleeve.task.type === "CRIME" || sleeve.actionTaken === 'DoCrime'))) {
             continue;
         }
 
-        let hackingFilter = false;
-        if (sleeve.task && sleeve.task.factionWorkType === "hacking") {
-            hackingFilter = true;
-        }
+        let filterToUse = allowNoneFilter;
 
-        let companyFilter = false;
-        if(sleeve.task && sleeve.task.type === "COMPANY"){
-            companyFilter = true;
-        }
-
-        let leadershipFilter = false;
-        if(sleeve.task && sleeve.task.classType === "Leadership"){
-            leadershipFilter = true;
-        }
-
-        let installAllAugs = false;
         let moneyOnHome = ns.getServerMoneyAvailable("home");
         if (moneyOnHome > 30_000_000_000_000) {
-            installAllAugs = true;
-            leadershipFilter = false;
-            companyFilter = false;
-            hackingFilter = false;
-        }
+            filterToUse = universalFilter;
+        } else {
+            if (sleeve.task && sleeve.task.factionWorkType === ns.enums.FactionWorkType.hacking) {
+                filterToUse = hackingFilter;
+            }
 
-        const buyAugments = hackingFilter || companyFilter || leadershipFilter || installAllAugs;
+            if (sleeve.task && sleeve.task.type === "COMPANY") {
+                filterToUse = companyFilter;
+            }
 
-        if (buyAugments === false) {
-            continue;
+            if (sleeve.task && sleeve.task.classType === ns.enums.UniversityClassType.leadership) {
+                filterToUse = leadershipFilter;
+            }
+
+            if (sleeve.task && sleeve.task.classType === ns.enums.UniversityClassType.algorithms) {
+                filterToUse = hackingFilter;
+            }
+
+            if (sleeve.task && sleeve.task.classType === ns.enums.GymType.agility) {
+                filterToUse = agilityFilter;
+            }
+
+            if (sleeve.task && sleeve.task.classType === ns.enums.GymType.defense) {
+                filterToUse = defenseFilter;
+            }
+
+            if (sleeve.task && sleeve.task.classType === ns.enums.GymType.dexterity) {
+                filterToUse = dexterityFilter;
+            }
+
+            if (sleeve.task && sleeve.task.classType === ns.enums.GymType.strength) {
+                filterToUse = strengthFilter;
+            }
         }
 
         const buyableAugment = ns.sleeve
@@ -48,42 +57,12 @@ export async function main(ns) {
                     stats
                 }
             })
-            .filter(x => {
-                if (hackingFilter) {
-                    return x.stats.hacking_chance > 1 ||
-                        x.stats.hacking_speed > 1 ||
-                        x.stats.hacking_money > 1 ||
-                        x.stats.hacking_grow > 1 ||
-                        x.stats.hacking > 1 ||
-                        x.stats.hacking_exp > 1 ||
-                        x.stats.faction_rep > 1
-                } else {
-                    return true;
-                }
-            })
-            .filter(x => {
-                if (companyFilter) {
-                    return x.stats.company_rep > 1 ||
-                        x.stats.work_money > 1 ||
-                        x.stats.charisma_exp > 1 ||
-                        x.stats.charisma > 1 
-                } else {
-                    return true;
-                }
-            })
-            .filter(x => {
-                if (leadershipFilter) {
-                    return x.stats.charisma_exp > 1 ||
-                        x.stats.charisma > 1 
-                } else {
-                    return true;
-                }
-            })
+            .filter(filterToUse)
             .sort((a, b) => b.cost - a.cost)
             .pop();
 
 
-        if(buyableAugment === undefined){
+        if (buyableAugment === undefined) {
             continue;
         }
 
@@ -92,11 +71,66 @@ export async function main(ns) {
         if (ns.fileExists(stockMarketReserveMoneyFile)) {
             stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
         }
-        if(stockMarketReserveMoney.canSpend(ns, buyableAugment.cost)){
+        
+        if (stockMarketReserveMoney.canSpend(ns, buyableAugment.cost)) {
             ns.sleeve.purchaseSleeveAug(sleeve.name, buyableAugment.name);
+            break;
         }
     }
 }
+
+function universalFilter(x) {
+    return true;
+}
+
+function allowNoneFilter(x) {
+    return false;
+}
+
+function leadershipFilter(x) {
+    return x.stats.charisma_exp > 1 ||
+        x.stats.charisma > 1;
+}
+
+function defenseFilter(x) {
+    return x.stats.defense > 1 ||
+        x.stats.dexterity_exp > 1;
+}
+
+function dexterityFilter(x) {
+    return x.stats.dexterity > 1 ||
+        x.stats.dexterity_exp > 1 ||
+        x.stats.crime_success > 1 ||
+        x.stats.crime_money > 1
+}
+
+function strengthFilter(x) {
+    return x.stats.strength > 1 ||
+        x.stats.strength_exp > 1;
+}
+
+function agilityFilter(x) {
+    return x.stats.agility > 1 ||
+        x.stats.agility_exp > 1
+}
+
+function companyFilter(x) {
+    return x.stats.company_rep > 1 ||
+        x.stats.work_money > 1 ||
+        x.stats.charisma_exp > 1 ||
+        x.stats.charisma > 1;
+}
+
+function hackingFilter(x) {
+    return x.stats.hacking_chance > 1 ||
+        x.stats.hacking_speed > 1 ||
+        x.stats.hacking_money > 1 ||
+        x.stats.hacking_grow > 1 ||
+        x.stats.hacking > 1 ||
+        x.stats.hacking_exp > 1 ||
+        x.stats.faction_rep > 1;
+}
+
 
 class ReserveForTrading {
     stockMarketReserveMoneyLimit = 1_500_000_000_000;

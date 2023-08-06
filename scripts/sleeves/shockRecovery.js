@@ -18,7 +18,7 @@ export async function main(ns) {
             continue;
         }
 
-        if (sleeve.shock > 0) {
+        if (sleeve.shock > 10) {
             if(!currentActionsPriority.tasks.find(x => x === sleeve.task.type)){
                 ns.sleeve.setToShockRecovery(sleeve.name);
             }

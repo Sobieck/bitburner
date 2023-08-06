@@ -28,19 +28,19 @@ function getBuffForFaction(ns, faction, targetForAttributes){
 
     if (!player.factions.includes(faction) && (!currentWork || currentWork.type === "CLASS")) {
         
-        if(doExersizeIfAppropriate(player.skills.agility, currentWork, ns, 'agi', targetForAttributes)){
+        if(doExersizeIfAppropriate(player.skills.agility, currentWork, ns, ns.enums.GymType.agility, targetForAttributes)){
             return true;
         }
 
-        if(doExersizeIfAppropriate(player.skills.defense, currentWork, ns, 'def', targetForAttributes)){
+        if(doExersizeIfAppropriate(player.skills.defense, currentWork, ns, ns.enums.GymType.defense, targetForAttributes)){
             return true;
         }
 
-        if(doExersizeIfAppropriate(player.skills.strength, currentWork, ns, 'str', targetForAttributes)){
+        if(doExersizeIfAppropriate(player.skills.strength, currentWork, ns, ns.enums.GymType.strength, targetForAttributes)){
             return true;
         }
 
-        if(doExersizeIfAppropriate(player.skills.dexterity, currentWork, ns, 'dex', targetForAttributes)){
+        if(doExersizeIfAppropriate(player.skills.dexterity, currentWork, ns, ns.enums.GymType.dexterity, targetForAttributes)){
             return true;
         }
     }
@@ -49,8 +49,8 @@ function getBuffForFaction(ns, faction, targetForAttributes){
 function doExersizeIfAppropriate(skill, currentWork, ns, type, targetForAttributes) {
     if (skill < targetForAttributes) {
         if (!currentWork || currentWork.classType !== type) {
-            ns.singularity.travelToCity("Sector-12");
-            ns.singularity.gymWorkout("powerhouse gym", type, true);
+            ns.singularity.travelToCity(ns.enums.CityName.Sector12);
+            ns.singularity.gymWorkout(ns.enums.LocationName.Sector12PowerhouseGym, type, true);
         }
         return true;
     }

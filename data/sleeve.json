@@ -1,5 +1,5 @@
 {
-    "numberOfSleeves": 1,
+    "numberOfSleeves": 7,
     "priorities": [
         {
             "actionName": "Syncronize",
@@ -7,7 +7,13 @@
                 "SYNCHRO"
             ],
             "who": [
-                0
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
             ],
             "priority": 0
         },
@@ -17,7 +23,13 @@
                 "RECOVERY"
             ],
             "who": [
-                0
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
             ],
             "priority": 1
         },
@@ -35,14 +47,38 @@
         },
         {
             "actionName": "DoCrime",
-            "tasks": "CRIME",
+            "tasks": [
+                "CRIME"
+            ],
             "who": [
-                0
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
             ],
             "priority": 3
+        },
+        {
+            "actionName": "CrimeTrain",
+            "tasks": [
+                "CLASS"
+            ],
+            "who": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            ],
+            "priority": 4
         }
     ],
-    "updated": "2023-08-05T17:53:36.161Z",
+    "updated": "2023-08-06T21:35:28.832Z",
     "sleeves": [
         {
             "hp": {
@@ -50,48 +86,48 @@
                 "max": 10
             },
             "skills": {
-                "hacking": 53,
+                "hacking": 7,
                 "strength": 1,
                 "defense": 1,
                 "dexterity": 1,
                 "agility": 1,
-                "charisma": 9,
-                "intelligence": 1
+                "charisma": 1,
+                "intelligence": 25
             },
             "exp": {
-                "hacking": 12052.309875952666,
+                "hacking": 490.9121962298831,
                 "strength": 0,
                 "defense": 0,
                 "dexterity": 0,
                 "agility": 0,
-                "charisma": 545.2934299999944,
-                "intelligence": 1.1602827250030583
+                "charisma": 0,
+                "intelligence": 624.0830327663683
             },
             "mults": {
-                "hacking_chance": 1.2127500000000002,
-                "hacking_speed": 1.0932564816,
-                "hacking_money": 1.15,
+                "hacking_chance": 1,
+                "hacking_speed": 1,
+                "hacking_money": 1,
                 "hacking_grow": 1,
-                "hacking": 1.4998104828000005,
-                "hacking_exp": 2.9938754999999997,
+                "hacking": 1,
+                "hacking_exp": 1,
                 "strength": 1,
-                "strength_exp": 1.265,
+                "strength_exp": 1,
                 "defense": 1,
-                "defense_exp": 1.265,
+                "defense_exp": 1,
                 "dexterity": 1,
-                "dexterity_exp": 1.265,
+                "dexterity_exp": 1,
                 "agility": 1,
-                "agility_exp": 1.265,
+                "agility_exp": 1,
                 "charisma": 1,
-                "charisma_exp": 1.265,
+                "charisma_exp": 1,
                 "hacknet_node_money": 1,
                 "hacknet_node_purchase_cost": 1,
                 "hacknet_node_ram_cost": 1,
                 "hacknet_node_core_cost": 1,
                 "hacknet_node_level_cost": 1,
-                "company_rep": 1.265,
-                "faction_rep": 1.265,
-                "work_money": 1.1,
+                "company_rep": 1,
+                "faction_rep": 1,
+                "work_money": 1,
                 "crime_success": 1,
                 "crime_money": 1,
                 "bladeburner_max_stamina": 1,
@@ -100,16 +136,1279 @@
                 "bladeburner_success_chance": 1
             },
             "city": "Sector-12",
-            "shock": 0,
+            "shock": 51.383307720926055,
             "sync": 100,
-            "memory": 1,
-            "storedCycles": 2,
+            "memory": 100,
+            "storedCycles": 1,
             "name": 0,
             "task": {
-                "type": "COMPANY",
-                "companyName": "Bachman & Associates"
+                "type": "RECOVERY"
             },
-            "actionTaken": "MirrorPlayer"
+            "actionTaken": "Recovery",
+            "crimeChances": [
+                {
+                    "chance": 0.0007193732193732194,
+                    "crime": {
+                        "hacking_success_weight": 1,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Heist",
+                        "difficulty": 18
+                    }
+                },
+                {
+                    "chance": 0.000592948717948718,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 2,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Assassination",
+                        "difficulty": 8
+                    }
+                },
+                {
+                    "chance": 0.0009487179487179488,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Kidnap",
+                        "difficulty": 5
+                    }
+                },
+                {
+                    "chance": 0.0028846153846153848,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Traffick Arms",
+                        "difficulty": 2
+                    }
+                },
+                {
+                    "chance": 0.004564102564102565,
+                    "crime": {
+                        "hacking_success_weight": 0.05,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1.25,
+                        "agility_success_weight": 0,
+                        "charisma_success_weight": 0,
+                        "name": "Bond Forgery",
+                        "difficulty": 0.5
+                    }
+                },
+                {
+                    "chance": 0.03141025641025641,
+                    "crime": {
+                        "hacking_success_weight": 0.5,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Rob Store",
+                        "difficulty": 0.2
+                    }
+                }
+            ],
+            "allCrimesChancesMaxed": false,
+            "crimeToTrainFor": {
+                "chance": 0.03141025641025641,
+                "crime": {
+                    "hacking_success_weight": 0.5,
+                    "strength_success_weight": 0,
+                    "defense_success_weight": 0,
+                    "dexterity_success_weight": 1,
+                    "agility_success_weight": 1,
+                    "charisma_success_weight": 0,
+                    "name": "Rob Store",
+                    "difficulty": 0.2
+                }
+            },
+            "stages": [
+                {
+                    "stage": 1,
+                    "typeOfTraining": "Algorithms"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "str"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "def"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "dex"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "agi"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "Leadership"
+                }
+            ],
+            "lowestStage": {
+                "stage": 1,
+                "typeOfTraining": "Algorithms"
+            }
+        },
+        {
+            "hp": {
+                "current": 10,
+                "max": 10
+            },
+            "skills": {
+                "hacking": 7,
+                "strength": 1,
+                "defense": 1,
+                "dexterity": 1,
+                "agility": 1,
+                "charisma": 1,
+                "intelligence": 1
+            },
+            "exp": {
+                "hacking": 517.263617388189,
+                "strength": 0,
+                "defense": 0,
+                "dexterity": 0,
+                "agility": 0,
+                "charisma": 0,
+                "intelligence": 1.2003212426407486
+            },
+            "mults": {
+                "hacking_chance": 1,
+                "hacking_speed": 1,
+                "hacking_money": 1,
+                "hacking_grow": 1,
+                "hacking": 1,
+                "hacking_exp": 1,
+                "strength": 1,
+                "strength_exp": 1,
+                "defense": 1,
+                "defense_exp": 1,
+                "dexterity": 1,
+                "dexterity_exp": 1,
+                "agility": 1,
+                "agility_exp": 1,
+                "charisma": 1,
+                "charisma_exp": 1,
+                "hacknet_node_money": 1,
+                "hacknet_node_purchase_cost": 1,
+                "hacknet_node_ram_cost": 1,
+                "hacknet_node_core_cost": 1,
+                "hacknet_node_level_cost": 1,
+                "company_rep": 1,
+                "faction_rep": 1,
+                "work_money": 1,
+                "crime_success": 1,
+                "crime_money": 1,
+                "bladeburner_max_stamina": 1,
+                "bladeburner_stamina_gain": 1,
+                "bladeburner_analysis": 1,
+                "bladeburner_success_chance": 1
+            },
+            "city": "Sector-12",
+            "shock": 52.090688124922536,
+            "sync": 100,
+            "memory": 100,
+            "storedCycles": 1,
+            "name": 1,
+            "task": {
+                "type": "RECOVERY"
+            },
+            "actionTaken": "Recovery",
+            "crimeChances": [
+                {
+                    "chance": 0.0006851851851851852,
+                    "crime": {
+                        "hacking_success_weight": 1,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Heist",
+                        "difficulty": 18
+                    }
+                },
+                {
+                    "chance": 0.000516025641025641,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 2,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Assassination",
+                        "difficulty": 8
+                    }
+                },
+                {
+                    "chance": 0.0008256410256410257,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Kidnap",
+                        "difficulty": 5
+                    }
+                },
+                {
+                    "chance": 0.002576923076923077,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Traffick Arms",
+                        "difficulty": 2
+                    }
+                },
+                {
+                    "chance": 0.0033333333333333335,
+                    "crime": {
+                        "hacking_success_weight": 0.05,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1.25,
+                        "agility_success_weight": 0,
+                        "charisma_success_weight": 0,
+                        "name": "Bond Forgery",
+                        "difficulty": 0.5
+                    }
+                },
+                {
+                    "chance": 0.028333333333333335,
+                    "crime": {
+                        "hacking_success_weight": 0.5,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Rob Store",
+                        "difficulty": 0.2
+                    }
+                }
+            ],
+            "allCrimesChancesMaxed": false,
+            "crimeToTrainFor": {
+                "chance": 0.028333333333333335,
+                "crime": {
+                    "hacking_success_weight": 0.5,
+                    "strength_success_weight": 0,
+                    "defense_success_weight": 0,
+                    "dexterity_success_weight": 1,
+                    "agility_success_weight": 1,
+                    "charisma_success_weight": 0,
+                    "name": "Rob Store",
+                    "difficulty": 0.2
+                }
+            },
+            "stages": [
+                {
+                    "stage": 1,
+                    "typeOfTraining": "Algorithms"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "str"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "def"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "dex"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "agi"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "Leadership"
+                }
+            ],
+            "lowestStage": {
+                "stage": 1,
+                "typeOfTraining": "Algorithms"
+            }
+        },
+        {
+            "hp": {
+                "current": 10,
+                "max": 10
+            },
+            "skills": {
+                "hacking": 7,
+                "strength": 1,
+                "defense": 1,
+                "dexterity": 1,
+                "agility": 1,
+                "charisma": 1,
+                "intelligence": 1
+            },
+            "exp": {
+                "hacking": 519.3947669925724,
+                "strength": 0,
+                "defense": 0,
+                "dexterity": 0,
+                "agility": 0,
+                "charisma": 0,
+                "intelligence": 1.2056281764199912
+            },
+            "mults": {
+                "hacking_chance": 1,
+                "hacking_speed": 1,
+                "hacking_money": 1,
+                "hacking_grow": 1,
+                "hacking": 1,
+                "hacking_exp": 1,
+                "strength": 1,
+                "strength_exp": 1,
+                "defense": 1,
+                "defense_exp": 1,
+                "dexterity": 1,
+                "dexterity_exp": 1,
+                "agility": 1,
+                "agility_exp": 1,
+                "charisma": 1,
+                "charisma_exp": 1,
+                "hacknet_node_money": 1,
+                "hacknet_node_purchase_cost": 1,
+                "hacknet_node_ram_cost": 1,
+                "hacknet_node_core_cost": 1,
+                "hacknet_node_level_cost": 1,
+                "company_rep": 1,
+                "faction_rep": 1,
+                "work_money": 1,
+                "crime_success": 1,
+                "crime_money": 1,
+                "bladeburner_max_stamina": 1,
+                "bladeburner_stamina_gain": 1,
+                "bladeburner_analysis": 1,
+                "bladeburner_success_chance": 1
+            },
+            "city": "Sector-12",
+            "shock": 52.07566937492251,
+            "sync": 100,
+            "memory": 100,
+            "storedCycles": 1,
+            "name": 2,
+            "task": {
+                "type": "RECOVERY"
+            },
+            "actionTaken": "Recovery",
+            "crimeChances": [
+                {
+                    "chance": 0.0006851851851851852,
+                    "crime": {
+                        "hacking_success_weight": 1,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Heist",
+                        "difficulty": 18
+                    }
+                },
+                {
+                    "chance": 0.000516025641025641,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 2,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Assassination",
+                        "difficulty": 8
+                    }
+                },
+                {
+                    "chance": 0.0008256410256410257,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Kidnap",
+                        "difficulty": 5
+                    }
+                },
+                {
+                    "chance": 0.002576923076923077,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Traffick Arms",
+                        "difficulty": 2
+                    }
+                },
+                {
+                    "chance": 0.0033333333333333335,
+                    "crime": {
+                        "hacking_success_weight": 0.05,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1.25,
+                        "agility_success_weight": 0,
+                        "charisma_success_weight": 0,
+                        "name": "Bond Forgery",
+                        "difficulty": 0.5
+                    }
+                },
+                {
+                    "chance": 0.028333333333333335,
+                    "crime": {
+                        "hacking_success_weight": 0.5,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Rob Store",
+                        "difficulty": 0.2
+                    }
+                }
+            ],
+            "allCrimesChancesMaxed": false,
+            "crimeToTrainFor": {
+                "chance": 0.028333333333333335,
+                "crime": {
+                    "hacking_success_weight": 0.5,
+                    "strength_success_weight": 0,
+                    "defense_success_weight": 0,
+                    "dexterity_success_weight": 1,
+                    "agility_success_weight": 1,
+                    "charisma_success_weight": 0,
+                    "name": "Rob Store",
+                    "difficulty": 0.2
+                }
+            },
+            "stages": [
+                {
+                    "stage": 1,
+                    "typeOfTraining": "Algorithms"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "str"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "def"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "dex"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "agi"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "Leadership"
+                }
+            ],
+            "lowestStage": {
+                "stage": 1,
+                "typeOfTraining": "Algorithms"
+            }
+        },
+        {
+            "hp": {
+                "current": 10,
+                "max": 10
+            },
+            "skills": {
+                "hacking": 8,
+                "strength": 1,
+                "defense": 1,
+                "dexterity": 1,
+                "agility": 1,
+                "charisma": 1,
+                "intelligence": 1
+            },
+            "exp": {
+                "hacking": 543.3092977978587,
+                "strength": 0,
+                "defense": 0,
+                "dexterity": 0,
+                "agility": 0,
+                "charisma": 0,
+                "intelligence": 1.2654145034332063
+            },
+            "mults": {
+                "hacking_chance": 1,
+                "hacking_speed": 1,
+                "hacking_money": 1,
+                "hacking_grow": 1,
+                "hacking": 1,
+                "hacking_exp": 1,
+                "strength": 1,
+                "strength_exp": 1,
+                "defense": 1,
+                "defense_exp": 1,
+                "dexterity": 1,
+                "dexterity_exp": 1,
+                "agility": 1,
+                "agility_exp": 1,
+                "charisma": 1,
+                "charisma_exp": 1,
+                "hacknet_node_money": 1,
+                "hacknet_node_purchase_cost": 1,
+                "hacknet_node_ram_cost": 1,
+                "hacknet_node_core_cost": 1,
+                "hacknet_node_level_cost": 1,
+                "company_rep": 1,
+                "faction_rep": 1,
+                "work_money": 1,
+                "crime_success": 1,
+                "crime_money": 1,
+                "bladeburner_max_stamina": 1,
+                "bladeburner_stamina_gain": 1,
+                "bladeburner_analysis": 1,
+                "bladeburner_success_chance": 1
+            },
+            "city": "Sector-12",
+            "shock": 52.07566937492251,
+            "sync": 100,
+            "memory": 100,
+            "storedCycles": 1,
+            "name": 3,
+            "task": {
+                "type": "RECOVERY"
+            },
+            "actionTaken": "Recovery",
+            "crimeChances": [
+                {
+                    "chance": 0.0007421652421652422,
+                    "crime": {
+                        "hacking_success_weight": 1,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Heist",
+                        "difficulty": 18
+                    }
+                },
+                {
+                    "chance": 0.000516025641025641,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 2,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Assassination",
+                        "difficulty": 8
+                    }
+                },
+                {
+                    "chance": 0.0008256410256410257,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Kidnap",
+                        "difficulty": 5
+                    }
+                },
+                {
+                    "chance": 0.002576923076923077,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Traffick Arms",
+                        "difficulty": 2
+                    }
+                },
+                {
+                    "chance": 0.0034358974358974356,
+                    "crime": {
+                        "hacking_success_weight": 0.05,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1.25,
+                        "agility_success_weight": 0,
+                        "charisma_success_weight": 0,
+                        "name": "Bond Forgery",
+                        "difficulty": 0.5
+                    }
+                },
+                {
+                    "chance": 0.030897435897435897,
+                    "crime": {
+                        "hacking_success_weight": 0.5,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Rob Store",
+                        "difficulty": 0.2
+                    }
+                }
+            ],
+            "allCrimesChancesMaxed": false,
+            "crimeToTrainFor": {
+                "chance": 0.030897435897435897,
+                "crime": {
+                    "hacking_success_weight": 0.5,
+                    "strength_success_weight": 0,
+                    "defense_success_weight": 0,
+                    "dexterity_success_weight": 1,
+                    "agility_success_weight": 1,
+                    "charisma_success_weight": 0,
+                    "name": "Rob Store",
+                    "difficulty": 0.2
+                }
+            },
+            "stages": [
+                {
+                    "stage": 1,
+                    "typeOfTraining": "Algorithms"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "str"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "def"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "dex"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "agi"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "Leadership"
+                }
+            ],
+            "lowestStage": {
+                "stage": 1,
+                "typeOfTraining": "Algorithms"
+            }
+        },
+        {
+            "hp": {
+                "current": 10,
+                "max": 10
+            },
+            "skills": {
+                "hacking": 8,
+                "strength": 1,
+                "defense": 1,
+                "dexterity": 1,
+                "agility": 1,
+                "charisma": 1,
+                "intelligence": 1
+            },
+            "exp": {
+                "hacking": 543.3083472429198,
+                "strength": 0,
+                "defense": 0,
+                "dexterity": 0,
+                "agility": 0,
+                "charisma": 0,
+                "intelligence": 1.2654121270458583
+            },
+            "mults": {
+                "hacking_chance": 1,
+                "hacking_speed": 1,
+                "hacking_money": 1,
+                "hacking_grow": 1,
+                "hacking": 1,
+                "hacking_exp": 1,
+                "strength": 1,
+                "strength_exp": 1,
+                "defense": 1,
+                "defense_exp": 1,
+                "dexterity": 1,
+                "dexterity_exp": 1,
+                "agility": 1,
+                "agility_exp": 1,
+                "charisma": 1,
+                "charisma_exp": 1,
+                "hacknet_node_money": 1,
+                "hacknet_node_purchase_cost": 1,
+                "hacknet_node_ram_cost": 1,
+                "hacknet_node_core_cost": 1,
+                "hacknet_node_level_cost": 1,
+                "company_rep": 1,
+                "faction_rep": 1,
+                "work_money": 1,
+                "crime_success": 1,
+                "crime_money": 1,
+                "bladeburner_max_stamina": 1,
+                "bladeburner_stamina_gain": 1,
+                "bladeburner_analysis": 1,
+                "bladeburner_success_chance": 1
+            },
+            "city": "Sector-12",
+            "shock": 52.07566937492251,
+            "sync": 100,
+            "memory": 100,
+            "storedCycles": 1,
+            "name": 4,
+            "task": {
+                "type": "RECOVERY"
+            },
+            "actionTaken": "Recovery",
+            "crimeChances": [
+                {
+                    "chance": 0.0007421652421652422,
+                    "crime": {
+                        "hacking_success_weight": 1,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Heist",
+                        "difficulty": 18
+                    }
+                },
+                {
+                    "chance": 0.000516025641025641,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 2,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Assassination",
+                        "difficulty": 8
+                    }
+                },
+                {
+                    "chance": 0.0008256410256410257,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Kidnap",
+                        "difficulty": 5
+                    }
+                },
+                {
+                    "chance": 0.002576923076923077,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Traffick Arms",
+                        "difficulty": 2
+                    }
+                },
+                {
+                    "chance": 0.0034358974358974356,
+                    "crime": {
+                        "hacking_success_weight": 0.05,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1.25,
+                        "agility_success_weight": 0,
+                        "charisma_success_weight": 0,
+                        "name": "Bond Forgery",
+                        "difficulty": 0.5
+                    }
+                },
+                {
+                    "chance": 0.030897435897435897,
+                    "crime": {
+                        "hacking_success_weight": 0.5,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Rob Store",
+                        "difficulty": 0.2
+                    }
+                }
+            ],
+            "allCrimesChancesMaxed": false,
+            "crimeToTrainFor": {
+                "chance": 0.030897435897435897,
+                "crime": {
+                    "hacking_success_weight": 0.5,
+                    "strength_success_weight": 0,
+                    "defense_success_weight": 0,
+                    "dexterity_success_weight": 1,
+                    "agility_success_weight": 1,
+                    "charisma_success_weight": 0,
+                    "name": "Rob Store",
+                    "difficulty": 0.2
+                }
+            },
+            "stages": [
+                {
+                    "stage": 1,
+                    "typeOfTraining": "Algorithms"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "str"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "def"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "dex"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "agi"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "Leadership"
+                }
+            ],
+            "lowestStage": {
+                "stage": 1,
+                "typeOfTraining": "Algorithms"
+            }
+        },
+        {
+            "hp": {
+                "current": 10,
+                "max": 10
+            },
+            "skills": {
+                "hacking": 8,
+                "strength": 1,
+                "defense": 1,
+                "dexterity": 1,
+                "agility": 1,
+                "charisma": 1,
+                "intelligence": 1
+            },
+            "exp": {
+                "hacking": 543.3073966879809,
+                "strength": 0,
+                "defense": 0,
+                "dexterity": 0,
+                "agility": 0,
+                "charisma": 0,
+                "intelligence": 1.2654097506585102
+            },
+            "mults": {
+                "hacking_chance": 1,
+                "hacking_speed": 1,
+                "hacking_money": 1,
+                "hacking_grow": 1,
+                "hacking": 1,
+                "hacking_exp": 1,
+                "strength": 1,
+                "strength_exp": 1,
+                "defense": 1,
+                "defense_exp": 1,
+                "dexterity": 1,
+                "dexterity_exp": 1,
+                "agility": 1,
+                "agility_exp": 1,
+                "charisma": 1,
+                "charisma_exp": 1,
+                "hacknet_node_money": 1,
+                "hacknet_node_purchase_cost": 1,
+                "hacknet_node_ram_cost": 1,
+                "hacknet_node_core_cost": 1,
+                "hacknet_node_level_cost": 1,
+                "company_rep": 1,
+                "faction_rep": 1,
+                "work_money": 1,
+                "crime_success": 1,
+                "crime_money": 1,
+                "bladeburner_max_stamina": 1,
+                "bladeburner_stamina_gain": 1,
+                "bladeburner_analysis": 1,
+                "bladeburner_success_chance": 1
+            },
+            "city": "Sector-12",
+            "shock": 52.07566937492251,
+            "sync": 100,
+            "memory": 100,
+            "storedCycles": 1,
+            "name": 5,
+            "task": {
+                "type": "RECOVERY"
+            },
+            "actionTaken": "Recovery",
+            "crimeChances": [
+                {
+                    "chance": 0.0007421652421652422,
+                    "crime": {
+                        "hacking_success_weight": 1,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Heist",
+                        "difficulty": 18
+                    }
+                },
+                {
+                    "chance": 0.000516025641025641,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 2,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Assassination",
+                        "difficulty": 8
+                    }
+                },
+                {
+                    "chance": 0.0008256410256410257,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Kidnap",
+                        "difficulty": 5
+                    }
+                },
+                {
+                    "chance": 0.002576923076923077,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Traffick Arms",
+                        "difficulty": 2
+                    }
+                },
+                {
+                    "chance": 0.0034358974358974356,
+                    "crime": {
+                        "hacking_success_weight": 0.05,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1.25,
+                        "agility_success_weight": 0,
+                        "charisma_success_weight": 0,
+                        "name": "Bond Forgery",
+                        "difficulty": 0.5
+                    }
+                },
+                {
+                    "chance": 0.030897435897435897,
+                    "crime": {
+                        "hacking_success_weight": 0.5,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Rob Store",
+                        "difficulty": 0.2
+                    }
+                }
+            ],
+            "allCrimesChancesMaxed": false,
+            "crimeToTrainFor": {
+                "chance": 0.030897435897435897,
+                "crime": {
+                    "hacking_success_weight": 0.5,
+                    "strength_success_weight": 0,
+                    "defense_success_weight": 0,
+                    "dexterity_success_weight": 1,
+                    "agility_success_weight": 1,
+                    "charisma_success_weight": 0,
+                    "name": "Rob Store",
+                    "difficulty": 0.2
+                }
+            },
+            "stages": [
+                {
+                    "stage": 1,
+                    "typeOfTraining": "Algorithms"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "str"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "def"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "dex"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "agi"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "Leadership"
+                }
+            ],
+            "lowestStage": {
+                "stage": 1,
+                "typeOfTraining": "Algorithms"
+            }
+        },
+        {
+            "hp": {
+                "current": 10,
+                "max": 10
+            },
+            "skills": {
+                "hacking": 3,
+                "strength": 1,
+                "defense": 1,
+                "dexterity": 1,
+                "agility": 1,
+                "charisma": 1,
+                "intelligence": 1
+            },
+            "exp": {
+                "hacking": 147.7900694308633,
+                "strength": 0,
+                "defense": 0,
+                "dexterity": 0,
+                "agility": 0,
+                "charisma": 0,
+                "intelligence": 0.3385428432934749
+            },
+            "mults": {
+                "hacking_chance": 1,
+                "hacking_speed": 1,
+                "hacking_money": 1,
+                "hacking_grow": 1,
+                "hacking": 1,
+                "hacking_exp": 1,
+                "strength": 1,
+                "strength_exp": 1,
+                "defense": 1,
+                "defense_exp": 1,
+                "dexterity": 1,
+                "dexterity_exp": 1,
+                "agility": 1,
+                "agility_exp": 1,
+                "charisma": 1,
+                "charisma_exp": 1,
+                "hacknet_node_money": 1,
+                "hacknet_node_purchase_cost": 1,
+                "hacknet_node_ram_cost": 1,
+                "hacknet_node_core_cost": 1,
+                "hacknet_node_level_cost": 1,
+                "company_rep": 1,
+                "faction_rep": 1,
+                "work_money": 1,
+                "crime_success": 1,
+                "crime_money": 1,
+                "bladeburner_max_stamina": 1,
+                "bladeburner_stamina_gain": 1,
+                "bladeburner_analysis": 1,
+                "bladeburner_success_chance": 1
+            },
+            "city": "Sector-12",
+            "shock": 84.02404062492488,
+            "sync": 57.91165253045498,
+            "memory": 1,
+            "storedCycles": 1,
+            "name": 6,
+            "task": {
+                "type": "SYNCHRO"
+            },
+            "actionTaken": "Syncronize",
+            "crimeChances": [
+                {
+                    "chance": 0.0004572649572649573,
+                    "crime": {
+                        "hacking_success_weight": 1,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Heist",
+                        "difficulty": 18
+                    }
+                },
+                {
+                    "chance": 0.000516025641025641,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 2,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Assassination",
+                        "difficulty": 8
+                    }
+                },
+                {
+                    "chance": 0.0008256410256410257,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Kidnap",
+                        "difficulty": 5
+                    }
+                },
+                {
+                    "chance": 0.002576923076923077,
+                    "crime": {
+                        "hacking_success_weight": 0,
+                        "strength_success_weight": 1,
+                        "defense_success_weight": 1,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 1,
+                        "name": "Traffick Arms",
+                        "difficulty": 2
+                    }
+                },
+                {
+                    "chance": 0.0029230769230769228,
+                    "crime": {
+                        "hacking_success_weight": 0.05,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1.25,
+                        "agility_success_weight": 0,
+                        "charisma_success_weight": 0,
+                        "name": "Bond Forgery",
+                        "difficulty": 0.5
+                    }
+                },
+                {
+                    "chance": 0.018076923076923077,
+                    "crime": {
+                        "hacking_success_weight": 0.5,
+                        "strength_success_weight": 0,
+                        "defense_success_weight": 0,
+                        "dexterity_success_weight": 1,
+                        "agility_success_weight": 1,
+                        "charisma_success_weight": 0,
+                        "name": "Rob Store",
+                        "difficulty": 0.2
+                    }
+                }
+            ],
+            "allCrimesChancesMaxed": false,
+            "crimeToTrainFor": {
+                "chance": 0.018076923076923077,
+                "crime": {
+                    "hacking_success_weight": 0.5,
+                    "strength_success_weight": 0,
+                    "defense_success_weight": 0,
+                    "dexterity_success_weight": 1,
+                    "agility_success_weight": 1,
+                    "charisma_success_weight": 0,
+                    "name": "Rob Store",
+                    "difficulty": 0.2
+                }
+            },
+            "stages": [
+                {
+                    "stage": 1,
+                    "typeOfTraining": "Algorithms"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "str"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "def"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "dex"
+                },
+                {
+                    "stage": 1,
+                    "typeOfTraining": "agi"
+                },
+                {
+                    "stage": null,
+                    "typeOfTraining": "Leadership"
+                }
+            ],
+            "lowestStage": {
+                "stage": 1,
+                "typeOfTraining": "Algorithms"
+            }
         }
     ]
 }

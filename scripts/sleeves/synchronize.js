@@ -18,7 +18,7 @@ export async function main(ns) {
             continue;
         }
 
-        if (sleeve.sync < 95) {
+        if (sleeve.sync < 100) {
             if(!currentActionsPriority.tasks.find(x => x === sleeve.task.type)){
                 ns.sleeve.setToSynchronize(sleeve.name)
             }

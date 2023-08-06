@@ -7,6 +7,7 @@ export async function main(ns) {
     "scripts/singularity/buy-rep.js",
     "scripts/hacking/batch-dispatch.js",
     "scripts/tools/manually-end-round.js",
+    'scripts/sleeves/installAugments.js',
   ];
 
   const notImportantFolder = "scripts/corporations/"
