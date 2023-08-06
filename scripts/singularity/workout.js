@@ -7,9 +7,9 @@ export async function main(ns) {
         return;
     }
 
-    // if(getBuffForFaction(ns, "The Covenant", 850)){
-    //     return;
-    // } 
+    if(getBuffForFaction(ns, "The Covenant", 850)){
+        return;
+    } 
 
     if(getBuffForFaction(ns, "Illuminati", 1200)){
         return;

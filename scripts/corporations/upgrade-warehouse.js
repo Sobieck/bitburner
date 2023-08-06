@@ -72,7 +72,7 @@ export async function main(ns) {
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
 
-            if (warehouse.size < 7000 && moneyLeft > capitalReserve && (percentUsedOfWarehouse > 0.7 && profit > 10_000_000_000)) {
+            if (warehouse.size < 40000 && moneyLeft > capitalReserve && (percentUsedOfWarehouse > 0.7 && profit > 10_000_000_000)) {
                 ns.corporation.upgradeWarehouse(divisionName, city);
             }
         }

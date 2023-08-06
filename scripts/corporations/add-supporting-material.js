@@ -58,8 +58,12 @@ export async function main(ns) {
 
             const warehouse = ns.corporation.getWarehouse(divisionName, city);
 
-            if (division.type === "Agriculture" && warehouse.size >= 7000) {
-                fillXPercentOfWarehouseWithMultiplerMaterial = 0.2;
+            if ((division.type === "Agriculture") && warehouse.size >= 7000) {
+                fillXPercentOfWarehouseWithMultiplerMaterial = 0.1;
+            }
+
+            if ((division.type === "Computer Hardware") && warehouse.size >= 7000) {
+                fillXPercentOfWarehouseWithMultiplerMaterial = 0.3;
             }
 
             const amountToFillWithMultipliers = warehouse.size * fillXPercentOfWarehouseWithMultiplerMaterial;

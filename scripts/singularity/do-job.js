@@ -1,5 +1,6 @@
 export async function main(ns) {
     const organizations = JSON.parse(ns.read("data/organizations.txt"));
+    const ownedAugmentations = JSON.parse(ns.read("data/ownedAugs.txt"));
     const companiesWeWantToBecomePartOf = organizations.companiesWeWantToBecomePartOf;
     const orderedFactions = organizations.toJoinInOrderInWhichIWantToComplete;
 
@@ -58,11 +59,20 @@ export async function main(ns) {
     const companyRep = ns.singularity.getCompanyRep(company);
 
     if (nextPositionInfo.requiredReputation < companyRep && nextPositionInfo.requiredSkills.charisma > player.skills.charisma) {
+        if(!ownedAugmentations.includes("SmartJaw") && currentWork.type !== "GRAFTING"){
+            ns.singularity.travelToCity("New Tokyo")
+            ns.grafting.graftAugmentation("SmartJaw", true);
+        }
+
+        if(currentWork.type === "GRAFTING"){
+            return;
+        }
+
         if (!currentWork || currentWork.type !== "CLASS") {
             ns.singularity.travelToCity("Sector-12");
             ns.singularity.universityCourse("Rothman University", "Leadership", true);
             return;
-        }
+        } 
     } else {
         if (!currentWork || currentWork.type !== "COMPANY") {
             ns.singularity.workForCompany(company, true);

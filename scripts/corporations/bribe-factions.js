@@ -44,15 +44,10 @@ export async function main(ns) {
                 const liquidFunds = corporation.funds;
                 const investableAmount = liquidFunds - capitalReserve;
 
-                const amountToDonate = 1_000_000_000_000;
+                const amountToDonate = 10_000_000_000_000;
 
-                let amountSpent = amountToDonate;
-                while (currentFactionRep < factionWithRep.maximumAugRep && investableAmount > amountSpent) {
-
+                if (currentFactionRep < factionWithRep.maximumAugRep && investableAmount > amountToDonate) {
                     ns.corporation.bribe(factionWithRep.faction, amountToDonate)
-
-                    amountSpent += amountToDonate;
-                    currentFactionRep = ns.singularity.getFactionRep(factionWithRep.faction);
                 }
             }
         }

@@ -13,7 +13,7 @@ export async function main(ns) {
     ]
 
     const investmentOffer = ns.corporation.getInvestmentOffer();
- 
+
     const juiceFile = "data/juice.txt"
     if (investmentOffer.round !== 1) {
         ns.rm(juiceFile);
@@ -27,7 +27,7 @@ export async function main(ns) {
                 const sharesToSell = corporation.totalShares * .65;
                 ns.corporation.goPublic(sharesToSell);
 
-                if(ns.fileExists(juiceFile)){
+                if (ns.fileExists(juiceFile)) {
                     ns.rm(juiceFile);
                 }
             }
@@ -89,8 +89,12 @@ export async function main(ns) {
             if (moneyOnHome > 0) {
                 let percentOfFreeCashToUse = 0.001;
 
-                if(moneyOnHome > 1_000_000_000_000){
+                if (moneyOnHome > 1_000_000_000_000) {
                     percentOfFreeCashToUse = .03;
+                }
+
+                if (moneyOnHome > 160_000_000_000_000) {
+                    percentOfFreeCashToUse = .3;
                 }
 
                 const cashToUseForBuybacks = moneyOnHome * percentOfFreeCashToUse;
@@ -105,30 +109,35 @@ export async function main(ns) {
             }
         }
 
-        const dividendConditions = [
-            { dividendRate: .01, partnership: false, floodPlayerWithMoney: false, minProfit: 200_000_000 },
-            { dividendRate: .5, partnership: true, floodPlayerWithMoney: false, minProfit: 200_000_000 },
-            { dividendRate: .77, partnership: false, floodPlayerWithMoney: true, minProfit: 50_000_000 },
-            { dividendRate: .77, partnership: true, floodPlayerWithMoney: true, minProfit: 50_000_000 },
-        ]
-
-        const hasGovPartnership = ns.corporation.hasUnlock("Government Partnership");
-        const floodPlayerWithMoneyBecauseTheyJustStarted = stockMarketReserveMoney.capitalToReserveForTrading <= 5_000_000_000;
-
-        const conditionToUse = dividendConditions.find(x => x.partnership === hasGovPartnership && x.floodPlayerWithMoney === floodPlayerWithMoneyBecauseTheyJustStarted);
-
-        if (conditionToUse.minProfit < profit) {
-            if (corporation.dividendRate !== conditionToUse.dividendRate) {
-                ns.corporation.issueDividends(conditionToUse.dividendRate);
-            }
+        let moneyOnHome = ns.getServerMoneyAvailable("home");
+        if (moneyOnHome > 1_000_000_000_000_000 && corporation.issuedShares === 0) {
+            ns.corporation.issueDividends(0);
         } else {
-            if (corporation.dividendRate !== 0) {
-                ns.corporation.issueDividends(0);
-            }
-        }
+            const dividendConditions = [
+                { dividendRate: .01, partnership: false, floodPlayerWithMoney: false, minProfit: 200_000_000 },
+                { dividendRate: .5, partnership: true, floodPlayerWithMoney: false, minProfit: 200_000_000 },
+                { dividendRate: .77, partnership: false, floodPlayerWithMoney: true, minProfit: 50_000_000 },
+                { dividendRate: .77, partnership: true, floodPlayerWithMoney: true, minProfit: 50_000_000 },
+            ]
 
-        if(ns.fileExists("data/needMoney.txt")){
-            ns.corporation.issueDividends(.80);
+            const hasGovPartnership = ns.corporation.hasUnlock("Government Partnership");
+            const floodPlayerWithMoneyBecauseTheyJustStarted = stockMarketReserveMoney.capitalToReserveForTrading <= 5_000_000_000;
+
+            const conditionToUse = dividendConditions.find(x => x.partnership === hasGovPartnership && x.floodPlayerWithMoney === floodPlayerWithMoneyBecauseTheyJustStarted);
+
+            if (conditionToUse.minProfit < profit) {
+                if (corporation.dividendRate !== conditionToUse.dividendRate) {
+                    ns.corporation.issueDividends(conditionToUse.dividendRate);
+                }
+            } else {
+                if (corporation.dividendRate !== 0) {
+                    ns.corporation.issueDividends(0);
+                }
+            }
+
+            if (ns.fileExists("data/needMoney.txt")) {
+                ns.corporation.issueDividends(.80);
+            }
         }
     }
 }

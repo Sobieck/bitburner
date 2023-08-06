@@ -1,5 +1,6 @@
 let incomePerHourEstimate;
 let updatedMoneyEstimate = false;
+let delayBeforeBuyCount = 0;
 
 export async function main(ns) {
 
@@ -309,6 +310,12 @@ export async function main(ns) {
 
                     analytics.moneyTrigger = moneyTrigger;
                     saveAnalytics(ns, analytics);
+                }
+
+                delayBeforeBuyCount++;
+// this is to give us enough time to buy augments and whatnot on our sleeves
+                if(delayBeforeBuyCount < 100){
+                    return;
                 }
 
                 for (const augment of orderedAugments) {

@@ -13,7 +13,21 @@ export async function main(ns) {
             companyFilter = true;
         }
 
-        const buyAugments = hackingFilter || companyFilter;
+        let leadershipFilter = false;
+        if(sleeve.task && sleeve.task.classType === "Leadership"){
+            leadershipFilter = true;
+        }
+
+        let installAllAugs = false;
+        let moneyOnHome = ns.getServerMoneyAvailable("home");
+        if (moneyOnHome > 30_000_000_000_000) {
+            installAllAugs = true;
+            leadershipFilter = false;
+            companyFilter = false;
+            hackingFilter = false;
+        }
+
+        const buyAugments = hackingFilter || companyFilter || leadershipFilter || installAllAugs;
 
         if (buyAugments === false) {
             continue;
@@ -53,8 +67,17 @@ export async function main(ns) {
                     return true;
                 }
             })
+            .filter(x => {
+                if (leadershipFilter) {
+                    return x.stats.charisma_exp > 1 ||
+                        x.stats.charisma > 1 
+                } else {
+                    return true;
+                }
+            })
             .sort((a, b) => b.cost - a.cost)
             .pop();
+
 
         if(buyableAugment === undefined){
             continue;

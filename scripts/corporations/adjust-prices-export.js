@@ -5,7 +5,7 @@ export async function main(ns) {
 
     const corporation = ns.corporation.getCorporation();
 
-    if (corporation.public && corporation.divisions.length === 1){
+    if (corporation.public && corporation.divisions.length === 1) {
         return;
     }
 
@@ -158,30 +158,35 @@ export async function main(ns) {
             for (const city of division.cities) {
                 const product = ns.corporation.getProduct(divisionName, city, productName);
 
-                if (product.developmentProgress !== 100) {
+                if (product.developmentProgress !== 100 || product.productionAmount === 0) {
                     continue;
                 }
 
-                if (product.desiredSellPrice === 0) {
-                    let mostExpensivePrice = 0;
+                let mostExpensivePrice = 0;
+                let lowestPrice;
 
-                    for (const productNameForPrice of division.products) {
-                        const product = ns.corporation.getProduct(divisionName, city, productNameForPrice);
-                        if (product.desiredSellPrice === 0) {
-                            continue;
-                        }
-
-                        let price = product.desiredSellPrice;
-
-                        if (isNaN(price)) {
-                            price = Number(price.split(')')[1]);
-                        }
-
-                        if (price > mostExpensivePrice) {
-                            mostExpensivePrice = price;
-                        }
+                for (const productNameForPrice of division.products) {
+                    const product = ns.corporation.getProduct(divisionName, city, productNameForPrice);
+                    if (product.desiredSellPrice === 0) {
+                        continue;
                     }
 
+                    let price = product.desiredSellPrice;
+
+                    if (isNaN(price)) {
+                        price = Number(price.split(')')[1]);
+                    }
+
+                    if (price > mostExpensivePrice) {
+                        mostExpensivePrice = price;
+                    }
+
+                    if(!lowestPrice || price < lowestPrice){
+                        lowestPrice = price;
+                    }
+                }
+
+                if (product.desiredSellPrice === 0) {
                     if (mostExpensivePrice === 0) {
                         mostExpensivePrice = product.productionCost * 2;
                     }
@@ -195,7 +200,12 @@ export async function main(ns) {
                     }
 
                     if (product.stored > 30) {
-                        const priceToSet = adjustPriceDown(product.desiredSellPrice, product.productionCost);
+                        let priceToSet = adjustPriceDown(product.desiredSellPrice, product.productionCost);
+
+                        if (product.stored > 50_000) {
+                            priceToSet = lowestPrice * 0.8;
+                        }
+
 
                         ns.corporation.sellProduct(divisionName, city, productName, "MAX", priceToSet, false);
                     }
@@ -209,7 +219,7 @@ export async function main(ns) {
             for (const city of division.cities) {
                 for (const materialName of rawMaterialProducer.materials) {
 
-                    if(!ns.corporation.hasWarehouse(divisionName, city)){
+                    if (!ns.corporation.hasWarehouse(divisionName, city)) {
                         continue;
                     }
 
