@@ -1,4 +1,5 @@
 export async function main(ns) {
+    return;
     const sleevesFile = 'data/sleeves.txt';
     let sleevesData = JSON.parse(ns.read(sleevesFile));
 
@@ -24,6 +25,10 @@ export async function main(ns) {
             continue;
         }
 
+        if(!sleeve.lowestStage){
+            continue;
+        }
+
         if (sleeve.lowestStage.typeOfTraining === ns.enums.GymType.strength ||
             sleeve.lowestStage.typeOfTraining === ns.enums.GymType.defense ||
             sleeve.lowestStage.typeOfTraining === ns.enums.GymType.dexterity ||
@@ -38,8 +43,6 @@ export async function main(ns) {
             sleeve.actionTaken = currentActionsPriority.actionName;
             continue;
         }
-
-        ns.toast("hi");
 
         ns.sleeve.setToUniversityCourse(sleeve.name, ns.enums.LocationName.Sector12RothmanUniversity, sleeve.lowestStage.typeOfTraining) 
         sleeve.actionTaken = currentActionsPriority.actionName;

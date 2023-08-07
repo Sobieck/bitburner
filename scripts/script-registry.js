@@ -81,6 +81,7 @@ export async function main(ns) {
     scriptsToRun = scriptsToRun.concat(corporateScripts);
 
     const sleevesScripts = [
+        'scripts/sleeves/setSeevesToIdle.js',//setSeevesToIdle
         'scripts/sleeves/countAndPriority.js',
         'scripts/sleeves/getSleeves.js',
         'scripts/sleeves/getTask.js',
@@ -90,6 +91,7 @@ export async function main(ns) {
         'scripts/sleeves/mirror/company.js',
         'scripts/sleeves/mirror/university.js',
         'scripts/sleeves/mirror/gym.js',
+        'scripts/sleeves/crime/calculateCrimes.js',
         'scripts/sleeves/crime/do.js',
         'scripts/sleeves/crime/gym.js',
         'scripts/sleeves/crime/university.js',

@@ -71,7 +71,7 @@ export async function main(ns) {
         if (ns.fileExists(stockMarketReserveMoneyFile)) {
             stockMarketReserveMoney = new ReserveForTrading(JSON.parse(ns.read(stockMarketReserveMoneyFile)));
         }
-        
+
         if (stockMarketReserveMoney.canSpend(ns, buyableAugment.cost)) {
             ns.sleeve.purchaseSleeveAug(sleeve.name, buyableAugment.name);
             break;

@@ -1,9 +1,7 @@
 let incomePerHourEstimate;
 let updatedMoneyEstimate = false;
-let delayBeforeBuyCount = 0;
 
 export async function main(ns) {
-
     if (!ns.stock.has4SDataTIXAPI() || !ns.corporation.hasCorporation() || ns.fileExists('data/juice.txt')) {
         return;
     }
@@ -252,7 +250,6 @@ export async function main(ns) {
             if (!orderedAugments.find(x => x.augmentName === augmentName)) {
                 orderedAugments.push({ faction: augment.faction, augmentName: augmentName, basePrice: augment.price, multipledPrice: 0 })
             }
-
         }
 
         let priceMultipler = 1;
@@ -264,7 +261,19 @@ export async function main(ns) {
 
         const moneyNeededForAugments = orderedAugments.reduce((acc, x) => acc + x.multipledPrice, 0);
 
-        let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments;
+        let moneyNeededForSleeveAugments = 0;
+
+        const sleevesFile = 'data/sleeves.txt';
+        let sleevesData = JSON.parse(ns.read(sleevesFile));
+
+        for (const sleeve of sleevesData.sleeves.filter(x => x.shock === 0)) {
+            moneyNeededForSleeveAugments += ns.sleeve
+                .getSleevePurchasableAugs(sleeve.name)
+                .map(x => x.cost)
+                .reduce((acc, b) => acc + b, 0);
+        }
+
+        let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments + moneyNeededForSleeveAugments;
 
         const estimatedIncomeForTheNextFourHours = incomePerHourEstimate * 4;
 
@@ -319,11 +328,21 @@ export async function main(ns) {
                     saveAnalytics(ns, analytics);
                 }
 
-                delayBeforeBuyCount++;
-                // this is to give us enough time to buy augments and whatnot on our sleeves
-                if (delayBeforeBuyCount < 100) {
-                    return;
+                for (const sleeve of sleevesData.sleeves) {
+                    if (sleeve.shock > 0) {
+                        continue;
+                    }
+
+                    const augmentsToInstall = ns.sleeve
+                        .getSleevePurchasableAugs(sleeve.name)
+                        .map(x => x.name);
+
+                    for (const augment of augmentsToInstall) {
+                        ns.sleeve.purchaseSleeveAug(sleeve.name, augment);
+                    }
                 }
+
+                analytics.costOfSleeveAugments = moneyNeededForSleeveAugments;
 
                 for (const augment of orderedAugments) {
                     purchaseAug(ns, augment, analytics);

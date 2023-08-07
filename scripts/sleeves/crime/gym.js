@@ -1,4 +1,6 @@
 export async function main(ns) {
+
+    return;
     const sleevesFile = 'data/sleeves.txt';
     let sleevesData = JSON.parse(ns.read(sleevesFile));
 
@@ -17,7 +19,7 @@ export async function main(ns) {
         if (allCrimesOver50) {
             sleeve.crimeToTrainFor = sortedCrimesThatArent1HighestToLowest.pop(); // lowest chance crime
         } else {
-            sleeve.crimeToTrainFor = sortedCrimesThatArent1HighestToLowest.filter(x => x.chance < 50).shift();
+            sleeve.crimeToTrainFor = sortedCrimesThatArent1HighestToLowest.filter(x => x.chance < 0.5).shift();
         }
 
         let totalPoints = 0;

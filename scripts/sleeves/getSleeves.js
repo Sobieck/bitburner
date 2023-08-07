@@ -5,8 +5,14 @@ export async function main(ns) {
     sleevesData.sleeves = [];
 
     for (let i = 0; i < sleevesData.numberOfSleeves; i++) {
-        let sleeve = ns.sleeve.getSleeve(i);
+        const sleeve = ns.sleeve.getSleeve(i);
         sleeve.name = i;
+
+        if(sleeve.name % 2 === 0){
+            sleeve.pair = sleeve.name + 1;
+        } else {
+            sleeve.pair = sleeve.name - 1;
+        }
 
         sleevesData.sleeves.push(sleeve);
     }
