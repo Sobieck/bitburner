@@ -38,7 +38,7 @@ export async function main(ns) {
 
         sleeve.allCrimesChancesMaxed = sleeve.crimeChances.every(x => x.chance === 1);
 
-        if (sleeve.task.type === crimeTypeOfWork) {
+        if (!sleeve.task || sleeve.task.type === crimeTypeOfWork) {
             sleeve.actionTaken = "DoCrime";
         }
     }

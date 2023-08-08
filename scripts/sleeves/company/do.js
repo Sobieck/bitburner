@@ -15,7 +15,7 @@ export async function main(ns) {
         companiesEmployedAt.push(company);
     }
 
-    const companiesWeArentPartOfTheirFactionYet = companiesEmployedAt
+    let companiesWeArentPartOfTheirFactionYet = companiesEmployedAt
         .filter(x => !player.factions.includes(x))
 
     if (companiesWeArentPartOfTheirFactionYet.length === 0) {

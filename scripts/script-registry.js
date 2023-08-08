@@ -90,7 +90,6 @@ export async function main(ns) {
         'scripts/sleeves/company/do.js',
         'scripts/sleeves/company/train.js',
         'scripts/sleeves/mirror/faction.js',
-        'scripts/sleeves/mirror/company.js',
         'scripts/sleeves/mirror/university.js',
         'scripts/sleeves/mirror/gym.js',
         'scripts/sleeves/crime/calculateCrimes.js',

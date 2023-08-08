@@ -1,7 +1,11 @@
 export async function main(ns) {
     const sleevesFile = 'data/sleeves.txt';
-    let sleevesData = JSON.parse(ns.read(sleevesFile));
 
+    if(!ns.fileExists(sleevesFile)){
+        return;
+    }
+
+    let sleevesData = JSON.parse(ns.read(sleevesFile));
     
     for (const lastRoundSleeve of sleevesData.sleeves) {
         const currentSleeve = ns.sleeve.getSleeve(lastRoundSleeve.name);
