@@ -6,7 +6,16 @@ export async function main(ns) {
     const crimeTypeOfWork = "CRIME";
     const crimes = makeCrimes(ns);
 
-    sleevesData.maximizeWhat = "money";
+    sleevesData.maximizeWhat = "money"; //"karma";
+    sleevesData.mostKarmaCrime = crimes
+        .map(x => x)
+        .sort((a, b) => b.karmaPerTime - a.karmaPerTime)
+        .shift();
+
+    sleevesData.mostMoneyCrime = crimes
+        .map(x => x)
+        .sort((a, b) => b.moneyPerTime - a.moneyPerTime)
+        .shift();
 
     for (const sleeve of sleevesData.sleeves) {
         sleeve.crimeChances = crimes.map(crime => {
@@ -16,20 +25,6 @@ export async function main(ns) {
 
             return crime;
         });
-
-
-        if (sleeve.task && sleeve.task.type === crimeTypeOfWork) {
-            sleeve.task.difficulty = sleeve
-                .crimeChances
-                .find(x => x.type === sleeve.task.crimeType)
-                .difficulty;
-        }
-
-        sleeve.highestDifficultyCrimeWithMoreThan50PercentChance = sleeve
-            .crimeChances
-            .filter(x => x.chance > 0.5)
-            .sort((a, b) => a.difficulty - b.difficulty)
-            .pop();
 
         sleeve.topKarmaMakers = sleeve
             .crimeChances

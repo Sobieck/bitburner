@@ -118,7 +118,13 @@ function companyFilter(x) {
     return x.stats.company_rep > 1 ||
         x.stats.work_money > 1 ||
         x.stats.charisma_exp > 1 ||
-        x.stats.charisma > 1;
+        x.stats.charisma > 1 ||
+        x.stats.hacking_chance > 1 ||
+        x.stats.hacking_speed > 1 ||
+        x.stats.hacking_money > 1 ||
+        x.stats.hacking_grow > 1 ||
+        x.stats.hacking > 1 ||
+        x.stats.hacking_exp > 1;
 }
 
 function hackingFilter(x) {

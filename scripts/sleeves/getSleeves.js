@@ -9,9 +9,9 @@ export async function main(ns) {
         sleeve.name = i;
 
         if(sleeve.name % 2 === 0){
-            sleeve.pair = sleeve.name + 1;
+            sleeve.partner = sleeve.name + 1;
         } else {
-            sleeve.pair = sleeve.name - 1;
+            sleeve.partner = sleeve.name - 1;
         }
 
         sleevesData.sleeves.push(sleeve);

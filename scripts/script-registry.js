@@ -87,6 +87,8 @@ export async function main(ns) {
         'scripts/sleeves/getTask.js',
         'scripts/sleeves/synchronize.js', 
         'scripts/sleeves/shockRecovery.js',
+        'scripts/sleeves/company/do.js',
+        'scripts/sleeves/company/train.js',
         'scripts/sleeves/mirror/faction.js',
         'scripts/sleeves/mirror/company.js',
         'scripts/sleeves/mirror/university.js',

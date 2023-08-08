@@ -1,84 +1,92 @@
+const actionName = "DoCrime";
+const crimeTypeOfWork = "CRIME";
+
 export async function main(ns) {
-return;
+
     const sleevesFile = 'data/sleeves.txt';
     let sleevesData = JSON.parse(ns.read(sleevesFile));
 
-    const actionName = "DoCrime";
-    const crimeTypeOfWork = "CRIME";
+    for (let i = 0; i < sleevesData.sleeves.length; i += 2) {
+        const sleeve = sleevesData.sleeves[i];
+        const partner = sleevesData.sleeves[sleeve.partner]
 
-    const currentActionsPriority = sleevesData.priorities.find(x => x.actionName === actionName);
+        const sleeveCanWork = canWork(sleeve, sleevesData);
+        const partnerCanWork = canWork(partner, sleevesData);
 
-    const sleevesInClassCount = sleevesData.sleeves
-        .filter(x => x.task)
-        .filter(x => x.task.type === "CLASS")
-        .length;
-
-    const sleevesCriming = sleevesData.sleeves
-        .filter(x => x.task)
-        .filter(x => x.task.type === crimeTypeOfWork);
-
-
-    if (sleevesCriming.length >= sleevesInClassCount && !sleevesData.sleeves.every(x => x.allCrimesChancesMaxed)) { // this logic doesn't handle things that won't benefit from more training, but there are some that will. We need to figure that out... but later. 
-// ns.toast(`${sleevesCriming.length} >= ${sleevesInClassCount} && ${!sleevesData.sleeves.every(x => x.allCrimesChancesMaxed)}`)
-
-        const difference = sleevesCriming.length - sleevesInClassCount;
-
-        const sortedCrimersByLowestDifficulty = sleevesCriming.sort((a,b) => b.task.difficulty - a.task.difficulty);
-
-        for (let i = 0; i < difference; i++) {
-            const crimer = sortedCrimersByLowestDifficulty[i];
-            crimer.actionTaken = undefined;
-        }
-
-        ns.rm(sleevesFile);
-        ns.write(sleevesFile, JSON.stringify(sleevesData), "W");
-
-        return;
-    }
-
-    const sleevesToPossiblyCommitCrimes = sleevesData.sleeves
-        .filter(x => x.task)
-        .filter(x => x.task.type !== crimeTypeOfWork)
-        .filter(x => x.highestDifficultyCrimeWithMoreThan50PercentChance)
-        .sort((a, b) => b.highestDifficultyCrimeWithMoreThan50PercentChance.difficulty - a.highestDifficultyCrimeWithMoreThan50PercentChance.difficulty);
-
-    let assignedNewSleeveAlready = false;
-
-    for (let sleeve of sleevesToPossiblyCommitCrimes) {
-        if (!currentActionsPriority.who.includes(sleeve.name)) {
+        if (!sleeveCanWork && !partnerCanWork) {
             continue;
         }
 
-        const jobsWithHigherPriority = sleevesData
-            .priorities
-            .filter(x => x.who.includes(sleeve.name) && x.priority < currentActionsPriority.priority);
+        let sleevesBestAction = [];
+        let partnersBestAction = [];
 
-        if (jobsWithHigherPriority.find(x => x.actionName === sleeve.actionTaken)) {
-            continue;
+        let sleevesTopValue = 0;
+        let partnersTopValue = 0;
+        let bestPossibleAction;
+
+        if (sleevesData.maximizeWhat === "money") {
+            sleevesBestAction = sleeve.topMoneyMakers[0]
+            sleevesTopValue = sleevesBestAction.expectedMoneyPerTime;
+
+            if (partner) {
+                partnersBestAction = partner.topMoneyMakers[0];
+                partnersTopValue = partnersBestAction.expectedMoneyPerTime;
+            }
+
+            bestPossibleAction = sleevesData.mostMoneyCrime.type;
+        } else {
+            sleevesBestAction = sleeve.topKarmaMakers[0];
+            sleevesTopValue = sleevesBestAction.expectedKarmaPerTime;
+
+            if (partner) {
+                partnersBestAction = partner.topKarmaMakers[0];
+                partnersTopValue = partnersBestAction.expectedKarmaPerTime;
+            }
+
+            bestPossibleAction = sleevesData.mostKarmaCrime.type;
         }
 
-        let crimeToDo = sleeve.highestDifficultyCrimeWithMoreThan50PercentChance.crime.type;
 
-        if (!sleeve.allCrimesChancesMaxed) {
-            const crimesBeingCommitted = sleevesCriming.map(x => x.task.crimeType);
+        const whos = [];
+        let whatCrimeToDo;
 
-            const highestDifficultyCrimeNotBeingCommitedElsewhere = sleeve
-                .crimeChances
-                .filter(x => x.chance > .5)
-                .filter(x => !crimesBeingCommitted.includes(x.crime.type))
-                .sort((a, b) => a.difficulty - b.difficulty)
-                .pop();
+        if (!partnerCanWork) {
+            whos.push(sleeve);
+            whatCrimeToDo = sleevesBestAction.type;
+        } else if (!sleeveCanWork) {
+            whos.push(partner);
+            whatCrimeToDo = partnersBestAction.type;
+        } else {
+            if (sleevesBestAction.type === bestPossibleAction &&
+                partnersBestAction.type === bestPossibleAction &&
+                sleevesBestAction.chance === 1 &&
+                partnersBestAction.chance === 1) {
 
-            if (highestDifficultyCrimeNotBeingCommitedElsewhere) {
-                crimeToDo = highestDifficultyCrimeNotBeingCommitedElsewhere.crime.type;
+                whos.push(sleeve);
+                whos.push(partner);
+                whatCrimeToDo = bestPossibleAction;
+            } else {
+                if (sleevesTopValue > partnersTopValue) {
+                    whos.push(sleeve);
+                    whatCrimeToDo = sleevesBestAction.type;
+                    partner.actionTaken = undefined;
+                } else {
+                    whos.push(partner);
+                    whatCrimeToDo = partnersBestAction.type;
+                    sleeve.actionTaken = undefined;
+                }
             }
         }
 
-        if(assignedNewSleeveAlready === false){
-            ns.sleeve.setToCommitCrime(sleeve.name, crimeToDo);
+        for (const who of whos) {
+            if (!who.task ||
+                who.task.type !== crimeTypeOfWork ||
+                who.task.crimeType !== whatCrimeToDo
+            ) {
+                ns.sleeve.setToCommitCrime(who.name, whatCrimeToDo);
+            }
 
-            sleeve.actionTaken = currentActionsPriority.actionName;
-            assignedNewSleeveAlready = true;
+            who.actionTaken = actionName;
         }
     }
 
@@ -86,5 +94,27 @@ return;
     ns.write(sleevesFile, JSON.stringify(sleevesData), "W");
 }
 
+
+function canWork(sleeve, sleevesData) {
+    if (!sleeve) {
+        return false;
+    }
+
+    const currentActionsPriority = sleevesData.priorities.find(x => x.actionName === actionName);
+
+    if (!currentActionsPriority.who.includes(sleeve.name)) {
+        return false;
+    }
+
+    const jobsWithHigherPriority = sleevesData
+        .priorities
+        .filter(x => x.who.includes(sleeve.name) && x.priority < currentActionsPriority.priority);
+
+    if (jobsWithHigherPriority.find(x => x.actionName === sleeve.actionTaken)) {
+        return false;
+    }
+
+    return true;
+}
 
 

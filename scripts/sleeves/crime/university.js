@@ -1,5 +1,4 @@
 export async function main(ns) {
-    return;
     const sleevesFile = 'data/sleeves.txt';
     let sleevesData = JSON.parse(ns.read(sleevesFile));
 

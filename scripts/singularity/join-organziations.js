@@ -19,6 +19,8 @@ export async function main(ns) {
         "Ishima",
         "Tian Di Hui",
         "Netburners",
+        "Slum Snakes",
+        "Tetrads",
     ];
 
     const companiesWeWantToBecomePartOf = [
@@ -35,7 +37,9 @@ export async function main(ns) {
         "New Tokyo",
         "Ishima",
         "Tian Di Hui",
-        "Netburners"
+        "Netburners",
+        "Slum Snakes",
+        "Tetrads",
     ];
 
     const stopAtAugments = [
