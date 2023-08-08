@@ -24,14 +24,14 @@ export async function main(ns) {
 
         if(sleeve.actionTaken === actionName && !sleeve.companyWorkingAt){
             let trainWhat = ns.enums.UniversityClassType.leadership;
-
+            
             if(computerTrain){
                 trainWhat = ns.enums.UniversityClassType.algorithms
             }
 
             if (sleeve.task && 
-                sleeve.task.type !== typeOfWork &&
-                sleeve.task.classType !== trainWhat) { 
+                (sleeve.task.type !== typeOfWork ||
+                sleeve.task.classType !== trainWhat)) { 
     
                 ns.sleeve.setToUniversityCourse(sleeve.name, ns.enums.LocationName.Sector12RothmanUniversity, trainWhat) 
             }

@@ -21,6 +21,8 @@ export async function main(ns) {
         "Netburners",
         "Slum Snakes",
         "Tetrads",
+        "Speakers for the Dead",
+        "The Syndicate",
     ];
 
     const companiesWeWantToBecomePartOf = [
@@ -40,6 +42,8 @@ export async function main(ns) {
         "Netburners",
         "Slum Snakes",
         "Tetrads",
+        "Speakers for the Dead",
+        "The Syndicate",
     ];
 
     const stopAtAugments = [

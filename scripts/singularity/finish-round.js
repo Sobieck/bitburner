@@ -139,8 +139,8 @@ export async function main(ns) {
         analytics.firstEncounterOfRepTrigger = repTrigger;
         saveAnalytics(ns, analytics);
     }
-
-    if (targetFaction.maximumAugRep < currentFactionRep || targetRepForGettingToFavor < currentFactionRep || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
+// || targetRepForGettingToFavor < currentFactionRep
+    if (targetFaction.maximumAugRep < currentFactionRep  || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
 
         if (!analytics.repTrigger) {
             const repTrigger = populateRepTrigger(targetFaction, currentFactionRep, targetRepForGettingToFavor, ns, factionDonationFile, factionToMaxFile);
