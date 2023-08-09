@@ -116,34 +116,18 @@ export async function main(ns) {
         ns.singularity.installAugmentations('scripts/coordinator.js')
     }
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction);
-    const currentFactionFavor = ns.singularity.getFactionFavor(targetFaction.faction);
-
-    const multipliersFileName = "data/multipliers.txt";
-    const constants = JSON.parse(ns.read(multipliersFileName));
-    const minRepToDonateToFaction = constants.RepToDonateToFaction * 150;
-
-    let targetRepForGettingToFavor = 700_000;
-    if (ns.fileExists("Formulas.exe")) {
-        const favorGain = ns.singularity.getFactionFavorGain(targetFaction.faction);
-        if (favorGain + currentFactionFavor > minRepToDonateToFaction) {
-            targetRepForGettingToFavor = currentFactionFavor;
-        }
-
-        if (ns.fileExists("data/bribedFaction.txt")) {
-            targetRepForGettingToFavor = targetFaction.maximumAugRep;
-        }
-    }
+  
 
     if (!analytics.firstEncounterOfRepTrigger) {
-        const repTrigger = populateRepTrigger(targetFaction, currentFactionRep, targetRepForGettingToFavor, ns, factionDonationFile, factionToMaxFile);
+        const repTrigger = populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile);
         analytics.firstEncounterOfRepTrigger = repTrigger;
         saveAnalytics(ns, analytics);
     }
-// || targetRepForGettingToFavor < currentFactionRep
+
     if (targetFaction.maximumAugRep < currentFactionRep  || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
 
         if (!analytics.repTrigger) {
-            const repTrigger = populateRepTrigger(targetFaction, currentFactionRep, targetRepForGettingToFavor, ns, factionDonationFile, factionToMaxFile);
+            const repTrigger = populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile);
             analytics.repTrigger = repTrigger;
             saveAnalytics(ns, analytics);
         }
@@ -391,15 +375,11 @@ function createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenW
     return moneyTrigger;
 }
 
-function populateRepTrigger(targetFaction, currentFactionRep, targetRepForGettingToFavor, ns, factionDonationFile, factionToMaxFile) {
+function populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile) {
     const repTrigger = new RepTrigger();
-    repTrigger.factionRepGreaterThanMaximumAug = targetFaction.maximumAugRep < currentFactionRep;
-    repTrigger.factionRepGreaterThanTargetToGetToFavorNeeded = targetRepForGettingToFavor < currentFactionRep;
     repTrigger.factionDonationTrigger = ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile);
 
     repTrigger.maximumAugRepNeeded = targetFaction.maximumAugRep;
-    repTrigger.currentFactionRep = currentFactionRep;
-    repTrigger.targetRepForGettingToFavor = targetRepForGettingToFavor;
     return repTrigger;
 }
 
@@ -576,7 +556,6 @@ class RepTrigger {
 
     maximumAugRepNeeded;
     currentFactionRep;
-    targetRepForGettingToFavor;
 
     time = new Date();
 }

@@ -44,7 +44,6 @@ export async function main(ns) {
         'scripts/singularity/study-computer-science.js',
         'scripts/singularity/create-early-programs.js',
         'scripts/singularity/do-job.js',
-        'scripts/singularity/buy-rep.js',
         'scripts/singularity/workout.js',
         'scripts/singularity/upgade-home-machine.js',
         'scripts/singularity/travel-to-get-augs.js',

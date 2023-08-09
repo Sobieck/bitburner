@@ -9,10 +9,6 @@ export async function main(ns) {
 
     const factionsWithAugsToBuyAndNotEnoughtFavor = [];
 
-    const multipliersFileName = "data/multipliers.txt";
-    const constants = JSON.parse(ns.read(multipliersFileName));
-    const minRepToDonateToFaction = constants.RepToDonateToFaction * 150;
-
     for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
         if (player.factions.includes(faction) && !doNoWorkFor.includes(faction)) {
 
@@ -38,9 +34,7 @@ export async function main(ns) {
                 .filter(x => !ownedAugmentations.includes(x))
                 .map(x => ns.singularity.getAugmentationRepReq(x)));
 
-            const favor = ns.singularity.getFactionFavor(faction);
-
-            if (maximumAugRep > 0 && favor < minRepToDonateToFaction) {
+            if (maximumAugRep > 0) {
                 factionsWithAugsToBuyAndNotEnoughtFavor.push({ faction, maximumAugRep });
             }
         }
