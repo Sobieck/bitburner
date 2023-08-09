@@ -33,6 +33,14 @@ export async function main(ns) {
 
     scriptsToRun = scriptsToRun.concat(contractScripts);
 
+    const playerScripts = [
+        'scripts/player/player-and-priority.js',
+        'scripts/player/study.js',
+        'scripts/player/create-programs.js',
+    ];
+    
+    scriptsToRun = scriptsToRun.concat(playerScripts);
+
     const singularityScripts = [
         'scripts/singularity/join-organziations.js',
         'scripts/singularity/apply-to-jobs.js',
@@ -41,8 +49,6 @@ export async function main(ns) {
         'scripts/singularity/do-work.js',
         'scripts/singularity/finish-round.js',
         'scripts/singularity/finish-bitnode.js',
-        'scripts/singularity/study-computer-science.js',
-        'scripts/singularity/create-early-programs.js',
         'scripts/singularity/do-job.js',
         'scripts/singularity/workout.js',
         'scripts/singularity/upgade-home-machine.js',

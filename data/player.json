@@ -1,72 +1,109 @@
 {
     "hp": {
-        "current": 14,
-        "max": 14
+        "current": 20,
+        "max": 20
     },
     "skills": {
-        "hacking": 154,
-        "strength": 85,
-        "defense": 45,
-        "dexterity": 71,
-        "agility": 58,
-        "charisma": 1,
-        "intelligence": 115
+        "hacking": 255,
+        "strength": 105,
+        "defense": 106,
+        "dexterity": 87,
+        "agility": 82,
+        "charisma": 127,
+        "intelligence": 116
     },
     "exp": {
-        "hacking": 11345187.864882186,
-        "strength": 95655.59374496993,
-        "defense": 7924.705823427064,
-        "dexterity": 39762.33582834328,
-        "agility": 17554.33896622201,
-        "charisma": 0,
-        "intelligence": 18618.315020190406
+        "hacking": 626048974.8089118,
+        "strength": 328555.04312008555,
+        "defense": 338691.16078065947,
+        "dexterity": 84358.22087159999,
+        "agility": 61262.15060001596,
+        "charisma": 90226.29133801039,
+        "intelligence": 19357.44312616817
     },
     "mults": {
-        "hacking_chance": 1.3824,
-        "hacking_speed": 1.3824,
+        "hacking_chance": 1.4515200000000001,
+        "hacking_speed": 1.4668729344000004,
         "hacking_money": 1.3824,
         "hacking_grow": 1.631232,
-        "hacking": 1.3824,
-        "hacking_exp": 1.3824,
+        "hacking": 1.6307827200000007,
         "strength": 1.28,
-        "strength_exp": 1.28,
         "defense": 1.28,
-        "defense_exp": 1.28,
-        "dexterity": 1.28,
-        "dexterity_exp": 1.28,
-        "agility": 1.28,
-        "agility_exp": 1.28,
-        "charisma": 1.4592000000000003,
-        "charisma_exp": 1.28,
+        "dexterity": 1.344,
+        "agility": 1.344,
+        "charisma": 1.9261440000000005,
+        "hacking_exp": 1.5206400000000002,
+        "strength_exp": 1.4080000000000001,
+        "defense_exp": 1.4080000000000001,
+        "dexterity_exp": 1.4080000000000001,
+        "agility_exp": 1.4080000000000001,
+        "charisma_exp": 1.4080000000000001,
+        "company_rep": 1.6896000000000002,
+        "faction_rep": 1.28,
+        "crime_money": 1.28,
+        "crime_success": 1.28,
         "hacknet_node_money": 1.28,
         "hacknet_node_purchase_cost": 0.78125,
         "hacknet_node_ram_cost": 0.78125,
         "hacknet_node_core_cost": 0.78125,
         "hacknet_node_level_cost": 0.78125,
-        "company_rep": 1.28,
-        "faction_rep": 1.28,
         "work_money": 1.4592000000000003,
-        "crime_success": 1.28,
-        "crime_money": 1.28,
         "bladeburner_max_stamina": 1,
         "bladeburner_stamina_gain": 1,
         "bladeburner_analysis": 1,
         "bladeburner_success_chance": 1
     },
-    "city": "Chongqing",
-    "numPeopleKilled": 8,
-    "money": 802015273.866336,
+    "city": "Sector-12",
+    "numPeopleKilled": 0,
+    "money": 17932490354.41353,
     "location": "ECorp",
-    "totalPlaytime": 5063778400,
-    "jobs": {},
+    "totalPlaytime": 5104208200,
+    "jobs": {
+        "Bachman & Associates": "Software Engineering Intern",
+        "OmniTek Incorporated": "Software Engineering Intern",
+        "Blade Industries": "Software Engineering Intern",
+        "NWO": "Software Engineering Intern",
+        "ECorp": "Software Engineering Intern"
+    },
     "factions": [
+        "NiteSec",
         "Chongqing",
+        "Tetrads",
         "Slum Snakes",
         "Tian Di Hui",
         "CyberSec"
     ],
     "entropy": 0,
-    "playtimeSinceLastAug": 53730200,
-    "playtimeSinceLastBitnode": 53730200,
-    "bitNodeN": 10
+    "playtimeSinceLastAug": 34754600,
+    "playtimeSinceLastBitnode": 94160000,
+    "bitNodeN": 10,
+    "inGang": false,
+    "work": {
+        "type": "FACTION",
+        "cyclesWorked": 8564,
+        "factionWorkType": "hacking",
+        "factionName": "NiteSec"
+    },
+    "priorities": [
+        {
+            "actionName": "StudyComputerScience",
+            "what": "Computer Science",
+            "goalSkill": 25,
+            "priority": 0,
+            "script": "study"
+        },
+        {
+            "actionName": "CreateEarlyPrograms",
+            "priority": 1,
+            "script": "create-programs"
+        },
+        {
+            "actionName": "DoCrime",
+            "do": true,
+            "priority": 10,
+            "script": "crime"
+        }
+    ],
+    "updated": "8/9/2023, 6:56:29 PM",
+    "actionTaken": "CreateEarlyPrograms"
 }

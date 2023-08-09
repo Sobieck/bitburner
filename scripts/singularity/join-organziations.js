@@ -2,10 +2,7 @@ export async function main(ns) {
     const toJoinInOrderInWhichIWantToComplete = [
         "CyberSec",
         "NiteSec",
-        "Chongqing",
-        "The Black Hand",
         "Bachman & Associates",
-        "BitRunners",
         "NWO",
         "Blade Industries",
         "OmniTek Incorporated",
@@ -13,6 +10,9 @@ export async function main(ns) {
         "The Covenant",
         "Daedalus", 
         "Illuminati",
+        "Chongqing",
+        "The Black Hand",
+        "BitRunners",
         "Aevum",
         "Volhaven",
         "New Tokyo",
@@ -48,6 +48,7 @@ export async function main(ns) {
 
     const stopAtAugments = [
         { final: true, faction: "Chongqing", augmentToStopAt: "Neuregen Gene Modification" },
+        { final: true, faction: "NiteSec", augmentToStopAt: "Cranial Signal Processors - Gen III" },
     ]
 
     const moneyAvailable = ns.getServerMoneyAvailable("home");

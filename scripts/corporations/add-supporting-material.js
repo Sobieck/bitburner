@@ -78,7 +78,12 @@ export async function main(ns) {
                 let amountToBuy = 0;
                 if (materialInWarehouse.stored < (countToBuy * .95)) {
                     if (countToBuy < 200) {
-                        ns.corporation.bulkPurchase(divisionName, city, material.name, countToBuy);
+                        try {
+                            // too lazy to calculate the cost and all that. This will fix itself with all the money we are generating in the corp. 
+                            ns.corporation.bulkPurchase(divisionName, city, material.name, countToBuy);
+                        } catch (error) {
+                            ns.tprint("we tried to buy supporting material that we didn't have money for in the corp.")
+                        }                        
                     } else {
                         amountToBuy = Math.floor(countToBuy / 20);
                     }
