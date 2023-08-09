@@ -18,7 +18,9 @@ export async function main(ns) {
             continue;
         }
 
-        if (sleeve.shock > 10) {
+        const shockToStopAt = sleeve.name * 10;
+
+        if (sleeve.shock > shockToStopAt) {
             if(!currentActionsPriority.tasks.find(x => x === sleeve.task.type)){
                 ns.sleeve.setToShockRecovery(sleeve.name);
             }

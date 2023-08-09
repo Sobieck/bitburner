@@ -16,6 +16,8 @@ export async function main(ns) {
 
     if(!inGang){
        // change crime priority to 2, when gangs are available. Then go through and make karma generation the most important thing. 
+
+       // make player do homicides after hack = 50. 
     }
 
     const updated = new Date();
