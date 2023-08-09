@@ -7,6 +7,11 @@ export async function main(ns) {
 
     const currentActionsPriority = sleevesData.priorities.find(x => x.actionName === actionName);
 
+    if (currentActionsPriority.ignorePriorityForGang) {
+        return;
+    }
+
+
     const mainPlayerWork = ns.singularity.getCurrentWork();
 
     if (!mainPlayerWork || mainPlayerWork.type !== typeOfWork || mainPlayerWork.location !== "Rothman University") {

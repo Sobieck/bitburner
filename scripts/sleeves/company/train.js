@@ -9,6 +9,10 @@ export async function main(ns) {
 
     const currentActionsPriority = sleevesData.priorities.find(x => x.actionName === actionName);
 
+    if (currentActionsPriority.ignorePriorityForGang) {
+        return;
+    }
+
     for (let sleeve of sleevesData.sleeves) {
         if (!currentActionsPriority.who.includes(sleeve.name)) {
             continue;

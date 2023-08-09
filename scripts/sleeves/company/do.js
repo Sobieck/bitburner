@@ -7,6 +7,10 @@ export async function main(ns) {
 
     const currentActionsPriority = sleevesData.priorities.find(x => x.actionName === actionName);
 
+    if (currentActionsPriority.ignorePriorityForGang) {
+        return;
+    }
+
     const player = JSON.parse(ns.read('data/player.txt'));
 
     const companiesEmployedAt = [];

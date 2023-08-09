@@ -6,7 +6,13 @@ export async function main(ns) {
     const crimeTypeOfWork = "CRIME";
     const crimes = makeCrimes(ns);
 
-    sleevesData.maximizeWhat = "money"; //"karma";
+    if(sleevesData.inGang){
+        sleevesData.maximizeWhat = "money"; 
+    } else {
+        sleevesData.maximizeWhat = "karma";
+    }
+
+    
     sleevesData.mostKarmaCrime = crimes
         .map(x => x)
         .sort((a, b) => b.karmaPerTime - a.karmaPerTime)

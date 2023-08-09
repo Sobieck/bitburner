@@ -2,23 +2,18 @@ export async function main(ns) {
 
     const numberOfSleeves = ns.sleeve.getNumSleeves();
     const allSleeves = Array.from(Array(numberOfSleeves).keys())
-    const inGang = ns.gang.inGang();
+    const inGang = true; //ns.gang.inGang();
+ 
 
     const priorities = [
-        { actionName: "Syncronize", tasks: ["SYNCHRO"], who: allSleeves, priority: 0 },
-        { actionName: "Recovery", tasks: ["RECOVERY"], who: allSleeves, priority: 1 },
-        { actionName: "WorkForCompany", tasks: ["COMPANY"], who: allSleeves, priority: 10 },
-        { actionName: "MirrorPlayer", tasks: ["FACTION", "CLASS", "COMPANY"], who: [6], priority: 20}, 
-        { actionName: "DoCrime", tasks: ["CRIME"], who: allSleeves, priority: 30 }, //"task": { "type": "CRIME", "crimeType": "Shoplift", "cyclesWorked": 0, "cyclesNeeded": 10 }
+        { actionName: "Syncronize", tasks: ["SYNCHRO"], who: allSleeves, priority: 0, ignorePriorityForGang: false },
+        { actionName: "Recovery", tasks: ["RECOVERY"], who: allSleeves, priority: 1, ignorePriorityForGang: false  },
+        { actionName: "WorkForCompany", tasks: ["COMPANY"], who: allSleeves, priority: 10, ignorePriorityForGang: !inGang },
+        { actionName: "MirrorPlayer", tasks: ["FACTION", "CLASS", "COMPANY"], who: [6], priority: 20, ignorePriorityForGang: !inGang }, 
+        { actionName: "DoCrime", tasks: ["CRIME"], who: allSleeves, priority: 30 }, 
         { actionName: "CrimeTrain", tasks: ["CLASS"], who: allSleeves, priority: 31 },
-        // "task":{"type":"CLASS","classType":"str","location":"Iron Gym"}
     ]
 
-    if(!inGang){
-       // change crime priority to 2, when gangs are available. Then go through and make karma generation the most important thing. 
-
-       // make player do homicides after hack = 50. 
-    }
 
     const updated = new Date();
 
