@@ -147,21 +147,6 @@ export async function main(ns) {
                             .getAugmentationsFromFaction(faction)
                             .filter(y => y !== "NeuroFlux Governor")
                             .filter(y => !ownedAugmentations.includes(y))
-                            .filter(y => {
-                                if (ownedAugmentations.length > 0) {
-                                    return true;
-                                } else { // on first install, we only want to install hacking and skill related. because it takes a long time to get the stock predictor and a company going. So it becomes prohibatively expensive to buy all the augments. 
-                                    const stats = ns.singularity.getAugmentationStats(y);
-
-                                    return stats.hacking_chance > 1 ||
-                                        stats.hacking_speed > 1 ||
-                                        stats.hacking_money > 1 ||
-                                        stats.hacking_grow > 1 ||
-                                        stats.hacking > 1 ||
-                                        stats.hacking_exp > 1 ||
-                                        stats.faction_rep > 1
-                                }
-                            })
                             .map(y => {
                                 return {
                                     augmentName: y,
@@ -415,7 +400,10 @@ function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
     }
 }
 
-function purchaseNeuroFluxGovernors(ns, faction, analytics, minRepToDonateToFaction) {
+function purchaseNeuroFluxGovernors(ns, faction, analytics) {
+
+    const multiplersFile = "data/multipliers.txt";
+    const multipliers = JSON.parse(ns.read(multiplersFile));
 
     const augmentName = "NeuroFlux Governor"
 
@@ -426,7 +414,7 @@ function purchaseNeuroFluxGovernors(ns, faction, analytics, minRepToDonateToFact
 
     while (price < moneyAvailable) {
         if (factionRep < augmentRepPrice) {
-            if (ns.singularity.getFactionFavor(faction) > minRepToDonateToFaction && ns.fileExists("Formulas.exe")) {
+            if (ns.singularity.getFactionFavor(faction) > (150 * multipliers.RepToDonateToFaction) && ns.fileExists("Formulas.exe")) {
                 const repNeeded = augmentRepPrice - factionRep;
                 let dollarsDonated = 0;
                 let purchasedRep = 0;

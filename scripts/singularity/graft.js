@@ -9,8 +9,8 @@ export async function main(ns) {
         && currentWork.classType === "Leadership") {
 
         if(!ownedAugmentations.includes("SmartJaw") && currentWork.type !== "GRAFTING"){
-            ns.singularity.travelToCity("New Tokyo")
-            ns.grafting.graftAugmentation("SmartJaw", true);
+            // ns.singularity.travelToCity("New Tokyo")
+            // ns.grafting.graftAugmentation("SmartJaw", true);
         }
     }
 }

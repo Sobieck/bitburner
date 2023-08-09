@@ -1,25 +1,25 @@
 {
     "hp": {
-        "current": 10,
-        "max": 10
+        "current": 14,
+        "max": 14
     },
     "skills": {
-        "hacking": 179,
-        "strength": 1,
-        "defense": 1,
-        "dexterity": 1,
-        "agility": 1,
+        "hacking": 154,
+        "strength": 85,
+        "defense": 45,
+        "dexterity": 71,
+        "agility": 58,
         "charisma": 1,
-        "intelligence": 63
+        "intelligence": 115
     },
     "exp": {
-        "hacking": 54510891.29355682,
-        "strength": 13.492266589486372,
-        "defense": 0,
-        "dexterity": 5.390591065778829,
-        "agility": 5.390591065778829,
+        "hacking": 11345187.864882186,
+        "strength": 95655.59374496993,
+        "defense": 7924.705823427064,
+        "dexterity": 39762.33582834328,
+        "agility": 17554.33896622201,
         "charisma": 0,
-        "intelligence": 3226.04509770113
+        "intelligence": 18618.315020190406
     },
     "mults": {
         "hacking_chance": 1.3824,
@@ -53,20 +53,20 @@
         "bladeburner_analysis": 1,
         "bladeburner_success_chance": 1
     },
-    "city": "New Tokyo",
-    "numPeopleKilled": 0,
-    "money": 20010.425454497337,
+    "city": "Chongqing",
+    "numPeopleKilled": 8,
+    "money": 802015273.866336,
     "location": "ECorp",
-    "totalPlaytime": 4655088200,
+    "totalPlaytime": 5063778400,
     "jobs": {},
     "factions": [
         "Chongqing",
-        "New Tokyo",
+        "Slum Snakes",
         "Tian Di Hui",
         "CyberSec"
     ],
     "entropy": 0,
-    "playtimeSinceLastAug": 66504600,
-    "playtimeSinceLastBitnode": 66504600,
+    "playtimeSinceLastAug": 53730200,
+    "playtimeSinceLastBitnode": 53730200,
     "bitNodeN": 10
 }
