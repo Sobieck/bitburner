@@ -2,7 +2,11 @@ let incomePerHourEstimate;
 let updatedMoneyEstimate = false;
 
 export async function main(ns) {
-    if (!ns.stock.has4SDataTIXAPI() || !ns.corporation.hasCorporation() || ns.fileExists('data/juice.txt')) {
+    if (!ns.stock.has4SDataTIXAPI() ||
+        !ns.corporation.hasCorporation() ||
+        // !ns.gang.inGang() ||
+        ns.fileExists('data/juice.txt')
+    ) {
         return;
     }
 
@@ -116,7 +120,7 @@ export async function main(ns) {
         ns.singularity.installAugmentations('scripts/coordinator.js')
     }
     const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction);
-  
+
 
     if (!analytics.firstEncounterOfRepTrigger) {
         const repTrigger = populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile);
@@ -124,7 +128,7 @@ export async function main(ns) {
         saveAnalytics(ns, analytics);
     }
 
-    if (targetFaction.maximumAugRep < currentFactionRep  || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
+    if (targetFaction.maximumAugRep < currentFactionRep || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
 
         if (!analytics.repTrigger) {
             const repTrigger = populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile);

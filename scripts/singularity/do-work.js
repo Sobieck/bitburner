@@ -33,8 +33,11 @@ export async function main(ns) {
 
     const currentWork = ns.singularity.getCurrentWork();
 
-    if (currentWork && currentWork.type === "CREATE_PROGRAM") {
-        return;
+    if (currentWork && 
+        (currentWork.type === "CREATE_PROGRAM" || 
+        currentWork.type === "CRIME")) {
+        
+            return;
     }
 
     for (const faction of organizationsToJoinInTheOrderWeWantToComplete) {
@@ -72,9 +75,9 @@ export async function main(ns) {
 
             break;
         } else {
-            if(currentWork && currentWork.factionName === faction) {
+            if (currentWork && currentWork.factionName === faction) {
                 await ns.singularity.stopAction()
             }
-        }   
+        }
     }
 }

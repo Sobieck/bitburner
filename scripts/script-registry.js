@@ -48,6 +48,7 @@ export async function main(ns) {
         'scripts/singularity/upgade-home-machine.js',
         'scripts/singularity/travel-to-get-augs.js',
         'scripts/singularity/graft.js',
+        'scripts/singularity/do-crime.js',
     ];
     
     scriptsToRun = scriptsToRun.concat(singularityScripts);
