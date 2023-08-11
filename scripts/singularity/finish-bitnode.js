@@ -8,7 +8,7 @@ export async function main(ns) {
     const enviroment = JSON.parse(ns.read("data/enviroment.txt"));
     const serverWithLineage = enviroment.find(x => x.name === endgameServer);
 
-    if (includesRedPill && currentHackingLevel > serverWithLineage.server.requiredHackingSkill) {
+    if (serverWithLineage && includesRedPill && currentHackingLevel > serverWithLineage.server.requiredHackingSkill) {
         if (serverWithLineage && serverWithLineage.server.hasAdminRights) {
             for (const server of serverWithLineage.lineage) {
                 await ns.singularity.connect(server);
@@ -19,6 +19,6 @@ export async function main(ns) {
         }
 
 
-        // ns.singularity.destroyW0r1dD43m0n(2, 'scripts/coordinator.js'); // 2 (gangs) 
+        ns.singularity.destroyW0r1dD43m0n(2, 'scripts/coordinator.js'); // 2 (gangs) 
     }
 }

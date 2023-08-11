@@ -2,7 +2,7 @@ export async function main(ns) {
 
     const numberOfSleeves = ns.sleeve.getNumSleeves();
     const allSleeves = Array.from(Array(numberOfSleeves).keys())
-    const inGang = true; //ns.gang.inGang();
+    const inGang = ns.gang.inGang();
 
 
     const priorities = [

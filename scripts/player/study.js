@@ -14,7 +14,8 @@ export async function main(ns) {
     }
 
     if(player.skills.hacking < currentActionsPriority.goalSkill){
-        if(player.work.type !== "CLASS" || 
+        if(!player.work ||
+            player.work.type !== "CLASS" || 
             player.work.classType !== ns.enums.UniversityClassType.computerScience ||
             player.work.location !== ns.enums.LocationName.Sector12RothmanUniversity
         ){

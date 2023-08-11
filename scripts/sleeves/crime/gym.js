@@ -39,6 +39,10 @@ export async function main(ns) {
                     .shift()
             }
         }
+        
+        if(!sleeve.crimeToTrainFor){
+            continue;
+        }
 
         let totalPoints = 0;
 

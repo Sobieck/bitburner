@@ -58,7 +58,7 @@ export async function main(ns) {
     const nextPositionInfo = ns.singularity.getCompanyPositionInfo(company, currentPositionInfo.nextPosition);
     const companyRep = ns.singularity.getCompanyRep(company);
 
-    if (nextPositionInfo.requiredReputation < companyRep && nextPositionInfo.requiredSkills.charisma > player.skills.charisma) {
+    if (nextPositionInfo.requiredReputation < companyRep && nextPositionInfo.requiredSkills.charisma > player.skills.charisma && player.skills.hacking > nextPositionInfo.requiredSkills.hacking) {
         if(currentWork && currentWork.type === "GRAFTING"){
             return;
         }

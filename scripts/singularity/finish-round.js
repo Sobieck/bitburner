@@ -4,7 +4,7 @@ let updatedMoneyEstimate = false;
 export async function main(ns) {
     if (!ns.stock.has4SDataTIXAPI() ||
         !ns.corporation.hasCorporation() ||
-        // !ns.gang.inGang() ||
+        !ns.gang.inGang() ||
         ns.fileExists('data/juice.txt')
     ) {
         return;
@@ -325,7 +325,7 @@ export async function main(ns) {
 
                 const factionsByRating = factionsWithAugmentsToBuy.sort((a, b) => b.factionRep - a.factionRep);
 
-                purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics, minRepToDonateToFaction);
+                purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics);
 
                 const corporation = ns.corporation.getCorporation();
                 const moneyOnHome = ns.getServerMoneyAvailable("home") * 0.9;

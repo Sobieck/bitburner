@@ -37,6 +37,7 @@ export async function main(ns) {
         'scripts/player/player-and-priority.js',
         'scripts/player/study.js',
         'scripts/player/create-programs.js',
+        'scripts/player/crime.js',
     ];
     
     scriptsToRun = scriptsToRun.concat(playerScripts);
@@ -44,17 +45,11 @@ export async function main(ns) {
     const singularityScripts = [
         'scripts/singularity/join-organziations.js',
         'scripts/singularity/apply-to-jobs.js',
-        'scripts/singularity/do-work-get-augments.js',
         'scripts/singularity/backdoor-all-machines.js',
-        'scripts/singularity/do-work.js',
         'scripts/singularity/finish-round.js',
         'scripts/singularity/finish-bitnode.js',
-        'scripts/singularity/do-job.js',
-        'scripts/singularity/workout.js',
         'scripts/singularity/upgade-home-machine.js',
         'scripts/singularity/travel-to-get-augs.js',
-        'scripts/singularity/graft.js',
-        'scripts/singularity/do-crime.js',
     ];
     
     scriptsToRun = scriptsToRun.concat(singularityScripts);
@@ -87,7 +82,7 @@ export async function main(ns) {
     scriptsToRun = scriptsToRun.concat(corporateScripts);
 
     const sleevesScripts = [
-        'scripts/sleeves/setSeevesToIdle.js',//setSeevesToIdle
+        'scripts/sleeves/setSeevesToIdle.js',
         'scripts/sleeves/countAndPriority.js',
         'scripts/sleeves/getSleeves.js',
         'scripts/sleeves/getTask.js',
@@ -106,6 +101,12 @@ export async function main(ns) {
     ];
 
     scriptsToRun = scriptsToRun.concat(sleevesScripts);
+
+    const gangScripts = [
+        'scripts/gang/start-gang.js',
+    ];
+
+    scriptsToRun = scriptsToRun.concat(gangScripts);
     
     const scriptsFile = 'data/scriptsToRun.txt';
     ns.rm(scriptsFile);

@@ -16,9 +16,9 @@ export async function main(ns) {
     }
 
     const currentWork = ns.singularity.getCurrentWork();
-    if(currentWork && currentWork.type === "CLASS"){
-        ns.singularity.stopAction();
-    }
+    // if(currentWork && currentWork.type === "CLASS"){
+    //     ns.singularity.stopAction();
+    // }
 
 }
 
