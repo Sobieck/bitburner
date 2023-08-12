@@ -1,8 +1,8 @@
 export async function main(ns) {
-    if(!ns.gang.inGang()){
+    if (!ns.gang.inGang()) {
         return;
     }
-    
+
     const gangFile = 'data/gang.txt';
     const gang = JSON.parse(ns.read(gangFile));
 
@@ -13,10 +13,12 @@ export async function main(ns) {
     }
 
     const equipmentNames = ns.gang.getEquipmentNames();
-    const equipment = [];
+    const equipments = [];
+
+    const currentEarnedRespectHighWaterMark = gang.memberNextToAscend.earnedRespect;
 
     for (const equipmentName of equipmentNames) {
-        equipment.push({
+        equipments.push({
             name: equipmentName,
             cost: ns.gang.getEquipmentCost(equipmentName),
             type: ns.gang.getEquipmentType(equipmentName),
@@ -24,9 +26,41 @@ export async function main(ns) {
         })
     }
 
-    ns.rm('js.txt');
-    ns.write('js.txt', JSON.stringify(equipment), "W")
+    const basicLoadOut = ["Baseball Bat", "Bulletproof Vest", "Ford Flex V20"];
 
+    if (currentEarnedRespectHighWaterMark < 600_000) {
+        for (const member of gang.members) {
+            if (member.def_asc_points > 0) {
+                continue;
+            }
+
+            for (const equipName of basicLoadOut) {
+                const equipmentToBuy = equipments.find(x => x.name === equipName);
+
+                if (!member.upgrades.includes(equipName)) {
+                    if (stockMarketReserveMoney.canSpend(ns, equipmentToBuy.cost)) {
+                        ns.gang.purchaseEquipment(member.name, equipName);
+                    }
+                }
+            }
+        }
+    } else {
+        const armThoseWithXRespectOrLower = currentEarnedRespectHighWaterMark * .75;
+
+        for (const member of gang.members) {
+            if(member.earnedRespect > armThoseWithXRespectOrLower){
+                continue;
+            }
+
+            for (const equipment of equipments.filter(x => x.type !== "Rootkit" && x.type !== "Augmentation")) {
+                if (!member.upgrades.includes(equipment.name)) {
+                    if (stockMarketReserveMoney.canSpend(ns, equipment.cost)) {
+                        ns.gang.purchaseEquipment(member.name, equipment.name);
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -41,36 +75,36 @@ class ReserveForTrading {
         obj && Object.assign(this, obj);
     }
 
-    setMoneyInvested(moneyInvested, ns){
+    setMoneyInvested(moneyInvested, ns) {
         this.moneyInvested = moneyInvested;
 
         const potentialCapitalReserve = moneyInvested / 2;
-        
+
         this.capitalToReserveForTrading = Math.max(...[potentialCapitalReserve, this.capitalToReserveForTrading]);
 
-        if(this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit){
+        if (this.capitalToReserveForTrading > this.stockMarketReserveMoneyLimit) {
             this.capitalToReserveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         this.countOfVisitedWithoutFillingRequest++;
     }
 
-    canSpend(ns, moneyNeeded){
+    canSpend(ns, moneyNeeded) {
         const moneyOnHome = ns.getServerMoneyAvailable("home");
 
         let moneyToSaveForTrading = this.capitalToReserveForTrading - this.moneyInvested;
 
-        if(moneyToSaveForTrading < 0){
+        if (moneyToSaveForTrading < 0) {
             moneyToSaveForTrading = 0;
         }
 
-        if(moneyToSaveForTrading > this.stockMarketReserveMoneyLimit){
+        if (moneyToSaveForTrading > this.stockMarketReserveMoneyLimit) {
             moneyToSaveForTrading = this.stockMarketReserveMoneyLimit;
         }
 
         const canSpend = moneyNeeded < moneyOnHome - moneyToSaveForTrading
 
-        if(canSpend === false){
+        if (canSpend === false) {
             this.requestMoney(ns, moneyNeeded);
         } else {
             this.moneyRequested = new Map(Array.from(this.moneyRequested));
@@ -85,15 +119,15 @@ class ReserveForTrading {
         return canSpend;
     }
 
-    requestMoney(ns, amount){
+    requestMoney(ns, amount) {
 
         const nameOfRequest = "gang-equipement";
         this.moneyRequested = new Map(Array.from(this.moneyRequested));
 
         const moneyRequestedPreviously = this.moneyRequested.get(nameOfRequest);
 
-        if(moneyRequestedPreviously){
-            if(moneyRequestedPreviously < amount){
+        if (moneyRequestedPreviously) {
+            if (moneyRequestedPreviously < amount) {
                 this.moneyRequested.set(nameOfRequest, amount);
                 this.moneyRequested = Array.from(this.moneyRequested);
 

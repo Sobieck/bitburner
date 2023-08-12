@@ -13,7 +13,7 @@ export async function main(ns) {
             continue;
         }
 
-        if(member.earnedRespect > goalRespect){
+        if(member.earnedRespect > goalRespect || member.earnedRespect > 3_000){
             ns.gang.ascendMember(member.name)
         }
     }

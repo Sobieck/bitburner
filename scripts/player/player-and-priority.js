@@ -8,7 +8,7 @@ export async function main(ns) {
     player.priorities = [
         { actionName: "StudyComputerScience", what: ns.enums.UniversityClassType.computerScience, goalSkill: 25, priority: 0, script: 'study' },
         { actionName: "CreateEarlyPrograms", priority: 1, script: 'create-programs' },
-        { actionName: "DoCrime", do: !player.inGang, priority: 10, script: 'crime' },
+        { actionName: "DoCrime", priority: 10, script: 'crime' },
         // workout 
         // graft?
     ]

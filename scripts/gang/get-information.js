@@ -49,7 +49,7 @@ export async function main(ns) {
 
     const gangStuff = { gangInfo, members, other, priorities };
 
-    if (memberNextToAscend !== oldGangData.memberNextToAscend) {
+    if (oldGangData && memberNextToAscend !== oldGangData.memberNextToAscend) {
         const memberAscendingNext = members.find(x => x.name === oldGangData.memberNextToAscend.name);
 
         if (memberAscendingNext.earnedRespect * 1.15 < memberNextToAscend.earnedRespect) {

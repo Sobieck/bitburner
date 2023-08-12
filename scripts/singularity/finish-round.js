@@ -10,13 +10,20 @@ export async function main(ns) {
         return;
     }
 
+    if (ns.singularity.getOwnedAugmentations(true) !== ns.singularity.getOwnedAugmentations(false)) {
+        ns.singularity.installAugmentations('scripts/coordinator.js')
+    }
 
+    const slumSnakesName = 'Slum Snakes'
+    let slumSnakesRep;
+    const player = ns.getPlayer();
 
-    const factionToMaxFile = "data/factionToMax.txt";
-    const factionDonationFile = 'data/factionDonatation.txt'
+    const hasSlumSnakes = player.factions.includes(slumSnakesName);
+    if (hasSlumSnakes) {
+        slumSnakesRep = ns.singularity.getFactionRep(slumSnakesName);
+    }
+
     const incomeEveryMinuteObservationsFile = 'data/incomeEveryMinuteForTheLast30Minutes.txt'
-
-    let factionToMax;
 
     let incomeObservations = [];
     const lastObservation = new Date();
@@ -63,113 +70,62 @@ export async function main(ns) {
         updatedMoneyEstimate = false;
     }
 
+
+
+    const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
+
+    const notOwnedAugments = ns
+        .singularity
+        .getAugmentationsFromFaction(slumSnakesName)
+        .filter(x => x !== "NeuroFlux Governor")
+        .filter(x => !ownedAugmentations.includes(x))
+        .map(y => {
+            return {
+                augmentName: y,
+                augmentationRepCost: ns.singularity.getAugmentationRepReq(y),
+                price: ns.singularity.getAugmentationPrice(y),
+                prereqs: ns.singularity.getAugmentationPrereq(y)
+            }
+        })
+        .sort((a, b) => b.price - a.price);
+
+    const splits = [
+        6_500,
+        18_000,
+        100_000_000
+    ]
+
+    let repGoal = 0;
+    let augmentsToBuy = [];
+    for (const split of splits) {
+        augmentsToBuy = notOwnedAugments.filter(x => x.augmentationRepCost <= split);
+        repGoal = split;
+        if (augmentsToBuy.length > 0) {
+            break;
+        }
+    }
+
     let analytics = new EndOfRoundAnalytics();
     const endOfRoundAnalyticsFile = "analytics/end-round.txt";
     if (ns.fileExists(endOfRoundAnalyticsFile)) {
         analytics = JSON.parse(ns.read(endOfRoundAnalyticsFile));
     }
 
-    if (ns.fileExists(factionToMaxFile) || ns.fileExists(factionDonationFile)) {
-        if (ns.fileExists(factionToMaxFile)) {
-            factionToMax = ns.read(factionToMaxFile);
-
-            if (!analytics.firstAssignFactionToMax) {
-                analytics.firstAssignFactionToMax = new Date();
-            }
-        } else {
-            factionToMax = ns.read(factionDonationFile);
-
-            if (!analytics.firstAssignFactionToMaxViaDonation) {
-                analytics.firstAssignFactionToMaxViaDonation = new Date();
-            }
-        }
-    } else {
-        return;
-    }
-
-    if (!analytics.factionsToMax.find(x => x.factionToMax === factionToMax)) {
-        const firstTime = new Date();
-        analytics.factionsToMax.push({ factionToMax, firstTime });
-    }
-
-    saveAnalytics(ns, analytics);
-
-    const player = ns.getPlayer();
-
-    const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
-
-    const mostRepExpensiveForEachFaction = [];
-    for (const faction of player.factions) {
-        const maximumAugRep = Math.max(...ns
-            .singularity
-            .getAugmentationsFromFaction(faction)
-            .filter(x => x !== "NeuroFlux Governor")
-            .filter(x => !ownedAugmentations.includes(x))
-            .map(x => ns.singularity.getAugmentationRepReq(x)));
-
-        if (maximumAugRep > 0) {
-            mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
-        }
-    }
-
-    const targetFaction = mostRepExpensiveForEachFaction
-        .filter(x => x.faction === factionToMax)
-        .pop();
-
-    setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns);
-
-    if (ns.singularity.getOwnedAugmentations(true) !== ns.singularity.getOwnedAugmentations(false)) {
-        ns.singularity.installAugmentations('scripts/coordinator.js')
-    }
-    const currentFactionRep = ns.singularity.getFactionRep(targetFaction.faction);
-
 
     if (!analytics.firstEncounterOfRepTrigger) {
-        const repTrigger = populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile);
+        const repTrigger = populateRepTrigger(repGoal, slumSnakesRep);
         analytics.firstEncounterOfRepTrigger = repTrigger;
         saveAnalytics(ns, analytics);
     }
 
-    if (targetFaction.maximumAugRep < currentFactionRep || (ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile))) {
-
+    if (repGoal < slumSnakesRep) {
         if (!analytics.repTrigger) {
-            const repTrigger = populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile);
+            const repTrigger = populateRepTrigger(repGoal, slumSnakesRep);
             analytics.repTrigger = repTrigger;
             saveAnalytics(ns, analytics);
         }
 
-        const factionsWithAugmentsToBuy =
-            mostRepExpensiveForEachFaction
-                .map(x => {
-                    {
-                        const faction = x.faction;
-                        const factionRep = ns.singularity.getFactionRep(faction);
-                        const factionAugmentsThatIDontOwnAndCanAfford = ns
-                            .singularity
-                            .getAugmentationsFromFaction(faction)
-                            .filter(y => y !== "NeuroFlux Governor")
-                            .filter(y => !ownedAugmentations.includes(y))
-                            .map(y => {
-                                return {
-                                    augmentName: y,
-                                    augmentationRepCost: ns.singularity.getAugmentationRepReq(y),
-                                    price: ns.singularity.getAugmentationPrice(y),
-                                    prereqs: ns.singularity.getAugmentationPrereq(y)
-                                }
-                            })
-                            .filter(y => y.augmentationRepCost < factionRep)
-                            .sort((a, b) => b.price - a.price);
-
-                        return {
-                            faction,
-                            factionRep,
-                            factionAugmentsThatIDontOwnAndCanAfford
-                        }
-                    }
-                });
-
-        const priceOfMostExpensiveAugment = Math.max(...factionsWithAugmentsToBuy.find(x => x.faction === targetFaction.faction).factionAugmentsThatIDontOwnAndCanAfford.map(x => x.price));
-
+        const priceOfMostExpensiveAugment = Math.max(...augmentsToBuy.map(x => x.price));
 
         if (priceOfMostExpensiveAugment < 0) {
             return;
@@ -177,17 +133,15 @@ export async function main(ns) {
 
         const purchasableAugments = new Map();
 
-        for (const factionWithAugments of factionsWithAugmentsToBuy) {
-            for (const augment of factionWithAugments.factionAugmentsThatIDontOwnAndCanAfford) {
-                if (purchasableAugments.has(augment.augmentName) === false) {
-                    const item = {
-                        augmentationRepCost: augment.augmentationRepCost,
-                        price: augment.price,
-                        prereqs: augment.prereqs,
-                        faction: factionWithAugments.faction
-                    }
-                    purchasableAugments.set(augment.augmentName, item)
+        for (const augment of augmentsToBuy) {
+            if (purchasableAugments.has(augment.augmentName) === false) {
+                const item = {
+                    augmentationRepCost: augment.augmentationRepCost,
+                    price: augment.price,
+                    prereqs: augment.prereqs,
+                    faction: slumSnakesName
                 }
+                purchasableAugments.set(augment.augmentName, item)
             }
         }
 
@@ -251,14 +205,10 @@ export async function main(ns) {
         let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments + moneyNeededForSleeveAugments;
 
         const estimatedIncomeForTheNextFourHours = incomePerHourEstimate * 4;
+        const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
+        const stockMarketReserveMoney = JSON.parse(ns.read(stockMarketReserveMoneyFile));
 
-        const moneyAvailable = ns.getServerMoneyAvailable("home");
-
-        const buyRepFile = 'data/buyRep.txt';
-        if (moneyAvailable - moneyNeededForAugments > 3_000_000_000_000 && !ns.fileExists(buyRepFile)) {
-            ns.write(buyRepFile, "", "W");
-            return;
-        }
+        const moneyAvailable = ns.getServerMoneyAvailable("home") + (stockMarketReserveMoney.moneyInvested * .9);
 
         const moneyFormatted = formatter.format(incomePerHourEstimate);
 
@@ -325,9 +275,8 @@ export async function main(ns) {
 
                 upgradeHomeMachine(ns, analytics);
 
-                const factionsByRating = factionsWithAugmentsToBuy.sort((a, b) => b.factionRep - a.factionRep);
 
-                purchaseNeuroFluxGovernors(ns, factionsByRating[0].faction, analytics);
+                purchaseNeuroFluxGovernors(ns, slumSnakesName, analytics);
 
                 const corporation = ns.corporation.getCorporation();
                 const moneyOnHome = ns.getServerMoneyAvailable("home") * 0.9;
@@ -366,11 +315,11 @@ function createMoneyTrigger(estimatedIncomeForTheNextFourHours, buyAugmentsWhenW
     return moneyTrigger;
 }
 
-function populateRepTrigger(targetFaction, ns, factionDonationFile, factionToMaxFile) {
+function populateRepTrigger(repGoal, currentFactionRep) {
     const repTrigger = new RepTrigger();
-    repTrigger.factionDonationTrigger = ns.fileExists(factionDonationFile) && !ns.fileExists(factionToMaxFile);
 
-    repTrigger.maximumAugRepNeeded = targetFaction.maximumAugRep;
+    repTrigger.maximumAugRepNeeded = repGoal;
+    repTrigger.currentFactionRep = currentFactionRep;
     return repTrigger;
 }
 
@@ -388,19 +337,6 @@ function saveAnalytics(ns, analytics, final = false) {
     ns.write(endOfRoundAnalyticsFile, JSON.stringify(analytics), "W");
 }
 
-function setGoalAugment(ownedAugmentations, factionToMax, targetFaction, ns) {
-    const organizations = JSON.parse(ns.read("data/organizations.txt"));
-
-    for (const stopAtAugment of organizations.stopAtAugments) {
-        const goalAugment = stopAtAugment.augmentToStopAt;
-        const goalFaction = stopAtAugment.faction;
-
-        if (!ownedAugmentations.includes(goalAugment) && factionToMax === goalFaction) {
-            targetFaction.maximumAugRep = ns.singularity.getAugmentationRepReq(goalAugment);
-            break;
-        }
-    }
-}
 
 function purchaseNeuroFluxGovernors(ns, faction, analytics) {
 
@@ -497,15 +433,8 @@ function purchaseAug(ns, augment, analytics) {
 class EndOfRoundAnalytics {
     firstStarted = new Date();
 
-
-    firstAssignFactionToMax;
-    firstAssignFactionToMaxViaDonation;
-
-    factionsToMax = [];
-
     firstEncounterOfRepTrigger;
     repTrigger;
-
 
     firstEncoundedMoneyTrigger;
     moneyTrigger;
@@ -542,14 +471,9 @@ class MoneySpent {
 }
 
 class RepTrigger {
-
-    factionRepGreaterThanMaximumAug;
-    factionRepGreaterThanTargetToGetToFavorNeeded;
-    factionDonationTrigger;
-
-
     maximumAugRepNeeded;
     currentFactionRep;
 
     time = new Date();
 }
+

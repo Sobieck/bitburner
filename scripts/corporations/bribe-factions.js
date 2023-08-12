@@ -13,27 +13,24 @@ export async function main(ns) {
 
     if (profit > 1_000_000_000_000) {
         const ownedAugmentations = ns.singularity.getOwnedAugmentations(true);
-        const player = ns.getPlayer();
 
         const mostRepExpensiveForEachFaction = [];
 
-        for (const faction of player.factions) {
-            const maximumAugRep = Math.max(...ns
-                .singularity
-                .getAugmentationsFromFaction(faction)
-                .filter(x => x !== "NeuroFlux Governor")
-                .filter(x => !ownedAugmentations.includes(x))
-                .filter(x => {
-                    const prereqs = ns.singularity.getAugmentationPrereq(x);
-                    return prereqs.every(y => ownedAugmentations.includes(y));
-                })
-                .map(x => ns.singularity.getAugmentationRepReq(x)));
+        const maximumAugRep = Math.max(...ns
+            .singularity
+            .getAugmentationsFromFaction('Slum Snakes')
+            .filter(x => x !== "NeuroFlux Governor")
+            .filter(x => !ownedAugmentations.includes(x))
+            .filter(x => {
+                const prereqs = ns.singularity.getAugmentationPrereq(x);
+                return prereqs.every(y => ownedAugmentations.includes(y));
+            })
+            .map(x => ns.singularity.getAugmentationRepReq(x)));
 
-            if (maximumAugRep > 0) {
-                mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
-            }
+        if (maximumAugRep > 0) {
+            mostRepExpensiveForEachFaction.push({ faction, maximumAugRep });
         }
-        
+
         if (mostRepExpensiveForEachFaction.length > 0) {
             for (const factionWithRep of mostRepExpensiveForEachFaction) {
 

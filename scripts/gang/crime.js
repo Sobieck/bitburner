@@ -2,7 +2,7 @@ export async function main(ns) {
     if(!ns.gang.inGang()){
         return;
     }
-    
+
     const gangFile = 'data/gang.txt';
     const gang = JSON.parse(ns.read(gangFile));
     const actionName = "Crime";
@@ -14,25 +14,34 @@ export async function main(ns) {
         .filter(x => x.priority < currentActionsPriority.priority);
 
     const shouldDoMoneyCrimes = true;
-    let moneyCrimeNext = true;
-    
-    for (const member of gang.members.sort((a,b) => b.earnedRespect - a.earnedRespect)) {
+
+    const currentEarnedRespectHighWaterMark = gang.memberNextToAscend.earnedRespect;
+    const respectWaterMark = currentEarnedRespectHighWaterMark * .75;
+
+    const moneyMakingGangsters = gang.members.filter(x => x.maxMoneyGain.name === x.task)
+
+    for (const member of gang.members) {
         if (jobsWithHigherPriority.find(x => x.actionName === member.actionTaken)) {
             continue;
         }
 
-        if(shouldDoMoneyCrimes && moneyCrimeNext){
+        if(member.earnedRespect > respectWaterMark && shouldDoMoneyCrimes){
             if(member.task !== member.maxMoneyGain.name){
                 ns.gang.setMemberTask(member.name, member.maxMoneyGain.name);
+            } else {
+                const topGansterDoingSameWork = moneyMakingGangsters
+                    .filter(x => x.task === member.task)
+                    .sort((a,b) => b.moneyGain - a.moneyGain)[0];
+
+                if(topGansterDoingSameWork && topGansterDoingSameWork.moneyGain * .30 > member.moneyGain){
+                    ns.gang.ascendMember(member.name)
+                }
             }
 
-            moneyCrimeNext = false;
         } else {
             if(member.task !== member.maxRespectGain.name){
                 ns.gang.setMemberTask(member.name, member.maxRespectGain.name);
             }
-
-            moneyCrimeNext = true;
         }
 
 
