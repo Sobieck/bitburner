@@ -6,7 +6,9 @@ export async function main(ns) {
     const gangFile = 'data/gang.txt';
     const gang = JSON.parse(ns.read(gangFile));
 
-    const memberNames = [
+    const memberNames = gang.members.map(x => x.name);
+
+    const potentialMemberNames = [
         "Lisa",
         "Gidget",
         "Zoe",
@@ -40,10 +42,11 @@ export async function main(ns) {
         "Geta",
         "Basil",
         "William"
-    ]
-
+    ].filter(x => !memberNames.includes(x));
+    
     if(ns.gang.canRecruitMember()){
-        ns.gang.recruitMember(memberNames[gang.members.length]);
+        const newRecruit = potentialMemberNames[Math.floor(Math.random()* potentialMemberNames.length)];
+        ns.gang.recruitMember(newRecruit);
     }
 
 }

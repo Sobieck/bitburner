@@ -21,6 +21,7 @@ export async function main(ns) {
     const priorities = [
         { actionName: "Vigilante Justice", priority: 0 },
         { actionName: "Train Combat", priority: 1 },
+        { actionName: "Territory Warfare", priority: 4},
         { actionName: "Crime", priority: 11},
     ]
 

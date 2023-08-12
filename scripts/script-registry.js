@@ -44,12 +44,10 @@ export async function main(ns) {
 
     const singularityScripts = [
         'scripts/singularity/join-organziations.js',
-        'scripts/singularity/apply-to-jobs.js',
         'scripts/singularity/backdoor-all-machines.js',
         'scripts/singularity/finish-round.js',
         'scripts/singularity/finish-bitnode.js',
         'scripts/singularity/upgade-home-machine.js',
-        'scripts/singularity/travel-to-get-augs.js',
     ];
     
     scriptsToRun = scriptsToRun.concat(singularityScripts);
@@ -108,6 +106,7 @@ export async function main(ns) {
         'scripts/gang/get-information.js',
         'scripts/gang/vigilante.js',
         'scripts/gang/train.js',
+        'scripts/gang/gang-warfare.js',
         'scripts/gang/crime.js',
     ];
 
