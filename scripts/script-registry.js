@@ -86,10 +86,7 @@ export async function main(ns) {
         'scripts/sleeves/countAndPriority.js',
         'scripts/sleeves/getSleeves.js',
         'scripts/sleeves/getTask.js',
-        'scripts/sleeves/synchronize.js', 
         'scripts/sleeves/shockRecovery.js',
-        'scripts/sleeves/company/do.js',
-        'scripts/sleeves/company/train.js',
         'scripts/sleeves/mirror/faction.js',
         'scripts/sleeves/mirror/university.js',
         'scripts/sleeves/mirror/gym.js',
@@ -104,6 +101,14 @@ export async function main(ns) {
 
     const gangScripts = [
         'scripts/gang/start-gang.js',
+        'scripts/gang/recruit-members.js',
+        'scripts/gang/buy-equipment.js',
+        'scripts/gang/ascend-lowely.js',
+        
+        'scripts/gang/get-information.js',
+        'scripts/gang/vigilante.js',
+        'scripts/gang/train.js',
+        'scripts/gang/crime.js',
     ];
 
     scriptsToRun = scriptsToRun.concat(gangScripts);

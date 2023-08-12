@@ -13,7 +13,6 @@ export async function main(ns) {
         return;
     }
 
-
     if (currentActionsPriority.do){
         if (!player.work || player.work.type !== "CRIME") {
             

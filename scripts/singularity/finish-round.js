@@ -10,6 +10,8 @@ export async function main(ns) {
         return;
     }
 
+
+
     const factionToMaxFile = "data/factionToMax.txt";
     const factionDonationFile = 'data/factionDonatation.txt'
     const incomeEveryMinuteObservationsFile = 'data/incomeEveryMinuteForTheLast30Minutes.txt'

@@ -46,7 +46,6 @@ export async function main(ns) {
             bestPossibleAction = sleevesData.mostKarmaCrime.type;
         }
 
-
         const whos = [];
         let whatCrimeToDo;
 
