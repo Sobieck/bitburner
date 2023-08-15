@@ -5,6 +5,10 @@ export async function main(ns) {
 
     for (let sleeve of sleevesData.sleeves) {
         sleeve.task = ns.sleeve.getTask(sleeve.name);
+    
+        if(sleeve.task === null){
+            ns.sleeve.setToUniversityCourse(sleeve.name, ns.enums.LocationName.Sector12RothmanUniversity, ns.enums.UniversityClassType.algorithms);
+        }
     }
 
     ns.rm(sleevesFile);

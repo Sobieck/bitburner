@@ -92,6 +92,11 @@ export async function main(ns) {
     const splits = [
         6_500,
         18_000,
+        75_000,
+        150_000,
+        375_000,
+        750_000,
+        2_500_000,
         100_000_000
     ]
 
@@ -202,7 +207,15 @@ export async function main(ns) {
                 .reduce((acc, b) => acc + b, 0);
         }
 
+        let buySleeveAugs = true;
+
         let buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments + moneyNeededForSleeveAugments;
+
+        if (moneyNeededForAugments * 2 < moneyNeededForSleeveAugments) {
+            buySleeveAugs = false;
+            buyAugmentsWhenWeHaveMoreThanThisMuchMoney = moneyNeededForAugments;
+        }
+
 
         const estimatedIncomeForTheNextFourHours = incomePerHourEstimate * 4;
         const stockMarketReserveMoneyFile = "data/stockMarketReserveMoney.txt";
@@ -218,10 +231,14 @@ export async function main(ns) {
                 const now = new Date();
                 const timeStamp = `[${String(now.getHours()).padStart(2, 0)}:${String(now.getMinutes()).padStart(2, 0)}]`
 
-                ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall} Money Needed: ${formatter.format(moneyNeededForAugments)}`, "success", 60000)
+                ns.toast(`${timeStamp} Income Per Hour Estimate: ${moneyFormatted}. ~Hours to install: ${hoursTillInstall} Money Needed: ${formatter.format(buyAugmentsWhenWeHaveMoreThanThisMuchMoney)}`, "success", 60000)
             }
 
-            ns.write("data/needMoney.txt", "", "W");
+            if(hoursTillInstall < 6){
+                ns.write("data/needMoney.txt", "", "W");
+            }
+
+
         }
 
         if (!analytics.firstEncoundedMoneyTrigger) {
@@ -253,21 +270,22 @@ export async function main(ns) {
                     saveAnalytics(ns, analytics);
                 }
 
-                for (const sleeve of sleevesData.sleeves) {
-                    if (sleeve.shock > 0) {
-                        continue;
-                    }
+                if (buySleeveAugs) {
+                    for (const sleeve of sleevesData.sleeves) {
+                        if (sleeve.shock > 0) {
+                            continue;
+                        }
 
-                    const augmentsToInstall = ns.sleeve
-                        .getSleevePurchasableAugs(sleeve.name)
-                        .map(x => x.name);
+                        const augmentsToInstall = ns.sleeve
+                            .getSleevePurchasableAugs(sleeve.name)
+                            .map(x => x.name);
 
-                    for (const augment of augmentsToInstall) {
-                        ns.sleeve.purchaseSleeveAug(sleeve.name, augment);
+                        for (const augment of augmentsToInstall) {
+                            ns.sleeve.purchaseSleeveAug(sleeve.name, augment);
+                        }
                     }
+                    analytics.costOfSleeveAugments = moneyNeededForSleeveAugments;
                 }
-
-                analytics.costOfSleeveAugments = moneyNeededForSleeveAugments;
 
                 for (const augment of orderedAugments) {
                     purchaseAug(ns, augment, analytics);
@@ -275,8 +293,7 @@ export async function main(ns) {
 
                 upgradeHomeMachine(ns, analytics);
 
-
-                purchaseNeuroFluxGovernors(ns, slumSnakesName, analytics);
+                // purchaseNeuroFluxGovernors(ns, slumSnakesName, analytics);
 
                 const corporation = ns.corporation.getCorporation();
                 const moneyOnHome = ns.getServerMoneyAvailable("home") * 0.9;
@@ -329,7 +346,7 @@ function saveAnalytics(ns, analytics, final = false) {
 
     if (final) {
         const now = new Date()
-        const factionToMax = analytics.factionsToMax[analytics.factionsToMax.length - 1].factionToMax.replaceAll(' ', '');
+        const factionToMax = "Slum Snakes"
         endOfRoundAnalyticsFile = `analytics/${now.toISOString().split('T')[0]}-${String(now.getHours()).padStart(2, 0)}-${String(now.getMinutes()).padStart(2, 0)}-${factionToMax}-end-round.txt`;
     }
 

@@ -1,28 +1,6 @@
 export async function main(ns) {
     const toJoinInOrderInWhichIWantToComplete = [
-        "CyberSec",
-        "NiteSec",
-        "Bachman & Associates",
-        "NWO",
-        "Blade Industries",
-        "OmniTek Incorporated",
-        "ECorp",
-        "The Covenant",
-        "Daedalus", 
-        "Illuminati",
-        "Chongqing",
-        "The Black Hand",
-        "BitRunners",
-        "Aevum",
-        "Volhaven",
-        "New Tokyo",
-        "Ishima",
-        "Tian Di Hui",
-        "Netburners",
         "Slum Snakes",
-        "Tetrads",
-        "Speakers for the Dead",
-        "The Syndicate",
     ];
 
     const companiesWeWantToBecomePartOf = [

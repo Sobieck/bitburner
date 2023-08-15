@@ -80,7 +80,6 @@ export async function main(ns) {
     scriptsToRun = scriptsToRun.concat(corporateScripts);
 
     const sleevesScripts = [
-        'scripts/sleeves/setSeevesToIdle.js',
         'scripts/sleeves/countAndPriority.js',
         'scripts/sleeves/getSleeves.js',
         'scripts/sleeves/getTask.js',
